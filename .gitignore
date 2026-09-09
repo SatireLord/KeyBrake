@@ -7,6 +7,7 @@ DerivedData/
 xcuserdata/
 
 .codegraph/
+.agent-cache/
 
 *.swp
 *.tmp
