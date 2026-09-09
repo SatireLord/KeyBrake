@@ -1,0 +1,82 @@
+name: KeyBrake
+options:
+  bundleIdPrefix: org.realitygood
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  defaultConfig: Debug
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    SWIFT_STRICT_CONCURRENCY: minimal
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGNING_ALLOWED: NO
+    DEVELOPMENT_TEAM: ""
+  configs:
+    Debug:
+      SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+    Release:
+      SWIFT_OPTIMIZATION_LEVEL: "-O"
+targets:
+  KeyBrakeCore:
+    type: framework
+    platform: macOS
+    sources:
+      - path: KeyBrakeCore
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrakeCore
+      DEFINES_MODULE: YES
+  KeyBrake:
+    type: application
+    platform: macOS
+    sources:
+      - path: KeyBrake
+    resources:
+      - path: Resources/KeyBrakeFeatureContract.json
+      - path: KeyBrakePrivilegedHelper/org.realitygood.KeyBrake.Helper.plist
+    dependencies:
+      - target: KeyBrakeCore
+      - target: KeyBrakePrivilegedHelper
+        embed: true
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake
+      INFOPLIST_FILE: SupportingFiles/Info.plist
+      CODE_ENTITLEMENTS: SupportingFiles/KeyBrake.entitlements
+      LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
+  KeyBrakePrivilegedHelper:
+    type: tool
+    platform: macOS
+    sources:
+      - path: KeyBrakePrivilegedHelper
+    dependencies:
+      - target: KeyBrakeCore
+    settings:
+      PRODUCT_NAME: KeyBrakePrivilegedHelper
+      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake.Helper
+      INFOPLIST_FILE: KeyBrakePrivilegedHelper/Info.plist
+  KeyBrakeTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: KeyBrakeTests
+    dependencies:
+      - target: KeyBrakeCore
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrakeTests
+      GENERATE_INFOPLIST_FILE: YES
+schemes:
+  KeyBrake:
+    build:
+      targets:
+        KeyBrake: all
+        KeyBrakeTests: [test]
+    test:
+      targets:
+        - name: KeyBrakeTests
+          parallelizable: false
+          randomExecutionOrder: false
+    run:
+      config: Debug
+    archive:
+      config: Release
