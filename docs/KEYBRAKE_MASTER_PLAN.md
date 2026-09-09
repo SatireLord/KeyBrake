@@ -17,11 +17,11 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 ## Current control state
 
 - Repository: `/Users/michaeltran/AntiGravity/KeyBrake`
-- GitHub: private `SatireLord/KeyBrake` publication is part of closeout
+- GitHub: private `SatireLord/KeyBrake` exists and `main` is synchronized at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: created during closeout and intentionally left unmerged
-- Last verified commit: recorded in the closeout proof and GitHub verification
-- Next action: human review, signing, helper approval, and live-host verification
+- Pull request: pending final proof commit; it will remain unmerged for human review
+- Last verified commit: `91a1cf6` foundation commit; final proof documentation is the next commit
+- Next action: commit and push the final proof record, then open the single review PR
 - External blockers: Xcode BuildService setup stalled before compilation; Computer Use service startup failed; signing/helper approval depends on a Developer ID identity and host configuration
 
 ## Feature inventory
@@ -138,13 +138,13 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-091 Push every implementation commit.
 [x] KB-092 Verify task-branch upstream divergence at 0/0.
 [x] KB-093 Verify main versus origin/main divergence at 0/0.
-[x] KB-094 Update the existing PR or create the single PR.
-[x] KB-095 Add exact local test, build, and proof evidence to the PR.
+[ ] KB-094 Update the existing PR or create the single PR.
+[ ] KB-095 Add exact local test, build, and proof evidence to the PR.
 [x] KB-096 Preserve and list every foreign dirty file; none were changed.
-[x] KB-097 Leave task-owned files clean.
+[ ] KB-097 Leave task-owned files clean.
 [x] KB-098 Record every genuine external blocker without disguising it as success.
 [x] KB-099 Re-run the complete circular requirements audit and record every external proof boundary.
-[x] KB-100 Deliver the complete final report with this entire current checklist.
+[ ] KB-100 Deliver the complete final report with this entire current checklist.
 
 ## Proof and handoff
 
