@@ -25,4 +25,13 @@ final class EmergencyCoordinatorTests: XCTestCase {
         let incident = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true))
         XCTAssertEqual(incident.steps.first?.outcome, .conflict)
     }
+
+    func testTargetApprovalChangesTheCoordinatorConfiguration() async {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let runner = RecordingCommandRunner()
+        let coordinator = EmergencyCoordinator(recoveryStore: RecoveryStore(rootDirectory: root), incidentStore: IncidentStore(rootDirectory: root), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: runner, executableCandidates: []), networkController: FixtureNetworkController(), privacyController: PrivacyController(commandRunner: runner))
+        await coordinator.setTargetApproval(targetID: "anydesk", approved: true)
+        let target = await coordinator.configuredTargets().first { $0.id == "anydesk" }
+        XCTAssertTrue(target?.approvedByUser == true)
+    }
 }

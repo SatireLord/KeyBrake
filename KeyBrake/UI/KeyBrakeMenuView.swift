@@ -15,7 +15,7 @@ struct KeyBrakeMenuView: View {
             .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
         Button("Stop Remote Access") { model.stopRemoteAccess() }
             .disabled(model.isBusy)
-        Button("Revoke App Access…") { openWindow(id: "settings"); model.isShowingSettings = true }
+        Button("Revoke App Access…") { openWindow(id: "settings") }
             .disabled(model.isBusy)
         Divider()
         Button("Restore Human Control") { openWindow(id: "recovery") }

@@ -4,6 +4,7 @@ import SwiftUI
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismiss) private var dismiss
     @State private var restoreSharing = false
 
     var body: some View {
@@ -26,7 +27,7 @@ struct RecoveryView: View {
             Button("Open Incident Log") { openWindow(id: "incidents") }
             Divider()
             HStack {
-                Button("Keep Isolation") { }
+                Button("Keep Isolation") { dismiss() }
                 Button("Quit KeyBrake") { NSApplication.shared.terminate(nil) }
             }
             Spacer()

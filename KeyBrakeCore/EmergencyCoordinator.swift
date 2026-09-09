@@ -8,7 +8,7 @@ public actor EmergencyCoordinator {
     private let espanso: EspansoAdapter
     private let networkController: NetworkControlling
     private let privacyController: PrivacyController
-    private let targetDefinitions: [TargetDefinition]
+    private var targetDefinitions: [TargetDefinition]
     private let sharingController: SharingServiceController?
     private var latestIncident: IncidentRecord?
 
@@ -55,6 +55,19 @@ public actor EmergencyCoordinator {
 
     public func state() -> KeyBrakeOperationalState { operationalState }
     public func latest() -> IncidentRecord? { latestIncident }
+    public func configuredTargets() -> [TargetDefinition] { targetDefinitions }
+
+    public func replaceTargetDefinitions(_ definitions: [TargetDefinition]) {
+        targetDefinitions = definitions.filter { definition in
+            TargetRegistry.canEnroll(definition, applicationBundleIdentifier: definition.bundleIdentifier, executableURL: definition.executableURL)
+        }
+    }
+
+    public func setTargetApproval(targetID: String, approved: Bool) {
+        guard let index = targetDefinitions.firstIndex(where: { $0.id == targetID }) else { return }
+        targetDefinitions[index].approvedByUser = approved
+        targetDefinitions[index].updatedAt = Date()
+    }
 
     public func recoverUnresolvedStateAtLaunch() -> RecoverySnapshot? {
         do {
@@ -135,7 +148,7 @@ public actor EmergencyCoordinator {
         return incident
     }
 
-    public func revokeAppAccess(targetID: UUID, services: Set<TCCService>, bundleIdentifier: String, displayName: String) async -> IncidentRecord {
+    public func revokeAppAccess(targetID: String, services: Set<TCCService>, bundleIdentifier: String, displayName: String) async -> IncidentRecord {
         var incident = IncidentRecord(initiatingAction: "Revoke App Access…", originalState: operationalState)
         incident.steps.append(contentsOf: await privacyController.reset(PrivacyResetRequest(bundleIdentifier: bundleIdentifier, services: services), targetDisplayName: displayName))
         incident.finalState = operationalState

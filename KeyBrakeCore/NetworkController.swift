@@ -48,10 +48,15 @@ public final class SystemNetworkController: NetworkControlling, @unchecked Senda
             .split(whereSeparator: \.isNewline)
             .map(String.init)
             .filter { !$0.hasPrefix("An asterisk") && !$0.isEmpty }
-        return serviceNames.enumerated().map { index, name in
-            let kind: NetworkServiceKind = name.localizedCaseInsensitiveContains("wi-fi") || name.localizedCaseInsensitiveContains("wifi") ? .wifi : name.localizedCaseInsensitiveContains("ethernet") ? .ethernet : .other
-            return NetworkService(id: "service-\(index)-\(name)", displayName: name, kind: kind, enabled: true, active: true)
+        var services: [NetworkService] = []
+        for (index, name) in serviceNames.enumerated() {
+            let kind: NetworkServiceKind = name.localizedCaseInsensitiveContains("wi-fi") || name.localizedCaseInsensitiveContains("wifi") ? .wifi : name.localizedCaseInsensitiveContains("ethernet") ? .ethernet : name.localizedCaseInsensitiveContains("vpn") ? .vpn : .other
+            let enabled = await enabledState(for: name) ?? false
+            let details = await command(arguments: ["-getinfo", name], executable: "/usr/sbin/networksetup").lowercased()
+            let active = details.contains("ip address:") && !details.contains("<none>") && !details.contains("none")
+            services.append(NetworkService(id: "service-\(index)-\(name)", displayName: name, kind: kind, enabled: enabled, active: active, isLoopback: false))
         }
+        return services
     }
 
     public func captureSnapshot() async -> [NetworkChange] {
@@ -65,13 +70,15 @@ public final class SystemNetworkController: NetworkControlling, @unchecked Senda
         for change in changes where change.originalEnabled && !change.isVPN {
             let start = Date()
             let result = await run(arguments: ["-setnetworkserviceenabled", change.displayName, "off"], executable: "/usr/sbin/networksetup")
-            let outcome: OperationOutcome = result.terminationStatus == 0 ? .succeeded : .failed
+            let verifiedDisabled = await enabledState(for: change.displayName) == false
+            let outcome: OperationOutcome = result.terminationStatus == 0 && verifiedDisabled ? .succeeded : .failed
             results.append(OperationStepResult(subsystem: "network", targetID: change.id, targetDisplayName: change.displayName, requestedState: "disabled", observedPreState: "enabled", observedPostState: outcome == .succeeded ? "disabled" : "unknown", operationDescription: "Disable network service", outcome: outcome, terminationStatus: result.terminationStatus, sanitizedStandardError: result.sanitizedStandardError, startedAt: start, finishedAt: result.finishedAt))
         }
         for change in changes where change.originalEnabled && change.isVPN {
             let start = Date()
             let result = await run(arguments: ["--nc", "stop", change.displayName], executable: "/usr/sbin/scutil")
-            let outcome: OperationOutcome = result.terminationStatus == 0 ? .succeeded : .failed
+            let status = await command(arguments: ["--nc", "status", change.displayName], executable: "/usr/sbin/scutil").lowercased()
+            let outcome: OperationOutcome = result.terminationStatus == 0 && (status.contains("disconnected") || status.contains("invalid") || status.isEmpty) ? .succeeded : .failed
             results.append(OperationStepResult(subsystem: "network", targetID: change.id, targetDisplayName: change.displayName, requestedState: "disconnected", observedPreState: "connected", observedPostState: outcome == .succeeded ? "disconnected" : "unknown", operationDescription: "Disconnect VPN", outcome: outcome, terminationStatus: result.terminationStatus, sanitizedStandardError: result.sanitizedStandardError, startedAt: start, finishedAt: result.finishedAt))
         }
         return results
@@ -86,7 +93,8 @@ public final class SystemNetworkController: NetworkControlling, @unchecked Senda
             }
             let start = Date()
             let result = await run(arguments: ["-setnetworkserviceenabled", change.displayName, "on"], executable: "/usr/sbin/networksetup")
-            let outcome: OperationOutcome = result.terminationStatus == 0 ? .succeeded : .failed
+            let verifiedEnabled = await enabledState(for: change.displayName) == true
+            let outcome: OperationOutcome = result.terminationStatus == 0 && verifiedEnabled ? .succeeded : .failed
             results.append(OperationStepResult(subsystem: "network", targetID: change.id, targetDisplayName: change.displayName, requestedState: "enabled", observedPreState: "disabled", observedPostState: outcome == .succeeded ? "enabled" : "unknown", operationDescription: "Restore network service", outcome: outcome, terminationStatus: result.terminationStatus, sanitizedStandardError: result.sanitizedStandardError, startedAt: start, finishedAt: result.finishedAt))
         }
         for change in changes where change.isVPN {
@@ -106,6 +114,15 @@ public final class SystemNetworkController: NetworkControlling, @unchecked Senda
     private func command(arguments: [String], executable: String) async -> String {
         let result = await run(arguments: arguments, executable: executable)
         return String(decoding: result.standardOutput, as: UTF8.self)
+    }
+
+    private func enabledState(for serviceName: String) async -> Bool? {
+        let result = await run(arguments: ["-getnetworkserviceenabled", serviceName], executable: "/usr/sbin/networksetup")
+        guard result.terminationStatus == 0 else { return nil }
+        let output = String(decoding: result.standardOutput, as: UTF8.self).lowercased()
+        if output.contains("yes") || output.contains("enabled") { return true }
+        if output.contains("no") || output.contains("disabled") { return false }
+        return nil
     }
 }
 

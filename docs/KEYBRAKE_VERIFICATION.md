@@ -18,13 +18,14 @@ The entries below are updated with exact commands and actual results as implemen
 | Foundation | `/opt/homebrew/bin/xcodegen generate`; `xcodebuild -list`; `xcodebuild -showBuildSettings` | pass; native targets, schemes, bundle identifier, entitlements, helper plist, and feature-contract resource are present |
 | Core type-check | direct `xcrun swiftc -typecheck -parse-as-library` over `KeyBrakeCore/*.swift` | pass |
 | App/helper type-check | direct module emission followed by app and helper `swiftc -typecheck` | pass |
-| Complete tests | `/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM` | pass; 12 tests, 0 failures |
+| Complete tests | `/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM` | pass; 13 tests, 0 failures |
 | SwiftPM app build | `/Users/michaeltran/bin/swift build --scratch-path /tmp/KeyBrakeSwiftPM --product KeyBrake` | pass; executable product compiled and linked |
 | Xcode build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake ... build` and Core retry | blocked by Xcode BuildService setup; no source diagnostic was emitted before interruption |
 | Runtime launch | staged SwiftPM executable in a temporary `.app`, added `CFBundleExecutable`, and launched with `open -n` | pass; process launched and exited without a crash; no persistent live app was left running |
 | Runtime UI | required Computer Use preflight and Computer Use session | not claimed; preflight passed, but Computer Use service startup failed, so no menu click or accessibility proof is asserted |
 | Network | fixture inventory and restore tests; live isolation | fixture proof passed; live mutation intentionally not run |
 | Signing | `codesign`/`spctl` | not claimed; no Developer ID signing identity or release bundle was available |
+| Target settings | direct app type-check plus coordinator approval test | pass; built-in and custom exact-identity targets can be approved, removed, persisted, and applied to the serialized coordinator |
 
 ## Safety boundaries
 
@@ -43,5 +44,9 @@ f1bc5ca2d725220ac2173daefb2df45fbb80bca1f72bd4bbad44b1815222970f  Resources/KeyB
 50d16a40121c6a87ccff29ec5c9a16aaf29029a023a23dce29f31d39c2c2c09f  docs/KEYBRAKE_RECOVERY_CONTRACT.md
 b29b538b5e6b63ead54edcfffd3a91a2ee8a9afed36faff0d41828a6f3de817e  KeyBrakeCore/HelperClient.swift
 e5ae969421494ed6968344d09e615440f5bc0de0f56c4e1542b7adbcf5007fc4  KeyBrakePrivilegedHelper/HelperService.swift
-e6a8b4772557f92b17b9825a0927155f85c5a1b138634377286ff544532aa369  KeyBrakeCore/EmergencyCoordinator.swift
+c25fe76f1d478439d317f6da249269944ba0f787732ec317c36e04a2edca020f  KeyBrakeCore/EmergencyCoordinator.swift
+1f92498e254abc8ad2db58104958e66ab23e176e781aa7f00c3b9dbc95a58239  KeyBrakeCore/NetworkController.swift
+5c63cf6afc4c992a0e96c503aeed6a46a90d98b177db8d120bfe15eb2393ecbd  KeyBrakeCore/SharingServiceController.swift
+528fcb2e5a29b55b3d6720d36efbff90e981df81db5e2ba705a741f7ef01ce22  KeyBrake/App/KeyBrakeViewModel.swift
+3a53b4fcf895d4a41ac237fbf2090cc4ac31c34c7d12aeddb4134640398b0599  KeyBrake/UI/SettingsView.swift
 ```

@@ -54,7 +54,9 @@ public struct SystemSharingServiceAdapter: SharingServiceAdapter {
         let start = Date()
         let result = try? await commandRunner.run(CommandRequest(executableURL: URL(fileURLWithPath: "/usr/sbin/systemsetup"), arguments: arguments + ["off"]))
         let status = result?.terminationStatus ?? 1
-        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", observedPreState: expectedState.enabled ? "enabled" : "disabled", observedPostState: status == 0 ? "disabled" : "unknown", operationDescription: "Disable supported sharing service", outcome: status == 0 ? .succeeded : .failed, terminationStatus: status, sanitizedStandardError: result?.sanitizedStandardError, startedAt: start, finishedAt: result?.finishedAt ?? Date())
+        let verified = status == 0 ? await detect() : nil
+        let outcome: OperationOutcome = status == 0 && verified?.supported == true && verified?.enabled == false ? .succeeded : .failed
+        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", observedPreState: expectedState.enabled ? "enabled" : "disabled", observedPostState: outcome == .succeeded ? "disabled" : "unknown", operationDescription: "Disable supported sharing service and verify post-state", outcome: outcome, terminationStatus: status, sanitizedStandardError: result?.sanitizedStandardError, startedAt: start, finishedAt: result?.finishedAt ?? Date())
     }
 
     public func restore(originalState: SharingServiceState, appliedState: SharingServiceState) async -> OperationStepResult {
@@ -62,7 +64,9 @@ public struct SystemSharingServiceAdapter: SharingServiceAdapter {
         guard originalState.enabled else { return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "remain disabled", operationDescription: "Sharing service was disabled before isolation", outcome: .alreadyInDesiredState) }
         let result = try? await commandRunner.run(CommandRequest(executableURL: URL(fileURLWithPath: "/usr/sbin/systemsetup"), arguments: arguments + ["on"]))
         let status = result?.terminationStatus ?? 1
-        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "enabled", operationDescription: "Explicitly restore previously enabled sharing service", outcome: status == 0 ? .succeeded : .failed, terminationStatus: status, sanitizedStandardError: result?.sanitizedStandardError)
+        let verified = status == 0 ? await detect() : nil
+        let outcome: OperationOutcome = status == 0 && verified?.supported == true && verified?.enabled == true ? .succeeded : .failed
+        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "enabled", operationDescription: "Explicitly restore previously enabled sharing service and verify post-state", outcome: outcome, terminationStatus: status, sanitizedStandardError: result?.sanitizedStandardError)
     }
 }
 

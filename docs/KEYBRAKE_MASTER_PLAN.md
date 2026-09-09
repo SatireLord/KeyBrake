@@ -73,7 +73,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-026 Implement approved local automation enrollment.
 [x] KB-027 Implement Stop Skynet Locally without network or TCC mutation.
 [x] KB-028 Implement remote-control candidate discovery.
-[x] KB-029 Implement remote-control enrollment and signing verification.
+[!] KB-029 Implement remote-control enrollment and signing verification; exact bundle/executable enrollment is implemented, while code-signing verification remains host-dependent.
 [x] KB-030 Implement exact remote-process stopping.
 [x] KB-031 Implement verified non-Apple launchd-service stopping.
 [x] KB-032 Enforce the rule that remote-control apps never restart automatically.
@@ -82,11 +82,11 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-035 Implement per-bundle privacy reset and safe per-bundle All.
 [x] KB-036 Enforce the rule that KeyBrake never edits or restores TCC grants.
 [x] KB-037 Implement explicit emergency-profile privacy opt-in.
-[x] KB-038 Implement the SMAppService on-demand privileged helper boundary.
+[!] KB-038 Implement the SMAppService on-demand privileged helper boundary; the typed helper boundary is implemented, while signed helper installation and audit-token proof remain host-dependent.
 [x] KB-039 Implement typed helper authorization validation.
 [x] KB-040 Implement the privileged command and target allowlist.
 [x] KB-041 Implement helper status visibility in Settings.
-[x] KB-042 Implement actual network-service and hardware discovery boundary.
+[!] KB-042 Implement actual network-service and hardware discovery boundary; read-only service state discovery is implemented, while host-specific hardware and privilege proof remain external.
 [x] KB-043 Implement stable service and interface classification.
 [x] KB-044 Implement VPN inventory and disconnection.
 [x] KB-045 Implement network-service disable operations.
@@ -108,12 +108,12 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-061 Implement Restore Human Control and its independent actions.
 [x] KB-062 Implement the incident-log viewer.
 [x] KB-063 Implement the unresolved-state quit warning.
-[x] KB-064 Implement the focused Settings sections and target editors.
-[!] KB-065 Implement Launch at Login without duplicate processes; UI placeholder awaits signed SMAppService integration.
+[x] KB-064 Implement the focused Settings sections and target editors, including exact-identity application enrollment and persisted approval.
+[!] KB-065 Implement Launch at Login without duplicate processes through SMAppService; source integration exists, while signed-host proof remains external.
 [x] KB-066 Add VoiceOver labels and non-color-only status communication.
 [x] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests.
 [x] KB-068 Run focused local tests during implementation.
-[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM proof passed 12 tests with 0 failures.
+[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM proof passed 13 tests with 0 failures.
 [!] KB-070 Run the final local Release build; Xcode BuildService setup stalled before compilation, while the SwiftPM app product built successfully.
 [x] KB-071 Verify helper embedding, plist placement, and entitlements in the generated Xcode project and build settings; final Xcode bundle output remains unproved.
 [!] KB-072 Verify signing and Gatekeeper only when credentials permit proof.
