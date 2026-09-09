@@ -20,9 +20,10 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 - GitHub: private `SatireLord/KeyBrake` exists and `main` is synchronized at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
 - Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged
-- Last verified commit: `a45fa87c1a038daf1576e75c1d60c9cedd084154`
+- Release-pass source checkpoint: `034dc2ffcd7e7544d8ba720f9b8027a367932a6d`; the final release-pass commit is recorded by Git closeout
+- Portfolio release version: `0.1.0` (build `1`), private until release approval
 - Next action: human review, signing, helper approval, and live-host verification
-- External blockers: Xcode BuildService setup stalled before compilation; Computer Use service startup failed; signing/helper approval depends on a Developer ID identity and host configuration
+- External blockers: Computer Use service startup failed; signing/helper approval depends on a Developer ID identity and host configuration; live destructive host verification remains intentionally deferred
 
 ## Feature inventory
 
@@ -40,7 +41,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 | Network/sharing adapters | missing | implemented adapters and fixtures |
 | Serialized coordinator | missing | implemented |
 | Menu/recovery/settings UI | missing | implemented |
-| Focused tests | missing | implemented; 12 SwiftPM tests pass |
+| Focused tests | missing | implemented; 13 SwiftPM tests pass |
 | Documentation | missing | implemented |
 
 ## PM checklist
@@ -114,8 +115,8 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests.
 [x] KB-068 Run focused local tests during implementation.
 [x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM proof passed 13 tests with 0 failures.
-[!] KB-070 Run the final local Release build; Xcode BuildService setup stalled before compilation, while the SwiftPM app product built successfully.
-[x] KB-071 Verify helper embedding, plist placement, and entitlements in the generated Xcode project and build settings; final Xcode bundle output remains unproved.
+[x] KB-070 Run the final local Release build; `xcodebuild` produced and validated the unsigned universal Release app bundle with `CODE_SIGNING_ALLOWED=NO`.
+[x] KB-071 Verify helper embedding, helper plist placement, feature-contract resource, entitlements, and build settings; the unsigned universal Release bundle now validates successfully.
 [!] KB-072 Verify signing and Gatekeeper only when credentials permit proof.
 [!] KB-073 Perform the safe live Espanso stop and restart test; bounded until a human-controlled session is staged.
 [x] KB-074 Perform the harmless fixture remote-target test through fake process control.

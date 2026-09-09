@@ -1,13 +1,22 @@
 # KeyBrake verification record
 
-## Baseline
+## Historical baseline
 
 - Repository: new; no source, project, Git history, build, or tests existed at the required canonical path.
 - Baseline branch: `main` before the first commit; the repository was created at the canonical path because no prior checkout existed.
 - Baseline dirty paths: all initial KeyBrake files were task-owned; generated `.build/`, `build/`, and `.codegraph/` paths are ignored.
 - Baseline build/tests: not applicable before the native project was created.
-- Agent-Cache: repository `keybrake` is not registered; operator session unavailable and operator doctor reported `Unknown repository id 'keybrake'`.
-- Connected discovery: no `SatireLord/KeyBrake` repository; no matching Drive specification; local workspace search found no other KeyBrake candidate.
+- Agent-Cache: repository `keybrake` was not registered during baseline discovery; the current repository is registered and certified in the Agent-Cache product registry.
+- Connected discovery: no `SatireLord/KeyBrake` repository was found during baseline discovery; the current private repository and pull request are recorded in the master plan.
+
+## Current private portfolio release pass
+
+- Canonical repository: `/Users/michaeltran/AntiGravity/KeyBrake`.
+- Branch: `codex/keybrake-complete-implementation`.
+- Source checkpoint before this release pass: `034dc2ffcd7e7544d8ba720f9b8027a367932a6d`.
+- Portfolio release version: `0.1.0` (build `1`); the repository remains private until release approval.
+- Agent-Cache admission: `ready / continue`; repository certification is `certified`.
+- XcodeGen resource routing: the app contract JSON, helper service plist, and helper executable are verified in the final app bundle; the source spec keeps those non-code files in the app target's `sources` entries so regeneration preserves the resource phase.
 
 ## Proof ledger
 
@@ -20,11 +29,14 @@ The entries below are updated with exact commands and actual results as implemen
 | App/helper type-check | direct module emission followed by app and helper `swiftc -typecheck` | pass |
 | Complete tests | `/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM` | pass; 13 tests, 0 failures |
 | SwiftPM app build | `/Users/michaeltran/bin/swift build --scratch-path /tmp/KeyBrakeSwiftPM --product KeyBrake` | pass; executable product compiled and linked |
-| Xcode build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake ... build` and Core retry | blocked by Xcode BuildService setup; no source diagnostic was emitted before interruption |
+| Xcode Release build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -derivedDataPath /tmp/KeyBrakeReleaseDerivedData CODE_SIGNING_ALLOWED=NO build` | pass; exit 0; universal unsigned `KeyBrake.app` bundle produced and validated at `/tmp/KeyBrakeReleaseDerivedData/Build/Products/Release/KeyBrake.app` |
+| Xcode tests | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -derivedDataPath /tmp/KeyBrakeXcodeTest CODE_SIGNING_ALLOWED=NO test` | pass; exit 0; 13 tests, 0 failures; result bundle at `/tmp/KeyBrakeXcodeTest/Logs/Test/Test-KeyBrake-2026.09.09_12-10-10--0700.xcresult` |
+| Release bundle contents | `find`, `plutil`, and `lipo` checks against `/tmp/KeyBrakeReleaseDerivedData/Build/Products/Release/KeyBrake.app` | pass; framework `Info.plist`, feature contract JSON, helper service plist, helper executable, version metadata, and universal `arm64`/`x86_64` app/helper binaries are present |
 | Runtime launch | staged SwiftPM executable in a temporary `.app`, added `CFBundleExecutable`, and launched with `open -n` | pass; process launched and exited without a crash; no persistent live app was left running |
 | Runtime UI | required Computer Use preflight and Computer Use session | not claimed; preflight passed, but Computer Use service startup failed, so no menu click or accessibility proof is asserted |
 | Network | fixture inventory and restore tests; live isolation | fixture proof passed; live mutation intentionally not run |
-| Signing | `codesign`/`spctl` | not claimed; no Developer ID signing identity or release bundle was available |
+| Signing | `codesign`/`spctl` | not claimed; the Release bundle is unsigned because local proof uses `CODE_SIGNING_ALLOWED=NO` and no Developer ID signing identity is configured |
+| Versioning | `SupportingFiles/Info.plist` | pass; `CFBundleShortVersionString` is `0.1.0` and `CFBundleVersion` is `1` |
 | Target settings | direct app type-check plus coordinator approval test | pass; built-in and custom exact-identity targets can be approved, removed, persisted, and applied to the serialized coordinator |
 
 ## Safety boundaries
@@ -33,7 +45,7 @@ No cloud CI, telemetry, remote logging, or runtime network dependency is added. 
 
 ## Evidence boundaries
 
-The SwiftPM proof validates the shared typed core and the debug app product. It does not prove Xcode archive output, Developer ID signing, SMAppService installation, privileged-helper audit-token authorization, TCC behavior, or live network isolation. Those boundaries remain visible in the master checklist and are not represented as completed runtime claims.
+The SwiftPM proof validates the shared typed core and the debug app product. The Xcode Release proof now validates an unsigned universal app bundle, its embedded framework, the feature contract resource, and the helper service resource. It does not prove archive output, Developer ID signing, SMAppService installation, privileged-helper audit-token authorization, TCC behavior, or live network isolation. Those boundaries remain visible in the master checklist and are not represented as completed runtime claims.
 
 ## Regression checksum anchors
 

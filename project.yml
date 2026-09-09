@@ -27,14 +27,14 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrakeCore
       DEFINES_MODULE: YES
+      GENERATE_INFOPLIST_FILE: YES
   KeyBrake:
     type: application
     platform: macOS
     sources:
       - path: KeyBrake
-    resources:
-      - path: Resources/KeyBrakeFeatureContract.json
       - path: KeyBrakePrivilegedHelper/org.realitygood.KeyBrake.Helper.plist
+      - path: Resources
     dependencies:
       - target: KeyBrakeCore
       - target: KeyBrakePrivilegedHelper

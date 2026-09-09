@@ -4,6 +4,10 @@ KeyBrake is a macOS menu-bar input and remote-access failsafe. It gives users a 
 
 KeyBrake is deliberately a command-driven recovery tool, not an antivirus product or a promise that every form of remote access can be eliminated. Its claims are bounded by the operations it can observe and verify.
 
+## Release status
+
+This repository remains private while KeyBrake is prepared as a portfolio release candidate. The current app version is `0.1.0` (build `1`). The local Xcode Release build is verified with signing disabled for development proof; this project does not claim Developer ID signing, notarization, privileged-helper approval, or live-host network isolation without the corresponding receipts. See [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md) for the exact evidence boundary.
+
 ## What it does
 
 The menu keeps the physical mouse as a recovery path:
