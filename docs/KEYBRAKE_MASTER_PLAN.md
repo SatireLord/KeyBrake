@@ -22,7 +22,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 - Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `ad7fa01`, with PR body updated to the final remote head after the documentation receipt
 - Release status: public source **HOLD** (private until identity and release decision); downloadable binary **BLOCKED** (unsigned local bundle only; signed helper approval and live recovery remain external)
 - Portfolio release version: `0.1.0` (build `1`), private until release approval
-- Next action: deliver the current owned source/doc lane, refresh PR #1 and PR #660 bodies, then run staged signed-host proof when a recoverable test Mac is available
+- Next action: human review of PR #1 and PR #660; if release approval, a Developer ID identity, and a recoverable test Mac become available, run staged signed-host, helper-approval, live-recovery, and mouse-only proof
 - External blockers: Agent-Cache direct enforcement is ready, while task bootstrap reports a CodeGraph query failure as `structural_owner_unresolved`; signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
 
 ## Feature inventory
