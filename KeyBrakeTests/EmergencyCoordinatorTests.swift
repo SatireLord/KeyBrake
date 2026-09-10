@@ -65,4 +65,39 @@ final class EmergencyCoordinatorTests: XCTestCase {
         let target = await coordinator.configuredTargets().first { $0.id == "anydesk" }
         XCTAssertTrue(target?.approvedByUser == true)
     }
+
+    func testStopRemoteAccessRoutesVerifiedLaunchdLabelsThroughHelper() async {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let helper = RecordingHelper()
+        let target = TargetDefinition(
+            id: "custom-agent",
+            displayName: "Custom Agent",
+            category: .remoteAccess,
+            executableURL: URL(fileURLWithPath: "/Applications/Custom Agent.app/Contents/MacOS/Custom Agent"),
+            approvedByUser: true,
+            verifiedLaunchAgentLabels: ["com.example.agent"]
+        )
+        let coordinator = EmergencyCoordinator(
+            recoveryStore: RecoveryStore(rootDirectory: root),
+            incidentStore: IncidentStore(rootDirectory: root),
+            processController: FixtureProcessController(),
+            espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []),
+            networkController: FixtureNetworkController(),
+            privacyController: PrivacyController(commandRunner: RecordingCommandRunner()),
+            helper: helper,
+            targetDefinitions: [target]
+        )
+
+        let incident = await coordinator.stopRemoteAccess()
+
+        XCTAssertEqual(helper.commands, [
+            .stopVerifiedLaunchdService(
+                domain: "gui",
+                label: "com.example.agent",
+                expectedProgramPath: "/Applications/Custom Agent.app/Contents/MacOS/Custom Agent",
+                expectedSigningRequirement: nil
+            )
+        ])
+        XCTAssertTrue(incident.steps.contains { $0.subsystem == "launchd" && $0.targetID == "custom-agent:gui/com.example.agent" && $0.outcome == .succeeded })
+    }
 }

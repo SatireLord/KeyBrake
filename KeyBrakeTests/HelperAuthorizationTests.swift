@@ -9,6 +9,16 @@ final class HelperAuthorizationTests: XCTestCase {
         XCTAssertTrue(validator.validate(.setNetworkServiceEnabled(serviceID: "service-1", serviceName: "USB Ethernet", expectedDevice: "en7", enabled: false)))
     }
 
+    func testHelperCommandCarriesLaunchdIdentityExpectations() {
+        let command = HelperCommand.stopVerifiedLaunchdService(
+            domain: "gui",
+            label: "com.example.agent",
+            expectedProgramPath: "/Applications/Agent.app/Contents/MacOS/Agent",
+            expectedSigningRequirement: "anchor apple generic"
+        )
+        XCTAssertTrue(HelperCommandValidator().validate(command))
+    }
+
     func testHelperXPCCodecRoundTripsCommandAndResult() throws {
         let command = HelperCommand.setNetworkServiceEnabled(serviceID: "wifi", serviceName: "Wi-Fi", expectedDevice: nil, enabled: false)
         let payload = try HelperXPCCodec.encode(command)

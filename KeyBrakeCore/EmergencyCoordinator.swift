@@ -8,6 +8,7 @@ public actor EmergencyCoordinator {
     private let espanso: EspansoAdapter
     private let networkController: NetworkControlling
     private let privacyController: PrivacyController
+    private let helper: HelperOperating
     private var targetDefinitions: [TargetDefinition]
     private let sharingController: SharingServiceController?
     private var latestIncident: IncidentRecord?
@@ -19,6 +20,7 @@ public actor EmergencyCoordinator {
         espanso: EspansoAdapter,
         networkController: NetworkControlling,
         privacyController: PrivacyController,
+        helper: HelperOperating = UnavailableHelper(),
         targetDefinitions: [TargetDefinition] = TargetRegistry.builtInRemoteAccess,
         sharingController: SharingServiceController? = nil,
         initialState: KeyBrakeOperationalState = .normal
@@ -29,6 +31,7 @@ public actor EmergencyCoordinator {
         self.espanso = espanso
         self.networkController = networkController
         self.privacyController = privacyController
+        self.helper = helper
         self.targetDefinitions = targetDefinitions
         self.sharingController = sharingController
         self.operationalState = initialState
@@ -50,6 +53,7 @@ public actor EmergencyCoordinator {
             espanso: EspansoAdapter(commandRunner: runner),
             networkController: SystemNetworkController(commandRunner: runner, helper: helper),
             privacyController: PrivacyController(commandRunner: runner),
+            helper: helper,
             sharingController: sharing
         )
     }
@@ -133,6 +137,7 @@ public actor EmergencyCoordinator {
                     incident.steps.append(OperationStepResult(subsystem: "remoteAccess", targetID: target.id, targetDisplayName: target.displayName, requestedState: "stopped", observedPreState: "running", observedPostState: result.outcome == .succeeded ? "stopped" : "running", operationDescription: result.detail, outcome: result.outcome))
                 }
             }
+            incident.steps.append(contentsOf: await performVerifiedLaunchdStops(for: target))
         }
         if snapshotReady {
             if let sharingController {
@@ -308,8 +313,56 @@ public actor EmergencyCoordinator {
                     steps.append(OperationStepResult(subsystem: "localAutomation", targetID: target.id, targetDisplayName: target.displayName, requestedState: "stopped", observedPreState: "running", observedPostState: result.outcome == .succeeded ? "stopped" : "running", operationDescription: result.detail, outcome: result.outcome))
                 }
             }
+            steps.append(contentsOf: await performVerifiedLaunchdStops(for: target))
         }
         return steps
+    }
+
+    private func performVerifiedLaunchdStops(for target: TargetDefinition) async -> [OperationStepResult] {
+        let labels: [(domain: String, label: String)] =
+            target.verifiedLaunchAgentLabels.sorted().map { ("gui", $0) }
+            + target.verifiedLaunchDaemonLabels.sorted().map { ("system", $0) }
+        guard !labels.isEmpty else { return [] }
+        return await withTaskGroup(of: OperationStepResult.self, returning: [OperationStepResult].self) { group in
+            for (domain, label) in labels {
+                group.addTask {
+                    let targetID = "\(target.id):\(domain)/\(label)"
+                    guard let executablePath = target.executableURL?.path, !executablePath.isEmpty else {
+                        return OperationStepResult(
+                            subsystem: "launchd",
+                            targetID: targetID,
+                            targetDisplayName: target.displayName,
+                            requestedState: "stopped",
+                            operationDescription: "Verified launchd stop skipped because the target executable path is missing",
+                            outcome: .unsupported
+                        )
+                    }
+                    let helperStep = await self.helper.perform(.stopVerifiedLaunchdService(
+                        domain: domain,
+                        label: label,
+                        expectedProgramPath: executablePath,
+                        expectedSigningRequirement: target.codeSigningDesignatedRequirement
+                    ))
+                    return OperationStepResult(
+                        subsystem: "launchd",
+                        targetID: targetID,
+                        targetDisplayName: target.displayName,
+                        requestedState: "stopped",
+                        observedPreState: helperStep.observedPreState,
+                        observedPostState: helperStep.observedPostState,
+                        operationDescription: helperStep.operationDescription,
+                        outcome: helperStep.outcome,
+                        terminationStatus: helperStep.terminationStatus,
+                        sanitizedStandardError: helperStep.sanitizedStandardError,
+                        startedAt: helperStep.startedAt,
+                        finishedAt: helperStep.finishedAt
+                    )
+                }
+            }
+            var results: [OperationStepResult] = []
+            for await result in group { results.append(result) }
+            return results.sorted { $0.targetID < $1.targetID }
+        }
     }
 
     private func conflictIncident(action: String, detail: String) async -> IncidentRecord {
