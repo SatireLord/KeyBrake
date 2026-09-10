@@ -34,6 +34,10 @@ targets:
     sources:
       - path: KeyBrake
       - path: KeyBrakePrivilegedHelper/org.realitygood.KeyBrake.Helper.plist
+        buildPhase:
+          copyFiles:
+            destination: wrapper
+            subpath: Contents/Library/LaunchDaemons
       - path: Resources
     dependencies:
       - target: KeyBrakeCore
@@ -49,6 +53,8 @@ targets:
     platform: macOS
     sources:
       - path: KeyBrakePrivilegedHelper
+        excludes:
+          - org.realitygood.KeyBrake.Helper.plist
     dependencies:
       - target: KeyBrakeCore
     settings:

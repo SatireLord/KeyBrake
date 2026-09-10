@@ -12,6 +12,13 @@ struct KeyBrakeApp: App {
             Label("KeyBrake", systemImage: model.operationalState == .normal ? "shield" : "exclamationmark.shield")
         }
         .menuBarExtraStyle(.menu)
+        .onChange(of: model.isShowingRecoveryPanel) { _, show in
+            if show {
+                Task { @MainActor in
+                    appDelegate.presentRecoveryPanel(model: model)
+                }
+            }
+        }
 
         Window("KeyBrake Settings", id: "settings") {
             SettingsView(model: model)

@@ -7,12 +7,14 @@ public struct ProcessIdentity: Codable, Sendable, Equatable {
     public let bundleIdentifier: String?
     public let executableURL: URL?
     public let effectiveUserIdentifier: UInt32
+    public let launchDate: Date?
 
-    public init(processIdentifier: Int32, bundleIdentifier: String?, executableURL: URL?, effectiveUserIdentifier: UInt32 = getuid()) {
+    public init(processIdentifier: Int32, bundleIdentifier: String?, executableURL: URL?, effectiveUserIdentifier: UInt32 = getuid(), launchDate: Date? = nil) {
         self.processIdentifier = processIdentifier
         self.bundleIdentifier = bundleIdentifier
         self.executableURL = executableURL
         self.effectiveUserIdentifier = effectiveUserIdentifier
+        self.launchDate = launchDate
     }
 }
 
@@ -45,7 +47,7 @@ public final class SystemProcessController: ProcessControlling, @unchecked Senda
             guard let bundleIdentifier = application.bundleIdentifier,
                   target.bundleIdentifier == bundleIdentifier || target.bundleIdentifier == nil else { return nil }
             guard TargetRegistry.canEnroll(target, applicationBundleIdentifier: bundleIdentifier, executableURL: application.executableURL) else { return nil }
-            return ProcessIdentity(processIdentifier: application.processIdentifier, bundleIdentifier: bundleIdentifier, executableURL: application.executableURL)
+            return ProcessIdentity(processIdentifier: application.processIdentifier, bundleIdentifier: bundleIdentifier, executableURL: application.executableURL, launchDate: application.launchDate)
         }
     }
 
@@ -53,14 +55,12 @@ public final class SystemProcessController: ProcessControlling, @unchecked Senda
         guard !TargetRegistry.protectedIdentifiers.contains(identity.bundleIdentifier ?? "") else {
             return ProcessTargetResult(targetID: identity.bundleIdentifier ?? "protected", displayName: identity.bundleIdentifier ?? "Protected process", identity: identity, outcome: .conflict, detail: "Protected process rejected")
         }
-        guard let application = NSRunningApplication(processIdentifier: identity.processIdentifier),
-              application.bundleIdentifier == identity.bundleIdentifier,
-              application.executableURL == identity.executableURL else {
+        guard let application = NSRunningApplication(processIdentifier: identity.processIdentifier), sameIdentity(application, identity: identity) else {
             return ProcessTargetResult(targetID: identity.bundleIdentifier ?? "unknown", displayName: identity.bundleIdentifier ?? "Unknown process", identity: identity, outcome: .conflict, detail: "Process identity changed before termination")
         }
         if !application.isTerminated {
             _ = application.terminate()
-            for _ in 0..<20 where !application.isTerminated { try? await Task.sleep(for: .milliseconds(50)) }
+            for _ in 0..<40 where !application.isTerminated { try? await Task.sleep(for: .milliseconds(50)) }
         }
         if application.isTerminated {
             return ProcessTargetResult(targetID: identity.bundleIdentifier ?? "unknown", displayName: identity.bundleIdentifier ?? "Process", identity: identity, outcome: .succeeded, detail: "Graceful termination verified")
@@ -68,12 +68,34 @@ public final class SystemProcessController: ProcessControlling, @unchecked Senda
         guard allowForcedTermination else {
             return ProcessTargetResult(targetID: identity.bundleIdentifier ?? "unknown", displayName: identity.bundleIdentifier ?? "Process", identity: identity, outcome: .failed, detail: "Graceful termination failed and forced termination is not approved")
         }
-        guard let current = NSRunningApplication(processIdentifier: identity.processIdentifier), current.bundleIdentifier == identity.bundleIdentifier, current.executableURL == identity.executableURL else {
+        guard let current = NSRunningApplication(processIdentifier: identity.processIdentifier), sameIdentity(current, identity: identity) else {
             return ProcessTargetResult(targetID: identity.bundleIdentifier ?? "unknown", displayName: identity.bundleIdentifier ?? "Process", identity: identity, outcome: .conflict, detail: "PID identity changed before escalation")
         }
         _ = kill(identity.processIdentifier, SIGKILL)
-        try? await Task.sleep(for: .milliseconds(100))
+        for _ in 0..<20 where NSRunningApplication(processIdentifier: identity.processIdentifier) != nil {
+            try? await Task.sleep(for: .milliseconds(50))
+        }
         let outcome: OperationOutcome = NSRunningApplication(processIdentifier: identity.processIdentifier) == nil ? .succeeded : .failed
+        if outcome == .succeeded, let replacement = respawnedProcess(for: identity) {
+            return ProcessTargetResult(targetID: identity.bundleIdentifier ?? "unknown", displayName: identity.bundleIdentifier ?? "Process", identity: replacement, outcome: .conflict, detail: "Target respawned as PID \(replacement.processIdentifier)")
+        }
         return ProcessTargetResult(targetID: identity.bundleIdentifier ?? "unknown", displayName: identity.bundleIdentifier ?? "Process", identity: identity, outcome: outcome, detail: outcome == .succeeded ? "Forced termination verified" : "Process remains active")
+    }
+
+    private func sameIdentity(_ application: NSRunningApplication, identity: ProcessIdentity) -> Bool {
+        guard application.bundleIdentifier == identity.bundleIdentifier,
+              application.executableURL == identity.executableURL else { return false }
+        guard let expectedLaunchDate = identity.launchDate else { return true }
+        return application.launchDate == expectedLaunchDate
+    }
+
+    private func respawnedProcess(for identity: ProcessIdentity) -> ProcessIdentity? {
+        for application in NSWorkspace.shared.runningApplications {
+            guard application.processIdentifier != identity.processIdentifier,
+                  application.bundleIdentifier == identity.bundleIdentifier,
+                  application.executableURL == identity.executableURL else { continue }
+            return ProcessIdentity(processIdentifier: application.processIdentifier, bundleIdentifier: application.bundleIdentifier, executableURL: application.executableURL, launchDate: application.launchDate)
+        }
+        return nil
     }
 }

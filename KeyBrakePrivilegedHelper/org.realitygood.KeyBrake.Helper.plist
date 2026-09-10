@@ -9,8 +9,8 @@
 		<key>org.realitygood.KeyBrake.Helper</key>
 		<true/>
 	</dict>
-	<key>RunAtLoad</key>
-	<false/>
+	<key>BundleProgram</key>
+	<string>Contents/Resources/KeyBrakePrivilegedHelper</string>
 	<key>KeepAlive</key>
 	<false/>
 </dict>

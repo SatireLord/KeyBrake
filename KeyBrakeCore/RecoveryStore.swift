@@ -54,9 +54,29 @@ public final class RecoveryStore: @unchecked Sendable {
             let temporary = rootDirectory.appendingPathComponent(".\(destination.lastPathComponent).\(UUID().uuidString).tmp")
             try data.write(to: temporary, options: .atomic)
             try fileManager.setAttributes([.posixPermissions: 0o600], ofItemAtPath: temporary.path)
-            if fileManager.fileExists(atPath: destination.path) { try fileManager.removeItem(at: destination) }
-            try fileManager.moveItem(at: temporary, to: destination)
-            try fileManager.setAttributes([.posixPermissions: 0o600], ofItemAtPath: destination.path)
+            let backup = rootDirectory.appendingPathComponent("\(destination.lastPathComponent).bak")
+            if fileManager.fileExists(atPath: destination.path) {
+                _ = try? fileManager.removeItem(at: backup)
+                try fileManager.moveItem(at: destination, to: backup)
+            }
+            do {
+                try fileManager.moveItem(at: temporary, to: destination)
+                try fileManager.setAttributes([.posixPermissions: 0o600], ofItemAtPath: destination.path)
+                guard try Data(contentsOf: destination) == data else {
+                    throw KeyBrakeStorageError.writeFailed("Recovery snapshot read-after-write verification failed")
+                }
+                try? fileManager.removeItem(at: backup)
+            } catch {
+                if fileManager.fileExists(atPath: backup.path) {
+                    if fileManager.fileExists(atPath: destination.path) {
+                        try? fileManager.removeItem(at: destination)
+                    }
+                    try? fileManager.moveItem(at: backup, to: destination)
+                }
+                throw KeyBrakeStorageError.writeFailed(error.localizedDescription)
+            }
+        } catch let error as KeyBrakeStorageError {
+            throw error
         } catch {
             throw KeyBrakeStorageError.writeFailed(error.localizedDescription)
         }

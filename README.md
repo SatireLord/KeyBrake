@@ -6,14 +6,19 @@ KeyBrake is deliberately a command-driven recovery tool, not an antivirus produc
 
 ## Release status
 
-This repository remains private while KeyBrake is prepared as a portfolio release candidate. The current app version is `0.1.0` (build `1`). The local Xcode Release build is verified with signing disabled for development proof; this project does not claim Developer ID signing, notarization, privileged-helper approval, or live-host network isolation without the corresponding receipts. See [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md) for the exact evidence boundary.
+| Surface | Status |
+| --- | --- |
+| Public source | **HOLD** — truth-and-identity pass required before public visibility |
+| Downloadable binary | **BLOCKED** — unsigned local bundle only; signing, helper approval, and live verification remain external gates |
+
+This repository remains private while KeyBrake is prepared as an **experimental systems prototype**. The current app version is `0.1.0` (build `1`). The local Xcode build verifies the app, embedded helper executable, LaunchDaemons plist, and feature contract with signing disabled for development proof; this project does not claim Developer ID signing, notarization, privileged-helper approval, or live-host network isolation without the corresponding receipts. See [`docs/KEYBRAKE_CAPABILITY_MATRIX.md`](docs/KEYBRAKE_CAPABILITY_MATRIX.md) and [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md) for exact capability classifications and evidence boundaries.
 
 ## What it does
 
 The menu keeps the physical mouse as a recovery path:
 
 - **Stop Skynet Locally** disables and stops Espanso plus other explicitly approved local automation targets. It does not disable networking or reset privacy permissions.
-- **Stop Remote Access** records a recovery snapshot before mutations, stops approved automation and remote-control targets, resets only explicitly selected TCC-managed privacy decisions, disables supported sharing controls, disconnects selected VPNs, isolates selected non-loopback network services, verifies the result, and opens a persistent recovery panel.
+- **Stop Remote Access** records a recovery snapshot before mutations, stops approved automation and remote-control targets, disables supported sharing controls according to the emergency profile, disconnects selected VPNs, isolates selected non-loopback network services, verifies the result, and opens a persistent recovery panel. Privacy resets are a separate explicit action via **Revoke App Access…**, not part of Stop Remote Access.
 - **Revoke App Access…** stops one selected application and resets selected TCC-managed privacy decisions for that application. It never edits the TCC database directly and never performs a global reset without a bundle identifier.
 - **Restore Human Control** exposes independent mouse-driven actions for restoring network state, explicitly restoring sharing services, restarting Espanso, opening Privacy & Security settings, and reviewing the incident record.
 - **Restart Espanso** is separate from network recovery and never changes Espanso configuration, packages, matches, service registration, or privacy permissions.

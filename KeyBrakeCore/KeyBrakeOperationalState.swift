@@ -115,6 +115,56 @@ public struct RecoverySelection: Codable, Sendable, Equatable {
     }
 }
 
+public struct EmergencyIsolationPolicy: Codable, Sendable, Equatable {
+    public var disableWiFi: Bool
+    public var disableEthernet: Bool
+    public var disconnectVPN: Bool
+    public var disableRemoteLogin: Bool
+    public var disableRemoteAppleEvents: Bool
+
+    public init(
+        disableWiFi: Bool = true,
+        disableEthernet: Bool = true,
+        disconnectVPN: Bool = true,
+        disableRemoteLogin: Bool = true,
+        disableRemoteAppleEvents: Bool = true
+    ) {
+        self.disableWiFi = disableWiFi
+        self.disableEthernet = disableEthernet
+        self.disconnectVPN = disconnectVPN
+        self.disableRemoteLogin = disableRemoteLogin
+        self.disableRemoteAppleEvents = disableRemoteAppleEvents
+    }
+
+    public static let standard = EmergencyIsolationPolicy()
+
+    public func permits(_ kind: NetworkServiceKind) -> Bool {
+        switch kind {
+        case .wifi:
+            return disableWiFi
+        case .ethernet, .usbEthernet, .thunderbolt:
+            return disableEthernet
+        case .vpn:
+            return disconnectVPN
+        case .loopback:
+            return false
+        case .bridge, .other:
+            return true
+        }
+    }
+
+    public func permitsSharing(identifier: String) -> Bool {
+        switch identifier {
+        case "remote-login":
+            return disableRemoteLogin
+        case "remote-apple-events":
+            return disableRemoteAppleEvents
+        default:
+            return false
+        }
+    }
+}
+
 public struct TargetDefinition: Identifiable, Codable, Sendable, Equatable {
     public enum Category: String, Codable, Sendable {
         case localAutomation

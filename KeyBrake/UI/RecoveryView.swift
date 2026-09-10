@@ -5,7 +5,6 @@ struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
-    @State private var restoreSharing = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -16,13 +15,15 @@ struct RecoveryView: View {
             Text("KeyBrake can restore network and sharing state that KeyBrake changed. macOS requires you to grant reset privacy permissions again; KeyBrake cannot silently restore those grants.")
                 .foregroundStyle(.secondary)
             Divider()
-            Button("Restore Network") { model.restoreHumanControl() }
+            Button("Restore Network") { model.restoreNetworkOnly() }
                 .buttonStyle(.borderedProminent)
+                .disabled(model.isBusy)
             Button("Restore Previously Enabled Sharing Services") {
-                restoreSharing = true
-                model.restoreHumanControl(restoreSharing: true)
+                model.restoreSharingOnly()
             }
+            .disabled(model.isBusy)
             Button("Restart Espanso") { model.restartEspanso() }
+                .disabled(model.isBusy)
             Button("Open Privacy & Security Settings") { model.openPrivacySettings() }
             Button("Open Incident Log") { openWindow(id: "incidents") }
             Divider()
@@ -34,9 +35,6 @@ struct RecoveryView: View {
         }
         .padding(24)
         .frame(width: 520, height: 470)
-        .onChange(of: model.operationalState) { _, state in
-            if state == .normal { restoreSharing = false }
-        }
     }
 
     private var stateText: String {

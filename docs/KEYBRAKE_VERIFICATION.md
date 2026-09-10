@@ -11,12 +11,14 @@
 
 ## Current private portfolio release pass
 
-- Canonical repository: `/Users/michaeltran/AntiGravity/KeyBrake`.
-- Branch: `codex/keybrake-complete-implementation`.
-- Source checkpoint before this release pass: `034dc2ffcd7e7544d8ba720f9b8027a367932a6d`.
+- Canonical repository: KeyBrake git checkout on branch `codex/keybrake-complete-implementation`.
+- Git HEAD at this audit checkpoint: `f1a421e`; the current implementation and documentation lane remains dirty until its scoped delivery commit.
 - Portfolio release version: `0.1.0` (build `1`); the repository remains private until release approval.
-- Agent-Cache admission: `ready / continue`; repository certification is `certified`.
-- XcodeGen resource routing: the app contract JSON, helper service plist, and helper executable are verified in the final app bundle; the source spec keeps those non-code files in the app target's `sources` entries so regeneration preserves the resource phase.
+- Release judgments: public source **HOLD**; downloadable binary **BLOCKED** (see `docs/KEYBRAKE_CAPABILITY_MATRIX.md`).
+- Agent-Cache direct enforcement: **ready / continue**, `cache_ready=true`, `manual_review_required=false`, and `next_action=continue_with_live_repo_truth` for the exact KeyBrake path and prompt. The bootstrap CodeGraph interlock is **degraded** with `reason=structural_owner_unresolved` because the current CodeGraph query failed; this is a task-orientation hold, not a Cursor source-mutation denial.
+- Cursor admission: the exact pre-tool request for `/Users/michaeltran/AntiGravity/KeyBrake/KeyBrakeCore/HelperClient.swift` returned `permission=allow` with `mode=degraded_structural` and an exact confirmed owner. Source mutation remains fail-closed outside the consumed file envelope.
+- Installed Agent-Cache runtime: `/Users/michaeltran/.codex/plugins/runtime/agent-cache-kernel/slots/0.2.4+g0b181119`, deployment `0b181119`, runtime generation `2c2d19a11199c73ac617bb2861599e6baae864df1b0adab1eddd1547383a5140`; the direct Cursor hook uses the checkout `.venv/bin/python` and `scripts/backseat_check_host_hook.py`.
+- XcodeGen resource routing: the app contract JSON, helper service plist, and helper executable are verified in the final app bundle at `/tmp/KeyBrakeXcodeBuild/Build/Products/Debug/KeyBrake.app`; signed installation and live SMAppService approval remain unverified.
 
 ## Proof ledger
 
@@ -27,17 +29,18 @@ The entries below are updated with exact commands and actual results as implemen
 | Foundation | `/opt/homebrew/bin/xcodegen generate`; `xcodebuild -list`; `xcodebuild -showBuildSettings` | pass; native targets, schemes, bundle identifier, entitlements, helper plist, and feature-contract resource are present |
 | Core type-check | direct `xcrun swiftc -typecheck -parse-as-library` over `KeyBrakeCore/*.swift` | pass |
 | App/helper type-check | direct module emission followed by app and helper `swiftc -typecheck` | pass |
-| Complete tests | `/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM` | pass; 13 tests, 0 failures |
+| Complete tests | `/Users/michaeltran/.codex/hooks/run_test_hud_detached.py -- /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM` | pass; 27 tests, 0 failures; HUD receipt `/tmp/codex-test-hud/1789043733-local-test.summary.txt`; log hash `d3a08998f53e7e74b02ecbcfa8bd51d1b3c3146fd07a43056a34fb9210eded1b` |
 | SwiftPM app build | `/Users/michaeltran/bin/swift build --scratch-path /tmp/KeyBrakeSwiftPM --product KeyBrake` | pass; executable product compiled and linked |
-| Xcode Release build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -derivedDataPath /tmp/KeyBrakeReleaseDerivedData CODE_SIGNING_ALLOWED=NO build` | pass; exit 0; universal unsigned `KeyBrake.app` bundle produced and validated at `/tmp/KeyBrakeReleaseDerivedData/Build/Products/Release/KeyBrake.app` |
-| Xcode tests | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -derivedDataPath /tmp/KeyBrakeXcodeTest CODE_SIGNING_ALLOWED=NO test` | pass; exit 0; 13 tests, 0 failures; result bundle at `/tmp/KeyBrakeXcodeTest/Logs/Test/Test-KeyBrake-2026.09.09_12-10-10--0700.xcresult` |
-| Release bundle contents | `find`, `plutil`, and `lipo` checks against `/tmp/KeyBrakeReleaseDerivedData/Build/Products/Release/KeyBrake.app` | pass; framework `Info.plist`, feature contract JSON, helper service plist, helper executable, version metadata, and universal `arm64`/`x86_64` app/helper binaries are present |
+| Xcode Release build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -derivedDataPath /tmp/KeyBrakeReleaseDerivedData CODE_SIGNING_ALLOWED=NO build` | pass; exit 0; HUD receipt `/tmp/codex-test-hud/1789043834-local-test.summary.txt`; log hash `7a2896c608fcac96ff97be406721a72fb2aa8f4c367681e8b80dc0bad84dd492`; universal unsigned app/helper bundle produced |
+| Xcode tests | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -derivedDataPath /tmp/KeyBrakeXcodeTest CODE_SIGNING_ALLOWED=NO test` | pass; exit 0; 27 tests, 0 failures; HUD receipt `/tmp/codex-test-hud/1789043766-local-test.summary.txt`; log hash `65ffd844471ff8e3bf17624600eb3da2a4c78890d1ffeafccdcf53ffc083ca93` |
+| App/helper bundle contents | `find`, `plutil`, `lipo`, and Mach-O inspection against `/tmp/KeyBrakeReleaseDerivedData/Build/Products/Release/KeyBrake.app` | pass; universal app and helper binaries, embedded `KeyBrakePrivilegedHelper`, `Contents/Library/LaunchDaemons/org.realitygood.KeyBrake.Helper.plist`, framework, feature contract, and bundle metadata are present |
 | Runtime launch | staged SwiftPM executable in a temporary `.app`, added `CFBundleExecutable`, and launched with `open -n` | pass; process launched and exited without a crash; no persistent live app was left running |
 | Runtime UI | required Computer Use preflight and Computer Use session | not claimed; preflight passed, but Computer Use service startup failed, so no menu click or accessibility proof is asserted |
+| Open-source boundary | `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, capability matrix, tracked-path scan | pass for repository hygiene; MIT license and policy files exist, tracked public-source paths contain no private `/Users/michaeltran` paths, and no public/tagged release is claimed |
 | Network | fixture inventory and restore tests; live isolation | fixture proof passed; live mutation intentionally not run |
 | Signing | `codesign`/`spctl` | not claimed; the Release bundle is unsigned because local proof uses `CODE_SIGNING_ALLOWED=NO` and no Developer ID signing identity is configured |
 | Versioning | `SupportingFiles/Info.plist` | pass; `CFBundleShortVersionString` is `0.1.0` and `CFBundleVersion` is `1` |
-| Target settings | direct app type-check plus coordinator approval test | pass; built-in and custom exact-identity targets can be approved, removed, persisted, and applied to the serialized coordinator |
+| Target settings and recovery UI | focused source review plus local compile/test | pass for persisted policy, helper status, automatic recovery presentation, independent network/sharing actions, and busy-state guards; live mouse proof is not claimed |
 
 ## Safety boundaries
 
@@ -45,7 +48,7 @@ No cloud CI, telemetry, remote logging, or runtime network dependency is added. 
 
 ## Evidence boundaries
 
-The SwiftPM proof validates the shared typed core and the debug app product. The Xcode Release proof now validates an unsigned universal app bundle, its embedded framework, the feature contract resource, and the helper service resource. It does not prove archive output, Developer ID signing, SMAppService installation, privileged-helper audit-token authorization, TCC behavior, or live network isolation. Those boundaries remain visible in the master checklist and are not represented as completed runtime claims.
+The SwiftPM proof validates the shared typed core and the debug app product. The Xcode proof validates an unsigned app bundle, its embedded helper executable, the LaunchDaemons plist, the feature contract resource, and the helper target. It does not prove archive output, Developer ID signing, SMAppService installation, live privileged-helper authorization, TCC behavior, live network isolation, or mouse-only interaction. Those boundaries remain visible in the master checklist and are not represented as completed runtime claims.
 
 ## Regression checksum anchors
 
@@ -54,11 +57,15 @@ These SHA-256 values anchor the safety contract and the highest-risk command sea
 ```text
 f1bc5ca2d725220ac2173daefb2df45fbb80bca1f72bd4bbad44b1815222970f  Resources/KeyBrakeFeatureContract.json
 50d16a40121c6a87ccff29ec5c9a16aaf29029a023a23dce29f31d39c2c2c09f  docs/KEYBRAKE_RECOVERY_CONTRACT.md
-b29b538b5e6b63ead54edcfffd3a91a2ee8a9afed36faff0d41828a6f3de817e  KeyBrakeCore/HelperClient.swift
-e5ae969421494ed6968344d09e615440f5bc0de0f56c4e1542b7adbcf5007fc4  KeyBrakePrivilegedHelper/HelperService.swift
-c25fe76f1d478439d317f6da249269944ba0f787732ec317c36e04a2edca020f  KeyBrakeCore/EmergencyCoordinator.swift
-1f92498e254abc8ad2db58104958e66ab23e176e781aa7f00c3b9dbc95a58239  KeyBrakeCore/NetworkController.swift
-5c63cf6afc4c992a0e96c503aeed6a46a90d98b177db8d120bfe15eb2393ecbd  KeyBrakeCore/SharingServiceController.swift
-528fcb2e5a29b55b3d6720d36efbff90e981df81db5e2ba705a741f7ef01ce22  KeyBrake/App/KeyBrakeViewModel.swift
-3a53b4fcf895d4a41ac237fbf2090cc4ac31c34c7d12aeddb4134640398b0599  KeyBrake/UI/SettingsView.swift
+de7ebf482070999d9de73c3c47dc03062d3a83d2429e5e24ec22ae89c1d08b01  KeyBrakeCore/HelperClient.swift
+2b95fc10af1db7db28a324aac4538b046d5d7a5a8d1e1d46b764a7349dd71170  KeyBrakePrivilegedHelper/HelperService.swift
+def72a0acbcd6d1ecc1e03435c605902dc14c0d510c31bc52a83cfc3480a091d  KeyBrakeCore/EmergencyCoordinator.swift
+c595a7172f250472c81a7788cdb13cd8f13f2493a79ed476c8ef1e9b3f83b323  KeyBrakeCore/NetworkController.swift
+a228776765d99a6d93ab1a94100e61e1bdadd31290b71d2f2791c50002f3f847  KeyBrakeCore/SharingServiceController.swift
+87645a5cbb3400731c5408772c1259858f2991944ac22c3a08bc3d37ddc7cc8b  KeyBrake/App/KeyBrakeViewModel.swift
+8470d7cdce009f832636aa04c25f3f739d698d94178ba78c0510f9d13c963fd5  KeyBrake/UI/SettingsView.swift
+7b9c1a69e2d0e72690395b70cf97a6f24d6adef24f175930a462b96eb8ef29f5  KeyBrake/UI/RecoveryView.swift
+d4f9497882d17ce8cfe40989490b6e04a2004462dcb0160b58567477473577b6  KeyBrakeCore/ProcessController.swift
+cfe335cd46f597a8cf9211d4ab888c94911659e38502ca0b86deb16df082b8e1  KeyBrakeCore/CommandRunner.swift
+40a6cd6e831db57a11a292a573ce4f85918446791a8260856e5d1c10e52d389e  KeyBrakeCore/RecoveryStore.swift
 ```

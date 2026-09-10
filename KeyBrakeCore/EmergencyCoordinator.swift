@@ -36,18 +36,19 @@ public actor EmergencyCoordinator {
 
     public static func live() -> EmergencyCoordinator {
         let runner = ProcessCommandRunner()
+        let helper = HelperXPCClient()
         let recoveryStore = RecoveryStore()
         let incidentStore = IncidentStore()
         let sharing = SharingServiceController(adapters: [
-            SystemSharingServiceAdapter(identifier: "remote-login", displayName: "Remote Login", commandRunner: runner, arguments: ["-getremotelogin"]),
-            SystemSharingServiceAdapter(identifier: "remote-apple-events", displayName: "Remote Apple Events", commandRunner: runner, arguments: ["-getremoteappleevents"])
+            SystemSharingServiceAdapter(identifier: "remote-login", displayName: "Remote Login", commandRunner: runner, helper: helper, getterArguments: ["-getremotelogin"], enableArguments: ["-setremotelogin", "on"], disableArguments: ["-setremotelogin", "off"]),
+            SystemSharingServiceAdapter(identifier: "remote-apple-events", displayName: "Remote Apple Events", commandRunner: runner, helper: helper, getterArguments: ["-getremoteappleevents"], enableArguments: ["-setremoteappleevents", "on"], disableArguments: ["-setremoteappleevents", "off"])
         ])
         return EmergencyCoordinator(
             recoveryStore: recoveryStore,
             incidentStore: incidentStore,
             processController: SystemProcessController(),
             espanso: EspansoAdapter(commandRunner: runner),
-            networkController: SystemNetworkController(commandRunner: runner),
+            networkController: SystemNetworkController(commandRunner: runner, helper: helper),
             privacyController: PrivacyController(commandRunner: runner),
             sharingController: sharing
         )
@@ -56,6 +57,7 @@ public actor EmergencyCoordinator {
     public func state() -> KeyBrakeOperationalState { operationalState }
     public func latest() -> IncidentRecord? { latestIncident }
     public func configuredTargets() -> [TargetDefinition] { targetDefinitions }
+    public func recoverySnapshot() -> RecoverySnapshot? { try? recoveryStore.load() }
 
     public func replaceTargetDefinitions(_ definitions: [TargetDefinition]) {
         targetDefinitions = definitions.filter { definition in
@@ -97,23 +99,28 @@ public actor EmergencyCoordinator {
         return incident
     }
 
-    public func stopRemoteAccess() async -> IncidentRecord {
+    public func stopRemoteAccess(policy: EmergencyIsolationPolicy = .standard) async -> IncidentRecord {
         guard operationalState == .normal || operationalState == .localAutomationStopped else {
             return await conflictIncident(action: "Stop Remote Access", detail: "Isolation is not legal from \(operationalState.rawValue)")
         }
         let original = operationalState
         operationalState = .isolating
         var incident = IncidentRecord(initiatingAction: "Stop Remote Access", originalState: original)
-        let networkChanges = await networkController.captureSnapshot()
-        let sharingChanges = await sharingController?.captureChanges() ?? []
-        let snapshot = RecoverySnapshot(incidentID: incident.id, originalOperationalState: original, networkChanges: networkChanges, vpnConnections: networkChanges.filter(\.isVPN), sharingChanges: sharingChanges)
+        let networkChanges = (await networkController.captureSnapshot()).filter { change in
+            guard let kind = NetworkServiceKind(rawValue: change.kind) else { return true }
+            return policy.permits(kind)
+        }
+        let sharingChanges = (await sharingController?.captureChanges() ?? []).filter {
+            policy.permitsSharing(identifier: $0.id)
+        }
+        var snapshot = RecoverySnapshot(incidentID: incident.id, originalOperationalState: original, networkChanges: networkChanges, vpnConnections: networkChanges.filter(\.isVPN), sharingChanges: sharingChanges)
         do {
             try recoveryStore.save(snapshot)
             incident.steps.append(OperationStepResult(subsystem: "recovery", targetID: "CurrentRecovery.json", targetDisplayName: "Recovery snapshot", requestedState: "persisted", observedPostState: "verified", operationDescription: "Atomic recovery snapshot persisted before system mutation", outcome: .succeeded))
         } catch {
             incident.steps.append(OperationStepResult(subsystem: "recovery", targetID: "CurrentRecovery.json", targetDisplayName: "Recovery snapshot", requestedState: "persisted", operationDescription: "Recovery snapshot could not be written; reversible system mutation skipped", outcome: .failed, sanitizedStandardError: error.localizedDescription))
         }
-        let snapshotReady = incident.steps.last?.outcome == .succeeded
+        var snapshotReady = incident.steps.last?.outcome == .succeeded
 
         incident.steps.append(contentsOf: await performLocalStopSteps())
         for target in targetDefinitions where target.category == .remoteAccess && target.approvedByUser && target.enabledForEmergencyStop {
@@ -129,14 +136,33 @@ public actor EmergencyCoordinator {
         }
         if snapshotReady {
             if let sharingController {
-                let changes = await sharingController.captureChanges()
-                for change in changes where change.originalEnabled && change.supported {
+                var sharingSteps: [OperationStepResult] = []
+                for change in snapshot.sharingChanges where change.originalEnabled && change.supported {
                     if let adapter = sharingController.adapters.first(where: { $0.identifier == change.id }) {
-                        incident.steps.append(await adapter.disable(expectedState: SharingServiceState(enabled: change.originalEnabled, supported: change.supported)))
+                        let step = await adapter.disable(expectedState: SharingServiceState(enabled: change.originalEnabled, supported: change.supported))
+                        sharingSteps.append(step)
+                        incident.steps.append(step)
                     }
                 }
+                applyIsolationResults(sharingSteps, to: &snapshot)
+                do {
+                    try recoveryStore.save(snapshot)
+                } catch {
+                    snapshotReady = false
+                    incident.steps.append(OperationStepResult(subsystem: "recovery", targetID: "CurrentRecovery.json", targetDisplayName: "Recovery snapshot", requestedState: "applied state persisted", operationDescription: "Sharing isolation completed but its applied state could not be journaled", outcome: .failed, sanitizedStandardError: error.localizedDescription))
+                }
             }
-            incident.steps.append(contentsOf: await networkController.isolate(networkChanges))
+            if snapshotReady {
+                let networkSteps = await networkController.isolate(networkChanges)
+                incident.steps.append(contentsOf: networkSteps)
+                applyIsolationResults(networkSteps, to: &snapshot)
+                do {
+                    try recoveryStore.save(snapshot)
+                } catch {
+                    snapshotReady = false
+                    incident.steps.append(OperationStepResult(subsystem: "recovery", targetID: "CurrentRecovery.json", targetDisplayName: "Recovery snapshot", requestedState: "applied state persisted", operationDescription: "Network isolation completed but its applied state could not be journaled", outcome: .failed, sanitizedStandardError: error.localizedDescription))
+                }
+            }
         }
         let failures = incident.steps.filter { $0.outcome == .failed || $0.outcome == .conflict }
         operationalState = failures.isEmpty && snapshotReady ? .isolated : .partiallyIsolated
@@ -172,9 +198,10 @@ public actor EmergencyCoordinator {
                 incident.steps.append(contentsOf: await sharingController.restore(snapshot.sharingChanges, selectedIDs: selection.sharingServiceIDs))
             }
             if selection.restartEspanso { incident.steps.append(await espanso.start()) }
+            applyRestorationResults(incident.steps, to: &snapshot)
             snapshot.completedSteps.append(contentsOf: incident.steps.filter { $0.outcome == .succeeded || $0.outcome == .alreadyInDesiredState || $0.outcome == .skipped })
             snapshot.failedSteps.append(contentsOf: incident.steps.filter { $0.outcome == .failed || $0.outcome == .conflict || $0.outcome == .unsupported })
-            snapshot.unresolvedSteps = incident.steps.filter { $0.outcome == .failed || $0.outcome == .conflict || $0.outcome == .unsupported }
+            snapshot.unresolvedSteps = unresolvedRecoverySteps(in: snapshot, latestSteps: incident.steps)
             snapshot.updatedAt = Date()
             if snapshot.unresolvedSteps.isEmpty {
                 try recoveryStore.clear()
@@ -195,13 +222,83 @@ public actor EmergencyCoordinator {
         return incident
     }
 
+    private func unresolvedRecoverySteps(in snapshot: RecoverySnapshot, latestSteps: [OperationStepResult]) -> [OperationStepResult] {
+        var unresolved = latestSteps.filter { $0.outcome == .failed || $0.outcome == .conflict || $0.outcome == .unsupported }
+        let restoredNetworkIDs = Set(latestSteps.filter { $0.subsystem == "network" && ($0.outcome == .succeeded || $0.outcome == .alreadyInDesiredState) }.map(\.targetID))
+        let restoredSharingIDs = Set(latestSteps.filter { $0.subsystem == "sharing" && ($0.outcome == .succeeded || $0.outcome == .alreadyInDesiredState) }.map(\.targetID))
+        for change in snapshot.networkChanges where change.originalEnabled && !restoredNetworkIDs.contains(change.id) {
+            unresolved.append(OperationStepResult(subsystem: "network", targetID: change.id, targetDisplayName: change.displayName, requestedState: "pending restore", operationDescription: "Network service remains in the applied isolation state", outcome: .failed))
+        }
+        for change in snapshot.sharingChanges where change.originalEnabled && change.supported && !restoredSharingIDs.contains(change.id) {
+            unresolved.append(OperationStepResult(subsystem: "sharing", targetID: change.id, targetDisplayName: change.displayName, requestedState: "pending restore", operationDescription: "Sharing service remains in the applied isolation state", outcome: .failed))
+        }
+        return unresolved
+    }
+
+    private func applyIsolationResults(_ steps: [OperationStepResult], to snapshot: inout RecoverySnapshot) {
+        for step in steps where step.subsystem == "network" {
+            guard let index = snapshot.networkChanges.firstIndex(where: { $0.id == step.targetID }) else { continue }
+            switch step.outcome {
+            case .succeeded, .alreadyInDesiredState, .skipped:
+                snapshot.networkChanges[index].appliedEnabled = false
+                snapshot.networkChanges[index].currentEnabled = false
+            default:
+                snapshot.networkChanges[index].currentEnabled = nil
+            }
+        }
+        for step in steps where step.subsystem == "sharing" {
+            guard let index = snapshot.sharingChanges.firstIndex(where: { $0.id == step.targetID }) else { continue }
+            switch step.outcome {
+            case .succeeded, .alreadyInDesiredState, .skipped:
+                snapshot.sharingChanges[index].appliedEnabled = false
+                snapshot.sharingChanges[index].currentEnabled = false
+            default:
+                snapshot.sharingChanges[index].currentEnabled = nil
+            }
+        }
+        snapshot.vpnConnections = snapshot.networkChanges.filter(\.isVPN)
+        snapshot.updatedAt = Date()
+    }
+
+    private func applyRestorationResults(_ steps: [OperationStepResult], to snapshot: inout RecoverySnapshot) {
+        for step in steps where step.subsystem == "network" {
+            guard let index = snapshot.networkChanges.firstIndex(where: { $0.id == step.targetID }) else { continue }
+            switch step.outcome {
+            case .skipped where snapshot.networkChanges[index].isVPN:
+                snapshot.networkChanges[index].currentEnabled = false
+                snapshot.networkChanges[index].appliedEnabled = false
+            case .succeeded, .alreadyInDesiredState, .skipped:
+                snapshot.networkChanges[index].currentEnabled = snapshot.networkChanges[index].originalEnabled
+                snapshot.networkChanges[index].appliedEnabled = snapshot.networkChanges[index].originalEnabled
+            case .conflict:
+                snapshot.networkChanges[index].currentEnabled = step.observedPostState == "enabled" ? true : false
+            default:
+                break
+            }
+        }
+        for step in steps where step.subsystem == "sharing" {
+            guard let index = snapshot.sharingChanges.firstIndex(where: { $0.id == step.targetID }) else { continue }
+            switch step.outcome {
+            case .succeeded, .alreadyInDesiredState, .skipped:
+                snapshot.sharingChanges[index].currentEnabled = snapshot.sharingChanges[index].originalEnabled
+                snapshot.sharingChanges[index].appliedEnabled = snapshot.sharingChanges[index].originalEnabled
+            case .conflict:
+                snapshot.sharingChanges[index].currentEnabled = step.observedPostState == "enabled" ? true : false
+            default:
+                break
+            }
+        }
+        snapshot.vpnConnections = snapshot.networkChanges.filter(\.isVPN)
+        snapshot.updatedAt = Date()
+    }
+
     public func restartEspanso() async -> OperationStepResult {
         await espanso.restart()
     }
 
     private func performLocalStopSteps() async -> [OperationStepResult] {
         var steps = await espanso.stop()
-        for target in TargetRegistry.builtInLocalAutomation where target.id != "espanso" && target.enabledForEmergencyStop {
+        for target in targetDefinitions where target.category == .localAutomation && target.enabledForEmergencyStop {
             let matches = processController.matchingProcesses(for: target)
             if matches.isEmpty {
                 steps.append(OperationStepResult(subsystem: "localAutomation", targetID: target.id, targetDisplayName: target.displayName, requestedState: "stopped", operationDescription: "Target not running", outcome: .alreadyInDesiredState))

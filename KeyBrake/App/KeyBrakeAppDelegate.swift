@@ -7,4 +7,9 @@ final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         recoveryPanelController = RecoveryPanelController()
     }
+
+    @MainActor
+    func presentRecoveryPanel(model: KeyBrakeViewModel) {
+        recoveryPanelController?.show(model: model)
+    }
 }

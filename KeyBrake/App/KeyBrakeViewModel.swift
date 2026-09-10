@@ -13,6 +13,9 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published private(set) var configuredTargets: [TargetDefinition]
     @Published private(set) var launchAtLoginEnabled = false
     @Published private(set) var launchAtLoginError: String?
+    @Published private(set) var privilegedHelperStatus = "Not registered"
+    @Published private(set) var privilegedHelperError: String?
+    @Published var isolationPolicy: EmergencyIsolationPolicy
     @Published var isShowingRecoveryPanel = false
     @Published var isShowingIncidentLog = false
     @Published var isShowingSettings = false
@@ -21,12 +24,15 @@ final class KeyBrakeViewModel: ObservableObject {
     let incidentStore: IncidentStore
 
     private static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
+    private static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
 
     init(coordinator: EmergencyCoordinator = .live(), incidentStore: IncidentStore = IncidentStore()) {
         self.coordinator = coordinator
         self.incidentStore = incidentStore
         self.configuredTargets = Self.loadConfiguredTargets()
+        self.isolationPolicy = Self.loadIsolationPolicy()
         self.launchAtLoginEnabled = Self.readLaunchAtLoginStatus()
+        self.privilegedHelperStatus = Self.readPrivilegedHelperStatus()
         Task {
             await coordinator.replaceTargetDefinitions(self.configuredTargets)
             await refresh()
@@ -46,10 +52,14 @@ final class KeyBrakeViewModel: ObservableObject {
         operationalState = await coordinator.state()
         latestIncident = await coordinator.latest()
         incidents = (try? incidentStore.list()) ?? []
-        if unresolvedRecovery != nil { isShowingRecoveryPanel = true }
+        if unresolvedRecovery != nil || [.isolated, .partiallyIsolated, .recoveryRequired].contains(operationalState) {
+            isShowingRecoveryPanel = true
+        }
     }
 
     func stopSkynetLocally() {
+        guard !isBusy else { return }
+        operationalState = .stoppingLocalAutomation
         Task {
             let incident = await coordinator.stopSkynetLocally()
             await apply(incident: incident)
@@ -57,22 +67,47 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func stopRemoteAccess() {
+        guard !isBusy else { return }
+        operationalState = .isolating
         Task {
-            let incident = await coordinator.stopRemoteAccess()
+            let incident = await coordinator.stopRemoteAccess(policy: isolationPolicy)
             await apply(incident: incident)
             await MainActor.run { self.isShowingRecoveryPanel = true }
         }
     }
 
     func restoreHumanControl(restoreSharing: Bool = false) {
+        guard !isBusy else { return }
+        operationalState = .restoring
         Task {
-            let selection = RecoverySelection(restoreNetwork: true, sharingServiceIDs: restoreSharing ? ["remote-login", "remote-apple-events"] : [])
+            let selection = RecoverySelection(restoreNetwork: !restoreSharing, sharingServiceIDs: restoreSharing ? ["remote-login", "remote-apple-events"] : [], restartEspanso: false)
+            let incident = await coordinator.restoreHumanControl(selection: selection)
+            await apply(incident: incident)
+        }
+    }
+
+    func restoreNetworkOnly() {
+        guard !isBusy else { return }
+        operationalState = .restoring
+        Task {
+            let selection = RecoverySelection(restoreNetwork: true, sharingServiceIDs: [], restartEspanso: false)
+            let incident = await coordinator.restoreHumanControl(selection: selection)
+            await apply(incident: incident)
+        }
+    }
+
+    func restoreSharingOnly() {
+        guard !isBusy else { return }
+        operationalState = .restoring
+        Task {
+            let selection = RecoverySelection(restoreNetwork: false, sharingServiceIDs: ["remote-login", "remote-apple-events"], restartEspanso: false)
             let incident = await coordinator.restoreHumanControl(selection: selection)
             await apply(incident: incident)
         }
     }
 
     func restartEspanso() {
+        guard !isBusy else { return }
         Task {
             let step = await coordinator.restartEspanso()
             let incident = IncidentRecord(initiatingAction: "Restart Espanso", originalState: operationalState, finalState: operationalState, steps: [step], resolution: step.outcome == .succeeded ? "Espanso restart verified" : "Espanso restart requires review")
@@ -87,6 +122,12 @@ final class KeyBrakeViewModel: ObservableObject {
         configuredTargets[index].updatedAt = Date()
         saveConfiguredTargets()
         Task { await coordinator.setTargetApproval(targetID: targetID, approved: approved) }
+    }
+
+    func updateIsolationPolicy(_ policy: EmergencyIsolationPolicy) {
+        isolationPolicy = policy
+        guard let data = try? JSONEncoder().encode(policy) else { return }
+        UserDefaults.standard.set(data, forKey: Self.isolationPolicyDefaultsKey)
     }
 
     func enrollTarget(_ target: TargetDefinition) {
@@ -110,6 +151,25 @@ final class KeyBrakeViewModel: ObservableObject {
             let incident = await coordinator.revokeAppAccess(targetID: targetID, services: services, bundleIdentifier: bundleIdentifier, displayName: target.displayName)
             await apply(incident: incident)
         }
+    }
+
+    func registerPrivilegedHelper() {
+        guard #available(macOS 13.0, *) else {
+            privilegedHelperError = "Privileged helper registration requires macOS 13 or later."
+            return
+        }
+        do {
+            try SMAppService.daemon(plistName: HelperDaemonRegistration.plistName).register()
+            privilegedHelperStatus = Self.readPrivilegedHelperStatus()
+            privilegedHelperError = nil
+        } catch {
+            privilegedHelperStatus = Self.readPrivilegedHelperStatus()
+            privilegedHelperError = error.localizedDescription
+        }
+    }
+
+    func refreshPrivilegedHelperStatus() {
+        privilegedHelperStatus = Self.readPrivilegedHelperStatus()
     }
 
     func setLaunchAtLogin(_ enabled: Bool) {
@@ -142,16 +202,13 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     private func apply(incident: IncidentRecord) async {
+        let recovery = await coordinator.recoverySnapshot()
         await MainActor.run {
             self.latestIncident = incident
             self.operationalState = incident.finalState
             self.incidents = (try? self.incidentStore.list()) ?? []
-            self.unresolvedRecovery = (try? self.coordinatorRecovery())
+            self.unresolvedRecovery = recovery
         }
-    }
-
-    private func coordinatorRecovery() throws -> RecoverySnapshot? {
-        try RecoveryStore().load()
     }
 
     private func saveConfiguredTargets() {
@@ -179,10 +236,31 @@ final class KeyBrakeViewModel: ObservableObject {
         return merged
     }
 
+    private static func loadIsolationPolicy() -> EmergencyIsolationPolicy {
+        guard let data = UserDefaults.standard.data(forKey: isolationPolicyDefaultsKey),
+              let policy = try? JSONDecoder().decode(EmergencyIsolationPolicy.self, from: data) else {
+            return .standard
+        }
+        return policy
+    }
+
     private static func readLaunchAtLoginStatus() -> Bool {
         if #available(macOS 13.0, *) {
             return SMAppService.mainApp.status == .enabled
         }
         return false
+    }
+
+    private static func readPrivilegedHelperStatus() -> String {
+        if #available(macOS 13.0, *) {
+            switch SMAppService.daemon(plistName: HelperDaemonRegistration.plistName).status {
+            case .enabled: return "Enabled"
+            case .requiresApproval: return "Approval required"
+            case .notRegistered: return "Not registered"
+            case .notFound: return "Not found in app bundle"
+            @unknown default: return "Unknown"
+            }
+        }
+        return "Requires macOS 13+"
     }
 }

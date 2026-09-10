@@ -5,10 +5,6 @@ import UniformTypeIdentifiers
 
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
-    @State private var disableWiFi = true
-    @State private var disableEthernet = true
-    @State private var disconnectVPN = true
-    @State private var disableRemoteLogin = true
     @State private var selectedPrivacyServices: Set<TCCService> = []
     @State private var selectedTargetID = ""
     @State private var errorMessage = ""
@@ -26,8 +22,15 @@ struct SettingsView: View {
             Section("General") {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
                 LabeledContent("Privileged Helper") {
-                    Text("Approval required until a signed helper is installed")
-                        .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(model.privilegedHelperStatus)
+                        Button("Register Privileged Helper") { model.registerPrivilegedHelper() }
+                    }
+                }
+                if let privilegedHelperError = model.privilegedHelperError {
+                    Text(privilegedHelperError)
+                        .font(.caption)
+                        .foregroundStyle(.red)
                 }
                 if let launchAtLoginError = model.launchAtLoginError {
                     Text(launchAtLoginError)
@@ -61,7 +64,7 @@ struct SettingsView: View {
                     }
                     .help("Include this exact application in Stop Remote Access")
                     if !builtInTargetIDs.contains(target.id) {
-                        Button("Remove (target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
+                        Button("Remove \(target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
                     }
                 }
                 Button("Add Application…") { chooseApplication(category: .remoteAccess) }
@@ -87,10 +90,11 @@ struct SettingsView: View {
             }
 
             Section("Emergency Isolation") {
-                Toggle("Disable Wi-Fi", isOn: $disableWiFi)
-                Toggle("Disable physical Ethernet", isOn: $disableEthernet)
-                Toggle("Disconnect VPNs", isOn: $disconnectVPN)
-                Toggle("Disable Remote Login", isOn: $disableRemoteLogin)
+                Toggle("Disable Wi-Fi", isOn: policyBinding(\.disableWiFi))
+                Toggle("Disable physical Ethernet", isOn: policyBinding(\.disableEthernet))
+                Toggle("Disconnect VPNs", isOn: policyBinding(\.disconnectVPN))
+                Toggle("Disable Remote Login", isOn: policyBinding(\.disableRemoteLogin))
+                Toggle("Disable Remote Apple Events", isOn: policyBinding(\.disableRemoteAppleEvents))
                 Text("Unsupported sharing capabilities are reported as unsupported and do not block independent network isolation.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -169,5 +173,16 @@ struct SettingsView: View {
         }
         model.enrollTarget(target)
         selectedTargetID = target.id
+    }
+
+    private func policyBinding(_ keyPath: WritableKeyPath<EmergencyIsolationPolicy, Bool>) -> Binding<Bool> {
+        Binding(
+            get: { model.isolationPolicy[keyPath: keyPath] },
+            set: { value in
+                var updated = model.isolationPolicy
+                updated[keyPath: keyPath] = value
+                model.updateIsolationPolicy(updated)
+            }
+        )
     }
 }

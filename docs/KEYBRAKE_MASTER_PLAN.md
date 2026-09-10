@@ -16,14 +16,14 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 
 ## Current control state
 
-- Repository: `/Users/michaeltran/AntiGravity/KeyBrake`
+- Repository: KeyBrake git checkout (canonical path recorded in local agent docs only)
 - GitHub: private `SatireLord/KeyBrake` exists and `main` is synchronized at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged
-- Release-pass source checkpoint: `034dc2ffcd7e7544d8ba720f9b8027a367932a6d`; the final release-pass commit is recorded by Git closeout
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; PR body must track current head `f1a421e` and capability matrix
+- Release status: public source **HOLD** (private until identity and release decision); downloadable binary **BLOCKED** (unsigned local bundle only; signed helper approval and live recovery remain external)
 - Portfolio release version: `0.1.0` (build `1`), private until release approval
-- Next action: human review, signing, helper approval, and live-host verification
-- External blockers: Computer Use service startup failed; signing/helper approval depends on a Developer ID identity and host configuration; live destructive host verification remains intentionally deferred
+- Next action: deliver the current owned source/doc lane, refresh PR #1 and PR #660 bodies, then run staged signed-host proof when a recoverable test Mac is available
+- External blockers: Agent-Cache direct enforcement is ready, while task bootstrap reports a CodeGraph query failure as `structural_owner_unresolved`; signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
 
 ## Feature inventory
 
@@ -37,12 +37,11 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 | Espanso/local automation | missing | implemented |
 | Remote target registry | missing | implemented |
 | TCC reset allowlist | missing | implemented |
-| Helper boundary | missing | implemented boundary; live approval remains external |
-| Network/sharing adapters | missing | implemented adapters and fixtures |
-| Serialized coordinator | missing | implemented |
-| Menu/recovery/settings UI | missing | implemented |
-| Focused tests | missing | implemented; 13 SwiftPM tests pass |
-| Documentation | missing | implemented |
+| Helper boundary | missing | source/build implemented; signed installation and live authorization remain host-unverified |
+| Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
+| Menu/recovery/settings UI | missing | persisted policy, helper status, automatic recovery presentation, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
+| Focused tests | missing | 27 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
+| Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
 ## PM checklist
 
@@ -64,39 +63,39 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-016 Implement command timeouts, output bounds, and redaction.
 [x] KB-017 Implement process inventory and exact process identity.
 [x] KB-018 Implement protected-process and self-protection rules.
-[x] KB-019 Implement graceful stop, verified escalation, and respawn detection.
+[!] KB-019 Implement graceful stop, verified escalation, and respawn detection; source is implemented, while deterministic respawn simulation and live process proof remain host-dependent.
 [x] KB-020 Implement atomic versioned incident storage.
-[x] KB-021 Implement atomic versioned recovery storage.
+[x] KB-021 Implement atomic versioned recovery storage; atomic replacement, read-after-write verification, and backup recovery are covered by source and focused tests.
 [x] KB-022 Implement corrupt-snapshot preservation and launch-time recovery.
-[x] KB-023 Implement original/applied/current conflict-aware restoration.
+[x] KB-023 Implement original/applied/current conflict-aware restoration; network, sharing, partial retention, and VPN non-reconnect behavior are covered by source and focused tests.
 [x] KB-024 Implement Espanso executable discovery.
 [x] KB-025 Implement Espanso immediate disable, stop, start, restart, and verification.
-[x] KB-026 Implement approved local automation enrollment.
+[x] KB-026 Implement approved local automation enrollment; exact enrolled targets are consumed by the serialized coordinator.
 [x] KB-027 Implement Stop Skynet Locally without network or TCC mutation.
 [x] KB-028 Implement remote-control candidate discovery.
 [!] KB-029 Implement remote-control enrollment and signing verification; exact bundle/executable enrollment is implemented, while code-signing verification remains host-dependent.
 [x] KB-030 Implement exact remote-process stopping.
-[x] KB-031 Implement verified non-Apple launchd-service stopping.
+[ ] KB-031 Implement verified non-Apple launchd-service stopping; helper command exists but coordinator does not invoke it.
 [x] KB-032 Enforce the rule that remote-control apps never restart automatically.
 [x] KB-033 Implement the per-application privacy picker.
-[x] KB-034 Implement the version-gated TCC allowlist.
+[ ] KB-034 Implement the version-gated TCC allowlist; minimumMajorVersion metadata is not enforced at runtime.
 [x] KB-035 Implement per-bundle privacy reset and safe per-bundle All.
 [x] KB-036 Enforce the rule that KeyBrake never edits or restores TCC grants.
 [x] KB-037 Implement explicit emergency-profile privacy opt-in.
-[!] KB-038 Implement the SMAppService on-demand privileged helper boundary; the typed helper boundary is implemented, while signed helper installation and audit-token proof remain host-dependent.
+[!] KB-038 Implement the SMAppService on-demand privileged helper boundary; XPC client, caller identity, helper routing, listener bootstrap, bundle resource placement, and daemon registration UI are source/build proven, while signed installation and live approval remain host-unverified.
 [x] KB-039 Implement typed helper authorization validation.
 [x] KB-040 Implement the privileged command and target allowlist.
-[x] KB-041 Implement helper status visibility in Settings.
+[x] KB-041 Implement helper status visibility in Settings; status reads the live `SMAppService` daemon state when the host supports it.
 [!] KB-042 Implement actual network-service and hardware discovery boundary; read-only service state discovery is implemented, while host-specific hardware and privilege proof remain external.
-[x] KB-043 Implement stable service and interface classification.
+[x] KB-043 Implement stable service and interface classification; ordered service metadata, stable IDs, device names, and kind classification are covered by parser tests.
 [x] KB-044 Implement VPN inventory and disconnection.
 [x] KB-045 Implement network-service disable operations.
 [x] KB-046 Implement Wi-Fi radio disable command boundary.
 [x] KB-047 Implement bounded interface-down helper command.
 [x] KB-048 Implement network-isolation result classification.
 [x] KB-049 Implement exact network restoration without VPN reconnection.
-[x] KB-050 Implement Remote Login detection, disable, verification, and restore boundary.
-[x] KB-051 Implement Remote Apple Events detection, disable, verification, and restore boundary.
+[!] KB-050 Implement Remote Login detection, disable, verification, and restore boundary; source, exact setter routing, and fixture verification pass, while live privilege proof remains external.
+[!] KB-051 Implement Remote Apple Events detection, disable, verification, and restore boundary; source, exact setter routing, and fixture verification pass, while live privilege proof remains external.
 [!] KB-052 Implement capability-detected Screen Sharing control; host-specific command remains unsupported until verified.
 [!] KB-053 Implement capability-detected Remote Management control; host-specific command remains unsupported until verified.
 [x] KB-054 Implement explicit sharing-service restoration.
@@ -105,18 +104,18 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-057 Implement partial-failure continuation and precise status.
 [x] KB-058 Implement duplicate-action serialization through the actor.
 [x] KB-059 Implement the exact menu and visible state row.
-[x] KB-060 Implement the persistent mouse-driven recovery panel.
-[x] KB-061 Implement Restore Human Control and its independent actions.
+[!] KB-060 Implement the persistent mouse-driven recovery panel; launch-time unresolved state automatically presents the panel in source, while mouse-only runtime proof remains unverified.
+[x] KB-061 Implement Restore Human Control and its independent actions; network and sharing restoration are separate view-model actions and do not force the other subsystem.
 [x] KB-062 Implement the incident-log viewer.
 [x] KB-063 Implement the unresolved-state quit warning.
-[x] KB-064 Implement the focused Settings sections and target editors, including exact-identity application enrollment and persisted approval.
+[x] KB-064 Implement the focused Settings sections and target editors; emergency isolation toggles persist and reach the coordinator policy.
 [!] KB-065 Implement Launch at Login without duplicate processes through SMAppService; source integration exists, while signed-host proof remains external.
 [x] KB-066 Add VoiceOver labels and non-color-only status communication.
-[x] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests.
+[!] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests; focused source seams pass, while live UI and process-respawn proof remain host-dependent.
 [x] KB-068 Run focused local tests during implementation.
-[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM proof passed 13 tests with 0 failures.
+[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM/XCTest proof passed 27 tests with 0 failures.
 [x] KB-070 Run the final local Release build; `xcodebuild` produced and validated the unsigned universal Release app bundle with `CODE_SIGNING_ALLOWED=NO`.
-[x] KB-071 Verify helper embedding, helper plist placement, feature-contract resource, entitlements, and build settings; the unsigned universal Release bundle now validates successfully.
+[x] KB-071 Verify helper embedding, helper plist placement, feature-contract resource, entitlements, and build settings; the unsigned app bundle now validates the helper executable and LaunchDaemons plist layout.
 [!] KB-072 Verify signing and Gatekeeper only when credentials permit proof.
 [!] KB-073 Perform the safe live Espanso stop and restart test; bounded until a human-controlled session is staged.
 [x] KB-074 Perform the harmless fixture remote-target test through fake process control.
@@ -124,7 +123,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-076 Perform read-only network inventory proof through fixtures.
 [!] KB-077 Perform live network isolation only when the local execution path remains recoverable.
 [x] KB-078 Verify unresolved recovery after application relaunch through deterministic store tests.
-[x] KB-079 Verify mouse-only quit and recovery paths through the app model and UI review.
+[ ] KB-079 Verify mouse-only quit and recovery paths; no runtime UI proof obtained.
 [x] KB-080 Complete README.md.
 [x] KB-081 Complete AGENTS.md.
 [x] KB-082 Complete docs/KEYBRAKE_MASTER_PLAN.md.
@@ -135,16 +134,16 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-087 Compare the baseline and final feature inventories.
 [x] KB-088 Prove that no requested or existing feature was removed; baseline contained no product feature.
 [x] KB-089 Compute and record required SHA-256 checksums.
-[x] KB-090 Commit every coherent deliverable.
-[x] KB-091 Push every implementation commit.
-[x] KB-092 Verify task-branch upstream divergence at 0/0.
+[!] KB-090 Commit every coherent deliverable; the prior foundation is delivered, while the current dirty source/doc lane still requires a scoped commit.
+[!] KB-091 Push every implementation commit; the prior foundation is pushed, while the current dirty source/doc lane still requires push proof.
+[!] KB-092 Verify task-branch upstream divergence at 0/0 after the current lane is delivered.
 [x] KB-093 Verify main versus origin/main divergence at 0/0.
 [x] KB-094 Update the existing PR or create the single PR; PR #1 is open against `main`.
-[x] KB-095 Add exact local test, build, and proof evidence to the PR body.
+[!] KB-095 Add exact local test, build, and proof evidence to the PR body after the current lane reaches its delivery SHA.
 [x] KB-096 Preserve and list every foreign dirty file; none were changed.
-[x] KB-097 Leave task-owned files clean after the final proof commit.
+[!] KB-097 Leave task-owned files clean after the final proof commit; foreign dirty paths must remain preserved and excluded.
 [x] KB-098 Record every genuine external blocker without disguising it as success.
-[x] KB-099 Re-run the complete circular requirements audit and record every external proof boundary.
+[!] KB-099 Re-run the complete circular requirements audit after scoped delivery; current evidence now distinguishes source/build proof from signed-host and live UI proof.
 [x] KB-100 Deliver the complete final report with this entire current checklist.
 
 ## Proof and handoff

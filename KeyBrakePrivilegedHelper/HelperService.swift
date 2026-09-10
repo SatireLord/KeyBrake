@@ -11,10 +11,18 @@ public final class HelperService: HelperOperating, @unchecked Sendable {
         self.runner = runner
     }
 
-    public func perform(_ command: HelperCommand) async -> OperationStepResult {
-        guard authorization.accepts(bundleIdentifier: authorization.expectedBundleIdentifier, teamIdentifier: authorization.expectedTeamIdentifier, command: command) else {
-            return OperationStepResult(subsystem: "helper", targetID: "authorization", targetDisplayName: "Privileged Helper", requestedState: "authorized", operationDescription: "Rejected command at the typed authorization boundary", outcome: .conflict)
+    public func perform(_ command: HelperCommand, caller: HelperCallerIdentity) async -> OperationStepResult {
+        guard authorization.accepts(caller: caller, command: command) else {
+            return OperationStepResult(subsystem: "helper", targetID: "authorization", targetDisplayName: "Privileged Helper", requestedState: "authorized", operationDescription: "Rejected command for caller \(caller.bundleIdentifier)", outcome: .conflict)
         }
+        return await execute(command)
+    }
+
+    public func perform(_ command: HelperCommand) async -> OperationStepResult {
+        await execute(command)
+    }
+
+    private func execute(_ command: HelperCommand) async -> OperationStepResult {
         switch command {
         case .setNetworkServiceEnabled(_, let serviceName, _, let enabled):
             return await run(arguments: ["-setnetworkserviceenabled", serviceName, enabled ? "on" : "off"], executable: "/usr/sbin/networksetup", targetID: serviceName, description: "Set network service enabled state")
@@ -42,5 +50,63 @@ public final class HelperService: HelperOperating, @unchecked Sendable {
         } catch {
             return OperationStepResult(subsystem: "helper", targetID: targetID, targetDisplayName: targetID, requestedState: "applied", operationDescription: description, outcome: .failed, sanitizedStandardError: error.localizedDescription)
         }
+    }
+}
+
+final class HelperXPCListenerDelegate: NSObject, NSXPCListenerDelegate {
+    private let service = HelperService()
+
+    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+        guard let caller = HelperAudit.callerIdentity(processIdentifier: newConnection.processIdentifier) else { return false }
+        let handler = HelperXPCConnectionHandler(service: service, caller: caller)
+        newConnection.exportedInterface = NSXPCInterface(with: HelperXPCProtocol.self)
+        newConnection.exportedObject = handler
+        newConnection.resume()
+        return true
+    }
+}
+
+final class HelperXPCConnectionHandler: NSObject, HelperXPCProtocol, @unchecked Sendable {
+    private let service: HelperService
+    private let caller: HelperCallerIdentity
+
+    init(service: HelperService, caller: HelperCallerIdentity) {
+        self.service = service
+        self.caller = caller
+    }
+
+    func performCommand(_ payload: Data, withReply reply: @escaping (Data?) -> Void) {
+        let replyBox = HelperReplyBox(reply)
+        Task {
+            do {
+                let command = try HelperXPCCodec.decodeCommand(payload)
+                let result = await service.perform(command, caller: caller)
+                replyBox.send(try HelperXPCCodec.encode(result))
+            } catch {
+                replyBox.send(nil)
+            }
+        }
+    }
+}
+
+private final class HelperReplyBox: @unchecked Sendable {
+    private let reply: (Data?) -> Void
+
+    init(_ reply: @escaping (Data?) -> Void) {
+        self.reply = reply
+    }
+
+    func send(_ data: Data?) {
+        reply(data)
+    }
+}
+
+enum HelperBootstrap {
+    static func runListener() {
+        let delegate = HelperXPCListenerDelegate()
+        let listener = NSXPCListener(machServiceName: HelperDaemonRegistration.machServiceName)
+        listener.delegate = delegate
+        listener.resume()
+        RunLoop.main.run()
     }
 }
