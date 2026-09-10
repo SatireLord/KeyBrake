@@ -34,7 +34,8 @@ This document classifies every user-visible or safety-critical capability by imp
 | Original/applied/current restore | `implemented` | Network and sharing adapters compare current vs applied |
 | Partial restore retention | `implemented` | Snapshot retained until all subsystems resolve |
 | Launch-time recovery panel | `implemented` | Persistent panel when unresolved recovery exists |
-| Privileged helper XPC listener | `host-unverified` | Listener bootstrap, typed routing, caller identity checks, helper embedding, and plist placement are source/build proven; signed installation and live authorization remain unverified |
+| Privileged helper XPC listener | `host-unverified` | Listener bootstrap, typed routing, caller identity checks, verified launchd identity checks, helper embedding, and plist placement are source/build proven; signed installation and live authorization remain unverified |
+| Verified non-Apple launchd stop | `fixture-only` | Approved labels route through the helper; `launchctl print` path, optional `codesign` designated requirement, and post-stop state are checked; live signed-host mutation remains unverified |
 | SMAppService daemon registration | `host-unverified` | Settings exposes registration and status through `SMAppService`; signed-host installation and approval remain unverified |
 | Live network isolation | `host-unverified` | Network/sharing mutations route through helper boundary; live mutation deferred |
 | Live sharing disable/restore | `host-unverified` | Setter commands corrected; privilege proof external |

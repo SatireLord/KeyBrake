@@ -19,7 +19,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 - Repository: KeyBrake git checkout (canonical path recorded in local agent docs only)
 - GitHub: private `SatireLord/KeyBrake` exists and `main` is synchronized at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `ad7fa01`, with PR body updated to the final remote head after the documentation receipt
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `8a77357`, with the documentation receipt to follow this source commit
 - Release status: public source **HOLD** (private until identity and release decision); downloadable binary **BLOCKED** (unsigned local bundle only; signed helper approval and live recovery remain external)
 - Portfolio release version: `0.1.0` (build `1`), private until release approval
 - Next action: human review of PR #1 and PR #660; if release approval, a Developer ID identity, and a recoverable test Mac become available, run staged signed-host, helper-approval, live-recovery, and mouse-only proof
@@ -37,10 +37,10 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 | Espanso/local automation | missing | implemented |
 | Remote target registry | missing | implemented |
 | TCC reset allowlist | missing | implemented |
-| Helper boundary | missing | source/build implemented; signed installation and live authorization remain host-unverified |
+| Helper boundary | missing | source/build implemented; verified launchd identity checks and coordinator routing are fixture-proven; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
 | Menu/recovery/settings UI | missing | persisted policy, helper status, automatic recovery presentation, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
-| Focused tests | missing | 29 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
+| Focused tests | missing | 31 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
 ## PM checklist
@@ -75,7 +75,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-028 Implement remote-control candidate discovery.
 [!] KB-029 Implement remote-control enrollment and signing verification; exact bundle/executable enrollment is implemented, while code-signing verification remains host-dependent.
 [x] KB-030 Implement exact remote-process stopping.
-[ ] KB-031 Implement verified non-Apple launchd-service stopping; helper command exists but coordinator does not invoke it.
+[x] KB-031 Implement verified non-Apple launchd-service stopping; coordinator routes approved labels through the helper, which verifies launchd path, optional designated signing requirement, and post-stop state; live signed-host proof remains external.
 [x] KB-032 Enforce the rule that remote-control apps never restart automatically.
 [x] KB-033 Implement the per-application privacy picker.
 [x] KB-034 Implement the version-gated TCC allowlist; catalog minimumMajorVersion metadata and unsupported enum cases are rejected before tccutil runs.
