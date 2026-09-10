@@ -12,7 +12,7 @@
 ## Current private portfolio release pass
 
 - Canonical repository: KeyBrake git checkout on branch `codex/keybrake-complete-implementation`.
-- Last source delivery checkpoint: `ecade547`; source, tests, packaging, and release-boundary files are pushed on the active PR branch. A later documentation-only receipt may advance HEAD without changing that source checkpoint.
+- Last source delivery checkpoint: `ad7fa01`; source, tests, packaging, and release-boundary files are pushed on the active PR branch. A later documentation-only receipt may advance HEAD without changing that source checkpoint.
 - Portfolio release version: `0.1.0` (build `1`); the repository remains private until release approval.
 - Release judgments: public source **HOLD**; downloadable binary **BLOCKED** (see `docs/KEYBRAKE_CAPABILITY_MATRIX.md`).
 - Agent-Cache direct enforcement: **ready / continue**, `cache_ready=true`, `manual_review_required=false`, and `next_action=continue_with_live_repo_truth` for the exact KeyBrake path and prompt. The bootstrap CodeGraph interlock is **degraded** with `reason=structural_owner_unresolved` because the current CodeGraph query failed; this is a task-orientation hold, not a Cursor source-mutation denial.

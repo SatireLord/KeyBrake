@@ -19,7 +19,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 - Repository: KeyBrake git checkout (canonical path recorded in local agent docs only)
 - GitHub: private `SatireLord/KeyBrake` exists and `main` is synchronized at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `ecade547`, with PR body updated to the final remote head after the documentation receipt
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `ad7fa01`, with PR body updated to the final remote head after the documentation receipt
 - Release status: public source **HOLD** (private until identity and release decision); downloadable binary **BLOCKED** (unsigned local bundle only; signed helper approval and live recovery remain external)
 - Portfolio release version: `0.1.0` (build `1`), private until release approval
 - Next action: deliver the current owned source/doc lane, refresh PR #1 and PR #660 bodies, then run staged signed-host proof when a recoverable test Mac is available
