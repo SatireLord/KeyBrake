@@ -19,7 +19,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 - Repository: KeyBrake git checkout (canonical path recorded in local agent docs only)
 - GitHub: private `SatireLord/KeyBrake` exists and `main` is synchronized at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; PR body must track current head `f1a421e` and capability matrix
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `ecade547`, with PR body updated to the final remote head after the documentation receipt
 - Release status: public source **HOLD** (private until identity and release decision); downloadable binary **BLOCKED** (unsigned local bundle only; signed helper approval and live recovery remain external)
 - Portfolio release version: `0.1.0` (build `1`), private until release approval
 - Next action: deliver the current owned source/doc lane, refresh PR #1 and PR #660 bodies, then run staged signed-host proof when a recoverable test Mac is available
@@ -134,16 +134,16 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-087 Compare the baseline and final feature inventories.
 [x] KB-088 Prove that no requested or existing feature was removed; baseline contained no product feature.
 [x] KB-089 Compute and record required SHA-256 checksums.
-[!] KB-090 Commit every coherent deliverable; the prior foundation is delivered, while the current dirty source/doc lane still requires a scoped commit.
-[!] KB-091 Push every implementation commit; the prior foundation is pushed, while the current dirty source/doc lane still requires push proof.
-[!] KB-092 Verify task-branch upstream divergence at 0/0 after the current lane is delivered.
+[x] KB-090 Commit every coherent deliverable; source and release-boundary files are delivered in `ecade547`.
+[x] KB-091 Push every implementation commit; `ecade547` reached the active PR branch.
+[x] KB-092 Verify task-branch upstream divergence at 0/0 after the current lane is delivered.
 [x] KB-093 Verify main versus origin/main divergence at 0/0.
 [x] KB-094 Update the existing PR or create the single PR; PR #1 is open against `main`.
-[!] KB-095 Add exact local test, build, and proof evidence to the PR body after the current lane reaches its delivery SHA.
+[x] KB-095 Add exact local test, build, and proof evidence to the PR body at the delivered source checkpoint.
 [x] KB-096 Preserve and list every foreign dirty file; none were changed.
-[!] KB-097 Leave task-owned files clean after the final proof commit; foreign dirty paths must remain preserved and excluded.
+[x] KB-097 Leave KeyBrake task-owned files clean after the delivery commit; no foreign paths were staged.
 [x] KB-098 Record every genuine external blocker without disguising it as success.
-[!] KB-099 Re-run the complete circular requirements audit after scoped delivery; current evidence now distinguishes source/build proof from signed-host and live UI proof.
+[x] KB-099 Re-run the complete circular requirements audit after scoped delivery; current evidence distinguishes source/build proof from signed-host and live UI proof.
 [x] KB-100 Deliver the complete final report with this entire current checklist.
 
 ## Proof and handoff
