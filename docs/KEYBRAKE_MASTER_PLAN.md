@@ -40,7 +40,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 | Helper boundary | missing | source/build implemented; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
 | Menu/recovery/settings UI | missing | persisted policy, helper status, automatic recovery presentation, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
-| Focused tests | missing | 27 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
+| Focused tests | missing | 29 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
 ## PM checklist
@@ -78,7 +78,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [ ] KB-031 Implement verified non-Apple launchd-service stopping; helper command exists but coordinator does not invoke it.
 [x] KB-032 Enforce the rule that remote-control apps never restart automatically.
 [x] KB-033 Implement the per-application privacy picker.
-[ ] KB-034 Implement the version-gated TCC allowlist; minimumMajorVersion metadata is not enforced at runtime.
+[x] KB-034 Implement the version-gated TCC allowlist; catalog minimumMajorVersion metadata and unsupported enum cases are rejected before tccutil runs.
 [x] KB-035 Implement per-bundle privacy reset and safe per-bundle All.
 [x] KB-036 Enforce the rule that KeyBrake never edits or restores TCC grants.
 [x] KB-037 Implement explicit emergency-profile privacy opt-in.

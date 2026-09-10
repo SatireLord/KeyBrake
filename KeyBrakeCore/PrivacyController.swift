@@ -8,7 +8,15 @@ public struct PrivacyResetRequest: Sendable, Equatable {
 
 public struct PrivacyController: Sendable {
     private let commandRunner: CommandRunning
-    public init(commandRunner: CommandRunning) { self.commandRunner = commandRunner }
+    private let operatingSystemMajorVersion: Int
+
+    public init(
+        commandRunner: CommandRunning,
+        operatingSystemMajorVersion: Int = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+    ) {
+        self.commandRunner = commandRunner
+        self.operatingSystemMajorVersion = operatingSystemMajorVersion
+    }
 
     public func reset(_ request: PrivacyResetRequest, targetDisplayName: String) async -> [OperationStepResult] {
         guard !request.bundleIdentifier.isEmpty, !request.bundleIdentifier.contains(" "), request.bundleIdentifier != "org.realitygood.KeyBrake" else {
@@ -26,6 +34,30 @@ public struct PrivacyController: Sendable {
 
     private func reset(service: TCCService, bundleIdentifier: String, targetDisplayName: String) async -> OperationStepResult {
         let start = Date()
+        guard let descriptor = PrivacyServiceCatalog.descriptors.first(where: { $0.id == service }) else {
+            return OperationStepResult(
+                subsystem: "privacy",
+                targetID: service.rawValue,
+                targetDisplayName: targetDisplayName,
+                requestedState: "reset",
+                operationDescription: "Privacy service is outside KeyBrake's supported allowlist",
+                outcome: .unsupported,
+                startedAt: start,
+                finishedAt: Date()
+            )
+        }
+        guard operatingSystemMajorVersion >= descriptor.minimumMajorVersion else {
+            return OperationStepResult(
+                subsystem: "privacy",
+                targetID: service.rawValue,
+                targetDisplayName: targetDisplayName,
+                requestedState: "reset",
+                operationDescription: "Privacy service requires macOS \(descriptor.minimumMajorVersion) or newer",
+                outcome: .unsupported,
+                startedAt: start,
+                finishedAt: Date()
+            )
+        }
         do {
             let result = try await commandRunner.run(CommandRequest(executableURL: URL(fileURLWithPath: "/usr/bin/tccutil"), arguments: ["reset", service.rawValue, bundleIdentifier]))
             return OperationStepResult(subsystem: "privacy", targetID: service.rawValue, targetDisplayName: targetDisplayName, requestedState: "reset", operationDescription: "Reset TCC-managed privacy decision for \(bundleIdentifier)", outcome: result.terminationStatus == 0 ? .succeeded : .failed, terminationStatus: result.terminationStatus, sanitizedStandardError: result.sanitizedStandardError, startedAt: start, finishedAt: result.finishedAt)
