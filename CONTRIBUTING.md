@@ -2,6 +2,8 @@
 
 KeyBrake is an experimental macOS recovery prototype. Contributions must preserve safety boundaries and truthful documentation.
 
+Please read [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) and [`SECURITY.md`](SECURITY.md) first.
+
 ## Before you start
 
 1. Read [`docs/KEYBRAKE_CAPABILITY_MATRIX.md`](docs/KEYBRAKE_CAPABILITY_MATRIX.md) for capability classifications.
@@ -13,8 +15,11 @@ KeyBrake is an experimental macOS recovery prototype. Contributions must preserv
 ```bash
 xcodegen generate
 swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM
-xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' test CODE_SIGNING_ALLOWED=NO
+xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' \
+  test CODE_SIGNING_ALLOWED=NO
 ```
+
+SwiftPM covers `KeyBrakeCore` and tests. The unsigned `.app` with the embedded helper is an Xcode product.
 
 ## Change rules
 

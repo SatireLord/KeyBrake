@@ -1,36 +1,41 @@
 # KeyBrake
 
-KeyBrake is a macOS menu-bar input and remote-access failsafe. It gives users a keyboard-independent recovery path for runaway keystroke automation, pauses approved local injectors, and performs reversible network isolation during suspicious or fraudulent remote-support sessions.
+KeyBrake is a macOS menu-bar failsafe. Source implements mouse-driven controls that stop approved local automation, isolate selected network and remote-access paths, record exact outcomes, and recover only state KeyBrake changed.
 
-KeyBrake is deliberately a command-driven recovery tool, not an antivirus product or a promise that every form of remote access can be eliminated. Its claims are bounded by the operations it can observe and verify.
+It is a command-driven recovery prototype, not an antivirus product and not a promise that every form of remote access can be eliminated. Claims are bounded by operations KeyBrake can observe and verify.
+
+Copyright 2026 Michael Tran. GitHub repository: [SatireLord/KeyBrake](https://github.com/SatireLord/KeyBrake). Bundle identifiers use `org.realitygood.KeyBrake` as the stable Mach/helper identity.
 
 ## Release status
 
 | Surface | Status |
 | --- | --- |
-| Public source | **HOLD** — truth-and-identity pass required before public visibility |
-| Downloadable binary | **BLOCKED** — unsigned local bundle only; signing, helper approval, and live verification remain external gates |
+| Source tree | Prepared for a human identity and visibility decision |
+| GitHub visibility | **HOLD** — this repository remains private |
+| Downloadable binary | **BLOCKED** — unsigned local bundle only; signing, helper approval, and live verification remain external |
 
-This repository remains private while KeyBrake is prepared as an **experimental systems prototype**. The current app version is `0.1.0` (build `1`). The local Xcode build verifies the app, embedded helper executable, LaunchDaemons plist, and feature contract with signing disabled for development proof; this project does not claim Developer ID signing, notarization, privileged-helper approval, or live-host network isolation without the corresponding receipts. See [`docs/KEYBRAKE_CAPABILITY_MATRIX.md`](docs/KEYBRAKE_CAPABILITY_MATRIX.md) and [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md) for exact capability classifications and evidence boundaries.
+Version `0.1.0` (build `1`) is an experimental systems prototype. Local Xcode builds verify the app, embedded helper executable, LaunchDaemons plist, and feature contract with signing disabled. This project does not claim Developer ID signing, notarization, privileged-helper approval, or live-host network isolation without receipts.
+
+Public claims must match [`docs/KEYBRAKE_CAPABILITY_MATRIX.md`](docs/KEYBRAKE_CAPABILITY_MATRIX.md). Evidence boundaries are in [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md). The operator checklist for flipping GitHub visibility is [`docs/KEYBRAKE_PUBLIC_RELEASE.md`](docs/KEYBRAKE_PUBLIC_RELEASE.md).
 
 ## What it does
 
-The menu keeps the physical mouse as a recovery path:
+The menu keeps the physical mouse as a recovery path. The following behaviors exist in source; live host mutation is **host-unverified** until a receipt exists.
 
 - **Stop Skynet Locally** disables and stops Espanso plus other explicitly approved local automation targets. It does not disable networking or reset privacy permissions.
 - **Stop Remote Access** records a recovery snapshot before mutations, stops approved automation and remote-control targets, disables supported sharing controls according to the emergency profile, disconnects selected VPNs, isolates selected non-loopback network services, verifies the result, and opens a persistent recovery panel. Privacy resets are a separate explicit action via **Revoke App Access…**, not part of Stop Remote Access.
-- **Revoke App Access…** stops one selected application and resets selected TCC-managed privacy decisions for that application. It never edits the TCC database directly and never performs a global reset without a bundle identifier.
+- **Revoke App Access…** opens Settings, where one selected application can be stopped and selected TCC-managed privacy decisions reset. KeyBrake never edits the TCC database file and never performs a global reset without a bundle identifier.
 - **Restore Human Control** exposes independent mouse-driven actions for restoring network state, explicitly restoring sharing services, restarting Espanso, opening Privacy & Security settings, and reviewing the incident record.
 - **Restart Espanso** is separate from network recovery and never changes Espanso configuration, packages, matches, service registration, or privacy permissions.
 - **Open Incident Log** displays the local JSON-backed operation history.
 
-The app reports precise states such as `Local Automation Stopped`, `Network Isolated`, `Partial Isolation`, `Recovery Required`, and `Human Control Restored`. It does not claim `Computer Secured`, `Threat Neutralized`, `System Safe`, or `All Remote Access Eliminated`.
+The app reports states such as `Normal Input`, `Local Automation Stopped`, `Network Isolated`, `Partial Isolation`, and `Recovery Required`. Successful restore returns to `Normal Input`. It does not claim `Computer Secured`, `Hacker Removed`, `Threat Neutralized`, `System Safe`, or `All Remote Access Eliminated`.
 
 ## Architecture
 
-`KeyBrakeCore` owns the serialized emergency coordinator, typed command boundary, exact process identity rules, target registries, Espanso adapter, remote-access controls, network inventory, sharing adapters, privacy reset allowlist, atomic recovery state, and incident storage. The SwiftUI/AppKit application owns the menu bar, settings, recovery panel, and incident viewer. The helper target is a narrow on-demand command surface for administrator-required network and sharing changes; it is not a generic shell.
+`KeyBrakeCore` owns the serialized emergency coordinator, typed command boundary, exact process identity rules, target registries, Espanso adapter, remote-access controls, network inventory, sharing adapters, privacy reset allowlist, atomic recovery state, and incident storage. The SwiftUI/AppKit application owns the menu bar, settings, recovery panel, and incident viewer. The helper target is an on-demand privileged command surface for administrator-required network, sharing, and verified launchd stops. It is not a generic shell. The helper can enable as well as disable network and sharing services during restore; that is intentional recovery behavior.
 
-All runtime state is local under `~/Library/Application Support/KeyBrake`, with user-only permissions and atomic replacement. The app stores operation metadata, identifiers, bounded sanitized errors, and timestamps. It does not store credentials, TCC database contents, Keychain contents, typed text, clipboard contents, documents, or packet data.
+All runtime state is local under `~/Library/Application Support/KeyBrake`, with user-only permissions and atomic replacement. The app stores operation metadata, identifiers, bounded command errors, and timestamps. It does not store credentials, TCC database contents, Keychain contents, typed text, clipboard contents, documents, or packet data.
 
 ## Recovery boundaries
 
@@ -40,18 +45,23 @@ KeyBrake does not defeat kernel or firmware compromise. It cannot guarantee reco
 
 ## Build and test
 
-The project uses XcodeGen only to generate the native Xcode project from `project.yml`; the app has no third-party runtime dependencies.
+The project uses XcodeGen only to generate the native Xcode project from `project.yml`. The app has no third-party runtime dependencies. SwiftPM covers `KeyBrakeCore` and a debug executable; the unsigned `.app` with embedded helper is an Xcode product.
 
 ```bash
 xcodegen generate
-xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' build
-xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' test
+swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM
+xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' \
+  CODE_SIGNING_ALLOWED=NO build
+xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' \
+  CODE_SIGNING_ALLOWED=NO test
 ```
 
 All verification remains local. No GitHub Actions, telemetry, remote logging, analytics, or network dependency is part of the runtime.
 
-## Portfolio demonstration
+## License and security
 
-Use the safe runbook in [`docs/KEYBRAKE_SAFE_DEMO.md`](docs/KEYBRAKE_SAFE_DEMO.md). It demonstrates the menu, a harmless fake command runner, the recovery contract, the incident log, and read-only network inventory without severing the active development session. Live network isolation should only be performed from a separately staged human-controlled Mac session with a known recovery path.
+MIT License. See [`LICENSE`](LICENSE), [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
-Thirty-second description: “I built KeyBrake because automation and remote-control software can take over the same keyboard and network interfaces that users need for recovery. KeyBrake is an independent macOS menu-bar failsafe that lets a user use the mouse to stop approved automation, terminate configured remote-control applications, isolate networking, reset selected application permissions, and recover only the state it changed.”
+## Demonstration
+
+Use the runbook in [`docs/KEYBRAKE_SAFE_DEMO.md`](docs/KEYBRAKE_SAFE_DEMO.md). It demonstrates the menu, a harmless fake command runner, the recovery contract, the incident log, and read-only network inventory without severing the active development session. Live network isolation should only be performed from a separately staged human-controlled Mac session with a known recovery path.

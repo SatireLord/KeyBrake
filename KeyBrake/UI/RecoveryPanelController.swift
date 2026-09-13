@@ -17,4 +17,8 @@ final class RecoveryPanelController {
         panel?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
+
+    func hide() {
+        panel?.orderOut(nil)
+    }
 }

@@ -18,5 +18,17 @@ final class FeatureContractTests: XCTestCase {
         XCTAssertTrue(contract.recoveryRules.contains("restoreOnlyChangesMadeByKeyBrake"))
         XCTAssertTrue(contract.recoveryRules.contains("neverAutomaticallyRestoreTCCGrants"))
         XCTAssertTrue(contract.recoveryRules.contains("neverAutomaticallyRestartRemoteControlApps"))
+        XCTAssertTrue(contract.recoveryRules.contains("neverReconnectVPNAutomatically"))
+        XCTAssertTrue(contract.protectedTargets.contains("com.apple.WindowServer"))
+        XCTAssertTrue(contract.protectedTargets.contains("kernel_task"))
+    }
+
+    func testBundledFeatureContractMatchesFallback() throws {
+        let url = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Resources/KeyBrakeFeatureContract.json")
+        let bundled = try FeatureContract.load(from: url)
+        XCTAssertEqual(bundled, FeatureContract.fallback)
     }
 }

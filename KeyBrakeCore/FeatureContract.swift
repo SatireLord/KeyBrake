@@ -12,11 +12,27 @@ public struct FeatureContract: Codable, Sendable, Equatable {
 
     public static let fallback = FeatureContract(
         schemaVersion: 1,
-        productDescription: "KeyBrake is a macOS menu-bar input and remote-access failsafe.",
+        productDescription: "KeyBrake is a macOS menu-bar input and remote-access failsafe. It gives users a keyboard-independent recovery path for runaway keystroke automation, pauses approved local injectors, and performs reversible network isolation during suspicious or fraudulent remote-support sessions.",
         requiredMenuActions: ["Stop Skynet Locally", "Stop Remote Access", "Revoke App Access…", "Restore Human Control", "Restart Espanso", "Open Incident Log", "Settings…", "Quit KeyBrake"],
         requiredOperationalStates: KeyBrakeOperationalState.allCases.map(\.rawValue),
-        protectedTargets: ["org.realitygood.KeyBrake", "com.apple.finder", "com.apple.dock"],
-        recoveryRules: ["restoreOnlyChangesMadeByKeyBrake", "neverAutomaticallyRestoreTCCGrants", "neverAutomaticallyRestartRemoteControlApps", "preserveMouseDrivenRecovery", "retainUnresolvedRecoverySnapshot"],
+        protectedTargets: [
+            "org.realitygood.KeyBrake",
+            "com.apple.finder",
+            "com.apple.dock",
+            "com.apple.SystemUIServer",
+            "com.apple.WindowServer",
+            "com.apple.loginwindow",
+            "com.apple.launchd",
+            "kernel_task"
+        ],
+        recoveryRules: [
+            "restoreOnlyChangesMadeByKeyBrake",
+            "neverAutomaticallyRestoreTCCGrants",
+            "neverAutomaticallyRestartRemoteControlApps",
+            "preserveMouseDrivenRecovery",
+            "retainUnresolvedRecoverySnapshot",
+            "neverReconnectVPNAutomatically"
+        ],
         forbiddenClaims: ["Computer Secured", "Hacker Removed", "Threat Neutralized", "System Safe", "All Remote Access Eliminated"],
         approvedThreatTerms: ["runaway user-space input automation", "unauthorized input automation", "fraudulent remote-support sessions", "untrusted remote-control software", "unexpected remote access"]
     )

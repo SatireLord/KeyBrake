@@ -8,14 +8,17 @@ struct KeyBrakeApp: App {
     var body: some Scene {
         MenuBarExtra {
             KeyBrakeMenuView(model: model)
+                .onAppear { appDelegate.attach(model: model) }
         } label: {
             Label("KeyBrake", systemImage: model.operationalState == .normal ? "shield" : "exclamationmark.shield")
         }
         .menuBarExtraStyle(.menu)
         .onChange(of: model.isShowingRecoveryPanel) { _, show in
-            if show {
-                Task { @MainActor in
+            Task { @MainActor in
+                if show {
                     appDelegate.presentRecoveryPanel(model: model)
+                } else {
+                    appDelegate.hideRecoveryPanel()
                 }
             }
         }
@@ -23,6 +26,7 @@ struct KeyBrakeApp: App {
         Window("KeyBrake Settings", id: "settings") {
             SettingsView(model: model)
                 .frame(width: 620, height: 560)
+                .onAppear { appDelegate.attach(model: model) }
         }
         .defaultSize(width: 620, height: 560)
 

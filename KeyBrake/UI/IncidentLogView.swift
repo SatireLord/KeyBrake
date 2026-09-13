@@ -16,13 +16,13 @@ struct IncidentLogView: View {
             List(model.incidents) { incident in
                 DisclosureGroup {
                     ForEach(incident.steps) { step in
-                        Text("\(step.targetDisplayName): \(step.operationDescription) [\(step.outcome.rawValue)]")
+                        Text("\(step.targetDisplayName): \(step.operationDescription) [\(step.outcome.displayTitle)]")
                             .font(.callout)
                     }
                 } label: {
                     VStack(alignment: .leading) {
                         Text(incident.initiatingAction).font(.headline)
-                        Text("\(incident.finalState.rawValue) · \(incident.resolution)")
+                        Text("\(incident.finalState.displayTitle) · \(incident.resolution)")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

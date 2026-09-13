@@ -1,18 +1,24 @@
 # Security policy
 
-KeyBrake is experimental macOS recovery software that can stop processes, mutate network settings, reset privacy decisions, and invoke a privileged helper. Treat all reports as high priority.
+KeyBrake is experimental macOS recovery software that can stop processes, mutate network settings, reset privacy decisions, and invoke a privileged helper. Treat reports as high priority.
 
 ## Supported versions
 
 | Version | Supported |
 | --- | --- |
-| 0.1.x (private prototype) | Best-effort review on the active development branch |
+| 0.1.x (experimental prototype) | Best-effort review on the active development branch |
+
+The GitHub repository is currently private. Downloadable binaries are unsigned.
 
 ## Reporting a vulnerability
 
 Do not open a public GitHub issue for exploitable defects in privileged execution, recovery bypass, or authorization boundaries.
 
-Instead, email the maintainer with:
+Use GitHub private vulnerability reporting:
+
+https://github.com/SatireLord/KeyBrake/security/advisories/new
+
+Include:
 
 1. A concise description of the impact
 2. macOS version and hardware class

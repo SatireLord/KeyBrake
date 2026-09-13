@@ -9,6 +9,19 @@ public enum KeyBrakeOperationalState: String, Codable, Sendable, CaseIterable {
     case partiallyIsolated
     case restoring
     case recoveryRequired
+
+    public var displayTitle: String {
+        switch self {
+        case .normal: return "Normal Input"
+        case .stoppingLocalAutomation: return "Stopping Local Automation"
+        case .localAutomationStopped: return "Local Automation Stopped"
+        case .isolating: return "Isolating Network"
+        case .isolated: return "Network Isolated"
+        case .partiallyIsolated: return "Partial Isolation"
+        case .restoring: return "Restoring Human Control"
+        case .recoveryRequired: return "Recovery Required"
+        }
+    }
 }
 
 public enum OperationOutcome: String, Codable, Sendable, CaseIterable {
@@ -20,6 +33,19 @@ public enum OperationOutcome: String, Codable, Sendable, CaseIterable {
     case unsupported
     case conflict
     case alreadyInDesiredState
+
+    public var displayTitle: String {
+        switch self {
+        case .planned: return "Planned"
+        case .attempted: return "Attempted"
+        case .succeeded: return "Succeeded"
+        case .failed: return "Failed"
+        case .skipped: return "Skipped"
+        case .unsupported: return "Unsupported"
+        case .conflict: return "Conflict"
+        case .alreadyInDesiredState: return "Already in desired state"
+        }
+    }
 }
 
 public struct OperationStepResult: Identifiable, Codable, Sendable, Equatable {

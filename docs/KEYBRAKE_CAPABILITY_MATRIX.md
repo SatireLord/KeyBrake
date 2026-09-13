@@ -14,7 +14,8 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Release surface | Status | Reason |
 | --- | --- | --- |
-| Public source | **HOLD** | Truth-and-identity pass required before public visibility |
+| Source tree | Prepared | License, security contact, community files, and redacted verification are in the implementation branch |
+| GitHub visibility | **HOLD** | Repository remains private until the owner identity and release decision |
 | Downloadable binary | **BLOCKED** | Local unsigned bundle is proven; signing, helper approval, and live verification remain external gates |
 
 ## Capability inventory
@@ -46,7 +47,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Feature contract resource | `implemented` | Bundled JSON with regression test |
 | Mouse-only UI proof | `planned` | Computer Use / accessibility proof not obtained |
 | Developer ID signing / notarization | `planned` | No signing identity is configured on this host |
-| Open-source license file | `implemented` | MIT `LICENSE` at repository root |
+| Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
 
 ## Checklist realignment
 

@@ -45,7 +45,11 @@ public final class SystemProcessController: ProcessControlling, @unchecked Senda
     public func matchingProcesses(for target: TargetDefinition) -> [ProcessIdentity] {
         NSWorkspace.shared.runningApplications.compactMap { application in
             guard let bundleIdentifier = application.bundleIdentifier,
-                  target.bundleIdentifier == bundleIdentifier || target.bundleIdentifier == nil else { return nil }
+                  let expectedBundleIdentifier = target.bundleIdentifier,
+                  expectedBundleIdentifier == bundleIdentifier else { return nil }
+            if let expectedExecutable = target.executableURL, expectedExecutable != application.executableURL {
+                return nil
+            }
             guard TargetRegistry.canEnroll(target, applicationBundleIdentifier: bundleIdentifier, executableURL: application.executableURL) else { return nil }
             return ProcessIdentity(processIdentifier: application.processIdentifier, bundleIdentifier: bundleIdentifier, executableURL: application.executableURL, launchDate: application.launchDate)
         }

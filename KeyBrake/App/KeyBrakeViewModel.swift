@@ -19,6 +19,7 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published var isShowingRecoveryPanel = false
     @Published var isShowingIncidentLog = false
     @Published var isShowingSettings = false
+    private var allowImmediateQuit = false
 
     let coordinator: EmergencyCoordinator
     let incidentStore: IncidentStore
@@ -83,6 +84,34 @@ final class KeyBrakeViewModel: ObservableObject {
             let selection = RecoverySelection(restoreNetwork: !restoreSharing, sharingServiceIDs: restoreSharing ? ["remote-login", "remote-apple-events"] : [], restartEspanso: false)
             let incident = await coordinator.restoreHumanControl(selection: selection)
             await apply(incident: incident)
+        }
+    }
+
+    func keepIsolation() {
+        isShowingRecoveryPanel = false
+    }
+
+    var shouldAllowImmediateQuit: Bool { allowImmediateQuit }
+
+    func requestQuit() {
+        if allowImmediateQuit || !hasRecovery {
+            NSApplication.shared.terminate(nil)
+            return
+        }
+        let alert = NSAlert()
+        alert.messageText = "Recovery is still required"
+        alert.informativeText = "KeyBrake changed system state that has not been fully resolved. Choose a mouse-operated action."
+        alert.addButton(withTitle: "Restore Network")
+        alert.addButton(withTitle: "Keep Isolation and Quit")
+        alert.addButton(withTitle: "Cancel")
+        switch alert.runModal() {
+        case .alertFirstButtonReturn:
+            restoreHumanControl()
+        case .alertSecondButtonReturn:
+            allowImmediateQuit = true
+            NSApplication.shared.terminate(nil)
+        default:
+            break
         }
     }
 

@@ -25,38 +25,14 @@ struct KeyBrakeMenuView: View {
         Button("Open Incident Log") { openWindow(id: "incidents") }
         Divider()
         Button("Settings…") { openWindow(id: "settings") }
-        Button("Quit KeyBrake") { requestQuit() }
+        Button("Quit KeyBrake") { model.requestQuit() }
     }
 
     private var statusText: String {
-        switch model.operationalState {
-        case .normal: return "Normal Input"
-        case .stoppingLocalAutomation: return "Stopping Local Automation"
-        case .localAutomationStopped: return "Local Automation Stopped"
-        case .isolating: return "Isolating Network"
-        case .isolated: return "Network Isolated"
-        case .partiallyIsolated: return "Partial Isolation"
-        case .restoring: return "Restoring Human Control"
-        case .recoveryRequired: return "Recovery Required"
-        }
+        model.operationalState.displayTitle
     }
 
     private var statusSymbol: String {
         model.operationalState == .normal ? "checkmark.circle" : "exclamationmark.triangle"
-    }
-
-    private func requestQuit() {
-        guard model.hasRecovery else { NSApplication.shared.terminate(nil); return }
-        let alert = NSAlert()
-        alert.messageText = "Recovery is still required"
-        alert.informativeText = "KeyBrake changed system state that has not been fully resolved. Choose a mouse-operated action."
-        alert.addButton(withTitle: "Restore Network")
-        alert.addButton(withTitle: "Keep Isolation and Quit")
-        alert.addButton(withTitle: "Cancel")
-        switch alert.runModal() {
-        case .alertFirstButtonReturn: model.restoreHumanControl()
-        case .alertSecondButtonReturn: NSApplication.shared.terminate(nil)
-        default: break
-        }
     }
 }

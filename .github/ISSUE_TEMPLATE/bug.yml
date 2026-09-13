@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a source or local-build defect. Do not use this for exploitable helper or recovery issues.
+title: "[bug] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use GitHub Security Advisories for privileged-helper, recovery-bypass, or authorization defects.
+        Do not run live network isolation on a machine without a known recovery path.
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "15.x"
+    validations:
+      required: true
+  - type: input
+    id: keybrake
+    attributes:
+      label: KeyBrake version or commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands run
+      description: Exact build or test commands, if any.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety
+      options:
+        - label: I did not run live network isolation, TCC reset, or helper installation without a recovery path.
+          required: true
+        - label: This report does not describe an exploitable privileged-helper or recovery bypass. Those go to SECURITY.md.
+          required: true

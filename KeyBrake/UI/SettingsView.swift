@@ -113,8 +113,9 @@ struct SettingsView: View {
             }
 
             Section("Recovery") {
-                Toggle("Open recovery panel after isolation", isOn: .constant(true))
-                Toggle("Preserve incident history", isOn: .constant(true))
+                Text("After Stop Remote Access, KeyBrake always presents the recovery panel and keeps incident history until you clear resolved records from the incident log.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)

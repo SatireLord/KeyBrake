@@ -99,7 +99,12 @@ public struct HelperCommandValidator: Sendable {
     private func validIdentifier(_ value: String) -> Bool { !value.isEmpty && value.count <= 200 && !value.contains(where: { $0.isWhitespace || $0 == ";" || $0 == "|" || $0 == "&" }) }
     private func validName(_ value: String) -> Bool { !value.isEmpty && value.count <= 200 && !value.contains(where: { $0 == "\n" || $0 == "\r" }) }
     private func validDevice(_ value: String) -> Bool { value.range(of: "^[A-Za-z0-9._-]+$", options: .regularExpression) != nil }
-    private func validLaunchdLabel(_ value: String) -> Bool { validIdentifier(value) && !value.hasPrefix("com.apple.") && !value.localizedCaseInsensitiveContains("keybrake") }
+    private func validLaunchdLabel(_ value: String) -> Bool {
+        validIdentifier(value)
+            && !value.contains("/")
+            && !value.lowercased().hasPrefix("com.apple.")
+            && !value.localizedCaseInsensitiveContains("keybrake")
+    }
     private func absolutePath(_ value: String) -> Bool { value.hasPrefix("/") && !value.contains("..") && !value.contains(where: { $0 == ";" || $0 == "|" || $0 == "&" }) }
 }
 

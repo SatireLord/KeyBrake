@@ -2,7 +2,7 @@
 
 ## Objective
 
-Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-driven controls stop approved input automation, isolate selected network and remote-access paths, record exact outcomes, and recover only state KeyBrake changed.
+Ship a native macOS menu-bar failsafe whose independent mouse-driven controls stop approved input automation, isolate selected network and remote-access paths, record exact outcomes, and recover only state KeyBrake changed.
 
 ## Invariants
 
@@ -16,14 +16,14 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 
 ## Current control state
 
-- Repository: KeyBrake git checkout (canonical path recorded in local agent docs only)
-- GitHub: private `SatireLord/KeyBrake` exists and `main` is synchronized at `91a1cf6`
+- Repository: KeyBrake git checkout
+- GitHub: private `SatireLord/KeyBrake`; default `main` is at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `8a77357`, with the documentation receipt to follow this source commit
-- Release status: public source **HOLD** (private until identity and release decision); downloadable binary **BLOCKED** (unsigned local bundle only; signed helper approval and live recovery remain external)
-- Portfolio release version: `0.1.0` (build `1`), private until release approval
-- Next action: human review of PR #1 and PR #660; if release approval, a Developer ID identity, and a recoverable test Mac become available, run staged signed-host, helper-approval, live-recovery, and mouse-only proof
-- External blockers: Agent-Cache direct enforcement is ready, while task bootstrap reports a CodeGraph query failure as `structural_owner_unresolved`; signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `8a77357`
+- Release status: GitHub visibility **HOLD**; downloadable binary **BLOCKED** (unsigned local bundle only)
+- Version: `0.1.0` (build `1`)
+- Next action: human review of PR #1; if the owner then chooses a public-source identity, merge #1 onto `main` before flipping visibility. Signed-host, helper-approval, live-recovery, and mouse-only proof remain separate external gates
+- External blockers: signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
 
 ## Feature inventory
 
@@ -40,7 +40,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 | Helper boundary | missing | source/build implemented; verified launchd identity checks and coordinator routing are fixture-proven; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
 | Menu/recovery/settings UI | missing | persisted policy, helper status, automatic recovery presentation, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
-| Focused tests | missing | 31 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
+| Focused tests | missing | 32 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
 ## PM checklist
@@ -113,7 +113,7 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-066 Add VoiceOver labels and non-color-only status communication.
 [!] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests; focused source seams pass, while live UI and process-respawn proof remain host-dependent.
 [x] KB-068 Run focused local tests during implementation.
-[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM/XCTest proof passed 27 tests with 0 failures.
+[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM/XCTest proof passed 32 tests with 0 failures.
 [x] KB-070 Run the final local Release build; `xcodebuild` produced and validated the unsigned universal Release app bundle with `CODE_SIGNING_ALLOWED=NO`.
 [x] KB-071 Verify helper embedding, helper plist placement, feature-contract resource, entitlements, and build settings; the unsigned app bundle now validates the helper executable and LaunchDaemons plist layout.
 [!] KB-072 Verify signing and Gatekeeper only when credentials permit proof.
@@ -134,8 +134,8 @@ Ship a portfolio-ready native macOS menu-bar failsafe whose independent mouse-dr
 [x] KB-087 Compare the baseline and final feature inventories.
 [x] KB-088 Prove that no requested or existing feature was removed; baseline contained no product feature.
 [x] KB-089 Compute and record required SHA-256 checksums.
-[x] KB-090 Commit every coherent deliverable; source and release-boundary files are delivered in `ecade547`.
-[x] KB-091 Push every implementation commit; `ecade547` reached the active PR branch.
+[x] KB-090 Commit every coherent deliverable; source implementation checkpoint is `8a77357` on the active PR branch.
+[x] KB-091 Push every implementation commit; the active PR branch tracks origin at 0/0 after each delivery.
 [x] KB-092 Verify task-branch upstream divergence at 0/0 after the current lane is delivered.
 [x] KB-093 Verify main versus origin/main divergence at 0/0.
 [x] KB-094 Update the existing PR or create the single PR; PR #1 is open against `main`.
