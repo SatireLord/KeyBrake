@@ -51,4 +51,15 @@ public struct FeatureContract: Codable, Sendable, Equatable {
     public static func load(from url: URL) throws -> FeatureContract {
         try JSONDecoder().decode(FeatureContract.self, from: Data(contentsOf: url))
     }
+
+    public static func current(resourceURL: URL?) -> FeatureContract {
+        guard let resourceURL, let loaded = try? load(from: resourceURL) else {
+            return fallback
+        }
+        return loaded
+    }
+
+    public static func current(in bundle: Bundle = .main) -> FeatureContract {
+        current(resourceURL: bundle.url(forResource: "KeyBrakeFeatureContract", withExtension: "json"))
+    }
 }

@@ -23,6 +23,7 @@ final class KeyBrakeViewModel: ObservableObject {
 
     let coordinator: EmergencyCoordinator
     let incidentStore: IncidentStore
+    let featureContract: FeatureContract
 
     private static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
     private static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
@@ -30,6 +31,7 @@ final class KeyBrakeViewModel: ObservableObject {
     init(coordinator: EmergencyCoordinator = .live(), incidentStore: IncidentStore = IncidentStore()) {
         self.coordinator = coordinator
         self.incidentStore = incidentStore
+        self.featureContract = FeatureContract.current()
         self.configuredTargets = Self.loadConfiguredTargets()
         self.isolationPolicy = Self.loadIsolationPolicy()
         self.launchAtLoginEnabled = Self.readLaunchAtLoginStatus()
@@ -89,6 +91,14 @@ final class KeyBrakeViewModel: ObservableObject {
 
     func keepIsolation() {
         isShowingRecoveryPanel = false
+    }
+
+    func openIncidentLog() {
+        isShowingIncidentLog = true
+    }
+
+    func openSettings() {
+        isShowingSettings = true
     }
 
     var shouldAllowImmediateQuit: Bool { allowImmediateQuit }

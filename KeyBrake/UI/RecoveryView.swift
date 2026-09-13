@@ -3,7 +3,6 @@ import SwiftUI
 
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
-    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -25,7 +24,7 @@ struct RecoveryView: View {
                 .disabled(model.isBusy)
             Button("Open Privacy & Security Settings") { model.openPrivacySettings() }
             Button("Open Incident Log") {
-                openWindow(id: "incidents")
+                model.openIncidentLog()
             }
             Divider()
             HStack {

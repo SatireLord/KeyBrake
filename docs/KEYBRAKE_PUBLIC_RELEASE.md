@@ -17,7 +17,8 @@ This is the operator checklist for making KeyBrake source public. Agents must no
 - `SECURITY.md` with GitHub private vulnerability reporting
 - `CODE_OF_CONDUCT.md`, `CHANGELOG.md`, issue and pull-request templates
 - Capability matrix, recovery contract, safe demo, and verification ledger
-- Local SwiftPM tests and unsigned Release build as the default proof path
+- Local SwiftPM tests, Xcode tests, and unsigned Release build as the default proof path
+- Bundled feature contract is loaded at runtime with fallback; recovery panel opens the incident log through the menu-bar window bridge
 
 ## Operator-only sequence
 

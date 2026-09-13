@@ -24,11 +24,23 @@ final class FeatureContractTests: XCTestCase {
     }
 
     func testBundledFeatureContractMatchesFallback() throws {
-        let url = URL(fileURLWithPath: #filePath)
+        let bundled = try FeatureContract.load(from: Self.bundledContractURL)
+        XCTAssertEqual(bundled, FeatureContract.fallback)
+    }
+
+    func testCurrentLoadsBundledJSONAndFallsBackWhenMissing() throws {
+        XCTAssertEqual(FeatureContract.current(resourceURL: Self.bundledContractURL), FeatureContract.fallback)
+        XCTAssertEqual(FeatureContract.current(resourceURL: nil), FeatureContract.fallback)
+        XCTAssertEqual(
+            FeatureContract.current(resourceURL: URL(fileURLWithPath: "/tmp/keybrake-missing-contract.json")),
+            FeatureContract.fallback
+        )
+    }
+
+    private static var bundledContractURL: URL {
+        URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .appendingPathComponent("Resources/KeyBrakeFeatureContract.json")
-        let bundled = try FeatureContract.load(from: url)
-        XCTAssertEqual(bundled, FeatureContract.fallback)
     }
 }

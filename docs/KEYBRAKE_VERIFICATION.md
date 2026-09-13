@@ -26,12 +26,12 @@ The entries below are updated with exact commands and actual results as implemen
 | Foundation | `xcodegen generate`; `xcodebuild -list`; `xcodebuild -showBuildSettings` | pass; native targets, schemes, bundle identifier, entitlements, helper plist, and feature-contract resource are present |
 | Core type-check | `xcrun swiftc -typecheck -parse-as-library` over `KeyBrakeCore/*.swift` | pass |
 | App/helper type-check | module emission followed by app and helper `swiftc -typecheck` | pass |
-| Complete tests | `swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMShipRetry` | pass; 32 tests, 0 failures |
+| Complete tests | `swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMContinue` | pass; 33 tests, 0 failures |
 | Version-gated privacy allowlist | `swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMPrivacyGated --filter PrivacyControllerTests` | pass; 4 tests, 0 failures; minimum macOS version and catalog membership are enforced before `tccutil` |
 | SwiftPM app build | `swift build --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMKB031 --product KeyBrake` | pass; executable product compiled and linked; receipt label `keybrake-kb031-swiftpm-build` |
 | Xcode Debug build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -derivedDataPath /tmp/KeyBrakeKB031DerivedData CODE_SIGNING_ALLOWED=NO build` | pass; exit 0; helper target compiled and embedded into the unsigned Debug app |
-| Xcode Release build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -derivedDataPath /tmp/KeyBrakeShipReleaseRetry -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build` | pass; ** BUILD SUCCEEDED **; unsigned app/helper bundle at `/tmp/KeyBrakeShipReleaseRetry/Build/Products/Release/KeyBrake.app` with helper executable, LaunchDaemons plist, and feature contract |
-| Xcode tests | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -derivedDataPath /tmp/KeyBrakeKB031XcodeTestDerivedData CODE_SIGNING_ALLOWED=NO test` | pass; exit 0; 31 tests, 0 failures |
+| Xcode Release build | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -derivedDataPath /tmp/KeyBrakeReleaseContinue -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build` | pass; ** BUILD SUCCEEDED **; unsigned app/helper bundle at `/tmp/KeyBrakeReleaseContinue/Build/Products/Release/KeyBrake.app` with helper executable, LaunchDaemons plist, and feature contract |
+| Xcode tests | `xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -derivedDataPath /tmp/KeyBrakeXcodeTestContinue -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO test` | pass; ** TEST SUCCEEDED **; 33 tests, 0 failures |
 | App/helper bundle contents | `find`, `plutil`, `lipo`, and Mach-O inspection against `/tmp/KeyBrakeKB031ReleaseDerivedData/Build/Products/Release/KeyBrake.app` | pass; app and helper binaries, embedded `KeyBrakePrivilegedHelper`, `Contents/Library/LaunchDaemons/org.realitygood.KeyBrake.Helper.plist`, framework, feature contract, and bundle metadata are present |
 | Runtime launch | staged SwiftPM executable in a temporary `.app`, added `CFBundleExecutable`, and launched with `open -n` | pass; process launched and exited without a crash; no persistent live app was left running |
 | Runtime UI | menu click and accessibility session | not claimed; no mouse-only proof is asserted |
@@ -62,9 +62,9 @@ ca01abde03d3e8c5d560a52cedd8a75aa52ceb73bec02132a2fa98b042a6fc95  KeyBrakePrivil
 4f874840014b8ffd4eecc46123c55d107356b4e7bac00d5e6c2c027bf454c900  KeyBrakeCore/EmergencyCoordinator.swift
 c595a7172f250472c81a7788cdb13cd8f13f2493a79ed476c8ef1e9b3f83b323  KeyBrakeCore/NetworkController.swift
 a228776765d99a6d93ab1a94100e61e1bdadd31290b71d2f2791c50002f3f847  KeyBrakeCore/SharingServiceController.swift
-a297046ff0939aaf39d240244143ce793a6cbee5048b375f3ef0adfaad8c9a05  KeyBrake/App/KeyBrakeViewModel.swift
+f9a32d8dce8bd950a1e4b9d0fc2a66ff3d32eb08f9f3cecb4c62d6e2cdb32919  KeyBrake/App/KeyBrakeViewModel.swift
 865a0964e361b267563040205e45601b4219fbb9199db93402509614437a107c  KeyBrake/UI/SettingsView.swift
-36028d8869437a4b9e407bdee4e5dd2cc4e4210c94bc1f35740d88905fa62f97  KeyBrake/UI/RecoveryView.swift
+cd9803dc5388451387916248fe36f750f535e576f4a0b419827ce21eade91ba5  KeyBrake/UI/RecoveryView.swift
 c9837ceb1acf0f105568c654976de8838589cd35e2d95684c90dc574649d2ba1  KeyBrakeCore/ProcessController.swift
 cfe335cd46f597a8cf9211d4ab888c94911659e38502ca0b86deb16df082b8e1  KeyBrakeCore/CommandRunner.swift
 40a6cd6e831db57a11a292a573ce4f85918446791a8260856e5d1c10e52d389e  KeyBrakeCore/RecoveryStore.swift

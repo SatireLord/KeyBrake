@@ -10,7 +10,7 @@ struct KeyBrakeApp: App {
             KeyBrakeMenuView(model: model)
                 .onAppear { appDelegate.attach(model: model) }
         } label: {
-            Label("KeyBrake", systemImage: model.operationalState == .normal ? "shield" : "exclamationmark.shield")
+            WindowLaunchBridge(model: model)
         }
         .menuBarExtraStyle(.menu)
         .onChange(of: model.isShowingRecoveryPanel) { _, show in
@@ -38,5 +38,26 @@ struct KeyBrakeApp: App {
         Window("KeyBrake Recovery", id: "recovery") {
             RecoveryView(model: model)
         }
+    }
+}
+
+private struct WindowLaunchBridge: View {
+    @ObservedObject var model: KeyBrakeViewModel
+    @Environment(\.openWindow) private var openWindow
+
+    var body: some View {
+        Label("KeyBrake", systemImage: model.operationalState == .normal ? "shield" : "exclamationmark.shield")
+            .onChange(of: model.isShowingIncidentLog) { _, show in
+                if show {
+                    openWindow(id: "incidents")
+                    model.isShowingIncidentLog = false
+                }
+            }
+            .onChange(of: model.isShowingSettings) { _, show in
+                if show {
+                    openWindow(id: "settings")
+                    model.isShowingSettings = false
+                }
+            }
     }
 }

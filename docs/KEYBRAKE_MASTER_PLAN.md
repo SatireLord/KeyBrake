@@ -40,7 +40,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 | Helper boundary | missing | source/build implemented; verified launchd identity checks and coordinator routing are fixture-proven; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
 | Menu/recovery/settings UI | missing | persisted policy, helper status, automatic recovery presentation, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
-| Focused tests | missing | 32 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
+| Focused tests | missing | 33 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
 ## PM checklist
@@ -113,7 +113,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [x] KB-066 Add VoiceOver labels and non-color-only status communication.
 [!] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests; focused source seams pass, while live UI and process-respawn proof remain host-dependent.
 [x] KB-068 Run focused local tests during implementation.
-[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM/XCTest proof passed 32 tests with 0 failures.
+[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM/XCTest proof passed 33 tests with 0 failures.
 [x] KB-070 Run the final local Release build; `xcodebuild` produced and validated the unsigned universal Release app bundle with `CODE_SIGNING_ALLOWED=NO`.
 [x] KB-071 Verify helper embedding, helper plist placement, feature-contract resource, entitlements, and build settings; the unsigned app bundle now validates the helper executable and LaunchDaemons plist layout.
 [!] KB-072 Verify signing and Gatekeeper only when credentials permit proof.
