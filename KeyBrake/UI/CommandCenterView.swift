@@ -11,6 +11,7 @@ import SwiftUI
 // consumers: KeyBrakeApp; KeyBrakeMenuView; KeyBrakeViewModel; Agent Display
 // owner: KeyBrakeCommandCenterView
 // QoL-005: the Command Center header, state card, recovery card, and badge share the hydration-aware state boundary.
+// QoL-010: Command Center state-changing controls explain their busy disabled state while review navigation remains available.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -98,6 +99,13 @@ struct KeyBrakeCommandCenterView: View {
                 subtitle: "Use the smallest action that matches the situation. KeyBrake records and verifies each operation."
             )
 
+            if model.isBusy {
+                Text("Emergency actions are temporarily unavailable while KeyBrake completes the current operation. Review status or incident history while you wait.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
             VStack(alignment: .leading, spacing: 10) {
                 Button {
                     model.stopSkynetLocally()
@@ -111,7 +119,7 @@ struct KeyBrakeCommandCenterView: View {
                 .buttonStyle(.bordered)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .accessibilityIdentifier("keybrake.command-center.stop-local-automation")
-                .accessibilityHint("Stops approved local input automation without changing network or privacy settings")
+                .accessibilityHint(commandCenterActionHint(description: "Stops approved local input automation without changing network or privacy settings", disablesWhileBusy: true))
                 .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
 
                 Button {
@@ -127,7 +135,7 @@ struct KeyBrakeCommandCenterView: View {
                 .tint(.orange)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .accessibilityIdentifier("keybrake.command-center.stop-remote-access")
-                .accessibilityHint("Saves recovery state before applying the selected isolation profile")
+                .accessibilityHint(commandCenterActionHint(description: "Saves recovery state before applying the selected isolation profile", disablesWhileBusy: true))
                 .disabled(model.isBusy)
             }
         }
@@ -155,6 +163,13 @@ struct KeyBrakeCommandCenterView: View {
                     recoveryInventory(snapshot)
                 }
 
+                if model.isBusy {
+                    Text("The recovery panel is temporarily unavailable while KeyBrake completes the current operation. Incident history and settings remain available.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
                 Button("Open Recovery Panel") {
                     model.isShowingRecoveryPanel = true
                 }
@@ -162,7 +177,7 @@ struct KeyBrakeCommandCenterView: View {
                 .tint(.orange)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .accessibilityIdentifier("keybrake.command-center.open-recovery-panel")
-                .accessibilityHint("Opens the mouse-operated recovery decision panel")
+                .accessibilityHint(commandCenterActionHint(description: "Opens the mouse-operated recovery decision panel", disablesWhileBusy: true))
                 .disabled(model.isBusy)
             }
         }
@@ -278,6 +293,11 @@ struct KeyBrakeCommandCenterView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
+    }
+
+    private func commandCenterActionHint(description: String, disablesWhileBusy: Bool) -> String {
+        guard disablesWhileBusy && model.isBusy else { return description }
+        return "Unavailable while KeyBrake completes the current operation."
     }
 
     private func navigationLabel(title: String, detail: String, systemImage: String) -> some View {
