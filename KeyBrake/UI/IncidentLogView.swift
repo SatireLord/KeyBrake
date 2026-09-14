@@ -10,6 +10,7 @@ import SwiftUI
 // consumers: KeyBrakeCommandCenterView; KeyBrakeMenuView; KeyBrakeViewModel
 // owner: IncidentLogView
 // QoL-001: clear-history availability follows recorded resolved outcomes; storage mutation remains owned by KeyBrakeViewModel.clearResolvedHistory.
+// QoL-005: the recovery summary stays in a checking state until launch recovery hydration is complete.
 struct IncidentLogView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -38,11 +39,15 @@ struct IncidentLogView: View {
     }
 
     private var recoveryStatusTitle: String {
-        model.hasRecovery ? "Recovery decision pending" : "No recovery decision pending"
+        guard model.isRecoveryStatusKnown else { return "Checking Recovery Status" }
+        return model.hasRecovery ? "Recovery decision pending" : "No recovery decision pending"
     }
 
     private var recoveryStatusDetail: String {
-        model.hasRecovery
+        guard model.isRecoveryStatusKnown else {
+            return "KeyBrake is confirming whether an unresolved recovery snapshot exists."
+        }
+        return model.hasRecovery
             ? "Use the recovery panel to choose the next action."
             : "KeyBrake has no unresolved recovery snapshot."
     }

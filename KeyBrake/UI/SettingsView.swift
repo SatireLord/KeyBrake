@@ -12,6 +12,7 @@ import UniformTypeIdentifiers
 // consumers: KeyBrakeCommandCenterView; KeyBrakeMenuView; KeyBrakeViewModel
 // owner: SettingsView
 // QoL-001: the protection overview uses the shared state tint so the destination communicates status before controls.
+// QoL-005: the recovery summary stays in a checking state until launch recovery hydration is complete.
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -55,6 +56,20 @@ struct SettingsView: View {
         return "\(count) configured \(count == 1 ? "target" : "targets")"
     }
 
+    private var recoverySummaryTitle: String {
+        guard model.isRecoveryStatusKnown else { return "Checking" }
+        return model.hasRecovery ? "Decision pending" : "No decision pending"
+    }
+
+    private var recoverySummaryDetail: String {
+        guard model.isRecoveryStatusKnown else {
+            return "KeyBrake is confirming whether an unresolved recovery snapshot exists."
+        }
+        return model.hasRecovery
+            ? "Use the recovery panel to choose the next action."
+            : "KeyBrake has no unresolved recovery snapshot."
+    }
+
     var body: some View {
         Form {
             Section("Current protection state") {
@@ -86,8 +101,9 @@ struct SettingsView: View {
                     )
                     LabeledContent(
                         "Recovery",
-                        value: model.hasRecovery ? "Decision pending" : "No decision pending"
+                        value: recoverySummaryTitle
                     )
+                    .help(recoverySummaryDetail)
                 }
                 .accessibilityIdentifier("keybrake.settings.overview")
             }

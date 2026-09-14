@@ -10,6 +10,7 @@ import SwiftUI
 // states: checking; ready; busy; recovery-required; empty; incident-present; degraded
 // consumers: KeyBrakeApp; KeyBrakeMenuView; KeyBrakeViewModel; Agent Display
 // owner: KeyBrakeCommandCenterView
+// QoL-005: the Command Center header, state card, recovery card, and badge share the hydration-aware state boundary.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -20,7 +21,7 @@ struct KeyBrakeCommandCenterView: View {
                 header
                 statusCard
                 emergencyActions
-                if model.hasRecovery {
+                if model.isRecoveryStatusKnown && model.hasRecovery {
                     recoveryCard
                 }
                 recentIncidentCard
@@ -35,11 +36,23 @@ struct KeyBrakeCommandCenterView: View {
         .accessibilityLabel("KeyBrake Command Center")
     }
 
+    private var hydrationAwareStatusSymbol: String {
+        model.isRecoveryStatusKnown
+            ? KeyBrakeStatusPresentation.symbol(for: model.operationalState)
+            : "hourglass"
+    }
+
+    private var hydrationAwareStatusTint: Color {
+        model.isRecoveryStatusKnown
+            ? KeyBrakeStatusPresentation.tint(for: model.operationalState)
+            : Color.secondary
+    }
+
     private var header: some View {
         HStack(alignment: .top, spacing: 14) {
-            Image(systemName: KeyBrakeStatusPresentation.symbol(for: model.operationalState))
+            Image(systemName: hydrationAwareStatusSymbol)
                 .font(.system(size: 38, weight: .semibold))
-                .foregroundStyle(KeyBrakeStatusPresentation.tint(for: model.operationalState))
+                .foregroundStyle(hydrationAwareStatusTint)
                 .frame(width: 48, height: 48)
 
             VStack(alignment: .leading, spacing: 5) {
@@ -57,9 +70,9 @@ struct KeyBrakeCommandCenterView: View {
     private var statusCard: some View {
         GroupBox {
             HStack(alignment: .top, spacing: 16) {
-                Image(systemName: KeyBrakeStatusPresentation.symbol(for: model.operationalState))
+                Image(systemName: hydrationAwareStatusSymbol)
                     .font(.system(size: 28, weight: .semibold))
-                    .foregroundStyle(KeyBrakeStatusPresentation.tint(for: model.operationalState))
+                    .foregroundStyle(hydrationAwareStatusTint)
                     .frame(width: 42, height: 42)
 
                 VStack(alignment: .leading, spacing: 5) {
