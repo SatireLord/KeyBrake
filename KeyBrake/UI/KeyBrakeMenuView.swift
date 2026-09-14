@@ -11,12 +11,13 @@ import SwiftUI
 // owner: KeyBrakeMenuView
 // QoL-001: menu actions carry stable visual symbols while their existing targets, labels, and disabled-state rules remain unchanged.
 // QoL-004: the menu status label and its help text share the same hydration-aware state explanation.
+// QoL-007: the menu header uses the same hydration-aware symbol as the adjacent status row.
 struct KeyBrakeMenuView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Label("KeyBrake", systemImage: "checkmark.shield")
+        Label("KeyBrake", systemImage: statusSymbol)
             .font(.headline)
         Divider()
         Label(statusText, systemImage: statusSymbol)
