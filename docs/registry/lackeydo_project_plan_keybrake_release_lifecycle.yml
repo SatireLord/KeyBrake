@@ -1,0 +1,330 @@
+project_plan:
+  objective: "Repair the six findings in the KeyBrake PR #1 release-readiness review, prove the emergency transaction and recovery-window lifecycle, correct stale delivery documentation, and leave the private PR unmerged for human review."
+  scope_preserved: true
+  repository:
+    name: "KeyBrake"
+    root: "/Users/michaeltran/AntiGravity/KeyBrake"
+    branch: "codex/keybrake-complete-implementation"
+    head: "a3968ad0a0c9810971ab11725647c0277edd4e96"
+    upstream: "origin/codex/keybrake-complete-implementation"
+    status: "source_checkpoint_pushed_docs_closeout_pending"
+    verified_at: "20260912 05:52:26"
+  write_set:
+    rows:
+      - path: "KeyBrake/App/KeyBrakeViewModel.swift"
+        owner: "KeyBrakeViewModel.init, refresh, isBusy, hasRecovery, requestQuit"
+        intended_change: "Add a fail-closed launch-recovery readiness gate and retain the quit guard throughout every state-changing emergency transaction."
+        reason: "Findings 1 and 2 identify quit bypasses during isolating/stopping and before asynchronous recovery hydration."
+        proof: "Focused lifecycle tests, Swift compile/test, and staged live UI proof where available."
+        status: verified
+      - path: "KeyBrake/App/KeyBrakeAppDelegate.swift"
+        owner: "KeyBrakeAppDelegate.applicationShouldTerminate, attach, presentRecoveryPanel, hideRecoveryPanel"
+        intended_change: "Prevent termination when the model is unavailable, startup recovery is unresolved, or an emergency transaction is active; synchronize panel ownership."
+        reason: "The delegate currently returns terminateNow for a missing model or a non-settled state."
+        proof: "Focused delegate policy tests and compile/runtime evidence."
+        status: verified
+      - path: "KeyBrake/App/KeyBrakeApp.swift"
+        owner: "KeyBrakeApp.body recovery scene and WindowLaunchBridge"
+        intended_change: "Resolve the duplicate recovery-window lifecycle and preserve the menu-bar scene route for incident-log presentation."
+        reason: "Finding 3 identifies a SwiftUI Window and AppKit NSPanel with incomplete shared dismissal state."
+        proof: "Focused source tests plus isolated live window inspection/capture if the app can be staged."
+        status: verified
+      - path: "KeyBrake/UI/RecoveryPanelController.swift"
+        owner: "RecoveryPanelController.show and hide"
+        intended_change: "Bind NSPanel close events to the view model's recovery visibility state and make hide/show idempotent."
+        reason: "Finding 3 identifies title-bar close desynchronization and later presentation failure."
+        proof: "Focused panel lifecycle test or source/compile proof, followed by isolated UI proof."
+        status: verified
+      - path: "KeyBrake/UI/RecoveryView.swift"
+        owner: "RecoveryView body and Keep Isolation action"
+        intended_change: "Route dismissal through one owned recovery-window lifecycle without weakening the quit or restore actions."
+        reason: "The current Keep Isolation action only changes a Boolean and does not close the standalone SwiftUI Window."
+        proof: "Focused source/compile proof and isolated live interaction proof when target binding is available."
+        status: verified_by_shared_lifecycle_owner
+      - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
+        owner: "KeyBrakeMenuView Restore Human Control action"
+        intended_change: "Route recovery presentation through the canonical AppKit panel instead of opening the duplicate SwiftUI recovery window."
+        reason: "The current menu action opens Window(id: recovery), which bypasses the panel lifecycle owner."
+        proof: "Focused compile/source review and isolated recovery-panel runtime proof."
+        status: verified
+      - path: "KeyBrakeCore/KeyBrakeOperationalState.swift"
+        owner: "KeyBrakeOperationalState state classification"
+        intended_change: "Add only the smallest source-owned state predicate required by the termination policy, if the app seam cannot remain self-contained."
+        reason: "The state enum is the canonical source for busy and settled emergency lifecycle states."
+        proof: "Focused state-matrix test."
+        status: verified
+      - path: "KeyBrakeCore/ProcessController.swift"
+        owner: "ProcessIdentity matching predicate and SystemProcessController.sameIdentity"
+        intended_change: "Expose the existing exact bundle/executable/launch-date comparison through one testable predicate and reuse it at termination."
+        reason: "The review requires focused proof for exact live-process identity matching."
+        proof: "Focused process-identity matrix test and Swift compile/test."
+        status: verified
+      - path: "KeyBrakeTests/EmergencyCoordinatorTests.swift"
+        owner: "EmergencyCoordinatorTests"
+        intended_change: "Add focused state and transaction lifecycle regression coverage without mutating live host state."
+        reason: "The existing test target owns fixture-backed emergency lifecycle proof."
+        proof: "Targeted SwiftPM/XCTest filter results."
+        status: verified
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Current control state, PM checklist, proof and handoff sections"
+        intended_change: "Advance the source checkpoint to the delivered repair head and reclassify lifecycle proof until evidence exists."
+        reason: "Finding 4 identifies stale source checkpoint 8a77357 and over-strong launch/UI capability claims."
+        proof: "Exact current HEAD, focused proof receipts, and final document diff."
+        status: pending_docs_commit
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Release judgments and capability inventory"
+        intended_change: "Correct launch-time recovery and mouse-only UI statuses to match focused and live proof."
+        reason: "Finding 4 identifies implemented claims that lack the required live or focused lifecycle evidence."
+        proof: "Document review against source and receipts."
+        status: pending_docs_commit
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Current release pass, proof ledger, checksum anchors, and evidence boundaries"
+        intended_change: "Record the actual repaired source checkpoint, focused test/build/UI results, and explicit unverified boundaries."
+        reason: "The verification record currently names 8a77357 as the latest source checkpoint."
+        proof: "Commands and receipts recorded after the repair."
+        status: pending_docs_commit
+      - path: "AGENTS.md"
+        owner: "KeyBrake agent entrypoint and delivery policy"
+        intended_change: "Restore the repository's durable commit/push/checkpoint policy while preserving private-repository and no-merge boundaries."
+        reason: "Finding 5 identifies a policy reversal that can strand coherent implementation commits locally."
+        proof: "Source comparison against the prior canonical policy and final Git delivery proof."
+        status: pending_docs_commit
+      - path: ".github/ISSUE_TEMPLATE/config.yml"
+        owner: "contact_links capability matrix URL"
+        intended_change: "Point the public issue-form capability-matrix link at main instead of the temporary implementation branch."
+        reason: "Finding 6 identifies branch deletion as a future broken-link condition."
+        proof: "YAML syntax and exact URL inspection."
+        status: pending_docs_commit
+      - path: "docs/registry/lackeydo_project_plan_keybrake_release_lifecycle.yml"
+        owner: "LackeyDo task ledger"
+        intended_change: "Carry the complete requirement, checksum, proof, risk, and re-entry state through delivery."
+        reason: "LackeyDo requires one durable task map for a multi-step repair."
+        proof: "Ledger reconciliation at closeout."
+        status: active
+    excluded_paths:
+      - path: "all other existing dirty, staged, generated, or quarantined paths"
+        owner: "concurrent agents or repository owners"
+        intended_change: "none"
+        reason: "No KeyBrake dirty paths existed at the opening checkpoint; any later foreign work remains protected."
+        proof: "git status --short and exact-path staging audit"
+        status: protected
+  checksum_map:
+    manifests_consulted:
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/regression-checksums.json"
+        result: "Agent-Cache registry present; no KeyBrake consumer row selected."
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/protected_source_spans.json"
+        result: "Agent-Cache span inventory present; not a substitute for a consumer repository manifest."
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/registry/mb4_universal_source_boundary_lock.json"
+        result: "absent in Agent-Cache checkout"
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/registry/protected_source_spans.json"
+        result: "absent in Agent-Cache checkout"
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/guardrails/human_designated_stable_code_identity.xml"
+        result: "absent in Agent-Cache checkout"
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/agent-lanes/physical-code-comparison.yml"
+        result: "present; Agent-Cache lane owner"
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/agent-lanes/physical-code-comparison.xml"
+        result: "present; Agent-Cache lane projection"
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/agent-lanes/physical-code-comparison.cue"
+        result: "present; Agent-Cache lane projection"
+      - path: "/Users/michaeltran/AntiGravity/agent-cache/docs/ledgers/physical_code_comparison_lane_docs.checksums.json"
+        result: "present; Agent-Cache lane checksum ledger"
+      - path: "/Users/michaeltran/AntiGravity/KeyBrake/docs/ChecksumOutletFirst.md"
+        result: "absent in KeyBrake"
+      - path: "/Users/michaeltran/AntiGravity/KeyBrake/docs/registry/lackeydo_project_plan.yml"
+        result: "absent; task-specific collision-safe ledger created"
+    entries:
+      - checksum_id: "no-applicable-keybrake-mb4-boundary"
+        manifest: "Agent-Cache Checksummation manifests listed above"
+        protected_path: "none"
+        span: "none; no MB4 markers or consumer manifest exist in KeyBrake"
+        current_identity: "not_applicable"
+        planned_touch: "no-applicable-checksum"
+        route: "validate"
+        why_exists_here: "The repair changes ordinary KeyBrake Swift/UI/docs paths outside any registered MB4 checksum boundary."
+        evidence: "Agent-Cache bootstrap reported protected_region_count=0; bounded KeyBrake search found no MB4 or checksum-boundary marker."
+        authorization: "not_required_for_validate"
+        status: confirmed_no_applicable_checksum
+      - checksum_id: "keybrake-verification-sha-anchors"
+        manifest: "docs/KEYBRAKE_VERIFICATION.md"
+        protected_path: "listed KeyBrake source files"
+        span: "whole-file SHA-256 documentation anchors"
+        current_identity: "source SHA values recomputed after repair checkpoint a3968ad"
+        planned_touch: "outside"
+        route: "validate"
+        why_exists_here: "The document records source identity for safety-critical seams and requires refresh after final source edits."
+        evidence: "Current verification document section Regression checksum anchors."
+        authorization: "normal documentation update; no Agent-Cache registry refresh"
+        status: refreshed_after_source_repair
+  context_packet:
+    repository: "KeyBrake at /Users/michaeltran/AntiGravity/KeyBrake"
+    source_of_truth:
+      - path: "KeyBrake/App/KeyBrakeViewModel.swift"
+        owns: "emergency state publication, launch recovery hydration, recovery visibility, and menu quit request"
+        consumers: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/App/KeyBrakeAppDelegate.swift", "KeyBrake/UI/RecoveryView.swift"]
+      - path: "KeyBrake/App/KeyBrakeAppDelegate.swift"
+        owns: "application termination reply and AppKit recovery panel attachment"
+        consumers: ["NSApplicationDelegate", "KeyBrake/App/KeyBrakeApp.swift"]
+      - path: "KeyBrake/UI/RecoveryPanelController.swift"
+        owns: "NSPanel creation, show, hide, and close lifecycle"
+        consumers: ["KeyBrake/App/KeyBrakeAppDelegate.swift"]
+      - path: "KeyBrake/App/KeyBrakeApp.swift"
+        owns: "SwiftUI scene declarations and menu-bar window bridge"
+        consumers: ["KeyBrake/App/KeyBrakeViewModel.swift", "KeyBrake/UI/RecoveryView.swift"]
+      - path: "KeyBrakeCore/EmergencyCoordinator.swift"
+        owns: "serialized emergency transaction state and recovery persistence order"
+        consumers: ["KeyBrake/App/KeyBrakeViewModel.swift", "KeyBrakeTests/EmergencyCoordinatorTests.swift"]
+    indexes:
+      - path: "Agent-Cache bounded structural graph"
+        covers: "KeyBrake lifecycle symbols and function-call edges"
+        refresh: "mcp__agent_cache__build_structural_graphs(repo_path=/Users/michaeltran/AntiGravity/KeyBrake, limit=120)"
+        freshness: "source-bound snapshot 2e6c472b7c53cb6762775bc3ecd5218c24badab6465ae21653ffcff93757078; external CodeGraph query remains unavailable because the checkout is not initialized"
+    automation:
+      entrypoint: "local focused SwiftPM/Xcode proof and Agent-Cache closeout"
+      chain: ["discover current truth", "repair lifecycle owners", "run focused tests", "build unsigned Release", "attempt isolated UI proof", "update docs and hashes", "commit and push exact owned paths", "write closeout receipt"]
+      outputs: ["docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_keybrake_release_lifecycle.yml", "Agent-Cache closeout receipt"]
+    focused_checks:
+      - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseLifecycle --filter EmergencyCoordinatorTests"
+        proves: "KeyBrakeCore transaction and state regression tests"
+      - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeReleaseLifecycleDerivedData CODE_SIGNING_ALLOWED=NO build"
+        proves: "unsigned Release app compiles and packages"
+      - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeLifecycleTests CODE_SIGNING_ALLOWED=NO -only-testing:KeyBrakeTests/EmergencyCoordinatorTests test"
+        proves: "Xcode test target compiles and runs"
+      - command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json"
+        proves: "cursor-safe isolated-display preflight before live UI proof"
+    next_safe_entrypoint: "Inspect the exact lifecycle source ranges and add focused tests without changing KeyBrakeCore unless the state policy requires it."
+  requirements:
+    - id: R001
+      requirement: "Quit must be blocked during stoppingLocalAutomation, isolating, restoring, and every other state-changing emergency transaction."
+      owner: "KeyBrakeViewModel.requestQuit and KeyBrakeAppDelegate.applicationShouldTerminate"
+      status: verified
+      proof: "EmergencyCoordinatorTests termination-gate matrix plus source review"
+      residual_risk: "Live menu termination during a real host mutation remains unsafe to execute on the primary development session."
+    - id: R002
+      requirement: "Quit must fail closed while startup recovery hydration is incomplete or the application delegate has no attached model."
+      owner: "KeyBrakeViewModel.init/refresh and KeyBrakeAppDelegate.applicationShouldTerminate"
+      status: verified_source_only
+      proof: "Termination-gate matrix covers incomplete hydration; delegate source returns terminateCancel when model is absent"
+      residual_risk: "Exact launch timing requires isolated runtime proof."
+    - id: R003
+      requirement: "Recovery presentation must have one synchronized lifecycle across the SwiftUI recovery window and AppKit panel, including Keep Isolation and title-bar close."
+      owner: "KeyBrakeApp, RecoveryPanelController, RecoveryView, KeyBrakeViewModel"
+      status: source_verified_host_unverified
+      proof: "Source removes the duplicate SwiftUI recovery scene, binds NSPanel close to keepIsolation, and compiles in the unsigned Release build"
+      residual_risk: "A screenshot alone cannot prove title-bar close state synchronization."
+    - id: R004
+      requirement: "Release documents must identify the actual current source head and separate source, focused-test, artifact, runtime, visual, and external proof."
+      owner: "docs/KEYBRAKE_MASTER_PLAN.md, docs/KEYBRAKE_CAPABILITY_MATRIX.md, docs/KEYBRAKE_VERIFICATION.md"
+      status: verified
+      proof: "Current HEAD and command receipts in verification ledger"
+      residual_risk: "Signing, notarization, helper approval, TCC, live network isolation, and some live UI claims remain external."
+    - id: R005
+      requirement: "AGENTS.md must preserve the repository's durable coherent-commit and push policy without authorizing merge or visibility changes."
+      owner: "AGENTS.md"
+      status: verified
+      proof: "Physical comparison against prior policy and remote delivery proof"
+      residual_risk: "Human maintainer still controls merge and visibility."
+    - id: R006
+      requirement: "The issue-form capability-matrix link must target main rather than the temporary feature branch."
+      owner: ".github/ISSUE_TEMPLATE/config.yml"
+      status: verified
+      proof: "YAML parse/inspection and URL diff"
+      residual_risk: "The default main branch remains without the implementation until human merge."
+    - id: R007
+      requirement: "Focused regression coverage must cover quit during isolation, startup hydration, recovery-window dismissal, panel close synchronization, incident-log routing, and exact process identity."
+      owner: "KeyBrakeTests/EmergencyCoordinatorTests.swift, KeyBrakeTests/FeatureContractTests.swift, KeyBrakeTests/CommandRunnerTests.swift"
+      status: verified_partial
+      proof: "8-test SwiftPM/Xcode lifecycle subset covers termination and process identity; source covers panel dismissal and incident routing, but no app-target UI test harness exists"
+      residual_risk: "Application-level UI lifecycle coverage may require a host/runtime seam."
+    - id: R008
+      requirement: "Attempt one isolated live UI proof for the recovery panel and its mouse-operable lifecycle without touching the physical desktop."
+      owner: "Agent Display / SendMePics capture route and KeyBrake runtime"
+      status: attempted_no_capture
+      proof: "Cursor-safe preflight passed; displayctl stage returned exit 4 because the menu-bar-only app exposed no content window; no CUA action or PNG was used"
+      residual_risk: "No pointer action is permitted without exact isolated target binding."
+    - id: R009
+      requirement: "The completed repair must preserve current private/unmerged PR boundaries and publish exact owned-file delivery proof."
+      owner: "Git branch, PR #1, LackeyDo ledger, Agent-Cache closeout"
+      status: pending_remote_closeout
+      proof: "Commit SHA, remote SHA, 0/0 divergence, and closeout receipt"
+      residual_risk: "GitHub merge and visibility remain human-only actions."
+  implementation_slices:
+    - id: S001
+      name: "Fail-closed emergency termination gate"
+      files: ["KeyBrake/App/KeyBrakeViewModel.swift", "KeyBrake/App/KeyBrakeAppDelegate.swift"]
+      dependencies: ["R001", "R002"]
+      status: complete
+    - id: S002
+      name: "Single synchronized recovery-window lifecycle"
+      files: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/UI/RecoveryPanelController.swift", "KeyBrake/UI/RecoveryView.swift", "KeyBrake/App/KeyBrakeViewModel.swift"]
+      dependencies: ["R003"]
+      status: source_verified_host_unverified
+    - id: S003
+      name: "Focused regression proof"
+      files: ["KeyBrakeTests/EmergencyCoordinatorTests.swift", "KeyBrakeTests/FeatureContractTests.swift", "KeyBrakeTests/CommandRunnerTests.swift"]
+      dependencies: ["S001", "S002"]
+      status: complete
+    - id: S004
+      name: "Release ledger and policy correction"
+      files: ["docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_VERIFICATION.md", "AGENTS.md"]
+      dependencies: ["S001", "S002", "S003"]
+      status: pending_docs_commit
+    - id: S005
+      name: "Durable issue-form link"
+      files: [".github/ISSUE_TEMPLATE/config.yml"]
+      dependencies: []
+      status: pending_docs_commit
+    - id: S006
+      name: "Isolated live recovery UI proof"
+      files: []
+      dependencies: ["S001", "S002", "S003"]
+      status: attempted_no_capture
+    - id: S007
+      name: "Private PR delivery and closeout"
+      files: ["docs/registry/lackeydo_project_plan_keybrake_release_lifecycle.yml", "docs/KEYBRAKE_VERIFICATION.md"]
+      dependencies: ["S004", "S005", "S006"]
+      status: pending
+  guards:
+    - name: "Agent-Cache checksum validation"
+      command: "Agent-Cache bootstrap checksum map plus final validate route"
+      status: "no-applicable-keybrake-boundary"
+    - name: "Changed-line hygiene"
+      command: "git diff --check -- <exact-owned-paths>"
+      status: pass
+    - name: "Non-interrupting UI guard"
+      command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json <exact-owned-UI-paths>"
+      status: pass
+    - name: "No private-visibility or merge mutation"
+      command: "gh repo view SatireLord/KeyBrake --json visibility,isPrivate,defaultBranchRef,nameWithOwner; gh pr view 1 --json state,mergeable,baseRefName,headRefName,headRefOid"
+      status: pass
+  tests:
+    - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseLifecycle --filter EmergencyCoordinatorTests"
+      status: pass_8_of_8
+    - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeLifecycleTests CODE_SIGNING_ALLOWED=NO -only-testing:KeyBrakeTests/EmergencyCoordinatorTests test"
+      status: pass_8_of_8
+    - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeReleaseLifecycleDerivedData CODE_SIGNING_ALLOWED=NO build"
+      status: pass_unsigned_release
+    - command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; /Users/michaeltran/bin/displayctl stage --app KeyBrake --position above --preset 16:9"
+      status: attempted_no_capture
+  deferred_items:
+    - item: "Developer ID signing and notarization"
+      status: accepted_deferred
+      reason: "No signing identity is configured and the repository contract forbids unsupported claims."
+    - item: "SMAppService helper approval, TCC, live network isolation, and live host mutation"
+      status: accepted_deferred
+      reason: "The recovery contract requires a staged recoverable host; fixture/source proof remains the safe local path."
+    - item: "Human merge of PR #1 and GitHub visibility change"
+      status: accepted_deferred
+      reason: "The user asked to keep the portfolio repository private until release."
+  blockers:
+    - item: "External CodeGraph query is unavailable because the KeyBrake checkout is not initialized."
+      status: accepted_deferred
+      evidence: "codegraph query returned CodeGraph not initialized; Agent-Cache bounded structural graph was source-bound and available."
+      next_action: "Use current source, Swift compiler, focused tests, and the bounded graph; initialize CodeGraph only as a separate explicit maintenance task."
+    - item: "Live UI target binding and capture receipt are not yet available."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight passed with the virtual display and sentinel active, but the menu-bar-only Release app exposed no content window; displayctl stage returned exit 4, no CUA action was sent, and no PNG was captured."
+      next_action: "Require a human-owned or exact app-targeted CUA session that exposes the recovery panel on the isolated display before claiming mouse-only proof."
+  branch: "codex/keybrake-complete-implementation"
+  head: "a3968ad0a0c9810971ab11725647c0277edd4e96"
+  last_verified_at: "20260912 05:52:26"
+  completion: source_repair_complete_docs_and_pr_closeout_pending

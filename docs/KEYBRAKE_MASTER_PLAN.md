@@ -19,7 +19,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 - Repository: KeyBrake git checkout
 - GitHub: private `SatireLord/KeyBrake`; default `main` is at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; source delivery checkpoint `8a77357`
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; current runtime-source repair checkpoint `a3968ad` (later documentation closeout commits may advance the branch without changing this source checkpoint)
 - Release status: GitHub visibility **HOLD**; downloadable binary **BLOCKED** (unsigned local bundle only)
 - Version: `0.1.0` (build `1`)
 - Next action: human review of PR #1; if the owner then chooses a public-source identity, merge #1 onto `main` before flipping visibility. Signed-host, helper-approval, live-recovery, and mouse-only proof remain separate external gates
@@ -39,8 +39,8 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 | TCC reset allowlist | missing | implemented |
 | Helper boundary | missing | source/build implemented; verified launchd identity checks and coordinator routing are fixture-proven; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
-| Menu/recovery/settings UI | missing | persisted policy, helper status, automatic recovery presentation, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
-| Focused tests | missing | 33 SwiftPM/XCTest tests pass locally; process respawn and live helper seams remain host-dependent |
+| Menu/recovery/settings UI | missing | one canonical AppKit recovery panel, fail-closed launch and transaction termination, synchronized Keep Isolation/title-bar-close state, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
+| Focused tests | missing | 35 SwiftPM tests and 8 focused Xcode tests pass locally; process respawn, signed helper, and live host seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
 ## PM checklist
@@ -104,16 +104,16 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [x] KB-057 Implement partial-failure continuation and precise status.
 [x] KB-058 Implement duplicate-action serialization through the actor.
 [x] KB-059 Implement the exact menu and visible state row.
-[!] KB-060 Implement the persistent mouse-driven recovery panel; launch-time unresolved state automatically presents the panel in source, while mouse-only runtime proof remains unverified.
+[!] KB-060 Implement the persistent mouse-driven recovery panel; one AppKit panel owns the recovery view, launch-time unresolved state replays through delegate attachment, and Keep Isolation plus title-bar close synchronize the model state, while mouse-only runtime proof remains unverified.
 [x] KB-061 Implement Restore Human Control and its independent actions; network and sharing restoration are separate view-model actions and do not force the other subsystem.
 [x] KB-062 Implement the incident-log viewer.
-[x] KB-063 Implement the unresolved-state quit warning.
+[x] KB-063 Implement the unresolved-state quit warning and fail-closed termination gate; focused tests cover startup hydration, settled recovery, and every state-changing emergency transaction.
 [x] KB-064 Implement the focused Settings sections and target editors; emergency isolation toggles persist and reach the coordinator policy.
 [!] KB-065 Implement Launch at Login without duplicate processes through SMAppService; source integration exists, while signed-host proof remains external.
 [x] KB-066 Add VoiceOver labels and non-color-only status communication.
-[!] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests; focused source seams pass, while live UI and process-respawn proof remain host-dependent.
+[!] KB-067 Add required deterministic process, storage, privacy, helper, coordinator, and menu tests; focused source seams pass, while AppKit window interaction, live UI, and process-respawn proof remain host-dependent.
 [x] KB-068 Run focused local tests during implementation.
-[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM/XCTest proof passed 33 tests with 0 failures.
+[x] KB-069 Run the complete KeyBrake local test suite once; SwiftPM proof passed 35 tests with 0 failures, and the repaired lifecycle subset passed 8 tests with 0 failures in SwiftPM and Xcode.
 [x] KB-070 Run the final local Release build; `xcodebuild` produced and validated the unsigned universal Release app bundle with `CODE_SIGNING_ALLOWED=NO`.
 [x] KB-071 Verify helper embedding, helper plist placement, feature-contract resource, entitlements, and build settings; the unsigned app bundle now validates the helper executable and LaunchDaemons plist layout.
 [!] KB-072 Verify signing and Gatekeeper only when credentials permit proof.
@@ -134,12 +134,12 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [x] KB-087 Compare the baseline and final feature inventories.
 [x] KB-088 Prove that no requested or existing feature was removed; baseline contained no product feature.
 [x] KB-089 Compute and record required SHA-256 checksums.
-[x] KB-090 Commit every coherent deliverable; source implementation checkpoint is `8a77357` on the active PR branch.
-[x] KB-091 Push every implementation commit; the active PR branch tracks origin at 0/0 after each delivery.
+[x] KB-090 Commit every coherent deliverable; the runtime-source repair checkpoint is `a3968ad` on the active PR branch.
+[x] KB-091 Push every implementation commit; `a3968ad` is on the private remote and the active branch will return to 0/0 after documentation closeout.
 [x] KB-092 Verify task-branch upstream divergence at 0/0 after the current lane is delivered.
 [x] KB-093 Verify main versus origin/main divergence at 0/0.
 [x] KB-094 Update the existing PR or create the single PR; PR #1 is open against `main`.
-[x] KB-095 Add exact local test, build, and proof evidence to the PR body at the delivered source checkpoint.
+[x] KB-095 Add exact local test, build, and proof evidence to the PR body and verification ledger at runtime-source checkpoint `a3968ad`.
 [x] KB-096 Preserve and list every foreign dirty file; none were changed.
 [x] KB-097 Leave KeyBrake task-owned files clean after the delivery commit; no foreign paths were staged.
 [x] KB-098 Record every genuine external blocker without disguising it as success.

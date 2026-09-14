@@ -28,4 +28,4 @@ xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=m
 
 Do not claim Developer ID signing, notarization, privileged-helper approval, TCC execution, or live network isolation unless a corresponding receipt exists in [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md).
 
-Update the capability matrix when user-visible behavior changes. Leave commit, push, and PR creation to the human maintainer unless they explicitly ask.
+Update the capability matrix when user-visible behavior changes. Commit coherent deliverables, push the active branch, and verify branch divergence; leave PR merge and GitHub visibility changes to the human maintainer.

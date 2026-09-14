@@ -22,10 +22,10 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Capability | Status | Notes |
 | --- | --- | --- |
-| Menu-bar app shell | `implemented` | SwiftUI menu bar and auxiliary windows |
+| Menu-bar app shell | `implemented` | SwiftUI menu bar, Settings and Incident Log windows, and one AppKit-owned Recovery panel |
 | Serialized emergency coordinator | `implemented` | Actor boundary with fixture-backed tests |
 | Typed absolute-path commands | `implemented` | No shell interpolation |
-| Process identity before termination | `implemented` | Bundle ID and executable URL re-check |
+| Process identity before termination | `implemented` | Exact bundle ID, executable URL, and stored launch-date re-check with focused identity-matrix coverage |
 | Protected process rejection | `implemented` | Self and core system targets blocked |
 | Espanso disable/stop/restart | `host-unverified` | Command boundary implemented; live Espanso proof deferred |
 | Built-in remote target registry | `implemented` | Exact bundle identifiers, user approval required |
@@ -34,7 +34,8 @@ This document classifies every user-visible or safety-critical capability by imp
 | Recovery snapshot persistence | `implemented` | Atomic write with backup-rename semantics |
 | Original/applied/current restore | `implemented` | Network and sharing adapters compare current vs applied |
 | Partial restore retention | `implemented` | Snapshot retained until all subsystems resolve |
-| Launch-time recovery panel | `implemented` | Persistent panel when unresolved recovery exists |
+| Launch-time recovery panel | `host-unverified` | Source replays pending recovery visibility when the delegate attaches and keeps one AppKit panel across presentation, Keep Isolation, close, and reopen; live window proof is not available |
+| Recovery-window lifecycle synchronization | `host-unverified` | AppKit title-bar close and SwiftUI Keep Isolation both update `isShowingRecoveryPanel`; source and Release compile are proven, while live interaction remains unverified |
 | Privileged helper XPC listener | `host-unverified` | Listener bootstrap, typed routing, caller identity checks, verified launchd identity checks, helper embedding, and plist placement are source/build proven; signed installation and live authorization remain unverified |
 | Verified non-Apple launchd stop | `fixture-only` | Approved labels route through the helper; `launchctl print` path, optional `codesign` designated requirement, and post-stop state are checked; live signed-host mutation remains unverified |
 | SMAppService daemon registration | `host-unverified` | Settings exposes registration and status through `SMAppService`; signed-host installation and approval remain unverified |
@@ -45,7 +46,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Helper status in Settings | `implemented` | Derived from `SMAppService` daemon status |
 | Independent sharing restore | `implemented` | Network-only restore does not clear unresolved sharing |
 | Feature contract resource | `implemented` | Bundled JSON with regression test |
-| Mouse-only UI proof | `planned` | Computer Use / accessibility proof not obtained |
+| Mouse-only UI proof | `host-unverified` | Cursor-safe preflight and a healthy virtual-display provider were confirmed, but the sandboxed menu-bar build exposed no content window for staging, so no CUA action or screenshot proof was claimed |
 | Developer ID signing / notarization | `planned` | No signing identity is configured on this host |
 | Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
 
