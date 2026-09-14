@@ -16,6 +16,8 @@ Copyright 2026 Michael Tran. GitHub repository: [SatireLord/KeyBrake](https://gi
 
 Version `0.1.0` (build `1`) is an experimental systems prototype. Local Xcode builds verify the app, embedded helper executable, LaunchDaemons plist, and feature contract with signing disabled. This project does not claim Developer ID signing, notarization, privileged-helper approval, or live-host network isolation without receipts.
 
+UI-015 adds explicit `CFBundleExecutable` metadata to the native app plist. The unsigned Xcode Release bundle now records `KeyBrake` as its executable while preserving the stable bundle identity, helper resources, LaunchDaemons plist, feature contract, and version metadata.
+
 Public claims must match [`docs/KEYBRAKE_CAPABILITY_MATRIX.md`](docs/KEYBRAKE_CAPABILITY_MATRIX.md). Evidence boundaries are in [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md). The operator checklist for flipping GitHub visibility is [`docs/KEYBRAKE_PUBLIC_RELEASE.md`](docs/KEYBRAKE_PUBLIC_RELEASE.md).
 
 ## What it does
@@ -87,6 +89,7 @@ UI-011 keeps the compact menu header icon aligned with the adjacent status row, 
 UI-012 explains why Restore Human Control is unavailable while KeyBrake is checking, completing another operation, or has no unresolved recovery snapshot, while the existing mouse-driven recovery gate remains unchanged.
 UI-013 explains why state-changing Recovery-panel actions are temporarily unavailable while an operation is running, while review actions remain available and existing handlers stay unchanged.
 UI-014 explains why Command Center emergency and recovery actions are temporarily unavailable during a busy operation, while review navigation remains available and existing handlers, targets, identifiers, and disabled-state gates stay unchanged.
+UI-015 repairs the native Release bundle’s explicit executable metadata and records the Xcode Release, focused Xcode test, signing, and Agent Display evidence boundaries. The bundle metadata and Release build are proven locally, while Developer ID signing, helper approval, exact live containment, and pointer-driven recovery remain unclaimed.
 
 The Command Center groups Incident Log and Settings into a Review and configure section that shows the current incident and configured-target counts. UI-004 adds a current protection-state summary to Settings and a record/recovery summary plus empty state to Incident Log, while the emergency and recovery actions keep their existing semantics.
 

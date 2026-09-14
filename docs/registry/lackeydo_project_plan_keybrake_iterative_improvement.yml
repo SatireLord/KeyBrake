@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "956809b853262ec8fc784345bc34e0c753b29017"
+    head: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "956809b853262ec8fc784345bc34e0c753b29017"
+    remote_head_verified: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -22,7 +22,7 @@ project_plan:
       observed: "The Command Center renders one 760x648 window with a visible state card, emergency actions, recent activity, secondary navigation, and mouse-operated recovery language."
       inferred: "The dedicated surface reduces action ambiguity and makes the primary UI stageable without changing coordinator behavior."
       receipt: "/Users/michaeltran/AntiGravity/KeyBrake/.agent-cache/proofs/keybrake-ui-001-command-center.png; sha256=4dc9ed7bcd09aabb5e77371be1d09ba0b857927834c50f9331680c8b82db65ce"
-      missing_evidence: "Live pointer action and Recovery-panel mouse-only interaction remain unproven; the current Xcode Release revalidation stalled before source compilation."
+      missing_evidence: "Live pointer action and Recovery-panel mouse-only interaction remain unproven; the UI-001 Xcode Release revalidation stalled before source compilation, and UI-015 later produced a native Release bundle."
   next_iteration:
     id: "UI-002"
     name: "Recovery-required state and panel readability"
@@ -85,7 +85,7 @@ project_plan:
       state: "command_center_staged_isolated_captured; recovery_panel_runtime_observed"
       observed: "The contained 760x652 Command Center renders Recovery Required, full-width emergency actions, corrected recovery inventory, Open Recovery Panel, and the staged incident. The AppKit runtime trace reports the recovery panel visible with five app windows, while the display harness exposes only the Command Center frame."
       receipt: ".agent-cache/proofs/keybrake-ui-002-recovery-demo.png; sha256=bc52d0ebe45c6950c0bffd60080b1e5669adcdbb9bccf294bfe19935c73e4872"
-      missing_evidence: "No exact pointer target or mouse action was sent; the current Xcode Release revalidation remains held by the host build service."
+      missing_evidence: "No exact pointer target or mouse action was sent; the UI-001 Xcode Release revalidation remained held by the host build service, and UI-015 later produced a native Release bundle."
     proof:
       tests: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI002FinalVerification; 35 tests, 0 failures"
       release_build: "swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI002Final; pass"
@@ -141,7 +141,7 @@ project_plan:
       observed: "The contained 760x652 Command Center renders Review and configure with an Incident Log card showing 0 recorded incidents, a Settings card showing 8 configured targets, readable descriptions, and preserved mouse-operated recovery language."
       inferred: "Navigation context reduces destination ambiguity without changing the existing open-window route or any emergency/recovery handler."
       receipt: ".agent-cache/proofs/keybrake-ui-003-navigation.png; sha256=be1dc0521122fc33ffefe8c37bf71e45178a5a007535bfbde2132e2c0106098a"
-      missing_evidence: "No pointer action opened either destination because the exact interaction target was not exposed by the cursor-safe harness; current Xcode Release revalidation remains held by the host build service."
+      missing_evidence: "No pointer action opened either destination because the exact interaction target was not exposed by the cursor-safe harness; the UI-001 Xcode Release revalidation was held by the host build service, and UI-015 later produced a native Release bundle."
     proof:
       tests: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI003; 35 tests, 0 failures"
       release_build: "swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI003; pass"
@@ -566,6 +566,28 @@ project_plan:
         evidence: "The SHA-256 value was recomputed after the UI-014 source edit and before documentation delivery."
         authorization: "normal documentation update"
         status: pass
+      - checksum_id: "no-applicable-keybrake-boundary-ui-015"
+        manifest: "Agent-Cache checksum registries and predecessor LackeyDo ledger"
+        protected_path: "none"
+        span: "none"
+        current_identity: "no registered KeyBrake protected span at UI-015 source checkpoint 5bc2b272702ae359ea30a0fef409b40ecad4f550"
+        planned_touch: "no-applicable-checksum"
+        route: "validate"
+        why_exists_here: "UI-015 is a release-bundle metadata seam and does not cross a registered protected consumer boundary."
+        evidence: "Agent-Cache bootstrap reported no applicable KeyBrake protected span; source plist, Xcode Release bundle, signed-host, and Agent Display boundaries were checked separately."
+        authorization: "not_required_for_validate"
+        status: confirmed_no_applicable_checksum
+      - checksum_id: "keybrake-verification-sha-anchors-ui-015-info-plist"
+        manifest: "docs/KEYBRAKE_VERIFICATION.md"
+        protected_path: "SupportingFiles/Info.plist"
+        span: "whole-file SHA-256 documentation anchor"
+        current_identity: "UI-015 source value at 5bc2b272702ae359ea30a0fef409b40ecad4f550; sha256=b76ab577eeb1fb2edc2f1bc3f1945e5b19b7983c4db9b2eec117aaa2d2724c6e"
+        planned_touch: "outside"
+        route: "validate"
+        why_exists_here: "The verification record detects drift in explicit Release app executable metadata."
+        evidence: "The SHA-256 value was recomputed after the UI-015 source edit and after the Xcode Release rebuild."
+        authorization: "normal documentation update"
+        status: pass
   context_packet:
     repository: "KeyBrake at /Users/michaeltran/AntiGravity/KeyBrake"
     source_of_truth:
@@ -714,7 +736,7 @@ project_plan:
       owner: "KeyBrake/App/KeyBrakeApp.swift"
       status: pass
       proof: "SwiftPM Release app launched with --keybrake-command-center; Agent Display isolated one 760x648 Command Center window and inspected its accessibility tree. Source keeps normal launches menu-bar-only."
-      residual_risk: "The current Xcode Release bundle was not revalidated because the host build service stalled before source compilation."
+      residual_risk: "The UI-001 Xcode Release bundle was not revalidated because the host build service stalled before source compilation; UI-015 later produced a native Release bundle, while signing and exact live containment remain unverified."
     - id: R004
       requirement: "The canonical fallback and bundled feature contracts must include the new menu route."
       owner: "KeyBrakeCore/FeatureContract.swift, Resources/KeyBrakeFeatureContract.json, KeyBrakeTests/FeatureContractTests.swift"
@@ -865,6 +887,12 @@ project_plan:
       status: pass
       proof: "UI-014 source review binds the visible busy-state explanations and commandCenterActionHint to the existing emergencyActions and recoveryCard controls; stop-local retains model.stopSkynetLocally(), stop-remote retains model.stopRemoteAccess(), recovery retains model.isShowingRecoveryPanel = true, identifiers are unchanged, existing busy gates remain, the source parses, the Release build passes, and the 35-test suite remains green."
       residual_risk: "The original disposable bundle identifier did not register with Agent Display; an alternate identifier staged four windows through accessibility, but the follow-up isolation check returned isolated=false with windowCount=0, so contained visual and pointer proof remain unverified."
+    - id: R029
+      requirement: "The macOS application bundle must declare its executable explicitly so the Release product has deterministic LaunchServices metadata while existing bundle identity, helper placement, and version metadata remain unchanged."
+      owner: "SupportingFiles/Info.plist, project.yml"
+      status: pass
+      proof: "UI-015 source review binds CFBundleExecutable to $(EXECUTABLE_NAME); plutil lint passes, the native Xcode Release build passes, the rebuilt bundle contains CFBundleExecutable=KeyBrake, helper/launchd/contract resources, version 0.1.0/build 1, and unique disposable bundle launch is confirmed. The original production identifier remains a host LaunchServices routing hold, and no signed-host claim is made."
+      residual_risk: "The project keeps CODE_SIGNING_ALLOWED=NO with an empty DEVELOPMENT_TEAM for local proof; the available keychain has Apple Development and Apple Distribution identities but no verified Developer ID Application identity, so direct-distribution signing/notarization remain unverified. Agent Display staging timed out and returned isolated=false/windowCount=0."
   implementation_slices:
     - id: S001
       name: "Command Center visual surface"
@@ -1031,6 +1059,16 @@ project_plan:
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S032"]
       status: complete
+    - id: S034
+      name: "Release bundle executable metadata"
+      files: ["SupportingFiles/Info.plist"]
+      dependencies: ["S033", "R029"]
+      status: complete
+    - id: S035
+      name: "UI-015 release gates and documentation"
+      files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
+      dependencies: ["S034"]
+      status: active
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -1156,6 +1194,26 @@ project_plan:
       command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; disposable UI-013 Release app with --keybrake-command-center --keybrake-recovery-demo; displayctl stage --app org.realitygood.KeyBrake --position above --preset 16:9; displayctl is-isolated --app org.realitygood.KeyBrake"
       status: hold
       result: "Cursor-safe preflight and provider checks passed; displayctl stage reported success and moved six KeyBrake windows, but the follow-up isolation check returned isolated=false with windowCount=0; the disposable process was terminated, and no contained visual, pointer, or PNG claim was made."
+    - name: "UI-015 release bundle metadata and Xcode Release boundary"
+      command: "plutil -lint SupportingFiles/Info.plist; xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI015BundleFix -disableAutomaticPackageResolution -jobs 1 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build; plutil -p /tmp/KeyBrakeXcodeReleaseUI015BundleFix/Build/Products/Release/KeyBrake.app/Contents/Info.plist; lipo -info /tmp/KeyBrakeXcodeReleaseUI015BundleFix/Build/Products/Release/KeyBrake.app/Contents/MacOS/KeyBrake"
+      status: pass
+      result: "Source plist linted; native Xcode Release build succeeded; rebuilt app declares CFBundleExecutable=KeyBrake, version 0.1.0/build 1, and stable identifier org.realitygood.KeyBrake; the app executable is arm64 and the helper, LaunchDaemons plist, feature contract, and app resources were present in the bundle inspection."
+    - name: "UI-015 focused test boundary"
+      command: "env -u CC -u CXX xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeTestsUI015Debug -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:KeyBrakeTests/EmergencyCoordinatorTests CODE_SIGNING_ALLOWED=NO test; Release-focused invocation with the same target and configuration"
+      status: hold
+      result: "Debug focused Xcode suite passed 8 tests/0 failures. Release-focused invocation failed before tests because @testable import KeyBrakeCore found modules built without -enable-testing and an incompatible architecture; this is a test-configuration hold, not a production-source diagnostic."
+    - name: "UI-015 signing boundary"
+      command: "security find-identity -v -p codesigning; codesign -dv --verbose=4 /tmp/KeyBrakeXcodeReleaseUI015BundleFix/Build/Products/Release/KeyBrake.app; codesign --verify --deep --strict /tmp/KeyBrakeXcodeReleaseUI015BundleFix/Build/Products/Release/KeyBrake.app; spctl --assess --type execute --verbose=4 /tmp/KeyBrakeXcodeReleaseUI015BundleFix/Build/Products/Release/KeyBrake.app"
+      status: hold
+      result: "Apple Development and Apple Distribution identities are present; rebuilt Release app/helper are ad hoc with TeamIdentifier=not set; deep verification and spctl fail; no Developer ID Application or notarized artifact is claimed."
+    - name: "UI-015 Agent Display live boundary"
+      command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; alternate preflight --app org.realitygood.KeyBrake.UI015.Release; disposable Xcode Release bundle; bounded displayctl stage; displayctl is-isolated"
+      status: hold
+      result: "Preflight/provider checks passed; unique disposable id launched the rebuilt app; stage timed out with exit 124; is-isolated returned false/windowCount=0; exact app PID was terminated; no pointer, contained visual, accessibility, or PNG proof was claimed."
+    - name: "UI-015 Agent-Cache Xcode single-flight boundary"
+      command: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind xcodebuild --cwd /Users/michaeltran/AntiGravity/KeyBrake --json"
+      status: hold
+      result: "Agent-Cache returned manual_review_required because kind xcodebuild is unsupported; the native Xcode build ran once manually with bounded output and succeeded."
   tests:
     - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI001"
       status: pass
@@ -1190,6 +1248,18 @@ project_plan:
     - command: "displayctl capture --display agent-stage --window-id 77782 --out .agent-cache/proofs/keybrake-ui-003-navigation.png"
       status: pass
       result: "Contained PNG receipt is 760x652, 8-bit RGBA, sha256=be1dc0521122fc33ffefe8c37bf71e45178a5a007535bfbde2132e2c0106098a; the receipt proves the rendered navigation surface only."
+    - command: "plutil -lint SupportingFiles/Info.plist"
+      status: pass
+      result: "SupportingFiles/Info.plist parsed successfully after the UI-015 CFBundleExecutable repair."
+    - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI015BundleFix -disableAutomaticPackageResolution -jobs 1 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build"
+      status: pass
+      result: "Native unsigned Xcode Release build succeeded at source checkpoint 5bc2b272702ae359ea30a0fef409b40ecad4f550."
+    - command: "env -u CC -u CXX xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeTestsUI015Debug -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:KeyBrakeTests/EmergencyCoordinatorTests CODE_SIGNING_ALLOWED=NO test"
+      status: pass
+      result: "EmergencyCoordinatorTests passed 8 tests with 0 failures."
+    - command: "env -u CC -u CXX xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeTestsUI015 -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:KeyBrakeTests/EmergencyCoordinatorTests CODE_SIGNING_ALLOWED=NO test"
+      status: hold
+      result: "Release test execution did not begin because KeyBrakeCore modules were built without -enable-testing and an incompatible architecture was selected."
   deferred_items:
     - item: "Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof"
       status: accepted_deferred
@@ -1209,10 +1279,10 @@ project_plan:
       status: accepted_deferred
       evidence: "The bounded Agent-Cache structural graph was refreshed after source implementation at source snapshot 87aa404bfe3637c25ed9b878f144fac43633482dc6e0a2037d78533054f6b05e with graph key aa9f0226ca9786673d9b8310d3ab4ef30b0da35a5d0e7533f064a9eb25dedb86."
       next_action: "Use the refreshed bounded graph plus source and compiler proof; do not loop on the unchanged external index."
-    - item: "Current Xcode build-service revalidation stalls before KeyBrake source compilation."
+    - item: "Historical UI-001 Xcode build-service revalidation stalled before KeyBrake source compilation."
       status: accepted_deferred
-      evidence: "Focused Debug tests and Release build both stalled during Xcode external-tool/package preparation after CC/CXX were unset; standalone Apple clang remained available and no KeyBrake compiler diagnostic appeared."
-      next_action: "Retry the two exact Xcode commands only after the host Xcode build service is reset or the environment changes; do not alter source based on this host-only stall."
+      evidence: "The earlier UI-001 bounded attempts stalled during Xcode external-tool/package preparation after CC/CXX were unset; standalone Apple clang remained available and no KeyBrake compiler diagnostic appeared. UI-015 later produced a successful native Xcode Release bundle, so the historical stall is not a current source-build claim."
+      next_action: "Use the current UI-015 Xcode Release receipt; do not alter source based on the historical host-only stall."
     - item: "UI-002 documentation and delivery metadata remain open until the documentation commit reaches the private remote branch."
       status: resolved
       evidence: "The six documentation paths were parsed and diff-checked, committed at 82001cb3e7805f7df82bf56fcde756f2d699e59f, pushed on codex/keybrake-complete-implementation, and verified against the private PR #1 head."
@@ -1225,17 +1295,25 @@ project_plan:
       status: resolved
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
+    - item: "UI-015 Release-focused Xcode test configuration cannot execute the focused target."
+      status: accepted_deferred
+      evidence: "The Debug configuration passed EmergencyCoordinatorTests with 8 tests and 0 failures; the Release invocation stopped before tests because KeyBrakeCore modules were built without -enable-testing and an incompatible architecture was selected."
+      next_action: "Repair the Release testability/architecture settings only if a signed Release test receipt is required; the production unsigned Release build already passes."
+    - item: "UI-015 Agent Display containment remains unavailable for the rebuilt native Release bundle."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the unique disposable bundle launched, bounded stage timed out with exit 124, and is-isolated returned isolated=false with windowCount=0; the exact process was terminated and no pointer or PNG proof was claimed."
+      next_action: "Continue with UI-016 exact containment and signed-host gates; keep the private PR boundary unchanged."
   branch: "codex/keybrake-complete-implementation"
-  head: "59b31a8e90156268643ffa53afd4867c644eac65"
+  head: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-014"
-    source_commit: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
-    documentation_commit: "59b31a8e90156268643ffa53afd4867c644eac65"
-    remote_head_verified: "956809b853262ec8fc784345bc34e0c753b29017"
-    status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-015 full release gates before any public-visibility decision."
+    iteration: "UI-015"
+    source_commit: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
+    documentation_commit: "pending_documentation_commit"
+    remote_head_verified: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
+    status: "documentation_pending_private_remote"
+    next_safe_entry_point: "Continue with UI-016 exact Agent Display containment and signed-host release gates before any public-visibility decision."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -1936,7 +2014,7 @@ project_plan:
     remote_head_verified: "3cfd57561a1f7b78f37accd07ca393ae6f426ed8"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-014 release gates before any public-visibility decision."
-  upcoming_iteration:
+  completed_iteration_ui014:
     id: "UI-014"
     name: "Command Center action availability guidance"
     source_checkpoint: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
@@ -1998,8 +2076,8 @@ project_plan:
       - "Agent-Cache repo_snapshot_files could not create WorkBeginOrder because database was locked; direct current-source validation and bounded compiler/build/test proof were used."
     deferred:
       - "Exact Command Center visual/accessibility proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Continue with UI-015 full release gates before any public-visibility decision."
-  upcoming_delivery:
+    next_action: "Continue with UI-015 release bundle, signed-host, and live-interaction gates before any public-visibility decision."
+  completed_delivery_ui014:
     iteration: "UI-014"
     source_commit: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
     source_file_shas:
@@ -2007,4 +2085,79 @@ project_plan:
     documentation_commit: "59b31a8e90156268643ffa53afd4867c644eac65"
     remote_head_verified: "956809b853262ec8fc784345bc34e0c753b29017"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-015 full release gates before any public-visibility decision."
+    next_safe_entry_point: "Continue with UI-015 release bundle, signed-host, and live-interaction gates before any public-visibility decision."
+  upcoming_iteration:
+    id: "UI-015"
+    name: "Release bundle executable metadata and release gates"
+    source_checkpoint: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
+    user_promise: "The native Xcode Release product declares its executable explicitly, and the release record distinguishes source and bundle proof from Release-test configuration, signing, helper approval, exact Agent Display containment, and pointer-driven recovery proof."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "SupportingFiles/Info.plist"
+        owner: "Native KeyBrake app bundle metadata"
+        intended_change: "Declare CFBundleExecutable=$(EXECUTABLE_NAME) while preserving the stable identifier, version/build metadata, usage descriptions, and existing app resource routing."
+        status: implemented
+      - path: "README.md"
+        owner: "Release status and portfolio demonstration boundary"
+        intended_change: "Document the explicit Release executable metadata and preserve the private, unsigned, host-unverified release status."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability and release judgment inventory"
+        intended_change: "Record Release bundle executable metadata as implemented and replace the stale signing-identity statement with the verified keychain boundary."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-015, its source/build/test evidence, the remaining external holds, and the UI-016 entry point."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Document the explicit bundle metadata repair and preserve the rule that unsigned build success does not prove host signing or interaction."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-015 plist lint, native Xcode Release build, bundle inventory, focused Debug tests, Release test hold, signing facts, Agent Display attempt, single-flight tooling limitation, and plist checksum."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-015 requirement, slice, checksum, guards, test receipts, blockers, source checkpoint, documentation checkpoint, and the next safe entry point."
+        status: committed
+    visual_evidence:
+      source: "SupportingFiles/Info.plist and native Xcode Release bundle"
+      provenance: "source checkpoint 5bc2b272702ae359ea30a0fef409b40ecad4f550; plist lint; native Xcode Release build; cursor-safe Agent Display preflight/provider checks; unique disposable bundle launch"
+      state: "release_bundle_proven_host_containment_unverified"
+      observed: "The rebuilt unsigned Xcode Release app reports CFBundleExecutable=KeyBrake, stable identifier org.realitygood.KeyBrake, version 0.1.0/build 1, and an arm64 app executable; a unique disposable bundle identifier launched, but bounded display staging timed out and is-isolated returned isolated=false with windowCount=0."
+      receipt: "No UI-015 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane."
+      missing_evidence: "Exact live containment, pointer action, accessibility inspection of the rebuilt target, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd mutation, and respawn proof remain unverified."
+    proof:
+      source_parse: "plutil -lint SupportingFiles/Info.plist; pass"
+      release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI015BundleFix -disableAutomaticPackageResolution -jobs 1 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build; pass"
+      bundle_inventory: "Built app plist reports CFBundleExecutable=KeyBrake, org.realitygood.KeyBrake, 0.1.0/build 1; app executable is arm64; helper, LaunchDaemons plist, feature contract, and app resources were present."
+      focused_tests: "Debug EmergencyCoordinatorTests; 8 tests, 0 failures. Release-focused invocation held before tests because KeyBrakeCore modules lacked -enable-testing and an incompatible architecture was selected."
+      signing: "Apple Development and Apple Distribution identities are present; no Developer ID Application identity was verified; Release app/helper are ad hoc with TeamIdentifier=not set; no signed or notarized artifact is claimed."
+      staging: "Agent Display preflight/provider checks passed; unique disposable id org.realitygood.KeyBrake.UI015.Release launched; bounded stage exited 124; is-isolated returned isolated=false/windowCount=0; exact process terminated; no pointer or additional PNG proof."
+      safety: "Only non-mutating plist/source inspection, unsigned build/test validation, and disposable app staging were used; no host emergency action, persistence mutation, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "SupportingFiles/Info.plist sha256=b76ab577eeb1fb2edc2f1bc3f1945e5b19b7983c4db9b2eec117aaa2d2724c6e"
+      - "UI-015 source checkpoint 5bc2b272702ae359ea30a0fef409b40ecad4f550"
+      - "UI-015 documentation checkpoint will be bound to the private remote commit after diff validation."
+    guards:
+      - "Agent-Cache UI-015 mutation gate passed after live branch and PR #1 continuity were verified."
+      - "CodeGraph query was attempted before source/documentation work; the connector reported CodeGraph not initialized, so no new graph snapshot is claimed."
+      - "SupportingFiles/Info.plist passed plutil lint and the native Xcode Release build succeeded with signing disabled."
+      - "Agent-Cache xcodebuild single-flight admission returned manual_review_required because xcodebuild is an unsupported kind; the build ran once manually with bounded output."
+      - "Cursor-safe Agent Display preflight and provider checks passed; bounded staging timed out and exact isolation remained unproven."
+      - "No new PNG was captured under the one-image SendMePics contract; the retained UI-004 Settings receipt was preserved."
+    deferred:
+      - "Release-focused Xcode test execution until the Release testability and architecture configuration is repaired."
+      - "Developer ID signing, notarization, signed helper approval, exact Agent Display containment, direct pointer activation, live TCC, live network mutation, launchd mutation, and respawn proof."
+    next_action: "Continue with UI-016 exact Agent Display containment and signed-host release gates before any public-visibility decision."
+  upcoming_delivery:
+    iteration: "UI-015"
+    source_commit: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
+    source_file_shas:
+      - "SupportingFiles/Info.plist=b76ab577eeb1fb2edc2f1bc3f1945e5b19b7983c4db9b2eec117aaa2d2724c6e"
+    documentation_commit: "pending_documentation_commit"
+    remote_head_verified: "5bc2b272702ae359ea30a0fef409b40ecad4f550"
+    status: "documentation_pending_private_remote"
+    next_safe_entry_point: "Continue with UI-016 exact Agent Display containment and signed-host release gates before any public-visibility decision."
