@@ -124,14 +124,21 @@ private enum KeyBrakeLaunchConfiguration {
 // states: incident-log; settings; command-center; recovery-demo
 // consumers: WindowLaunchBridge; Agent Display
 // owner: KeyBrakeLaunchArgument
+// QoL-006: the menu-bar extra label uses the same hydration-aware status symbol as the compact status row.
 private struct WindowLaunchBridge: View {
     @ObservedObject var model: KeyBrakeViewModel
     let appDelegate: KeyBrakeAppDelegate
     @Environment(\.openWindow) private var openWindow
     @State private var didOpenLaunchRequestedCommandCenter = false
 
+    private var hydrationAwareApplicationSymbol: String {
+        model.isRecoveryStatusKnown
+            ? KeyBrakeStatusPresentation.symbol(for: model.operationalState)
+            : "hourglass"
+    }
+
     var body: some View {
-        Label("KeyBrake", systemImage: model.operationalState == .normal ? "shield" : "exclamationmark.shield")
+        Label("KeyBrake", systemImage: hydrationAwareApplicationSymbol)
             .onAppear {
                 appDelegate.attach(model: model)
                 openCommandCenterIfRequested()
