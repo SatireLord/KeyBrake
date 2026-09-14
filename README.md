@@ -82,6 +82,8 @@ UI-009 keeps the Command Center header, protection card, and destination recover
 
 UI-010 keeps the menu-bar extra icon in the same checking state until recovery hydration completes, so the compact shell does not show a normal or warning state before KeyBrake has confirmed it.
 
+UI-011 keeps the compact menu header icon aligned with the adjacent status row, so the menu cannot show a confirmed normal shield while recovery status is still checking.
+
 The Command Center groups Incident Log and Settings into a Review and configure section that shows the current incident and configured-target counts. UI-004 adds a current protection-state summary to Settings and a record/recovery summary plus empty state to Incident Log, while the emergency and recovery actions keep their existing semantics.
 
 Use the runbook in [`docs/KEYBRAKE_SAFE_DEMO.md`](docs/KEYBRAKE_SAFE_DEMO.md). It demonstrates the menu, the Command Center, a harmless fake command runner, the recovery contract, the incident log, and read-only network inventory without severing the active development session. For deterministic destination staging, launch the temporary app with `--keybrake-settings` or `--keybrake-incident-log`; each argument opens only the named review window and performs no emergency operation. For deterministic recovery-required staging, launch the temporary app with `--keybrake-command-center --keybrake-recovery-demo`; that route writes its fixture snapshot and incident into a UUID-named temporary directory and uses fixture-backed controllers, so it does not touch real Application Support, network, sharing, TCC, or process state. Live network isolation should only be performed from a separately staged human-controlled Mac session with a known recovery path.

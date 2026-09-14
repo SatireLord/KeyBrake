@@ -25,6 +25,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Hydration-aware menu status | implemented | Menu-bar status help uses the shared checking explanation until recovery-status hydration completes, matching the visible status label |
 | Hydration-safe destination summaries | implemented | Command Center icons and recovery card, Settings recovery summary, and Incident Log recovery summary remain in checking state until recovery-status hydration completes |
 | Hydration-safe menu-bar shell icon | implemented | The menu-bar extra label uses the shared checking symbol until recovery-status hydration completes, then follows the confirmed operational state |
+| Hydration-safe compact menu header | implemented | The compact menu heading reuses the hydration-aware status symbol, so its title and status row agree while recovery status is checking |
 | Recovery hydration status | implemented | Recovery panel uses the shared checking state until launch recovery hydration completes, then presents the current operational state before its existing actions |
 | Recovery state orientation | implemented | The Recovery panel repeats the shared operational-state icon, tint, detail, and pending-decision explanation before its existing restore, keep-isolation, and quit actions |
 | State-aware history and menu affordances | implemented | Incident Log explains whether resolved records are available and disables its clear-history action when none exist; the menu uses stable symbols for its existing actions, and Settings reuses the shared state tint |
@@ -72,6 +73,8 @@ UI-008 is source and SwiftPM Release proven, and the menu-bar status help now us
 UI-009 is source and SwiftPM Release proven, and the Command Center header, protection card, recovery-card visibility, Settings recovery summary, and Incident Log recovery summary now respect the same hydration boundary. Agent Display preflight passed, but the disposable Command Center did not leave a running window for exact containment on this attempt; no pointer or additional PNG proof is claimed.
 
 UI-010 is source and SwiftPM Release proven, and the menu-bar extra label now uses the same hydration-aware status symbol as the compact status row. Agent Display preflight passed, but the disposable shell route did not leave a running KeyBrake window for exact containment; no pointer or additional PNG proof is claimed.
+
+UI-011 is source and SwiftPM Release proven, and the compact menu header now reuses the hydration-aware status symbol already used by its status row. Agent Display preflight passed, but the disposable app exposed no movable content window for exact containment; no pointer or additional PNG proof is claimed.
 
 ## Checklist realignment
 
