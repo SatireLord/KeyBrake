@@ -85,7 +85,7 @@ struct KeyBrakeCommandCenterView: View {
                 subtitle: "Use the smallest action that matches the situation. KeyBrake records and verifies each operation."
             )
 
-            HStack(alignment: .top, spacing: 12) {
+            VStack(alignment: .leading, spacing: 10) {
                 Button {
                     model.stopSkynetLocally()
                 } label: {
@@ -96,6 +96,9 @@ struct KeyBrakeCommandCenterView: View {
                     )
                 }
                 .buttonStyle(.bordered)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityIdentifier("keybrake.command-center.stop-local-automation")
+                .accessibilityHint("Stops approved local input automation without changing network or privacy settings")
                 .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
 
                 Button {
@@ -109,6 +112,9 @@ struct KeyBrakeCommandCenterView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityIdentifier("keybrake.command-center.stop-remote-access")
+                .accessibilityHint("Saves recovery state before applying the selected isolation profile")
                 .disabled(model.isBusy)
             }
         }
@@ -116,29 +122,66 @@ struct KeyBrakeCommandCenterView: View {
 
     private var recoveryCard: some View {
         GroupBox {
-            HStack(alignment: .top, spacing: 14) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.title2)
-                    .foregroundStyle(.orange)
-                    .frame(width: 32)
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(alignment: .top, spacing: 14) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.title2)
+                        .foregroundStyle(.orange)
+                        .frame(width: 32)
 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Recovery decision required")
-                        .font(.headline)
-                    Text("A recovery snapshot is still available. Review the panel before you quit or consider the incident resolved.")
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Recovery decision required")
+                            .font(.headline)
+                        Text("A recovery snapshot is still available. Review the panel before you quit or consider the incident resolved.")
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
 
-                Spacer(minLength: 12)
+                if let snapshot = model.unresolvedRecovery {
+                    recoveryInventory(snapshot)
+                }
 
                 Button("Open Recovery Panel") {
                     model.isShowingRecoveryPanel = true
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityIdentifier("keybrake.command-center.open-recovery-panel")
+                .accessibilityHint("Opens the mouse-operated recovery decision panel")
                 .disabled(model.isBusy)
             }
+        }
+    }
+
+    private func recoveryInventory(_ snapshot: RecoverySnapshot) -> some View {
+        let networkSummary = recoveryMetricDescription(snapshot.networkChanges.count, singular: "network change", plural: "network changes")
+        let sharingSummary = recoveryMetricDescription(snapshot.sharingChanges.count, singular: "sharing change", plural: "sharing changes")
+        let unresolvedSummary = recoveryMetricDescription(snapshot.unresolvedSteps.count, singular: "unresolved step", plural: "unresolved steps")
+
+        return HStack(spacing: 14) {
+            recoveryMetric(summary: networkSummary, systemImage: "network")
+            recoveryMetric(summary: sharingSummary, systemImage: "person.2.badge.gearshape")
+            recoveryMetric(summary: unresolvedSummary, systemImage: "exclamationmark.circle")
+        }
+        .padding(.vertical, 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Recovery inventory: \(networkSummary), \(sharingSummary), \(unresolvedSummary)")
+    }
+
+    private func recoveryMetricDescription(_ value: Int, singular: String, plural: String) -> String {
+        "\(value) \(value == 1 ? singular : plural)"
+    }
+
+    private func recoveryMetric(summary: String, systemImage: String) -> some View {
+        Label {
+            Text(summary)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        } icon: {
+            Image(systemName: systemImage)
+                .foregroundStyle(.orange)
         }
     }
 
@@ -189,6 +232,7 @@ struct KeyBrakeCommandCenterView: View {
                 Label("Incident Log", systemImage: "list.bullet.clipboard")
             }
             .buttonStyle(.bordered)
+            .accessibilityIdentifier("keybrake.command-center.open-incident-log")
 
             Button {
                 openWindow(id: "settings")
@@ -196,6 +240,7 @@ struct KeyBrakeCommandCenterView: View {
                 Label("Settings", systemImage: "gearshape")
             }
             .buttonStyle(.bordered)
+            .accessibilityIdentifier("keybrake.command-center.open-settings")
 
             Spacer(minLength: 12)
             Text("Mouse-operated recovery")

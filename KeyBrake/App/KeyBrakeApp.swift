@@ -1,9 +1,11 @@
+import Foundation
+import KeyBrakeCore
 import SwiftUI
 
 @main
 struct KeyBrakeApp: App {
     @NSApplicationDelegateAdaptor(KeyBrakeAppDelegate.self) private var appDelegate
-    @StateObject private var model = KeyBrakeViewModel()
+    @StateObject private var model = KeyBrakeLaunchConfiguration.makeViewModel()
 
     var body: some Scene {
         MenuBarExtra {
@@ -45,6 +47,75 @@ struct KeyBrakeApp: App {
     }
 }
 
+// Greppable:
+// canonical: keybrake-recovery-demo-route
+// aliases: disposable recovery demo; staged recovery fixture; recovery launch argument
+// forms: keybrake-recovery-demo; --keybrake-recovery-demo
+// descriptors: temporary recovery store; no host mutation; command-center staging
+// states: recovery-required; isolated; pending-decision
+// consumers: KeyBrakeApp; WindowLaunchBridge; Agent Display
+// owner: KeyBrakeLaunchConfiguration
+@MainActor
+private enum KeyBrakeLaunchConfiguration {
+    static func makeViewModel() -> KeyBrakeViewModel {
+        guard ProcessInfo.processInfo.arguments.contains(KeyBrakeLaunchArgument.recoveryDemo) else {
+            return KeyBrakeViewModel()
+        }
+
+        let rootDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("KeyBrake-Recovery-Demo-\(UUID().uuidString)", isDirectory: true)
+        let recoveryStore = RecoveryStore(rootDirectory: rootDirectory)
+        let incidentStore = IncidentStore(rootDirectory: rootDirectory)
+        let failedStep = OperationStepResult(
+            subsystem: "network",
+            targetID: "wifi",
+            targetDisplayName: "Wi-Fi",
+            requestedState: "enabled",
+            observedPreState: "disabled",
+            observedPostState: "disabled",
+            operationDescription: "Recovery demonstration keeps the recorded Wi-Fi change pending until explicit restoration.",
+            outcome: .failed
+        )
+        let snapshot = RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .isolated,
+            hostIdentifier: "KeyBrake staged recovery demonstration",
+            networkChanges: [
+                NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: "wifi")
+            ],
+            sharingChanges: [
+                SharingChange(id: "remote-login", displayName: "Remote Login", originalEnabled: true, appliedEnabled: false, currentEnabled: false, supported: true)
+            ],
+            privacyResetRequests: ["accessibility"],
+            failedSteps: [failedStep],
+            unresolvedSteps: [failedStep]
+        )
+        try? recoveryStore.save(snapshot)
+
+        var incident = IncidentRecord(
+            initiatingAction: "Stop Remote Access",
+            originalState: .normal,
+            finalState: .recoveryRequired,
+            steps: [failedStep],
+            resolution: "Recovery is pending review in the staged demonstration."
+        )
+        incident.completedAt = Date()
+        try? incidentStore.save(incident)
+
+        let safeRunner = RecordingCommandRunner()
+        let coordinator = EmergencyCoordinator(
+            recoveryStore: recoveryStore,
+            incidentStore: incidentStore,
+            processController: SystemProcessController(),
+            espanso: EspansoAdapter(commandRunner: safeRunner, executableCandidates: []),
+            networkController: FixtureNetworkController(),
+            privacyController: PrivacyController(commandRunner: safeRunner),
+            helper: UnavailableHelper(),
+            initialState: .recoveryRequired
+        )
+        return KeyBrakeViewModel(coordinator: coordinator, incidentStore: incidentStore)
+    }
+}
+
 private struct WindowLaunchBridge: View {
     @ObservedObject var model: KeyBrakeViewModel
     let appDelegate: KeyBrakeAppDelegate
@@ -56,6 +127,15 @@ private struct WindowLaunchBridge: View {
             .onAppear {
                 appDelegate.attach(model: model)
                 openCommandCenterIfRequested()
+            }
+            .onReceive(model.$isShowingRecoveryPanel.removeDuplicates()) { show in
+                Task { @MainActor in
+                    if show {
+                        appDelegate.presentRecoveryPanel(model: model)
+                    } else {
+                        appDelegate.hideRecoveryPanel()
+                    }
+                }
             }
             .onChange(of: model.isShowingIncidentLog) { _, show in
                 if show {
@@ -72,15 +152,20 @@ private struct WindowLaunchBridge: View {
     }
 
     private func openCommandCenterIfRequested() {
-        guard !didOpenLaunchRequestedCommandCenter,
-              ProcessInfo.processInfo.arguments.contains(KeyBrakeLaunchArgument.commandCenter) else { return }
+        let launchArguments = ProcessInfo.processInfo.arguments
+        let shouldOpenCommandCenter = launchArguments.contains(KeyBrakeLaunchArgument.commandCenter) || launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo)
+        guard !didOpenLaunchRequestedCommandCenter, shouldOpenCommandCenter else { return }
         didOpenLaunchRequestedCommandCenter = true
         Task { @MainActor in
             openWindow(id: "command-center")
+            guard launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo) else { return }
+            try? await Task.sleep(nanoseconds: 500_000_000)
+            appDelegate.presentRecoveryPanel(model: model)
         }
     }
 }
 
 private enum KeyBrakeLaunchArgument {
     static let commandCenter = "--keybrake-command-center"
+    static let recoveryDemo = "--keybrake-recovery-demo"
 }

@@ -12,6 +12,7 @@ final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
     @MainActor
     func attach(model: KeyBrakeViewModel) {
         self.model = model
+        ensureRecoveryPanelController()
         if model.isShowingRecoveryPanel {
             recoveryPanelController?.show(model: model)
         }
@@ -26,6 +27,13 @@ final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
     @MainActor
     func hideRecoveryPanel() {
         recoveryPanelController?.hide()
+    }
+
+    @MainActor
+    private func ensureRecoveryPanelController() {
+        if recoveryPanelController == nil {
+            recoveryPanelController = RecoveryPanelController()
+        }
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {

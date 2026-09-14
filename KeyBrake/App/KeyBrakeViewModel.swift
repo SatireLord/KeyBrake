@@ -67,8 +67,8 @@ final class KeyBrakeViewModel: ObservableObject {
     func refresh() async {
         let recovery = await coordinator.recoverUnresolvedStateAtLaunch()
         let state = await coordinator.state()
-        let incident = await coordinator.latest()
         let storedIncidents = (try? incidentStore.list()) ?? []
+        let incident = await coordinator.latest() ?? storedIncidents.first
         unresolvedRecovery = recovery
         operationalState = state
         latestIncident = incident
