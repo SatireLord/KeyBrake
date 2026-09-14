@@ -10,6 +10,7 @@ import SwiftUI
 // consumers: KeyBrakeApp; KeyBrakeCommandCenterView; KeyBrakeViewModel
 // owner: KeyBrakeMenuView
 // QoL-001: menu actions carry stable visual symbols while their existing targets, labels, and disabled-state rules remain unchanged.
+// QoL-004: the menu status label and its help text share the same hydration-aware state explanation.
 struct KeyBrakeMenuView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -20,7 +21,7 @@ struct KeyBrakeMenuView: View {
         Divider()
         Label(statusText, systemImage: statusSymbol)
             .accessibilityLabel("Current KeyBrake state: \(statusText)")
-            .help(KeyBrakeStatusPresentation.detail(for: model.operationalState))
+            .help(statusDetail)
         Button {
             openWindow(id: "command-center")
         } label: {
@@ -83,5 +84,11 @@ struct KeyBrakeMenuView: View {
 
     private var statusSymbol: String {
         model.isRecoveryStatusKnown ? KeyBrakeStatusPresentation.symbol(for: model.operationalState) : "hourglass"
+    }
+
+    private var statusDetail: String {
+        model.isRecoveryStatusKnown
+            ? KeyBrakeStatusPresentation.detail(for: model.operationalState)
+            : "KeyBrake is confirming whether an unresolved recovery snapshot exists."
     }
 }
