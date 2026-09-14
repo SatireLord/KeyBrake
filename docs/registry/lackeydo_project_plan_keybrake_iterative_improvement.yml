@@ -23,6 +23,81 @@ project_plan:
       inferred: "The dedicated surface reduces action ambiguity and makes the primary UI stageable without changing coordinator behavior."
       receipt: "/Users/michaeltran/AntiGravity/KeyBrake/.agent-cache/proofs/keybrake-ui-001-command-center.png; sha256=4dc9ed7bcd09aabb5e77371be1d09ba0b857927834c50f9331680c8b82db65ce"
       missing_evidence: "Live pointer action and Recovery-panel mouse-only interaction remain unproven; the current Xcode Release revalidation stalled before source compilation."
+  next_iteration:
+    id: "UI-002"
+    name: "Recovery-required state and panel readability"
+    source_checkpoint: "50c6a9816a026e06867f8d49caa71b41b569277a"
+    user_promise: "A user can see exactly what recovery state remains, understand the recorded inventory, open a readable recovery decision panel, and keep isolation without falsely resolving an unfinished decision."
+    status: "partial_complete"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/App/KeyBrakeApp.swift"
+        owner: "KeyBrakeLaunchConfiguration and WindowLaunchBridge"
+        intended_change: "Add a disposable recovery-demo launch argument, temporary fixture stores, deterministic command-center opening, and direct recovery-panel presentation after the command-center window opens."
+        status: implemented
+      - path: "KeyBrake/App/KeyBrakeAppDelegate.swift"
+        owner: "KeyBrakeAppDelegate"
+        intended_change: "Provision the recovery panel controller at presentation entry points so asynchronous launch hydration cannot lose the recovery window."
+        status: implemented
+      - path: "KeyBrake/App/KeyBrakeViewModel.swift"
+        owner: "KeyBrakeViewModel.refresh"
+        intended_change: "Keep the newest stored incident visible when the coordinator has no in-memory latest incident after relaunch."
+        status: implemented
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView"
+        intended_change: "Stack emergency actions at full width, show recovery inventory, correct singular labels, and add grounded accessibility identifiers."
+        status: implemented
+      - path: "KeyBrake/UI/RecoveryPanelController.swift"
+        owner: "RecoveryPanelController"
+        intended_change: "Expand the panel and place it beside the Command Center when a staged content window exists."
+        status: implemented
+      - path: "KeyBrake/UI/RecoveryView.swift"
+        owner: "RecoveryView"
+        intended_change: "Provide a scrollable recovery decision surface with state summary, recorded inventory, described actions, explicit Keep Isolation and Quit hierarchy, and close-language clarity."
+        status: implemented
+      - path: "README.md"
+        owner: "Demonstration and recovery-boundary sections"
+        intended_change: "Document the recovery-required Command Center and safe fixture launch route."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Classify the recovery-demo route, panel presentation evidence, and remaining pointer boundary."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-002 as the current partial-proof iteration and route the next work to UI-003."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger and source SHA anchors"
+        intended_change: "Record final SwiftPM tests/build, disposable runtime evidence, Agent Display capture, exact visual hash, and truthful hold boundaries."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration sequence"
+        intended_change: "Provide the deterministic recovery-required staging path without real host mutation."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Add UI-002 source owners, proof classes, checksum refresh, risks, and the UI-003 re-entry point without rewriting UI-001 history."
+        status: active
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift and KeyBrake/UI/RecoveryView.swift"
+      provenance: "source checkpoint 50c6a9816a026e06867f8d49caa71b41b569277a; final SwiftPM Release executable; cursor-safe Agent Display staging"
+      state: "command_center_staged_isolated_captured; recovery_panel_runtime_observed"
+      observed: "The contained 760x652 Command Center renders Recovery Required, full-width emergency actions, corrected recovery inventory, Open Recovery Panel, and the staged incident. The AppKit runtime trace reports the recovery panel visible with five app windows, while the display harness exposes only the Command Center frame."
+      receipt: ".agent-cache/proofs/keybrake-ui-002-recovery-demo.png; sha256=bc52d0ebe45c6950c0bffd60080b1e5669adcdbb9bccf294bfe19935c73e4872"
+      missing_evidence: "No exact pointer target or mouse action was sent; the current Xcode Release revalidation remains held by the host build service."
+    proof:
+      tests: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI002FinalVerification; 35 tests, 0 failures"
+      release_build: "swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI002Final; pass"
+      staging: "agent_ui_preflight.py; displayctl doctor; displayctl capabilities; PID-targeted stage; inspect-ui; is-isolated; contained capture by window ID; pass"
+      safety: "The demo uses a UUID-named temporary recovery store, FixtureNetworkController, RecordingCommandRunner, and UnavailableHelper; no real host mutation was requested."
+    guards:
+      - "Agent-Cache single-flight guard passed before final SwiftPM proof."
+      - "Non-interrupting UI guard and bounded source parse passed."
+      - "Whole-file SHA anchors were refreshed for all six changed Swift source files."
+    deferred:
+      - "Live pointer interaction, exact Recovery-panel target binding, signed helper approval, Developer ID signing, notarization, live TCC, live network mutation, and launchd mutation."
+    next_action: "Implement UI-003 settings and incident-log navigation without changing action semantics; keep UI-004 as the final release-source, signed-host, and live-interaction gate."
   write_set:
     rows:
       - path: "KeyBrake/UI/CommandCenterView.swift"
@@ -149,18 +224,49 @@ project_plan:
         evidence: "Recompute after final source edits and update only changed rows."
         authorization: "normal documentation update"
         status: pass
+      - checksum_id: "no-applicable-keybrake-boundary-ui-002"
+        manifest: "Agent-Cache checksum registries and predecessor LackeyDo ledger"
+        protected_path: "none"
+        span: "none"
+        current_identity: "no registered KeyBrake protected span at UI-002 source checkpoint 50c6a9816a026e06867f8d49caa71b41b569277a"
+        planned_touch: "no-applicable-checksum"
+        route: "validate"
+        why_exists_here: "UI-002 extends the ordinary KeyBrake recovery UI seam and does not cross a registered protected consumer boundary."
+        evidence: "Agent-Cache bootstrap and the prior ledger report protected_region_count=0 and task_relevant_region_count=0."
+        authorization: "not_required_for_validate"
+        status: confirmed_no_applicable_checksum
+      - checksum_id: "keybrake-verification-sha-anchors-ui-002"
+        manifest: "docs/KEYBRAKE_VERIFICATION.md"
+        protected_path: "KeyBrake/App/KeyBrakeApp.swift, KeyBrake/App/KeyBrakeAppDelegate.swift, KeyBrake/App/KeyBrakeViewModel.swift, KeyBrake/UI/CommandCenterView.swift, KeyBrake/UI/RecoveryPanelController.swift, KeyBrake/UI/RecoveryView.swift"
+        span: "whole-file SHA-256 documentation anchors"
+        current_identity: "UI-002 source values at 50c6a9816a026e06867f8d49caa71b41b569277a"
+        planned_touch: "outside"
+        route: "validate"
+        why_exists_here: "The verification record detects source drift across the recovery decision and Command Center seams without claiming runtime behavior."
+        evidence: "SHA-256 values were recomputed after the final UI-002 source changes and before documentation delivery."
+        authorization: "normal documentation update"
+        status: pass
   context_packet:
     repository: "KeyBrake at /Users/michaeltran/AntiGravity/KeyBrake"
     source_of_truth:
       - path: "KeyBrake/UI/CommandCenterView.swift"
-        owns: "command-center layout, status presentation, emergency action hierarchy, recovery routing, and recent incident summary"
+        owns: "command-center layout, status presentation, emergency action hierarchy, recovery inventory, recovery routing, and recent incident summary"
         consumers: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/UI/KeyBrakeMenuView.swift", "Agent Display staged window"]
       - path: "KeyBrake/App/KeyBrakeApp.swift"
-        owns: "command-center Window scene and explicit launch-argument demonstration route"
-        consumers: ["SwiftUI scene runtime", "Agent Display stage command"]
+        owns: "command-center Window scene, disposable recovery-demo fixture, and explicit launch-argument presentation route"
+        consumers: ["SwiftUI scene runtime", "KeyBrake/App/KeyBrakeAppDelegate.swift", "Agent Display stage command"]
+      - path: "KeyBrake/App/KeyBrakeAppDelegate.swift"
+        owns: "AppKit recovery-panel controller provisioning and presentation entry points"
+        consumers: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/UI/RecoveryPanelController.swift"]
       - path: "KeyBrake/App/KeyBrakeViewModel.swift"
-        owns: "existing state and action behavior consumed by the new view, including launch-hydration readiness"
+        owns: "existing state and action behavior consumed by the new view, including launch-hydration readiness and stored-incident fallback"
         consumers: ["KeyBrakeCommandCenterView", "RecoveryView", "KeyBrakeMenuView"]
+      - path: "KeyBrake/UI/RecoveryPanelController.swift"
+        owns: "AppKit recovery panel size, placement, and title-bar lifecycle"
+        consumers: ["KeyBrake/App/KeyBrakeAppDelegate.swift", "KeyBrake/UI/RecoveryView.swift"]
+      - path: "KeyBrake/UI/RecoveryView.swift"
+        owns: "recovery decision summary, recorded inventory, restore actions, and mouse-oriented close/quit hierarchy"
+        consumers: ["KeyBrake/UI/RecoveryPanelController.swift", "KeyBrake/App/KeyBrakeViewModel.swift"]
       - path: "KeyBrakeCore/FeatureContract.swift"
         owns: "canonical required menu action inventory"
         consumers: ["Resources/KeyBrakeFeatureContract.json", "KeyBrakeTests/FeatureContractTests.swift"]
@@ -168,18 +274,22 @@ project_plan:
       - path: "Agent-Cache bounded structural graph"
         covers: "KeyBrake UI symbols, scene routes, and function-call edges"
         refresh: "mcp__agent_cache__build_structural_graphs(repo_path=/Users/michaeltran/AntiGravity/KeyBrake, limit=120)"
-        freshness: "source-bound snapshot 87aa404bfe3637c25ed9b878f144fac43633482dc6e0a2037d78533054f6b05e with graph key aa9f0226ca9786673d9b8310d3ab4ef30b0da35a5d0e7533f064a9eb25dedb86 after UI-001 source implementation"
+        freshness: "source-bound snapshot a8ccc5ce4aca4c4394c33bd807f950cc5aaa1f35d8e781630d868bd4a9525099 with graph key 5cf85bb4f74dfcc2af0c82ae2fcd24f601fcd408c433bb1de33598bb6847b02e after UI-002 source implementation"
       - path: "Greppable markers in KeyBrake UI source"
         covers: "command-center route, status presentation, and menu consumer vocabulary"
         refresh: "bounded rg -n over KeyBrake/App and KeyBrake/UI"
-        freshness: "refreshed after UI-001 implementation; owner markers and route references resolve"
+        freshness: "refreshed after UI-002 implementation; recovery-demo, recovery-decision, inventory, panel-placement, and owner markers resolve"
     automation:
       entrypoint: "discover -> update UI owner -> regenerate project membership if required -> focused tests/build -> Agent Display preflight/stage/inspect -> update docs/hashes -> commit/push -> Agent-Cache closeout"
       chain: ["repository truth", "source owner and visual evidence", "focused compile/test", "exact Release artifact", "cursor-safe Agent Display attempt", "documentation and checksum refresh", "remote delivery", "closeout receipt"]
-      outputs: ["KeyBrake/UI/CommandCenterView.swift", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml", "Agent-Cache closeout receipt"]
+      outputs: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/App/KeyBrakeAppDelegate.swift", "KeyBrake/UI/CommandCenterView.swift", "KeyBrake/UI/RecoveryPanelController.swift", "KeyBrake/UI/RecoveryView.swift", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml", "Agent-Cache closeout receipt"]
     focused_checks:
       - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI001"
         proves: "Core feature-contract parity and existing regression suite remain green"
+      - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI002FinalVerification"
+        proves: "The final recovery-decision source compiles and the complete 35-test SwiftPM suite remains green"
+      - command: "swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI002Final"
+        proves: "The final production-mode KeyBrake executable compiles and links after UI-002 changes"
       - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeUI001 CODE_SIGNING_ALLOWED=NO -only-testing:KeyBrakeTests/FeatureContractTests test"
         proves: "Native Xcode test target compiles after the new menu contract"
       - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeReleaseUI001 CODE_SIGNING_ALLOWED=NO build"
@@ -188,6 +298,8 @@ project_plan:
         proves: "cursor-safe preflight before any Agent Display inspection or capture"
       - command: "/Users/michaeltran/bin/displayctl stage --app KeyBrake --position above --preset 16:9"
         proves: "task-owned Command Center window is stageable, or records the exact failure without visual proof"
+      - command: "/usr/bin/open -n /tmp/KeyBrakeUI002RecoveryDemo.app --args --keybrake-command-center --keybrake-recovery-demo; displayctl inspect-ui --display agent-stage; displayctl is-isolated --app 52958; displayctl capture --display agent-stage --window-id 77638 --out .agent-cache/proofs/keybrake-ui-002-recovery-demo.png"
+        proves: "The recovery-required fixture renders a contained Command Center receipt while keeping AppKit panel and pointer evidence separate"
   requirements:
     - id: R001
       requirement: "The Command Center must provide a clear visual hierarchy for current state, emergency actions, recovery actions, recent activity, and secondary navigation."
@@ -231,6 +343,18 @@ project_plan:
       status: pass
       proof: "Source commit fe24017763e52a88de90b966c2d4b5b0692945c1 and documentation commit fddcd57da7738e42d48bc44221a0026b4d06d5e3 were exact-path; remote branch and PR head verified at ebbc3d623806769752ef35557b2feddc147016d5; GitHub repository is private, PR #1 is open and unmerged, and the worktree is clean."
       residual_risk: "Human review and later release gates remain outside this iteration."
+    - id: R008
+      requirement: "The recovery-required state must expose recorded network, sharing, unresolved-step, and privacy-review inventory in a readable decision surface."
+      owner: "KeyBrake/UI/CommandCenterView.swift, KeyBrake/UI/RecoveryView.swift"
+      status: pass
+      proof: "SwiftPM Release build, final 35-test suite, final Agent Display capture at .agent-cache/proofs/keybrake-ui-002-recovery-demo.png with sha256=bc52d0ebe45c6950c0bffd60080b1e5669adcdbb9bccf294bfe19935c73e4872, and disposable recovery-demo runtime inspection."
+      residual_risk: "Only the contained Command Center frame has visual capture; Recovery-panel pointer interaction remains unproven."
+    - id: R009
+      requirement: "The disposable recovery demo must create a persisted fixture without touching real host state, and recovery-panel presentation must survive asynchronous launch hydration."
+      owner: "KeyBrake/App/KeyBrakeApp.swift, KeyBrake/App/KeyBrakeAppDelegate.swift, KeyBrake/App/KeyBrakeViewModel.swift, KeyBrake/UI/RecoveryPanelController.swift"
+      status: pass
+      proof: "Exact Release demo launch observed Recovery Required, the staged incident, panel.visible=true, and NSApp.windows.count=5; source review confirms UUID temporary stores, fixture controllers, and lazy recovery-panel controller provisioning."
+      residual_risk: "Xcode bundle and signed-host behavior remain held."
   implementation_slices:
     - id: S001
       name: "Command Center visual surface"
@@ -257,6 +381,26 @@ project_plan:
       files: ["docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S003", "S004"]
       status: complete
+    - id: S006
+      name: "Recovery-required fixture and persisted recent activity"
+      files: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/App/KeyBrakeViewModel.swift"]
+      dependencies: ["S002", "R003", "R008", "R009"]
+      status: complete
+    - id: S007
+      name: "Recovery decision panel UX and presentation lifecycle"
+      files: ["KeyBrake/App/KeyBrakeAppDelegate.swift", "KeyBrake/UI/RecoveryPanelController.swift", "KeyBrake/UI/RecoveryView.swift"]
+      dependencies: ["S006", "R009"]
+      status: complete
+    - id: S008
+      name: "Command Center recovery inventory and readability"
+      files: ["KeyBrake/UI/CommandCenterView.swift"]
+      dependencies: ["S006", "R008"]
+      status: complete
+    - id: S009
+      name: "UI-002 verification and documentation"
+      files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
+      dependencies: ["S006", "S007", "S008"]
+      status: active
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -274,6 +418,18 @@ project_plan:
       command: "gh repo view SatireLord/KeyBrake --json visibility,isPrivate,defaultBranchRef,nameWithOwner; gh pr view 1 --json state,isDraft,baseRefName,headRefName,headRefOid"
       status: pass
       result: "Repository is private; PR #1 is open, non-draft, based on main, unmerged, and points to remote head ebbc3d623806769752ef35557b2feddc147016d5."
+    - name: "UI-002 single-flight build and test boundary"
+      command: "Agent-Cache single-flight guard; swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI002Final; swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI002FinalVerification"
+      status: pass
+      result: "The final UI-002 Release build and 35-test SwiftPM suite ran after the single-flight guard passed; no overlapping KeyBrake build or test process was introduced."
+    - name: "UI-002 source parse and non-interrupting UI boundary"
+      command: "swiftc -frontend -parse KeyBrake/App/KeyBrakeApp.swift KeyBrake/App/KeyBrakeAppDelegate.swift KeyBrake/App/KeyBrakeViewModel.swift KeyBrake/UI/CommandCenterView.swift KeyBrake/UI/RecoveryPanelController.swift KeyBrake/UI/RecoveryView.swift; python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/App/KeyBrakeApp.swift KeyBrake/App/KeyBrakeAppDelegate.swift KeyBrake/App/KeyBrakeViewModel.swift KeyBrake/UI/CommandCenterView.swift KeyBrake/UI/RecoveryPanelController.swift KeyBrake/UI/RecoveryView.swift"
+      status: pass
+      result: "All six changed Swift files parsed, and the cursor-safe non-interrupting UI guard passed before runtime staging."
+    - name: "UI-002 visual evidence boundary"
+      command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; displayctl stage --app 52958 --position above --preset 16:9; displayctl inspect-ui --display agent-stage; displayctl is-isolated --app 52958; displayctl capture --display agent-stage --window-id 77638 --out .agent-cache/proofs/keybrake-ui-002-recovery-demo.png"
+      status: pass
+      result: "The final contained Command Center frame was isolated as one 760x652 window and captured with sha256=bc52d0ebe45c6950c0bffd60080b1e5669adcdbb9bccf294bfe19935c73e4872; the AppKit recovery panel was observed separately, and no pointer interaction was claimed."
   tests:
     - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI001"
       status: pass
@@ -287,13 +443,25 @@ project_plan:
     - command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; displayctl doctor; displayctl capabilities; displayctl stage; displayctl inspect; displayctl inspect-ui; displayctl is-isolated; displayctl capture"
       status: pass
       result: "Cursor-safe preflight and provider checks passed; the task-owned Command Center staged and isolated as one 760x648 window; accessibility inspection found the intended labels; one 1920x1080 PNG receipt was captured."
+    - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI002FinalVerification"
+      status: pass
+      result: "35 tests, 0 failures after the final UI-002 source commit 50c6a9816a026e06867f8d49caa71b41b569277a."
+    - command: "swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI002Final"
+      status: pass
+      result: "The final production-mode SwiftPM KeyBrake executable compiled and linked after UI-002 source changes."
+    - command: "/usr/bin/open -n /tmp/KeyBrakeUI002RecoveryDemo.app --args --keybrake-command-center --keybrake-recovery-demo; displayctl inspect-ui --display agent-stage; displayctl is-isolated --app 52958; displayctl capture --display agent-stage --window-id 77638 --out .agent-cache/proofs/keybrake-ui-002-recovery-demo.png"
+      status: pass
+      result: "Disposable runtime showed Recovery Required, the staged incident, one contained Command Center frame at 760x652, and a visible AppKit recovery panel in the five-window runtime trace; task PID 52958 was terminated after capture and no host mutation was claimed."
+    - command: "displayctl capture --display agent-stage --window-id 77638 --out .agent-cache/proofs/keybrake-ui-002-recovery-demo.png"
+      status: pass
+      result: "Contained PNG receipt is 760x652, 8-bit RGBA, sha256=bc52d0ebe45c6950c0bffd60080b1e5669adcdbb9bccf294bfe19935c73e4872; the receipt proves the Command Center frame only."
   deferred_items:
     - item: "Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof"
       status: accepted_deferred
       reason: "The current release contract forbids unsupported host claims."
     - item: "Live pointer interaction"
       status: accepted_deferred
-      reason: "The Command Center capture passed after exact isolation, but no exact CUA target binding was exposed and no pointer action was sent; Recovery-panel interaction remains unproven."
+      reason: "The Command Center capture passed after exact isolation, but the AppKit recovery panel was not exposed as an exact Agent Display target, so no pointer action was sent; Recovery-panel interaction remains unproven."
     - item: "Human merge of PR #1 and GitHub visibility change"
       status: accepted_deferred
       reason: "The portfolio repository remains private until the owner explicitly releases it."
@@ -310,7 +478,18 @@ project_plan:
       status: accepted_deferred
       evidence: "Focused Debug tests and Release build both stalled during Xcode external-tool/package preparation after CC/CXX were unset; standalone Apple clang remained available and no KeyBrake compiler diagnostic appeared."
       next_action: "Retry the two exact Xcode commands only after the host Xcode build service is reset or the environment changes; do not alter source based on this host-only stall."
+    - item: "UI-002 documentation and delivery metadata remain open until the documentation commit reaches the private remote branch."
+      status: active
+      evidence: "Source commit 50c6a9816a026e06867f8d49caa71b41b569277a is local and the six documentation files remain intentionally uncommitted while this ledger is finalized."
+      next_action: "Parse and diff-check the six documentation paths, commit them on codex/keybrake-complete-implementation, push without merging, verify the private PR head, and write the Agent-Cache closeout receipt."
   branch: "codex/keybrake-complete-implementation"
   head: "ebbc3d623806769752ef35557b2feddc147016d5"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
+  active_delivery:
+    iteration: "UI-002"
+    source_commit: "50c6a9816a026e06867f8d49caa71b41b569277a"
+    documentation_commit: "pending"
+    remote_head_verified: "pending"
+    status: "source_committed_documentation_in_progress"
+    next_safe_entry_point: "UI-003 settings and incident-log navigation; UI-004 remains the final Xcode, signed-host, and live-interaction gate."

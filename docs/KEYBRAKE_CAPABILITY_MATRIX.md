@@ -23,7 +23,8 @@ This document classifies every user-visible or safety-critical capability by imp
 | Capability | Status | Notes |
 | --- | --- | --- |
 | Menu-bar app shell | `implemented` | SwiftUI menu bar, Settings and Incident Log windows, and one AppKit-owned Recovery panel |
-| Command Center window | `implemented` | Stageable SwiftUI status surface with state explanation, bounded emergency actions, recovery routing, recent activity, and secondary navigation; SwiftPM Release compile plus isolated Agent Display accessibility and PNG proof completed |
+| Command Center window | `implemented` | Stageable SwiftUI status surface with state explanation, full-width emergency actions, recorded recovery inventory, recovery routing, recent activity, and secondary navigation; UI-002 also corrects singular inventory labels and persists the latest stored incident for relaunch visibility |
+| Recovery-required staging route | `fixture-only` | `--keybrake-recovery-demo` creates a UUID-named temporary snapshot and incident, uses fixture-backed controllers, and avoids real Application Support, network, sharing, TCC, and process mutation |
 | Serialized emergency coordinator | `implemented` | Actor boundary with fixture-backed tests |
 | Typed absolute-path commands | `implemented` | No shell interpolation |
 | Process identity before termination | `implemented` | Exact bundle ID, executable URL, and stored launch-date re-check with focused identity-matrix coverage |
@@ -35,8 +36,8 @@ This document classifies every user-visible or safety-critical capability by imp
 | Recovery snapshot persistence | `implemented` | Atomic write with backup-rename semantics |
 | Original/applied/current restore | `implemented` | Network and sharing adapters compare current vs applied |
 | Partial restore retention | `implemented` | Snapshot retained until all subsystems resolve |
-| Launch-time recovery panel | `host-unverified` | Source replays pending recovery visibility when the delegate attaches and keeps one AppKit panel across presentation, Keep Isolation, close, and reopen; live window proof is not available |
-| Recovery-window lifecycle synchronization | `host-unverified` | AppKit title-bar close and SwiftUI Keep Isolation both update `isShowingRecoveryPanel`; source and Release compile are proven, while live interaction remains unverified |
+| Launch-time recovery panel | `host-unverified` | Source replays pending recovery visibility when the delegate attaches, lazily provisions the AppKit controller when needed, anchors the panel beside the Command Center, and keeps one panel across presentation, Keep Isolation, close, and reopen; the disposable recovery demo observed the panel visible, while the display harness exposed only the Command Center frame |
+| Recovery-window lifecycle synchronization | `host-unverified` | AppKit title-bar close and SwiftUI Keep Isolation both update `isShowingRecoveryPanel`; source, Release compile, and disposable panel presentation are proven, while live pointer interaction remains unverified |
 | Privileged helper XPC listener | `host-unverified` | Listener bootstrap, typed routing, caller identity checks, verified launchd identity checks, helper embedding, and plist placement are source/build proven; signed installation and live authorization remain unverified |
 | Verified non-Apple launchd stop | `fixture-only` | Approved labels route through the helper; `launchctl print` path, optional `codesign` designated requirement, and post-stop state are checked; live signed-host mutation remains unverified |
 | SMAppService daemon registration | `host-unverified` | Settings exposes registration and status through `SMAppService`; signed-host installation and approval remain unverified |
@@ -47,7 +48,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Helper status in Settings | `implemented` | Derived from `SMAppService` daemon status |
 | Independent sharing restore | `implemented` | Network-only restore does not clear unresolved sharing |
 | Feature contract resource | `implemented` | Bundled JSON with regression test |
-| Mouse-only UI proof | `host-unverified` | The new Command Center now has isolated Agent Display staging, accessibility inspection, and one PNG receipt; no pointer action was sent, and the Recovery panel’s mouse-only interaction remains unverified |
+| Mouse-only UI proof | `host-unverified` | UI-002 has an isolated 760×652 Command Center Agent Display capture with readable recovery-required inventory and action hierarchy; the disposable AppKit trace observed a visible recovery panel, but the harness exposed no exact panel target and no pointer action was sent |
 | Developer ID signing / notarization | `planned` | No signing identity is configured on this host |
 | Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
 

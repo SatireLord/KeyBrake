@@ -19,10 +19,10 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 - Repository: KeyBrake git checkout
 - GitHub: private `SatireLord/KeyBrake`; default `main` is at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; release repair checkpoint `a3968ad`; current UI-001 source checkpoint `fe24017` adds the Command Center surface and advances the private branch without changing the release boundary
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; release repair checkpoint `a3968ad`; UI-001 source checkpoint `fe24017` added the Command Center surface, and UI-002 source checkpoint `50c6a9816a026e06867f8d49caa71b41b569277a` adds the recovery-required fixture route, recovery inventory, deterministic panel presentation, and readability refinements without changing the release boundary
 - Release status: GitHub visibility **HOLD**; downloadable binary **BLOCKED** (unsigned local bundle only)
 - Version: `0.1.0` (build `1`)
-- Next action: human review of PR #1; if the owner then chooses a public-source identity, merge #1 onto `main` before flipping visibility. The Command Center visual path is proven locally, while signed-host, helper-approval, live-recovery, and pointer-driven Recovery-panel proof remain separate external gates
+- Next action: continue with UI-003 settings and incident-log navigation, then run UI-004 release gates before any public-visibility decision. UI-002 proves the recovery-required Command Center visually and observes disposable AppKit panel presentation, while signed-host, helper-approval, live-recovery, and pointer-driven Recovery-panel proof remain separate external gates
 - External blockers: signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
 
 ## Feature inventory
@@ -39,7 +39,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 | TCC reset allowlist | missing | implemented |
 | Helper boundary | missing | source/build implemented; verified launchd identity checks and coordinator routing are fixture-proven; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
-| Menu/recovery/settings UI | missing | one canonical AppKit recovery panel, fail-closed launch and transaction termination, synchronized Keep Isolation/title-bar-close state, independent restore actions, and busy-state guards implemented; live mouse proof remains unverified |
+| Menu/recovery/settings UI | missing | one canonical AppKit recovery panel, fail-closed launch and transaction termination, synchronized Keep Isolation/title-bar-close state, independent restore actions, busy-state guards, recovery inventory, deterministic recovery-demo staging, and panel placement beside the Command Center implemented; live mouse proof remains unverified |
 | Focused tests | missing | 35 SwiftPM tests and 8 focused Xcode tests pass locally; process respawn, signed helper, and live host seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
@@ -123,7 +123,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [x] KB-076 Perform read-only network inventory proof through fixtures.
 [!] KB-077 Perform live network isolation only when the local execution path remains recoverable.
 [x] KB-078 Verify unresolved recovery after application relaunch through deterministic store tests.
-[!] KB-079 Verify mouse-only quit and recovery paths; UI-001 proves the Command Center can be staged and inspected in isolation, but no pointer action or Recovery-panel mouse proof was obtained.
+[!] KB-079 Verify mouse-only quit and recovery paths; UI-002 proves the recovery-required Command Center can be staged and inspected in isolation and observes disposable AppKit panel presentation, but no exact pointer target or Recovery-panel mouse action proof was obtained.
 [x] KB-080 Complete README.md.
 [x] KB-081 Complete AGENTS.md.
 [x] KB-082 Complete docs/KEYBRAKE_MASTER_PLAN.md.
@@ -151,7 +151,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 `docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml` is the durable slice map for continuing UI, UX, and quality-of-life work without reopening the closed release ledger.
 
 [!] UI-001 Add the Command Center status hierarchy, emergency-action cards, recovery routing, recent activity, and secondary navigation. Source and SwiftPM Release proof passed at `fe24017`; isolated Agent Display staging, accessibility inspection, and one PNG receipt passed; Xcode Release revalidation remains held by the host build-service stall documented in `docs/KEYBRAKE_VERIFICATION.md`.
-[ ] UI-002 Validate the recovery-required Command Center state with a disposable persisted snapshot and mouse-only Recovery-panel route.
+[!] UI-002 Validate the recovery-required Command Center state with a disposable persisted snapshot, readable recovery inventory, deterministic AppKit panel presentation, and panel placement beside the staged surface. Source checkpoint `50c6a9816a026e06867f8d49caa71b41b569277a` passed the SwiftPM suite and Release build; final Agent Display capture passed for the contained Command Center, while the floating panel was visible in the disposable runtime trace but did not expose an exact harness target for pointer proof.
 [ ] UI-003 Improve settings and incident-log navigation from the Command Center without changing action semantics.
 [ ] UI-004 Re-run the full release-source, signed-host, and live-interaction gates before public visibility.
 
