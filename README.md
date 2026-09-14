@@ -41,6 +41,8 @@ All runtime state is local under `~/Library/Application Support/KeyBrake`, with 
 
 ## Recovery boundaries
 
+The recovery decision panel now repeats the current operational state with the same icon, tint, and explanation hierarchy used by the Command Center, so the user sees the decision context before choosing a restore action.
+
 KeyBrake restores only properties that KeyBrake changed, and it compares original, applied, and current values before every restore. A changed value is reported as a conflict instead of being overwritten. VPNs remain disconnected after network restoration, remote-control applications remain stopped, and macOS privacy grants are never silently restored. An unresolved `CurrentRecovery.json` survives crashes and relaunches and keeps the recovery panel available.
 
 KeyBrake does not defeat kernel or firmware compromise. It cannot guarantee recovery when the mouse and KeyBrake process are both unavailable or attacker-controlled. It cannot silently restore reset TCC grants, and it cannot guarantee control over unsupported third-party or system-managed network paths. The AppKit recovery panel presents the recorded decision inventory beside the Command Center when recovery requires review, and closing that panel does not make an unresolved decision disappear.
@@ -67,6 +69,8 @@ MIT License. See [`LICENSE`](LICENSE), [`SECURITY.md`](SECURITY.md), [`CONTRIBUT
 ## Demonstration
 
 UI-005 adds state-aware resolved-history guidance, stable menu action symbols, and shared Settings status tinting without changing emergency or recovery semantics.
+
+UI-006 gives the Recovery panel the same state-first visual hierarchy as the Command Center; the recovery actions and their safety boundaries remain unchanged.
 
 The Command Center groups Incident Log and Settings into a Review and configure section that shows the current incident and configured-target counts. UI-004 adds a current protection-state summary to Settings and a record/recovery summary plus empty state to Incident Log, while the emergency and recovery actions keep their existing semantics.
 
