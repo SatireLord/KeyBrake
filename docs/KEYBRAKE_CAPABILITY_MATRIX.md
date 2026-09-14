@@ -23,6 +23,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Capability | Status | Notes |
 | --- | --- | --- |
 | Menu-bar app shell | `implemented` | SwiftUI menu bar, Settings and Incident Log windows, and one AppKit-owned Recovery panel |
+| Command Center window | `implemented` | Stageable SwiftUI status surface with state explanation, bounded emergency actions, recovery routing, recent activity, and secondary navigation; SwiftPM Release compile plus isolated Agent Display accessibility and PNG proof completed |
 | Serialized emergency coordinator | `implemented` | Actor boundary with fixture-backed tests |
 | Typed absolute-path commands | `implemented` | No shell interpolation |
 | Process identity before termination | `implemented` | Exact bundle ID, executable URL, and stored launch-date re-check with focused identity-matrix coverage |
@@ -46,7 +47,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Helper status in Settings | `implemented` | Derived from `SMAppService` daemon status |
 | Independent sharing restore | `implemented` | Network-only restore does not clear unresolved sharing |
 | Feature contract resource | `implemented` | Bundled JSON with regression test |
-| Mouse-only UI proof | `host-unverified` | Cursor-safe preflight and a healthy virtual-display provider were confirmed, but the sandboxed menu-bar build exposed no content window for staging, so no CUA action or screenshot proof was claimed |
+| Mouse-only UI proof | `host-unverified` | The new Command Center now has isolated Agent Display staging, accessibility inspection, and one PNG receipt; no pointer action was sent, and the Recovery panel’s mouse-only interaction remains unverified |
 | Developer ID signing / notarization | `planned` | No signing identity is configured on this host |
 | Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
 

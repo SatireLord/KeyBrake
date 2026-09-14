@@ -6,21 +6,22 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "8a7f653daf42b42ec258b7fd9385d1426c9747fb"
+    head: "fe24017763e52a88de90b966c2d4b5b0692945c1"
     upstream: "origin/codex/keybrake-complete-implementation"
-    status: "clean_pre_iteration"
+    status: "source_milestone_committed_docs_pending"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
     name: "Command Center and status hierarchy"
     user_promise: "A user can open one visual control surface, understand the current KeyBrake state immediately, choose the correct emergency or recovery action, and reach settings or incident history without losing the existing menu-bar failsafe."
     visual_evidence:
-      source: "/Users/michaeltran/AntiGravity/KeyBrake/KeyBrake/UI/KeyBrakeMenuView.swift"
-      provenance: "current source at 8a7f653; no current live screenshot"
-      state: "menu_bar_only_source_observation"
-      observed: "The current menu contains the required actions but has no persistent at-a-glance window, no status explanation beyond the state title, and no dedicated recent-incident context surface."
-      inferred: "A dedicated command center can reduce action ambiguity and make the primary UI stageable on Agent Display without changing coordinator behavior."
-      missing_evidence: "Current rendered pixels, accessibility tree, and live interaction receipt before the change."
+      source: "/Users/michaeltran/AntiGravity/KeyBrake/KeyBrake/UI/CommandCenterView.swift"
+      provenance: "source checkpoint fe24017; SwiftPM Release runtime; isolated Agent Display receipt"
+      state: "staged_isolated_captured"
+      observed: "The Command Center renders one 760x648 window with a visible state card, emergency actions, recent activity, secondary navigation, and mouse-operated recovery language."
+      inferred: "The dedicated surface reduces action ambiguity and makes the primary UI stageable without changing coordinator behavior."
+      receipt: "/Users/michaeltran/AntiGravity/KeyBrake/.agent-cache/proofs/keybrake-ui-001-command-center.png; sha256=4dc9ed7bcd09aabb5e77371be1d09ba0b857927834c50f9331680c8b82db65ce"
+      missing_evidence: "Live pointer action and Recovery-panel mouse-only interaction remain unproven; the current Xcode Release revalidation stalled before source compilation."
   write_set:
     rows:
       - path: "KeyBrake/UI/CommandCenterView.swift"
@@ -28,79 +29,79 @@ project_plan:
         intended_change: "Add the visual command-center surface, state explanation, action hierarchy, recovery routing, recent incident summary, and accessible hit targets."
         reason: "The current menu has no persistent visual dashboard and Agent Display could not stage a menu-bar-only content window."
         proof: "Xcode compile, focused source review, launch-argument runtime staging, accessibility/window inspection, and one SendMePics capture only if containment is proven."
-        status: pending
+        status: implemented
       - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
         owner: "KeyBrakeMenuView"
         intended_change: "Add a discoverable Open Command Center route and compact status detail without removing or renaming existing safety actions."
         reason: "The menu remains the emergency fallback and must lead users to the richer visual surface."
         proof: "Feature-contract test, Xcode compile, source action inventory, and menu route inspection."
-        status: pending
+        status: implemented
       - path: "KeyBrake/App/KeyBrakeViewModel.swift"
         owner: "KeyBrakeViewModel.isRecoveryStatusKnown"
         intended_change: "Expose the existing fail-closed launch-hydration boundary to the UI so the menu and Command Center do not present a premature ready state."
         reason: "The current state defaults to Normal Input before asynchronous recovery hydration completes."
         proof: "Xcode compile and focused source review; termination-gate tests remain the authority for quit safety."
-        status: pending
+        status: implemented
       - path: "KeyBrake/App/KeyBrakeApp.swift"
         owner: "KeyBrakeApp scene declarations and WindowLaunchBridge"
         intended_change: "Register the Command Center window and an explicit command-center launch argument used for safe staged demonstration."
         reason: "A window scene gives the visual UX a real host surface while normal launches remain menu-bar-only."
         proof: "Xcode compile, exact Release artifact launch, window containment inspection, and launch-argument route evidence."
-        status: pending
+        status: implemented
       - path: "KeyBrakeCore/FeatureContract.swift"
         owner: "FeatureContract.fallback.requiredMenuActions"
         intended_change: "Register Open Command Center in the canonical fallback contract."
         reason: "The new user-visible menu route must remain represented in the source-owned feature contract."
         proof: "FeatureContractTests and bundled/fallback equality test."
-        status: pending
+        status: implemented
       - path: "Resources/KeyBrakeFeatureContract.json"
         owner: "bundled requiredMenuActions resource"
         intended_change: "Keep the bundled contract synchronized with the fallback contract."
         reason: "The app loads this resource at runtime and the test requires exact fallback parity."
         proof: "FeatureContractTests and JSON parse/build-resource proof."
-        status: pending
+        status: implemented
       - path: "KeyBrakeTests/FeatureContractTests.swift"
         owner: "FeatureContractTests.testRequiredMenuActionsAndStatesRemainPresent"
         intended_change: "Add the new command-center route to the required action matrix."
         reason: "The new route must not drift out of the contract test."
         proof: "Focused FeatureContractTests."
-        status: pending
+        status: implemented
       - path: "README.md"
         owner: "What it does and demonstration sections"
         intended_change: "Describe the Command Center as an at-a-glance UX surface and preserve the menu/recovery boundary language."
         reason: "The portfolio-facing README must match the new user-visible surface."
         proof: "Document diff and stale-claim search."
-        status: pending
+        status: implemented
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record Command Center implementation and separate source/build/live visual proof."
         reason: "The matrix must classify the new UI honestly."
         proof: "Document review against source, artifact, and Agent Display receipts."
-        status: pending
+        status: implemented
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Feature inventory and iteration handoff"
         intended_change: "Record the UI-001 improvement and its remaining live-proof boundary."
         reason: "Future agents need a durable iteration map."
         proof: "Current HEAD, source owner, and focused proof receipt."
-        status: pending
+        status: implemented
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Current proof ledger and checksum anchors"
         intended_change: "Record Command Center source/artifact/runtime/visual evidence and refreshed hashes."
         reason: "The existing release proof must not imply visual success without a valid capture."
         proof: "Exact commands, artifact identity, and one-image boundary if capture succeeds."
-        status: pending
+        status: implemented
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "safe demonstration sequence"
         intended_change: "Add the Command Center demonstration and explicit staged launch route."
         reason: "The safe demo is the user-facing re-entry path for the new visual surface."
         proof: "Document/source alignment and runtime proof classification."
-        status: pending
+        status: complete
       - path: "KeyBrake.xcodeproj/project.pbxproj"
         owner: "XcodeGen generated source membership"
         intended_change: "Regenerate source membership only if the new Swift file requires it."
         reason: "The new view must compile in the native Xcode target."
         proof: "xcodegen diff inspection and Xcode build."
-        status: conditional
+        status: complete
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "LackeyDo iteration ledger"
         intended_change: "Carry UI-001 requirements, visual evidence, proof classes, risks, and re-entry state."
@@ -129,7 +130,7 @@ project_plan:
         manifest: "Agent-Cache checksum registries and predecessor LackeyDo ledger"
         protected_path: "none"
         span: "none"
-        current_identity: "no registered KeyBrake protected span at pre-edit HEAD 8a7f653"
+        current_identity: "no registered KeyBrake protected span at UI-001 source checkpoint fe24017"
         planned_touch: "no-applicable-checksum"
         route: "validate"
         why_exists_here: "The Command Center is an ordinary KeyBrake UI seam outside a registered MB4 consumer boundary."
@@ -140,13 +141,13 @@ project_plan:
         manifest: "docs/KEYBRAKE_VERIFICATION.md"
         protected_path: "changed source and resource files listed in the verification document"
         span: "whole-file SHA-256 documentation anchors"
-        current_identity: "pre-edit values at 8a7f653"
+        current_identity: "UI-001 source values at fe24017"
         planned_touch: "outside"
         route: "validate"
         why_exists_here: "The document detects source drift across safety and UI seams without claiming runtime behavior."
         evidence: "Recompute after final source edits and update only changed rows."
         authorization: "normal documentation update"
-        status: pending
+        status: pass
   context_packet:
     repository: "KeyBrake at /Users/michaeltran/AntiGravity/KeyBrake"
     source_of_truth:
@@ -166,11 +167,11 @@ project_plan:
       - path: "Agent-Cache bounded structural graph"
         covers: "KeyBrake UI symbols, scene routes, and function-call edges"
         refresh: "mcp__agent_cache__build_structural_graphs(repo_path=/Users/michaeltran/AntiGravity/KeyBrake, limit=120)"
-        freshness: "source-bound snapshot 2e6c472b7c53cb6762775bc3ecd5218c24badab6465ae21653ffcff93757078 at pre-edit HEAD"
+        freshness: "source-bound snapshot 87aa404bfe3637c25ed9b878f144fac43633482dc6e0a2037d78533054f6b05e with graph key aa9f0226ca9786673d9b8310d3ab4ef30b0da35a5d0e7533f064a9eb25dedb86 after UI-001 source implementation"
       - path: "Greppable markers in KeyBrake UI source"
         covers: "command-center route, status presentation, and menu consumer vocabulary"
         refresh: "bounded rg -n over KeyBrake/App and KeyBrake/UI"
-        freshness: "to refresh after implementation"
+        freshness: "refreshed after UI-001 implementation; owner markers and route references resolve"
     automation:
       entrypoint: "discover -> update UI owner -> regenerate project membership if required -> focused tests/build -> Agent Display preflight/stage/inspect -> update docs/hashes -> commit/push -> Agent-Cache closeout"
       chain: ["repository truth", "source owner and visual evidence", "focused compile/test", "exact Release artifact", "cursor-safe Agent Display attempt", "documentation and checksum refresh", "remote delivery", "closeout receipt"]
@@ -190,113 +191,125 @@ project_plan:
     - id: R001
       requirement: "The Command Center must provide a clear visual hierarchy for current state, emergency actions, recovery actions, recent activity, and secondary navigation."
       owner: "KeyBrake/UI/CommandCenterView.swift"
-      status: pending
-      proof: "Source review plus Agent Display pixel proof if exact containment succeeds."
-      residual_risk: "Rendered spacing and visual hierarchy remain unknown until a live window is captured."
+      status: pass
+      proof: "CommandCenterView source review, SwiftPM Release build, Agent Display accessibility inspection, isolated one-window inspection, and PNG receipt at sha256=4dc9ed7bcd09aabb5e77371be1d09ba0b857927834c50f9331680c8b82db65ce."
+      residual_risk: "The captured Command Center is visually verified; pointer-driven recovery remains a separate unproved interaction path."
     - id: R002
       requirement: "Existing emergency and recovery action labels, safety semantics, disabled busy behavior, and mouse-operable hit targets must remain intact."
       owner: "KeyBrake/UI/KeyBrakeMenuView.swift, KeyBrake/UI/CommandCenterView.swift, KeyBrake/App/KeyBrakeViewModel.swift"
-      status: pending
+      status: pass
       proof: "Feature-contract tests, source action mapping, Xcode compile, and focused SwiftPM regression suite."
       residual_risk: "No live pointer action may be claimed without exact CUA target binding."
     - id: R003
       requirement: "Normal launch remains menu-bar-only, while an explicit command-center launch argument opens the visual window for safe demonstration and staging."
       owner: "KeyBrake/App/KeyBrakeApp.swift"
-      status: pending
-      proof: "Exact Release artifact launch with and without the explicit argument plus window inspection."
-      residual_risk: "SwiftUI scene timing may require a host-specific runtime receipt."
+      status: pass
+      proof: "SwiftPM Release app launched with --keybrake-command-center; Agent Display isolated one 760x648 Command Center window and inspected its accessibility tree. Source keeps normal launches menu-bar-only."
+      residual_risk: "The current Xcode Release bundle was not revalidated because the host build service stalled before source compilation."
     - id: R004
       requirement: "The canonical fallback and bundled feature contracts must include the new menu route."
       owner: "KeyBrakeCore/FeatureContract.swift, Resources/KeyBrakeFeatureContract.json, KeyBrakeTests/FeatureContractTests.swift"
-      status: pending
+      status: pass
       proof: "Focused FeatureContractTests."
       residual_risk: "Bundled resource membership depends on the generated Xcode project."
     - id: R005
       requirement: "Portfolio-facing documentation must describe the Command Center and keep source, artifact, runtime, visual, and external proof separate."
       owner: "README.md, docs/KEYBRAKE_CAPABILITY_MATRIX.md, docs/KEYBRAKE_MASTER_PLAN.md, docs/KEYBRAKE_VERIFICATION.md, docs/KEYBRAKE_SAFE_DEMO.md"
-      status: pending
-      proof: "Document diff, SHA refresh, stale-claim search, and exact build receipts."
-      residual_risk: "Live visual proof may remain accepted-deferred if no window is exposed."
+      status: pass
+      proof: "README, capability matrix, master plan, verification ledger, and safe demo were updated; JSON/YAML parsing and stale-claim search passed; source SHA anchors and exact build/visual receipts are recorded."
+      residual_risk: "Signed-host, live recovery, and pointer interaction claims remain intentionally deferred."
     - id: R006
       requirement: "The new source owner and launch route must be discoverable through grounded Greppable terms and the existing Agent-Cache structural graph."
       owner: "CommandCenterView.swift markers and current Agent-Cache graph"
-      status: pending
-      proof: "Bounded rg and refreshed source-bound graph."
-      residual_risk: "External CodeGraph query may remain unavailable even when the bounded graph is fresh."
+      status: pass
+      proof: "Bounded rg resolves the owner markers and routes; refreshed Agent-Cache source-bound graph uses source snapshot 87aa404bfe3637c25ed9b878f144fac43633482dc6e0a2037d78533054f6b05e and graph key aa9f0226ca9786673d9b8310d3ab4ef30b0da35a5d0e7533f064a9eb25dedb86."
+      residual_risk: "External CodeGraph query remains uninitialized, so no external-index claim is made."
     - id: R007
       requirement: "The change must be delivered on the existing private PR branch without merge, public-visibility, or unrelated-work mutation."
       owner: "Git branch, PR #1, iteration ledger, Agent-Cache closeout"
       status: pending
-      proof: "Exact-path commit, push, remote SHA, private/open/unmerged PR state, and clean worktree."
+      proof: "Source commit fe24017763e52a88de90b966c2d4b5b0692945c1 is exact-path and local; documentation commit, push, remote SHA, private/open/unmerged PR state, and clean worktree remain to be recorded."
       residual_risk: "Human review and later release gates remain outside this iteration."
   implementation_slices:
     - id: S001
       name: "Command Center visual surface"
       files: ["KeyBrake/UI/CommandCenterView.swift"]
       dependencies: ["R001", "R002"]
-      status: pending
+      status: complete
     - id: S002
       name: "Menu and scene routing"
       files: ["KeyBrake/UI/KeyBrakeMenuView.swift", "KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/App/KeyBrakeViewModel.swift"]
       dependencies: ["S001", "R003"]
-      status: pending
+      status: complete
     - id: S003
       name: "Contract and documentation alignment"
       files: ["KeyBrakeCore/FeatureContract.swift", "Resources/KeyBrakeFeatureContract.json", "KeyBrakeTests/FeatureContractTests.swift", "README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md"]
       dependencies: ["S001", "S002", "R004", "R005"]
-      status: pending
+      status: complete
     - id: S004
       name: "Agent Display visual proof attempt"
       files: []
       dependencies: ["S001", "S002", "S003"]
-      status: pending
+      status: complete
     - id: S005
       name: "Private branch delivery and closeout"
       files: ["docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S003", "S004"]
-      status: pending
+      status: active
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
-      status: pending
+      status: pass
+      result: "Pass before documentation commit; the staged source commit also passed its exact-path diff check."
     - name: "Greppable owner discoverability"
       command: "rg -n 'keybrake-command-center|command-center|KeyBrakeCommandCenterView|KeyBrakeStatusPresentation' KeyBrake/App KeyBrake/UI docs README.md"
-      status: pending
+      status: pass
+      result: "All intended owner markers, scene IDs, menu route, and status presentation references resolve in bounded source/document search."
     - name: "Non-interrupting UI guard"
-      command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json <exact-owned-UI-paths>"
-      status: pending
+      command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/CommandCenterView.swift KeyBrake/UI/KeyBrakeMenuView.swift KeyBrake/App/KeyBrakeApp.swift KeyBrake/App/KeyBrakeViewModel.swift"
+      status: pass
+      result: "Pass with the canonical cursor-safe guard; the guard found no prohibited interrupting UI path in the exact owned files."
     - name: "Private PR and no-merge boundary"
       command: "gh repo view SatireLord/KeyBrake --json visibility,isPrivate,defaultBranchRef,nameWithOwner; gh pr view 1 --json state,isDraft,baseRefName,headRefName,headRefOid"
       status: pending
+      result: "Awaiting documentation commit, push, and final remote verification; the repository and PR must remain private, open, and unmerged."
   tests:
     - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI001"
-      status: pending
-    - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeUI001 CODE_SIGNING_ALLOWED=NO -only-testing:KeyBrakeTests/FeatureContractTests test"
-      status: pending
-    - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeReleaseUI001 CODE_SIGNING_ALLOWED=NO build"
-      status: pending
-    - command: "agent_ui_preflight.py; displayctl doctor; displayctl capabilities; displayctl stage; displayctl inspect; displayctl inspect-ui; displayctl inspect-windows; displayctl is-isolated"
-      status: pending
+      status: pass
+      result: "35 tests, 0 failures."
+    - command: "env -u CC -u CXX xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Debug -destination 'platform=macOS,id=00006041-001821160260801C' -derivedDataPath /tmp/KeyBrakeXcodeUI001 -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:KeyBrakeTests/FeatureContractTests CODE_SIGNING_ALLOWED=NO test"
+      status: hold
+      result: "Host Xcode build service stalled at external-tool precompilation before KeyBrake source compilation; no KeyBrake diagnostic was produced."
+    - command: "env -u CC -u CXX xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI001 -disableAutomaticPackageResolution -jobs 1 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build"
+      status: hold
+      result: "Host Xcode build service stalled while preparing packages and executing the clang precompile probe before KeyBrake source compilation; no current Xcode Release bundle is claimed."
+    - command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; displayctl doctor; displayctl capabilities; displayctl stage; displayctl inspect; displayctl inspect-ui; displayctl is-isolated; displayctl capture"
+      status: pass
+      result: "Cursor-safe preflight and provider checks passed; the task-owned Command Center staged and isolated as one 760x648 window; accessibility inspection found the intended labels; one 1920x1080 PNG receipt was captured."
   deferred_items:
     - item: "Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof"
       status: accepted_deferred
       reason: "The current release contract forbids unsupported host claims."
-    - item: "Live pointer interaction and SendMePics capture"
+    - item: "Live pointer interaction"
       status: accepted_deferred
-      reason: "Capture is allowed only after exact Agent Display containment and target binding; a failed or ambiguous stage produces no image."
+      reason: "The Command Center capture passed after exact isolation, but no exact CUA target binding was exposed and no pointer action was sent; Recovery-panel interaction remains unproven."
     - item: "Human merge of PR #1 and GitHub visibility change"
       status: accepted_deferred
       reason: "The portfolio repository remains private until the owner explicitly releases it."
   blockers:
     - item: "Current visual baseline has no raw screenshot or accessibility frame."
-      status: accepted_deferred
-      evidence: "Previous release lane attempted staging and found no menu-bar content window; this iteration creates an explicit window owner to close that routing gap."
-      next_action: "Build the exact Release artifact with the explicit command-center launch argument and inspect only the task-owned virtual display."
+      status: resolved
+      evidence: "UI-001 produced one isolated Command Center window, accessibility inspection, and PNG receipt /Users/michaeltran/AntiGravity/KeyBrake/.agent-cache/proofs/keybrake-ui-001-command-center.png with sha256=4dc9ed7bcd09aabb5e77371be1d09ba0b857927834c50f9331680c8b82db65ce."
+      next_action: "Use the receipt as the UI-001 baseline and reserve the next visual pass for the recovery-required state and pointer-driven Recovery panel."
     - item: "External CodeGraph query may remain uninitialized."
       status: accepted_deferred
-      evidence: "The bounded Agent-Cache structural graph is source-bound and available at the current pre-edit snapshot."
-      next_action: "Use the refreshed bounded graph plus source and compiler proof; do not loop on an unchanged external index."
+      evidence: "The bounded Agent-Cache structural graph was refreshed after source implementation at source snapshot 87aa404bfe3637c25ed9b878f144fac43633482dc6e0a2037d78533054f6b05e with graph key aa9f0226ca9786673d9b8310d3ab4ef30b0da35a5d0e7533f064a9eb25dedb86."
+      next_action: "Use the refreshed bounded graph plus source and compiler proof; do not loop on the unchanged external index."
+    - item: "Current Xcode build-service revalidation stalls before KeyBrake source compilation."
+      status: accepted_deferred
+      evidence: "Focused Debug tests and Release build both stalled during Xcode external-tool/package preparation after CC/CXX were unset; standalone Apple clang remained available and no KeyBrake compiler diagnostic appeared."
+      next_action: "Retry the two exact Xcode commands only after the host Xcode build service is reset or the environment changes; do not alter source based on this host-only stall."
   branch: "codex/keybrake-complete-implementation"
-  head: "8a7f653daf42b42ec258b7fd9385d1426c9747fb"
+  head: "fe24017763e52a88de90b966c2d4b5b0692945c1"
   last_verified_at: "20260912 05:52:26"
-  completion: incomplete
+  completion: docs_pending

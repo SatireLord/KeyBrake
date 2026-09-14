@@ -19,10 +19,10 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 - Repository: KeyBrake git checkout
 - GitHub: private `SatireLord/KeyBrake`; default `main` is at `91a1cf6`
 - Authoritative branch: `codex/keybrake-complete-implementation`
-- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; current runtime-source repair checkpoint `a3968ad` (later documentation closeout commits may advance the branch without changing this source checkpoint)
+- Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; release repair checkpoint `a3968ad`; current UI-001 source checkpoint `fe24017` adds the Command Center surface and advances the private branch without changing the release boundary
 - Release status: GitHub visibility **HOLD**; downloadable binary **BLOCKED** (unsigned local bundle only)
 - Version: `0.1.0` (build `1`)
-- Next action: human review of PR #1; if the owner then chooses a public-source identity, merge #1 onto `main` before flipping visibility. Signed-host, helper-approval, live-recovery, and mouse-only proof remain separate external gates
+- Next action: human review of PR #1; if the owner then chooses a public-source identity, merge #1 onto `main` before flipping visibility. The Command Center visual path is proven locally, while signed-host, helper-approval, live-recovery, and pointer-driven Recovery-panel proof remain separate external gates
 - External blockers: signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
 
 ## Feature inventory
@@ -103,7 +103,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [x] KB-056 Implement persistence gating before system mutations.
 [x] KB-057 Implement partial-failure continuation and precise status.
 [x] KB-058 Implement duplicate-action serialization through the actor.
-[x] KB-059 Implement the exact menu and visible state row.
+[x] KB-059 Implement the exact menu, visible state row, and Command Center entry with a shared state hierarchy.
 [!] KB-060 Implement the persistent mouse-driven recovery panel; one AppKit panel owns the recovery view, launch-time unresolved state replays through delegate attachment, and Keep Isolation plus title-bar close synchronize the model state, while mouse-only runtime proof remains unverified.
 [x] KB-061 Implement Restore Human Control and its independent actions; network and sharing restoration are separate view-model actions and do not force the other subsystem.
 [x] KB-062 Implement the incident-log viewer.
@@ -123,7 +123,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [x] KB-076 Perform read-only network inventory proof through fixtures.
 [!] KB-077 Perform live network isolation only when the local execution path remains recoverable.
 [x] KB-078 Verify unresolved recovery after application relaunch through deterministic store tests.
-[ ] KB-079 Verify mouse-only quit and recovery paths; no runtime UI proof obtained.
+[!] KB-079 Verify mouse-only quit and recovery paths; UI-001 proves the Command Center can be staged and inspected in isolation, but no pointer action or Recovery-panel mouse proof was obtained.
 [x] KB-080 Complete README.md.
 [x] KB-081 Complete AGENTS.md.
 [x] KB-082 Complete docs/KEYBRAKE_MASTER_PLAN.md.
@@ -145,6 +145,15 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [x] KB-098 Record every genuine external blocker without disguising it as success.
 [x] KB-099 Re-run the complete circular requirements audit after scoped delivery; current evidence distinguishes source/build proof from signed-host and live UI proof.
 [x] KB-100 Deliver the complete final report with this entire current checklist.
+
+## Iterative improvement lane
+
+`docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml` is the durable slice map for continuing UI, UX, and quality-of-life work without reopening the closed release ledger.
+
+[!] UI-001 Add the Command Center status hierarchy, emergency-action cards, recovery routing, recent activity, and secondary navigation. Source and SwiftPM Release proof passed at `fe24017`; isolated Agent Display staging, accessibility inspection, and one PNG receipt passed; Xcode Release revalidation remains held by the host build-service stall documented in `docs/KEYBRAKE_VERIFICATION.md`.
+[ ] UI-002 Validate the recovery-required Command Center state with a disposable persisted snapshot and mouse-only Recovery-panel route.
+[ ] UI-003 Improve settings and incident-log navigation from the Command Center without changing action semantics.
+[ ] UI-004 Re-run the full release-source, signed-host, and live-interaction gates before public visibility.
 
 ## Proof and handoff
 
