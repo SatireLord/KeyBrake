@@ -1,6 +1,14 @@
 import KeyBrakeCore
 import SwiftUI
 
+// Greppable:
+// canonical: keybrake-menu-command-routing
+// aliases: menu-bar command menu; emergency menu; compact failsafe menu
+// forms: keybrake-menu-command-routing; Open Command Center
+// descriptors: menu fallback; command-center entry point; status row
+// states: checking; ready; busy; recovery-required
+// consumers: KeyBrakeApp; KeyBrakeCommandCenterView; KeyBrakeViewModel
+// owner: KeyBrakeMenuView
 struct KeyBrakeMenuView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -10,6 +18,9 @@ struct KeyBrakeMenuView: View {
         Divider()
         Label(statusText, systemImage: statusSymbol)
             .accessibilityLabel("Current KeyBrake state: \(statusText)")
+            .help(KeyBrakeStatusPresentation.detail(for: model.operationalState))
+        Button("Open Command Center") { openWindow(id: "command-center") }
+            .help("Open the at-a-glance KeyBrake status and action surface")
         Divider()
         Button("Stop Skynet Locally") { model.stopSkynetLocally() }
             .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
@@ -29,10 +40,10 @@ struct KeyBrakeMenuView: View {
     }
 
     private var statusText: String {
-        model.operationalState.displayTitle
+        model.isRecoveryStatusKnown ? model.operationalState.displayTitle : "Checking Recovery Status"
     }
 
     private var statusSymbol: String {
-        model.operationalState == .normal ? "checkmark.circle" : "exclamationmark.triangle"
+        model.isRecoveryStatusKnown ? KeyBrakeStatusPresentation.symbol(for: model.operationalState) : "hourglass"
     }
 }

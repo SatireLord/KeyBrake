@@ -47,6 +47,10 @@ final class KeyBrakeViewModel: ObservableObject {
         operationalState.isStateChanging
     }
 
+    var isRecoveryStatusKnown: Bool {
+        launchRecoveryCheckCompleted
+    }
+
     var hasRecovery: Bool {
         unresolvedRecovery != nil || operationalState.requiresRecoveryDecision
     }

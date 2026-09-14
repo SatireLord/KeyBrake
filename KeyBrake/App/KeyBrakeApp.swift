@@ -10,7 +10,7 @@ struct KeyBrakeApp: App {
             KeyBrakeMenuView(model: model)
                 .onAppear { appDelegate.attach(model: model) }
         } label: {
-            WindowLaunchBridge(model: model)
+            WindowLaunchBridge(model: model, appDelegate: appDelegate)
                 .onAppear { appDelegate.attach(model: model) }
         }
         .menuBarExtraStyle(.menu)
@@ -35,16 +35,28 @@ struct KeyBrakeApp: App {
             IncidentLogView(model: model)
                 .frame(minWidth: 680, minHeight: 460)
         }
+        .defaultSize(width: 760, height: 620)
 
+        Window("KeyBrake Command Center", id: "command-center") {
+            KeyBrakeCommandCenterView(model: model)
+                .onAppear { appDelegate.attach(model: model) }
+        }
+        .defaultSize(width: 760, height: 620)
     }
 }
 
 private struct WindowLaunchBridge: View {
     @ObservedObject var model: KeyBrakeViewModel
+    let appDelegate: KeyBrakeAppDelegate
     @Environment(\.openWindow) private var openWindow
+    @State private var didOpenLaunchRequestedCommandCenter = false
 
     var body: some View {
         Label("KeyBrake", systemImage: model.operationalState == .normal ? "shield" : "exclamationmark.shield")
+            .onAppear {
+                appDelegate.attach(model: model)
+                openCommandCenterIfRequested()
+            }
             .onChange(of: model.isShowingIncidentLog) { _, show in
                 if show {
                     openWindow(id: "incidents")
@@ -58,4 +70,17 @@ private struct WindowLaunchBridge: View {
                 }
             }
     }
+
+    private func openCommandCenterIfRequested() {
+        guard !didOpenLaunchRequestedCommandCenter,
+              ProcessInfo.processInfo.arguments.contains(KeyBrakeLaunchArgument.commandCenter) else { return }
+        didOpenLaunchRequestedCommandCenter = true
+        Task { @MainActor in
+            openWindow(id: "command-center")
+        }
+    }
+}
+
+private enum KeyBrakeLaunchArgument {
+    static let commandCenter = "--keybrake-command-center"
 }

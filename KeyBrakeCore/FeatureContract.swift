@@ -13,7 +13,7 @@ public struct FeatureContract: Codable, Sendable, Equatable {
     public static let fallback = FeatureContract(
         schemaVersion: 1,
         productDescription: "KeyBrake is a macOS menu-bar input and remote-access failsafe. It gives users a keyboard-independent recovery path for runaway keystroke automation, pauses approved local injectors, and performs reversible network isolation during suspicious or fraudulent remote-support sessions.",
-        requiredMenuActions: ["Stop Skynet Locally", "Stop Remote Access", "Revoke App Access…", "Restore Human Control", "Restart Espanso", "Open Incident Log", "Settings…", "Quit KeyBrake"],
+        requiredMenuActions: ["Stop Skynet Locally", "Stop Remote Access", "Revoke App Access…", "Restore Human Control", "Restart Espanso", "Open Incident Log", "Open Command Center", "Settings…", "Quit KeyBrake"],
         requiredOperationalStates: KeyBrakeOperationalState.allCases.map(\.rawValue),
         protectedTargets: [
             "org.realitygood.KeyBrake",

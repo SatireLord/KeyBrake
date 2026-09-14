@@ -35,6 +35,7 @@
 		91773EE777011A1EE9B37B63 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A385883EF32958B01485A /* NetworkController.swift */; };
 		94AA5EB2E978098F5E8738C8 /* KeyBrakeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFCB27E771A443CA34A411B /* KeyBrakeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		988DC764E4C2F08DAF967FC4 /* HelperClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA955A85C2065F4D1D95CD6E /* HelperClient.swift */; };
+		9CA95C4CDF24226DC9925D28 /* CommandCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA662C0F14A327C5CC339913 /* CommandCenterView.swift */; };
 		ABC64A4D17011FA4A49530E2 /* KeyBrakeAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930B91BC9F360F193DD777B /* KeyBrakeAppDelegate.swift */; };
 		B87727D9530E031F1177BBD2 /* IncidentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5D606595997D124D3D87CF /* IncidentStore.swift */; };
 		C359718A67D32966E987683C /* HelperAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ED4C1189C48F1DF948F4 /* HelperAuthorization.swift */; };
@@ -151,6 +152,7 @@
 		BC82847B12FD0A398CC206FC /* NetworkControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkControllerTests.swift; sourceTree = "<group>"; };
 		CBE62FF4A736418DB5CC25B3 /* PrivacyControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyControllerTests.swift; sourceTree = "<group>"; };
 		D7466C41CDD1AD109562A3B1 /* PrivacyServiceCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyServiceCatalog.swift; sourceTree = "<group>"; };
+		DA662C0F14A327C5CC339913 /* CommandCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandCenterView.swift; sourceTree = "<group>"; };
 		DC61E757405AF15D46376C14 /* KeyBrakePrivilegedHelper */ = {isa = PBXFileReference; includeInIndex = 0; path = KeyBrakePrivilegedHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5D606595997D124D3D87CF /* IncidentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncidentStore.swift; sourceTree = "<group>"; };
 		E0D645A0CA823E29FCF5107F /* FeatureContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureContractTests.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		7D81489D00373AF90847005D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				DA662C0F14A327C5CC339913 /* CommandCenterView.swift */,
 				24A082B66DA1B54383798096 /* IncidentLogView.swift */,
 				483BB3D5521A4D9AA29D8577 /* KeyBrakeMenuView.swift */,
 				9F9D2C56C8FA18AC427E05CC /* RecoveryPanelController.swift */,
@@ -466,6 +469,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CA95C4CDF24226DC9925D28 /* CommandCenterView.swift in Sources */,
 				F58166AB4D1A2061E282FB05 /* IncidentLogView.swift in Sources */,
 				D277755403CD6475E7C590BC /* KeyBrakeApp.swift in Sources */,
 				ABC64A4D17011FA4A49530E2 /* KeyBrakeAppDelegate.swift in Sources */,
