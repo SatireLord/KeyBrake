@@ -1375,16 +1375,16 @@ project_plan:
       evidence: "The requested Agent-Cache source snapshot could not create WorkBeginOrder because the database was locked, and the single receipt append attempt returned HTTP 504 after local proof; no successful snapshot or receipt projection is claimed."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "72e1a9f862543d12a3beb5bbdd1f892ed2358196"
+  head: "eeec461314bc9326d78c59d8707d06db8841a1b4"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-016"
     source_commit: "72e1a9f862543d12a3beb5bbdd1f892ed2358196"
-    documentation_commit: "pending after diff validation"
-    remote_head_verified: "72e1a9f862543d12a3beb5bbdd1f892ed2358196"
-    status: "source_checkpoint_documentation_pending"
-    next_safe_entry_point: "Complete the UI-016 documentation checkpoint, then continue with UI-017 exact Agent Display containment and signed-host release gates before any public-visibility decision."
+    documentation_commit: "eeec461314bc9326d78c59d8707d06db8841a1b4"
+    remote_head_verified: "eeec461314bc9326d78c59d8707d06db8841a1b4"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-017 exact Agent Display containment and signed-host release gates while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -2267,7 +2267,7 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Record UI-016 requirement, slice, checksums, guards, test receipts, tooling holds, source checkpoint, documentation checkpoint, and UI-017 entry point."
-        status: pending_documentation_commit
+        status: committed
     visual_evidence:
       source: "KeyBrake/UI/CommandCenterView.swift"
       provenance: "source checkpoint 72e1a9f862543d12a3beb5bbdd1f892ed2358196; bounded Swift parse; cursor-safe UI guard; SwiftPM Release build and complete test suite; Agent Display preflight/provider checks; unique disposable bundle launch"
@@ -2287,7 +2287,7 @@ project_plan:
     checksums:
       - "KeyBrake/UI/CommandCenterView.swift sha256=d5384ef653e2ceb061812a2eb8923bdac501cd849bbfd47508eaa99743bf6ca2"
       - "UI-016 source checkpoint 72e1a9f862543d12a3beb5bbdd1f892ed2358196"
-      - "UI-016 documentation checkpoint will be bound to the private remote commit after diff validation."
+      - "UI-016 documentation checkpoint eeec461314bc9326d78c59d8707d06db8841a1b4 is bound to the private remote commit after diff validation."
     guards:
       - "Agent-Cache UI-016 mutation gate passed after live branch and PR #1 continuity were verified."
       - "CodeGraph query was attempted before the source edit; the connector reported CodeGraph not initialized, so no new graph snapshot is claimed."
@@ -2305,7 +2305,7 @@ project_plan:
     source_commit: "72e1a9f862543d12a3beb5bbdd1f892ed2358196"
     source_file_shas:
       - "KeyBrake/UI/CommandCenterView.swift=d5384ef653e2ceb061812a2eb8923bdac501cd849bbfd47508eaa99743bf6ca2"
-    documentation_commit: "pending after diff validation"
-    remote_head_verified: "72e1a9f862543d12a3beb5bbdd1f892ed2358196"
-    status: "source_checkpoint_documentation_pending"
-    next_safe_entry_point: "Complete the UI-016 documentation checkpoint, then continue with UI-017 exact Agent Display containment and signed-host release gates before any public-visibility decision."
+    documentation_commit: "eeec461314bc9326d78c59d8707d06db8841a1b4"
+    remote_head_verified: "eeec461314bc9326d78c59d8707d06db8841a1b4"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-017 exact Agent Display containment and signed-host release gates while preserving the private PR."
