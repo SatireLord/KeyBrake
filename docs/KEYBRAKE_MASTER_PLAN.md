@@ -21,8 +21,9 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 - Authoritative branch: `codex/keybrake-complete-implementation`
 - Pull request: [#1](https://github.com/SatireLord/KeyBrake/pull/1), open and intentionally unmerged; release repair checkpoint `a3968ad`; UI-001 source checkpoint `fe24017` added the Command Center surface, and UI-002 source checkpoint `50c6a9816a026e06867f8d49caa71b41b569277a` adds the recovery-required fixture route, recovery inventory, deterministic panel presentation, and readability refinements without changing the release boundary
 - Release status: GitHub visibility **HOLD**; downloadable binary **BLOCKED** (unsigned local bundle only)
+- UI-003 checkpoint: ae31bc811087e512b8aec49a43fb7590b55b224f improves Command Center navigation with readable Incident Log and Settings cards, live counts, descriptions, accessibility hints, and no emergency or recovery handler changes
 - Version: `0.1.0` (build `1`)
-- Next action: continue with UI-003 settings and incident-log navigation, then run UI-004 release gates before any public-visibility decision. UI-002 proves the recovery-required Command Center visually and observes disposable AppKit panel presentation, while signed-host, helper-approval, live-recovery, and pointer-driven Recovery-panel proof remain separate external gates
+- Next action: continue with UI-004 release gates before any public-visibility decision. UI-003 now makes Settings and Incident Log navigation readable from the Command Center, while signed-host, helper-approval, live-recovery, and pointer-driven proof remain separate external gates
 - External blockers: signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
 
 ## Feature inventory
@@ -39,7 +40,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 | TCC reset allowlist | missing | implemented |
 | Helper boundary | missing | source/build implemented; verified launchd identity checks and coordinator routing are fixture-proven; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
-| Menu/recovery/settings UI | missing | one canonical AppKit recovery panel, fail-closed launch and transaction termination, synchronized Keep Isolation/title-bar-close state, independent restore actions, busy-state guards, recovery inventory, deterministic recovery-demo staging, and panel placement beside the Command Center implemented; live mouse proof remains unverified |
+| Menu/recovery/settings UI | missing | one canonical AppKit recovery panel, fail-closed launch and transaction termination, synchronized Keep Isolation/title-bar-close state, independent restore actions, busy-state guards, recovery inventory, deterministic recovery-demo staging, panel placement beside the Command Center, and review/configure navigation cards implemented; live mouse proof remains unverified |
 | Focused tests | missing | 35 SwiftPM tests and 8 focused Xcode tests pass locally; process respawn, signed helper, and live host seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
@@ -152,7 +153,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 
 [!] UI-001 Add the Command Center status hierarchy, emergency-action cards, recovery routing, recent activity, and secondary navigation. Source and SwiftPM Release proof passed at `fe24017`; isolated Agent Display staging, accessibility inspection, and one PNG receipt passed; Xcode Release revalidation remains held by the host build-service stall documented in `docs/KEYBRAKE_VERIFICATION.md`.
 [!] UI-002 Validate the recovery-required Command Center state with a disposable persisted snapshot, readable recovery inventory, deterministic AppKit panel presentation, and panel placement beside the staged surface. Source checkpoint `50c6a9816a026e06867f8d49caa71b41b569277a` passed the SwiftPM suite and Release build; final Agent Display capture passed for the contained Command Center, while the floating panel was visible in the disposable runtime trace but did not expose an exact harness target for pointer proof.
-[ ] UI-003 Improve settings and incident-log navigation from the Command Center without changing action semantics.
+[x] UI-003 Improve settings and incident-log navigation from the Command Center without changing action semantics. Source checkpoint ae31bc811087e512b8aec49a43fb7590b55b224f passed the Release build and 35-test suite; the contained Agent Display receipt shows the Review and configure cards with incident and target counts.
 [ ] UI-004 Re-run the full release-source, signed-host, and live-interaction gates before public visibility.
 
 ## Proof and handoff

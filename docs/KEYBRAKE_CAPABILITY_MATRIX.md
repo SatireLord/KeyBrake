@@ -52,6 +52,8 @@ This document classifies every user-visible or safety-critical capability by imp
 | Developer ID signing / notarization | `planned` | No signing identity is configured on this host |
 | Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
 
+UI-003 navigation refinement is source and SwiftPM Release proven, and the contained Agent Display receipt shows Incident Log and Settings as readable navigation cards with live counts. The receipt proves the Command Center presentation only; opening either window with a pointer remains unverified.
+
 ## Checklist realignment
 
 Items previously marked complete in `docs/KEYBRAKE_MASTER_PLAN.md` but contradicted by source at audit time are reclassified in that document using `[!]` (partial/host-dependent) or `[ ]` (not implemented).

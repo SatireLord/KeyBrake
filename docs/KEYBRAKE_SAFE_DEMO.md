@@ -1,5 +1,7 @@
 # Safe demonstration
 
+The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation.
+
 1. Build the Debug app and launch it from a human-controlled local Mac session.
 2. Open the menu bar item, show the exact status row and action ordering, and choose `Open Command Center`.
 3. For isolated visual review, launch the app with `--keybrake-command-center`, then use the cursor-safe preflight and Agent Display staging path. This argument only opens the existing window and does not change recovery behavior. To stage the recovery-required state, add `--keybrake-recovery-demo`; the route creates a UUID-named temporary recovery store and incident, uses fixture-backed network and command controllers, and does not touch real Application Support, network, sharing, TCC, or process state.
