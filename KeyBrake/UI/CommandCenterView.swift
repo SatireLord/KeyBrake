@@ -12,6 +12,7 @@ import SwiftUI
 // owner: KeyBrakeCommandCenterView
 // QoL-005: the Command Center header, state card, recovery card, and badge share the hydration-aware state boundary.
 // QoL-010: Command Center state-changing controls explain their busy disabled state while review navigation remains available.
+// QoL-011: Recent activity reuses the shared operational-state symbol and tint so the latest recorded outcome is scannable before its detail text.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -216,24 +217,38 @@ struct KeyBrakeCommandCenterView: View {
     private var recentIncidentCard: some View {
         GroupBox {
             if let incident = model.latestIncident {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text(incident.initiatingAction)
-                            .font(.headline)
-                        Spacer()
-                        Text(incident.updatedAt, style: .relative)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                HStack(alignment: .top, spacing: 12) {
+                    Image(systemName: KeyBrakeStatusPresentation.symbol(for: incident.finalState))
+                        .font(.title2.weight(.semibold))
+                        .foregroundStyle(KeyBrakeStatusPresentation.tint(for: incident.finalState))
+                        .frame(width: 32, height: 32)
+                        .accessibilityHidden(true)
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(incident.initiatingAction)
+                                .font(.headline)
+                            Spacer()
+                            Text(incident.updatedAt, style: .relative)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Text(incident.finalState.displayTitle)
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(KeyBrakeStatusPresentation.tint(for: incident.finalState))
+                        Text(incident.resolution)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Label(
+                            "\(incident.steps.count) recorded \(incident.steps.count == 1 ? "step" : "steps")",
+                            systemImage: "checklist"
+                        )
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                     }
-                    Text(incident.resolution)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Label(
-                        "\(incident.steps.count) recorded \(incident.steps.count == 1 ? "step" : "steps")",
-                        systemImage: "checklist"
-                    )
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Recent activity: \(incident.initiatingAction), \(incident.finalState.displayTitle), \(incident.resolution), \(incident.steps.count) recorded \(incident.steps.count == 1 ? "step" : "steps")")
+                .accessibilityIdentifier("keybrake.command-center.recent-activity")
             } else {
                 HStack(spacing: 12) {
                     Image(systemName: "checkmark.circle")
