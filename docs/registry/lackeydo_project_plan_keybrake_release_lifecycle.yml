@@ -5,9 +5,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "a3968ad0a0c9810971ab11725647c0277edd4e96"
+    head: "7bd7bc7f785199da6df23f4357d23f2df54e9296"
+    source_checkpoint: "a3968ad0a0c9810971ab11725647c0277edd4e96"
     upstream: "origin/codex/keybrake-complete-implementation"
-    status: "source_checkpoint_pushed_docs_closeout_pending"
+    status: "docs_and_pr_closeout_complete"
     verified_at: "20260912 05:52:26"
   write_set:
     rows:
@@ -70,37 +71,37 @@ project_plan:
         intended_change: "Advance the source checkpoint to the delivered repair head and reclassify lifecycle proof until evidence exists."
         reason: "Finding 4 identifies stale source checkpoint 8a77357 and over-strong launch/UI capability claims."
         proof: "Exact current HEAD, focused proof receipts, and final document diff."
-        status: pending_docs_commit
+        status: complete
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Release judgments and capability inventory"
         intended_change: "Correct launch-time recovery and mouse-only UI statuses to match focused and live proof."
         reason: "Finding 4 identifies implemented claims that lack the required live or focused lifecycle evidence."
         proof: "Document review against source and receipts."
-        status: pending_docs_commit
+        status: complete
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Current release pass, proof ledger, checksum anchors, and evidence boundaries"
         intended_change: "Record the actual repaired source checkpoint, focused test/build/UI results, and explicit unverified boundaries."
         reason: "The verification record currently names 8a77357 as the latest source checkpoint."
         proof: "Commands and receipts recorded after the repair."
-        status: pending_docs_commit
+        status: complete
       - path: "AGENTS.md"
         owner: "KeyBrake agent entrypoint and delivery policy"
         intended_change: "Restore the repository's durable commit/push/checkpoint policy while preserving private-repository and no-merge boundaries."
         reason: "Finding 5 identifies a policy reversal that can strand coherent implementation commits locally."
         proof: "Source comparison against the prior canonical policy and final Git delivery proof."
-        status: pending_docs_commit
+        status: complete
       - path: ".github/ISSUE_TEMPLATE/config.yml"
         owner: "contact_links capability matrix URL"
         intended_change: "Point the public issue-form capability-matrix link at main instead of the temporary implementation branch."
         reason: "Finding 6 identifies branch deletion as a future broken-link condition."
         proof: "YAML syntax and exact URL inspection."
-        status: pending_docs_commit
+        status: complete
       - path: "docs/registry/lackeydo_project_plan_keybrake_release_lifecycle.yml"
         owner: "LackeyDo task ledger"
         intended_change: "Carry the complete requirement, checksum, proof, risk, and re-entry state through delivery."
         reason: "LackeyDo requires one durable task map for a multi-step repair."
         proof: "Ledger reconciliation at closeout."
-        status: active
+        status: complete
     excluded_paths:
       - path: "all other existing dirty, staged, generated, or quarantined paths"
         owner: "concurrent agents or repository owners"
@@ -191,7 +192,7 @@ project_plan:
         proves: "Xcode test target compiles and runs"
       - command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json"
         proves: "cursor-safe isolated-display preflight before live UI proof"
-    next_safe_entrypoint: "Inspect the exact lifecycle source ranges and add focused tests without changing KeyBrakeCore unless the state policy requires it."
+    next_safe_entrypoint: "Human review of private PR #1; keep the repository private and unmerged until the owner accepts the remaining signed-host and live-UI gates."
   requirements:
     - id: R001
       requirement: "Quit must be blocked during stoppingLocalAutomation, isolating, restoring, and every other state-changing emergency transaction."
@@ -244,8 +245,8 @@ project_plan:
     - id: R009
       requirement: "The completed repair must preserve current private/unmerged PR boundaries and publish exact owned-file delivery proof."
       owner: "Git branch, PR #1, LackeyDo ledger, Agent-Cache closeout"
-      status: pending_remote_closeout
-      proof: "Commit SHA, remote SHA, 0/0 divergence, and closeout receipt"
+      status: verified
+      proof: "Private repository inspection, open unmerged PR #1, documentation closeout commit 7bd7bc7, remote SHA match, and 0/0 divergence"
       residual_risk: "GitHub merge and visibility remain human-only actions."
   implementation_slices:
     - id: S001
@@ -267,12 +268,12 @@ project_plan:
       name: "Release ledger and policy correction"
       files: ["docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_VERIFICATION.md", "AGENTS.md"]
       dependencies: ["S001", "S002", "S003"]
-      status: pending_docs_commit
+      status: complete
     - id: S005
       name: "Durable issue-form link"
       files: [".github/ISSUE_TEMPLATE/config.yml"]
       dependencies: []
-      status: pending_docs_commit
+      status: complete
     - id: S006
       name: "Isolated live recovery UI proof"
       files: []
@@ -282,7 +283,7 @@ project_plan:
       name: "Private PR delivery and closeout"
       files: ["docs/registry/lackeydo_project_plan_keybrake_release_lifecycle.yml", "docs/KEYBRAKE_VERIFICATION.md"]
       dependencies: ["S004", "S005", "S006"]
-      status: pending
+      status: complete
   guards:
     - name: "Agent-Cache checksum validation"
       command: "Agent-Cache bootstrap checksum map plus final validate route"
@@ -325,6 +326,7 @@ project_plan:
       evidence: "Cursor-safe preflight passed with the virtual display and sentinel active, but the menu-bar-only Release app exposed no content window; displayctl stage returned exit 4, no CUA action was sent, and no PNG was captured."
       next_action: "Require a human-owned or exact app-targeted CUA session that exposes the recovery panel on the isolated display before claiming mouse-only proof."
   branch: "codex/keybrake-complete-implementation"
-  head: "a3968ad0a0c9810971ab11725647c0277edd4e96"
+  head: "7bd7bc7f785199da6df23f4357d23f2df54e9296"
+  source_checkpoint: "a3968ad0a0c9810971ab11725647c0277edd4e96"
   last_verified_at: "20260912 05:52:26"
-  completion: source_repair_complete_docs_and_pr_closeout_pending
+  completion: source_repair_docs_and_pr_closeout_complete
