@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
+    head: "7a77a7ea1177f2635a91e24793dedbf533cf3762"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
-    status: "remote_verified_at_UI-009_source_checkpoint_documentation_pending"
+    remote_head_verified: "7a77a7ea1177f2635a91e24793dedbf533cf3762"
+    status: "remote_verified_at_UI-009_documentation_checkpoint"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -830,7 +830,7 @@ project_plan:
       name: "UI-009 verification and documentation"
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S022"]
-      status: active
+      status: complete
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -994,16 +994,16 @@ project_plan:
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
+  head: "7a77a7ea1177f2635a91e24793dedbf533cf3762"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-009"
     source_commit: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
-    documentation_commit: "pending"
-    remote_head_verified: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
-    status: "source_checkpoint_remote_verified_documentation_pending"
-    next_safe_entry_point: "Commit and push the UI-009 documentation checkpoint, then continue with UI-010 release gates."
+    documentation_commit: "7a77a7ea1177f2635a91e24793dedbf533cf3762"
+    remote_head_verified: "7a77a7ea1177f2635a91e24793dedbf533cf3762"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-010 release gates."
   following_delivery:
     iteration: "UI-008"
     source_commit: "dacf9e888f0a642d215076bca0a974d980763866"
@@ -1344,7 +1344,7 @@ project_plan:
     name: "Hydration-safe destination status presentation"
     source_checkpoint: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
     user_promise: "A user does not see Command Center icons, recovery-card visibility, Settings recovery summary, or Incident Log recovery summary describing an unconfirmed in-memory state while recovery status is still hydrating, and every existing action remains unchanged."
-    status: "documentation_checkpoint_pending"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/CommandCenterView.swift"
@@ -1382,7 +1382,7 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Record UI-009 requirements, source and documentation slices, exact proof classes, checksums, graph freshness, host routing result, and the UI-010 re-entry point."
-        status: pending_commit
+        status: committed
     visual_evidence:
       source: "KeyBrake/UI/CommandCenterView.swift; KeyBrake/UI/SettingsView.swift; KeyBrake/UI/IncidentLogView.swift"
       provenance: "source checkpoint 7a8b7f512485dcf7c9a04455de9cd632b79dde38; SwiftPM Release executable; cursor-safe Agent Display preflight and disposable Command Center route"
@@ -1400,7 +1400,7 @@ project_plan:
       - "KeyBrake/UI/CommandCenterView.swift sha256=8ed69586938c330c195d2fa8544970a502af8c7a3d2984fc1bbf7fcf3d7dd09d"
       - "KeyBrake/UI/SettingsView.swift sha256=94c2a02852c17df0b4438f6a5cf8d2ebafe76623ca5822239599a0c93544f51b"
       - "KeyBrake/UI/IncidentLogView.swift sha256=343a9d24d6a2d268a21c0bba7d283968d6130d97ac3359898841a9209765fd37"
-      - "README.md and release documentation are changed in the pending UI-009 documentation checkpoint."
+      - "README.md and release documentation checkpoint committed at 7a77a7ea1177f2635a91e24793dedbf533cf3762."
     guards:
       - "Agent-Cache workspace single-flight guard passed before the UI-009 Release build and test."
       - "CommandCenterView.swift, SettingsView.swift, and IncidentLogView.swift passed bounded frontend parsing."
@@ -1409,7 +1409,7 @@ project_plan:
       - "Agent Display preflight passed; the subsequent disposable Command Center route did not expose a running exact target, so the visual boundary remains unproven."
     deferred:
       - "Contained destination visual proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Commit and push the UI-009 documentation checkpoint, then continue with UI-010 release gates."
+    next_action: "Continue with UI-010 release gates."
   upcoming_delivery:
     iteration: "UI-009"
     source_commit: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
@@ -1417,7 +1417,7 @@ project_plan:
       - "KeyBrake/UI/CommandCenterView.swift=8ed69586938c330c195d2fa8544970a502af8c7a3d2984fc1bbf7fcf3d7dd09d"
       - "KeyBrake/UI/SettingsView.swift=94c2a02852c17df0b4438f6a5cf8d2ebafe76623ca5822239599a0c93544f51b"
       - "KeyBrake/UI/IncidentLogView.swift=343a9d24d6a2d268a21c0bba7d283968d6130d97ac3359898841a9209765fd37"
-    documentation_commit: "pending"
-    remote_head_verified: "7a8b7f512485dcf7c9a04455de9cd632b79dde38"
-    status: "source_checkpoint_remote_verified_documentation_pending"
-    next_safe_entry_point: "Push the UI-009 documentation checkpoint, then continue with UI-010 release gates."
+    documentation_commit: "7a77a7ea1177f2635a91e24793dedbf533cf3762"
+    remote_head_verified: "7a77a7ea1177f2635a91e24793dedbf533cf3762"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-010 release gates."
