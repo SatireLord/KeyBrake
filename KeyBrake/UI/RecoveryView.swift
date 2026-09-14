@@ -9,6 +9,7 @@ import SwiftUI
 // states: recovery-required; restoring; partially-restored; retained
 // consumers: RecoveryPanelController; KeyBrakeViewModel; KeyBrakeCommandCenterView
 // owner: RecoveryView
+// QoL-002: the recovery state card reuses the shared state hierarchy so the decision panel explains status before actions.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -122,14 +123,29 @@ struct RecoveryView: View {
 
     private var stateSummary: some View {
         GroupBox {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Current state: \(model.operationalState.displayTitle)")
-                    .font(.headline)
-                Text("Recovery stays available until the selected restoration steps are verified or you explicitly keep isolation.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: KeyBrakeStatusPresentation.symbol(for: model.operationalState))
+                    .font(.title2)
+                    .foregroundStyle(KeyBrakeStatusPresentation.tint(for: model.operationalState))
+                    .frame(width: 32, height: 32)
+
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Current state")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(model.operationalState.displayTitle)
+                        .font(.headline)
+                    Text(KeyBrakeStatusPresentation.detail(for: model.operationalState))
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("Recovery stays available until the selected restoration steps are verified or you explicitly keep isolation.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
+            .accessibilityIdentifier("keybrake.recovery.state-summary")
         } label: {
             Label("Recovery status", systemImage: "exclamationmark.triangle.fill")
         }
