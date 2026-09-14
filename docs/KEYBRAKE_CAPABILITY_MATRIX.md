@@ -22,6 +22,7 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Capability | Status | Notes |
 | --- | --- | --- |
+| Recovery hydration status | implemented | Recovery panel uses the shared checking state until launch recovery hydration completes, then presents the current operational state before its existing actions |
 | Recovery state orientation | implemented | The Recovery panel repeats the shared operational-state icon, tint, detail, and pending-decision explanation before its existing restore, keep-isolation, and quit actions |
 | State-aware history and menu affordances | implemented | Incident Log explains whether resolved records are available and disables its clear-history action when none exist; the menu uses stable symbols for its existing actions, and Settings reuses the shared state tint |
 | Menu-bar app shell | `implemented` | SwiftUI menu bar, readable Settings and Incident Log windows, and one AppKit-owned Recovery panel |
@@ -60,6 +61,8 @@ UI-003 navigation refinement is source and SwiftPM Release proven, and the conta
 UI-005 is source and SwiftPM Release proven, and Agent Display inspection observed the new no-resolved-records guidance in Incident Log. The receipts prove rendered surfaces only; opening either window with a pointer remains unverified.
 
 UI-006 is source and SwiftPM Release proven, and the recovery-demo route exposed the expected 760x652 Command Center window, but Agent Display could not route that window to agent-stage on either bounded attempt. No contained recovery-demo capture or pointer action is claimed.
+
+UI-007 is source and SwiftPM Release proven, and the recovery panel now uses the shared checking state while isRecoveryStatusKnown is false. The recovery-demo route again exposed the expected 760x652 Command Center window, but Agent Display could not route it to agent-stage; no contained visual or pointer proof is claimed.
 
 ## Checklist realignment
 

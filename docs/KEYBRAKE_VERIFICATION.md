@@ -11,6 +11,9 @@
 
 ## Current release pass
 
+- Current UI-007 source checkpoint: 1b1f89e3f84bcfbcc1d671f20a7d301d474fceba; this checkpoint keeps the Recovery panel on the shared checking state until isRecoveryStatusKnown becomes true, so an initial in-memory state is not presented as confirmed.
+- Current UI-007 Agent Display attempt: cursor-safe preflight passed and the disposable SwiftPM Release recovery-demo exposed a 760x652 KeyBrake Command Center window, but the host again failed to route it to agent-stage. No contained visual or pointer proof is claimed.
+
 - Current UI-006 source checkpoint: 028c80557899c056c3e81c876df7883dff049505; this checkpoint gives the Recovery panel a shared state-first icon, tint, detail, and pending-decision hierarchy without changing restore, Keep Isolation, close, or quit behavior.
 - Current UI-006 Agent Display attempt: cursor-safe preflight passed and the disposable SwiftPM Release recovery-demo exposed a 760x652 KeyBrake Command Center window (window ID 78064), but two bounded routing attempts could not move it to agent-stage. No contained recovery-demo capture or pointer action is claimed.
 
@@ -86,6 +89,10 @@ The entries below are updated with exact commands and actual results as implemen
 | UI-006 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI006 | pass; 35 tests, 0 failures |
 | UI-006 recovery-demo routing attempt | agent_ui_preflight.py; disposable Release app with --keybrake-command-center --keybrake-recovery-demo; displayctl stage and is-isolated for PID 52779; displayctl inspect-ui --display agent-stage | hold for host routing; the app exposed a 760x652 Command Center window (window ID 78064) on the physical display, but stage fallback failed and agent-stage exposed no elements; no PNG or pointer action was sent |
 | UI-006 Recovery state presentation | focused RecoveryView source review, UI-006 SwiftPM Release build, final 35-test SwiftPM suite, and recovery-demo runtime attempt | pass for shared status icon/tint/detail rendering in source and compiled app; contained recovery-demo routing remains unverified on this host |
+| UI-007 source parse and UI guard | swiftc -frontend -parse KeyBrake/UI/RecoveryView.swift; non_interrupting_ui_guard.py --json KeyBrake/UI/RecoveryView.swift | pass; RecoveryView parsed and the cursor-safe non-interrupting UI guard found no prohibited interaction path after the hydration fallback change |
+| UI-007 Release build | /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI007 | pass; the production-mode app executable compiled and linked after the hydration-safe RecoveryView change |
+| UI-007 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI007 | pass; 35 tests, 0 failures |
+| UI-007 recovery-demo routing attempt | agent_ui_preflight.py; disposable Release app with --keybrake-command-center --keybrake-recovery-demo; displayctl stage for PID 94195; displayctl is-isolated and inspect-ui could not obtain an agent-stage window | hold for host routing; the app launched and the route returned fallback_failed while the physical-display window was exposed; no PNG or pointer action was sent |
 
 ## Safety boundaries
 
@@ -102,6 +109,8 @@ The UI-004 proof establishes the rendered Settings protection overview and the r
 The UI-005 proof establishes that the Incident Log communicates clear-history availability from the same recorded incident states that the storage owner uses, that menu symbols do not alter existing action routing, and that Settings uses the shared state presentation tint. The rebuilt app was isolated and inspected through Agent Display as window ID 78011, but no second PNG or pointer action was used; current Xcode Release, signed-host, and live emergency mutation remain outside this proof.
 
 The UI-006 proof establishes the RecoveryView state-summary source seam and SwiftPM compilation, but the recovery-demo window could not be contained on agent-stage during two bounded routing attempts. The source and test proof therefore remains valid, while contained visual and pointer proof remain unverified.
+
+The UI-007 proof establishes the hydration-safe checking branch in RecoveryView, its SwiftPM compilation, and the unchanged regression suite. The disposable recovery-demo launched, but the host routing failure remained unchanged, so no contained visual or pointer claim is added.
 
 ## Regression checksum anchors
 
@@ -124,7 +133,7 @@ c268de0088f4c76dcd1f020f3691a48872f60345ff2bb1bee2d57eb6af82d914  KeyBrake/App/K
 593936f603fc2eb8297bbdf0a8643381927b7a3d2098d2dea6d2d89986632e84  KeyBrakeCore/KeyBrakeOperationalState.swift
 0283c9a53a77ea5b62843377d64b7760a0d44fcde76d16a04cc8fd969102070b  KeyBrake/UI/IncidentLogView.swift
 2aad778181b7899ff815c15babfd5152a3e03eece5fb301a1d2942a999debe67  KeyBrake/UI/SettingsView.swift
-570375e487e2dcad34f4c6118648acae8e67c1af82c331ac190cdca4aaa3cca3  KeyBrake/UI/RecoveryView.swift
+ac9dc0aed5c20ea62aa9cd0170d0196b80a205ef3a5240d95201eb64147f38b2  KeyBrake/UI/RecoveryView.swift
 8b7279ff324774a5f01f70e80bbf49277fa2291ac7ed75de124c9db179d2c0da  KeyBrakeCore/FeatureContract.swift
 3c3e614e2bee1e0638248ba51f58bf4d2950529f8137c35a41c1b4cf6b7866e1  KeyBrakeTests/FeatureContractTests.swift
 401945f4b863aa9a16d0f73f082a61e3627b32a88fee711156b090c2117999d1  KeyBrakeCore/ProcessController.swift
