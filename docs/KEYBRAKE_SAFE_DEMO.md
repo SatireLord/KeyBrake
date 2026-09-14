@@ -1,6 +1,6 @@
 # Safe demonstration
 
-UI-006 makes the recovery panel state-first by repeating the shared status hierarchy before its existing actions. UI-007 keeps that hierarchy truthful during asynchronous launch hydration by showing the shared checking state until recovery status is known. A recovery-demo staging failure must remain labeled as host routing evidence only; it does not change the source or recovery contract.
+UI-006 makes the recovery panel state-first by repeating the shared status hierarchy before its existing actions. UI-007 keeps that hierarchy truthful during asynchronous launch hydration by showing the shared checking state until recovery status is known. UI-008 applies the same checking explanation to the compact menu-bar status help. A recovery-demo staging failure must remain labeled as host routing evidence only; it does not change the source or recovery contract.
 
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 

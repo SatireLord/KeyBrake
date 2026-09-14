@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "adbcc462600da1a760ec01a17afb9311b8670474"
+    head: "dacf9e888f0a642d215076bca0a974d980763866"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "adbcc462600da1a760ec01a17afb9311b8670474"
-    status: "remote_verified_at_UI-007_documentation_checkpoint"
+    remote_head_verified: "dacf9e888f0a642d215076bca0a974d980763866"
+    status: "remote_verified_at_UI-008_source_checkpoint_documentation_pending"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -390,6 +390,28 @@ project_plan:
         evidence: "The SHA-256 value was recomputed after the UI-007 source edit and before documentation delivery."
         authorization: "normal documentation update"
         status: pass
+      - checksum_id: "no-applicable-keybrake-boundary-ui-008"
+        manifest: "Agent-Cache checksum registries and predecessor LackeyDo ledger"
+        protected_path: "none"
+        span: "none"
+        current_identity: "no registered KeyBrake protected span at UI-008 source checkpoint dacf9e888f0a642d215076bca0a974d980763866"
+        planned_touch: "no-applicable-checksum"
+        route: "validate"
+        why_exists_here: "UI-008 remains within the compact menu status presentation seam and does not cross a registered protected consumer boundary."
+        evidence: "Agent-Cache bootstrap reported no applicable KeyBrake protected span; source, parse, build, test, and Agent Display boundaries were checked separately."
+        authorization: "not_required_for_validate"
+        status: confirmed_no_applicable_checksum
+      - checksum_id: "keybrake-verification-sha-anchors-ui-008"
+        manifest: "docs/KEYBRAKE_VERIFICATION.md"
+        protected_path: "KeyBrake/UI/KeyBrakeMenuView.swift"
+        span: "whole-file SHA-256 documentation anchor"
+        current_identity: "UI-008 source value at dacf9e888f0a642d215076bca0a974d980763866; sha256=4b796d9a954044e4412c1225494dac2afed8ade2638f2bbd174365d5d9223bc3"
+        planned_touch: "outside"
+        route: "validate"
+        why_exists_here: "The verification record detects drift across the hydration-aware menu status-help seam without claiming pointer behavior."
+        evidence: "The SHA-256 value was recomputed after the UI-008 source edit and before documentation delivery."
+        authorization: "normal documentation update"
+        status: pass
   context_packet:
     repository: "KeyBrake at /Users/michaeltran/AntiGravity/KeyBrake"
     source_of_truth:
@@ -424,11 +446,11 @@ project_plan:
       - path: "Agent-Cache bounded structural graph"
         covers: "KeyBrake UI symbols, scene routes, and function-call edges"
         refresh: "mcp__agent_cache__build_structural_graphs(repo_path=/Users/michaeltran/AntiGravity/KeyBrake, limit=120)"
-        freshness: "source-bound snapshot bbbb1c9fbe3c494427053f9e27bbb9d8c4af2f623f2e08beb8fe601bffbb706c with graph key f1598ae855cd8dccd65e8ea95c494639e505b210405e287ebe0208f89dec4370 after UI-007 source implementation; CodeGraph provider and AST/CST fallbacks were available"
+        freshness: "source-bound snapshot 4d8effbbfe0478c17de9b3c56503abecd8a628213f16e886b29a449ed8652524 with graph key 1873a5230ceb717901199d4a92832b6e6ec79f9dba7d30510c71d8270cf08089 after UI-008 source implementation; CodeGraph provider and AST/CST fallbacks were available"
       - path: "Greppable markers in KeyBrake UI source"
         covers: "command-center route, status presentation, and menu consumer vocabulary"
         refresh: "bounded rg -n over KeyBrake/App and KeyBrake/UI"
-        freshness: "refreshed after UI-007 implementation; recovery-demo, recovery-decision, inventory, panel-placement, command-center-navigation, destination-demo-routes, incident-log-destination, settings-destination, QoL-001, QoL-002, QoL-003, and owner markers resolve"
+        freshness: "refreshed after UI-008 implementation; recovery-demo, recovery-decision, inventory, panel-placement, command-center-navigation, destination-demo-routes, incident-log-destination, settings-destination, QoL-001, QoL-002, QoL-003, QoL-004, and owner markers resolve"
     automation:
       entrypoint: "discover -> update UI owner -> regenerate project membership if required -> focused tests/build -> Agent Display preflight/stage/inspect -> update docs/hashes -> commit/push -> Agent-Cache closeout"
       chain: ["repository truth", "source owner and visual evidence", "focused compile/test", "exact Release artifact", "cursor-safe Agent Display attempt", "documentation and checksum refresh", "remote delivery", "closeout receipt"]
@@ -478,6 +500,16 @@ project_plan:
         proves: "The final production-mode KeyBrake executable compiles and links after UI-007 hydration-safe RecoveryView changes"
       - command: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI007"
         proves: "The complete 35-test SwiftPM suite remains green after UI-007 changes"
+      - command: "swiftc -frontend -parse KeyBrake/UI/KeyBrakeMenuView.swift"
+        proves: "The UI-008 KeyBrakeMenuView source owner parses after the hydration-aware help change"
+      - command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/KeyBrakeMenuView.swift"
+        proves: "The UI-008 KeyBrakeMenuView source owner contains no prohibited interrupting UI path"
+      - command: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json"
+        proves: "No overlapping SwiftPM or Xcode build, test, or run command exists before UI-008 proof"
+      - command: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI008"
+        proves: "The final production-mode KeyBrake executable compiles and links after UI-008 hydration-aware menu status-help changes"
+      - command: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI008"
+        proves: "The complete 35-test SwiftPM suite remains green after UI-008 changes"
       - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeUI001 CODE_SIGNING_ALLOWED=NO -only-testing:KeyBrakeTests/FeatureContractTests test"
         proves: "Native Xcode test target compiles after the new menu contract"
       - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeReleaseUI001 CODE_SIGNING_ALLOWED=NO build"
@@ -605,6 +637,18 @@ project_plan:
       status: pass
       proof: "The UI-007 diff changes only the state-summary presentation and adds a greppable QoL marker; all recovery action call sites remain unchanged, the Release build passes, and the 35-test suite remains green."
       residual_risk: "Mouse-only action execution remains unverified because Agent Display routing is unavailable on this host."
+    - id: R020
+      requirement: "The menu-bar status row must use the shared checking explanation while asynchronous launch recovery hydration is incomplete, so its help text cannot describe the initial in-memory state as confirmed."
+      owner: "KeyBrake/UI/KeyBrakeMenuView.swift, KeyBrake/App/KeyBrakeViewModel.swift"
+      status: pass
+      proof: "UI-008 source review binds the status-row help to statusDetail, which returns the shared checking explanation until isRecoveryStatusKnown is true; the source parses, the Release build passes, and the 35-test suite remains green."
+      residual_risk: "The menu popover was not exposed as an exact Agent Display target for direct help-text inspection."
+    - id: R021
+      requirement: "UI-008 must preserve every menu action target, label, disabled-state rule, and emergency/recovery handler while changing only the status-help presentation."
+      owner: "KeyBrake/UI/KeyBrakeMenuView.swift, KeyBrake/App/KeyBrakeViewModel.swift"
+      status: pass
+      proof: "The UI-008 diff changes only the status-help expression, adds statusDetail, and adds a greppable QoL marker; existing menu action closures and disabled conditions remain unchanged, the Release build passes, and the 35-test suite remains green."
+      residual_risk: "Direct pointer activation of menu actions remains unverified."
   implementation_slices:
     - id: S001
       name: "Command Center visual surface"
@@ -701,6 +745,16 @@ project_plan:
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S018"]
       status: active
+    - id: S020
+      name: "Hydration-aware menu status help"
+      files: ["KeyBrake/UI/KeyBrakeMenuView.swift"]
+      dependencies: ["S018", "R020", "R021"]
+      status: complete
+    - id: S021
+      name: "UI-008 verification and documentation"
+      files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
+      dependencies: ["S020"]
+      status: active
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -778,6 +832,14 @@ project_plan:
       command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; /usr/bin/open -n /tmp/KeyBrakeUI004Settings.app --args --keybrake-command-center --keybrake-recovery-demo; displayctl stage --app 94195 --position above --preset 16:9; displayctl is-isolated --app 94195; displayctl inspect-ui --display agent-stage"
       status: hold
       result: "Cursor-safe preflight passed and the disposable recovery-demo launched, but stage routing returned fallback_failed and no agent-stage window was available; the physical-display window was not used for visual or pointer claims, and PID 94195 was terminated after the attempt."
+    - name: "UI-008 source, build, and test boundary"
+      command: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; swiftc -frontend -parse KeyBrake/UI/KeyBrakeMenuView.swift; python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/KeyBrakeMenuView.swift; /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI008; /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI008"
+      status: pass
+      result: "Single-flight reported no overlap; KeyBrakeMenuView.swift parsed successfully; the cursor-safe non-interrupting UI guard passed; the SwiftPM Release build completed; and the complete 35-test suite passed with zero failures."
+    - name: "UI-008 Agent Display menu-surface boundary"
+      command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; /usr/bin/open -n /tmp/KeyBrakeUI004Settings.app --args --keybrake-command-center; displayctl stage --app 29831 --position above --preset 16:9; displayctl is-isolated --app 29831; displayctl inspect-ui --app 29831"
+      status: pass
+      result: "Cursor-safe preflight passed; Agent Display isolated one 760x652 Command Center window (window ID 79230) for the disposable process; the menu-bar popover was not exposed as an exact harness target, so no pointer or additional PNG claim was made; PID 29831 was terminated after inspection."
   tests:
     - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI001"
       status: pass
@@ -848,25 +910,25 @@ project_plan:
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "adbcc462600da1a760ec01a17afb9311b8670474"
+  head: "dacf9e888f0a642d215076bca0a974d980763866"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
+    iteration: "UI-008"
+    source_commit: "dacf9e888f0a642d215076bca0a974d980763866"
+    documentation_commit: "pending"
+    remote_head_verified: "dacf9e888f0a642d215076bca0a974d980763866"
+    status: "source_checkpoint_remote_verified_documentation_pending"
+    next_safe_entry_point: "Commit and push the UI-008 documentation checkpoint, then continue with UI-009 release gates."
+  following_delivery:
     iteration: "UI-007"
     source_commit: "1b1f89e3f84bcfbcc1d671f20a7d301d474fceba"
+    source_file_shas:
+      - "KeyBrake/UI/RecoveryView.swift=ac9dc0aed5c20ea62aa9cd0170d0196b80a205ef3a5240d95201eb64147f38b2"
     documentation_commit: "adbcc462600da1a760ec01a17afb9311b8670474"
     remote_head_verified: "adbcc462600da1a760ec01a17afb9311b8670474"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-008 release gates."
-  following_delivery:
-    iteration: "UI-006"
-    source_commit: "028c80557899c056c3e81c876df7883dff049505"
-    source_file_shas:
-      - "KeyBrake/UI/RecoveryView.swift=570375e487e2dcad34f4c6118648acae8e67c1af82c331ac190cdca4aaa3cca3"
-    documentation_commit: "b5423da"
-    remote_head_verified: "b5423da"
-    status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "UI-007 hydration-safe RecoveryView state orientation and documentation checkpoint."
+    next_safe_entry_point: "UI-008 hydration-aware menu status help and documentation checkpoint."
   completed_iteration:
     id: "UI-004"
     name: "Destination window orientation and deterministic staging"
@@ -1053,7 +1115,7 @@ project_plan:
     remote_head_verified: "b5423da"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-007 hydration-safe RecoveryView state orientation and its documentation checkpoint."
-  upcoming_iteration:
+  completed_iteration_ui007:
     id: "UI-007"
     name: "Hydration-safe Recovery state orientation"
     source_checkpoint: "1b1f89e3f84bcfbcc1d671f20a7d301d474fceba"
@@ -1113,8 +1175,8 @@ project_plan:
       - "Agent Display preflight passed; the subsequent containment failure remains classified as host routing evidence."
     deferred:
       - "Contained pre-hydration Recovery-panel visual proof, mouse-only recovery action proof, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Continue with UI-008 release gates; preserve the host-only Agent Display routing hold."
-  upcoming_delivery:
+    next_action: "UI-008 hydration-aware menu status help and documentation checkpoint."
+  completed_delivery_ui007:
     iteration: "UI-007"
     source_commit: "1b1f89e3f84bcfbcc1d671f20a7d301d474fceba"
     source_file_shas:
@@ -1122,4 +1184,74 @@ project_plan:
     documentation_commit: "adbcc462600da1a760ec01a17afb9311b8670474"
     remote_head_verified: "adbcc462600da1a760ec01a17afb9311b8670474"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-008 release gates."
+    next_safe_entry_point: "UI-008 hydration-aware menu status help and documentation checkpoint."
+  upcoming_iteration:
+    id: "UI-008"
+    name: "Hydration-aware menu status help"
+    source_checkpoint: "dacf9e888f0a642d215076bca0a974d980763866"
+    user_promise: "A user does not see menu-bar help describing the initial in-memory operational state as confirmed while recovery status is still hydrating, and every existing menu action remains unchanged."
+    status: "documentation_checkpoint_pending"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
+        owner: "KeyBrakeMenuView.statusDetail"
+        intended_change: "Use the same hydration-aware checking explanation for menu-bar status help that the visible status label uses until recovery status is known."
+        status: implemented
+      - path: "README.md"
+        owner: "Recovery boundaries and demonstration sections"
+        intended_change: "Document that the menu-bar status label and help stay aligned while recovery status hydrates."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record hydration-aware menu status help as implemented and retain the exact Agent Display evidence boundary."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-008 as complete at its source checkpoint and route the next work to UI-009 release gates."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration sequence"
+        intended_change: "Explain the aligned checking text on the compact menu-bar failsafe surface."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger and source SHA anchors"
+        intended_change: "Record UI-008 source, parse, Release build, test, Agent Display containment, checksum, and unclaimed pointer or exact-menu evidence."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-008 requirements, source and documentation slices, exact proof classes, checksum, graph freshness, routing boundary, and the UI-009 re-entry point."
+        status: pending_commit
+    visual_evidence:
+      source: "KeyBrake/UI/KeyBrakeMenuView.swift"
+      provenance: "source checkpoint dacf9e888f0a642d215076bca0a974d980763866; SwiftPM Release executable; cursor-safe Agent Display staging"
+      state: "command_center_staged_isolated_menu_unexposed"
+      observed: "The disposable KeyBrake Command Center was isolated on the virtual display at 760x652 with window ID 79230, but the menu-bar popover was not an exact harness target."
+      receipt: "No UI-008 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane."
+      missing_evidence: "Exact menu popover and help visual proof, direct pointer activation, Xcode Release proof, and signed-host or live platform proof remain unverified."
+    proof:
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/KeyBrakeMenuView.swift; pass"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI008; 35 tests, 0 failures"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI008; pass"
+      staging: "agent_ui_preflight.py passed; disposable Command Center PID 29831 was isolated; window ID 79230; menu popover was not an exact target; no pointer or additional PNG proof"
+      safety: "Only non-mutating Command Center launch and containment inspection were used; no pointer, emergency, persistence, TCC, network, launchd, or signed-host action was claimed; PID 29831 was terminated after inspection."
+    checksums:
+      - "KeyBrake/UI/KeyBrakeMenuView.swift sha256=4b796d9a954044e4412c1225494dac2afed8ade2638f2bbd174365d5d9223bc3"
+      - "README.md and release documentation are changed in the pending UI-008 documentation checkpoint."
+    guards:
+      - "Agent-Cache workspace single-flight guard passed before the UI-008 Release build and test."
+      - "KeyBrakeMenuView.swift passed bounded frontend parsing."
+      - "Cursor-safe non-interrupting UI guard passed for KeyBrakeMenuView.swift."
+      - "CodeGraph source-bound snapshot 4d8effbbfe0478c17de9b3c56503abecd8a628213f16e886b29a449ed8652524 with graph key 1873a5230ceb717901199d4a92832b6e6ec79f9dba7d30510c71d8270cf08089 was refreshed after UI-008 source implementation."
+      - "Agent Display preflight passed; Command Center containment succeeded, but the menu popover remained unexposed to the exact harness target."
+    deferred:
+      - "Exact menu popover visual proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+    next_action: "Commit and push the UI-008 documentation checkpoint, then continue with UI-009 release gates."
+  upcoming_delivery:
+    iteration: "UI-008"
+    source_commit: "dacf9e888f0a642d215076bca0a974d980763866"
+    source_file_shas:
+      - "KeyBrake/UI/KeyBrakeMenuView.swift=4b796d9a954044e4412c1225494dac2afed8ade2638f2bbd174365d5d9223bc3"
+    documentation_commit: "pending"
+    remote_head_verified: "dacf9e888f0a642d215076bca0a974d980763866"
+    status: "source_checkpoint_remote_verified_documentation_pending"
+    next_safe_entry_point: "Push the UI-008 documentation checkpoint, then continue with UI-009 release gates."
