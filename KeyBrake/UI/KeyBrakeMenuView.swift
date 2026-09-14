@@ -12,6 +12,7 @@ import SwiftUI
 // QoL-001: menu actions carry stable visual symbols while their existing targets, labels, and disabled-state rules remain unchanged.
 // QoL-004: the menu status label and its help text share the same hydration-aware state explanation.
 // QoL-007: the menu header uses the same hydration-aware symbol as the adjacent status row.
+// QoL-008: the recovery affordance explains its hydration, busy, and no-snapshot disabled states without changing its gate.
 struct KeyBrakeMenuView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -54,6 +55,8 @@ struct KeyBrakeMenuView: View {
         } label: {
             Label("Restore Human Control", systemImage: "arrow.uturn.backward.circle")
         }
+            .help(recoveryActionDetail)
+            .accessibilityHint(recoveryActionDetail)
             .disabled(!model.hasRecovery || model.isBusy)
         Button {
             model.restartEspanso()
@@ -91,5 +94,17 @@ struct KeyBrakeMenuView: View {
         model.isRecoveryStatusKnown
             ? KeyBrakeStatusPresentation.detail(for: model.operationalState)
             : "KeyBrake is confirming whether an unresolved recovery snapshot exists."
+    }
+
+    private var recoveryActionDetail: String {
+        guard model.isRecoveryStatusKnown else {
+            return "KeyBrake is checking whether an unresolved recovery snapshot exists."
+        }
+        if model.isBusy {
+            return "KeyBrake is completing the current operation. Keep KeyBrake open until it completes."
+        }
+        return model.hasRecovery
+            ? "Open the recovery panel to choose how to restore the recorded changes."
+            : "No unresolved recovery snapshot is available."
     }
 }
