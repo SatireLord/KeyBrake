@@ -11,6 +11,9 @@
 
 ## Current release pass
 
+- Current UI-010 source checkpoint: 2b633cedcefec7bb381d0feb350b56a9b47ea63a; this checkpoint makes the menu-bar extra label use the same hydration-aware status symbol as the compact status row, without changing window routing or menu actions.
+- Current UI-010 Agent Display attempt: cursor-safe preflight passed, but the disposable shell launch did not leave a running KeyBrake window for exact Agent Display containment; no pointer or additional PNG proof is claimed.
+
 - Current UI-009 source checkpoint: 7a8b7f512485dcf7c9a04455de9cd632b79dde38; this checkpoint keeps Command Center icons and recovery-card visibility, Settings recovery summary, and Incident Log recovery summary behind the known-hydration boundary, without changing emergency, recovery, or navigation handlers.
 - Current UI-009 Agent Display attempt: cursor-safe preflight passed, but the disposable Command Center launch did not leave a running window for exact Agent Display containment; no pointer or additional PNG proof is claimed.
 
@@ -107,6 +110,10 @@ The entries below are updated with exact commands and actual results as implemen
 | UI-009 Release build | /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI009 | pass; the production-mode app executable compiled and linked after the Command Center, Settings, and Incident Log hydration-boundary changes |
 | UI-009 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI009 | pass; 35 tests, 0 failures |
 | UI-009 Agent Display staging | agent_ui_preflight.py; disposable Release app with --keybrake-command-center; displayctl stage and is-isolated | hold for host containment; preflight passed, but no running Command Center window remained for an exact target after launch, so no contained visual, pointer, or PNG proof was claimed |
+| UI-010 source parse and UI guard | swiftc -frontend -parse KeyBrake/App/KeyBrakeApp.swift; non_interrupting_ui_guard.py --json KeyBrake/App/KeyBrakeApp.swift | pass; the menu-bar shell owner parsed and the cursor-safe guard found no prohibited interaction path after the hydration-aware symbol change |
+| UI-010 Release build | /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI010 | pass; the production-mode app executable compiled and linked after the menu-bar shell icon change |
+| UI-010 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI010 | pass; 35 tests, 0 failures |
+| UI-010 Agent Display staging | agent_ui_preflight.py; disposable Release app with --keybrake-command-center; displayctl stage and is-isolated | hold for host containment; preflight passed, but the disposable shell route left no running KeyBrake window for an exact target, so no contained visual, pointer, or PNG proof was claimed |
 
 ## Safety boundaries
 
@@ -130,6 +137,8 @@ The UI-008 proof establishes the hydration-aware menu status-help seam, its Swif
 
 The UI-009 proof establishes the hydration-aware Command Center icon and recovery-card boundary plus the destination recovery-summary boundary, its SwiftPM compilation, and the unchanged regression suite. Agent Display preflight passed, but the disposable Command Center did not remain available as an exact harness target on this attempt, so no contained visual, pointer, or PNG claim is added.
 
+The UI-010 proof establishes the menu-bar extra icon’s hydration-aware source seam, its SwiftPM compilation, and the unchanged regression suite. Agent Display preflight passed, but the disposable shell route did not leave a running KeyBrake window for an exact target, so no contained visual, pointer, or PNG claim is added.
+
 ## Regression checksum anchors
 
 These SHA-256 values anchor the safety contract and the highest-risk command seams for this deliverable. They are recorded after the final source/doc edits; a later change must recompute and review the affected value.
@@ -144,7 +153,7 @@ c595a7172f250472c81a7788cdb13cd8f13f2493a79ed476c8ef1e9b3f83b323  KeyBrakeCore/N
 a228776765d99a6d93ab1a94100e61e1bdadd31290b71d2f2791c50002f3f847  KeyBrakeCore/SharingServiceController.swift
 9ecdf00f980551d8f767601bd3af21c255bbe0cdcf82e1629fb3910c74a4a5bd  KeyBrake/App/KeyBrakeViewModel.swift
 c268de0088f4c76dcd1f020f3691a48872f60345ff2bb1bee2d57eb6af82d914  KeyBrake/App/KeyBrakeAppDelegate.swift
-4c85dff2aadaae25bbaf26b213cdf982e7d8eb4d17877eaf3b1272b2af4c8b6c  KeyBrake/App/KeyBrakeApp.swift
+3a317e25e16b3d0cbd0c6032389d30216d386a5a895bc98f5abe5da3980573b5  KeyBrake/App/KeyBrakeApp.swift
 4b796d9a954044e4412c1225494dac2afed8ade2638f2bbd174365d5d9223bc3  KeyBrake/UI/KeyBrakeMenuView.swift
 8ed69586938c330c195d2fa8544970a502af8c7a3d2984fc1bbf7fcf3d7dd09d  KeyBrake/UI/CommandCenterView.swift
 4914ce3e017d1bb8385ede6b30bdef180fc763e51a8bb26e3d9e00903b17983d  KeyBrake/UI/RecoveryPanelController.swift
