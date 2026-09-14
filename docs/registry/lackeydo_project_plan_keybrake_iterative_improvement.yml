@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "70dedada1ac73121fde73c19416418d6947b8b63"
+    head: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "70dedada1ac73121fde73c19416418d6947b8b63"
-    status: "remote_verified_at_UI-013_source_checkpoint_documentation_pending"
+    remote_head_verified: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
+    status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -1188,16 +1188,16 @@ project_plan:
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "70dedada1ac73121fde73c19416418d6947b8b63"
+  head: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
-    documentation_commit: "pending"
-    remote_head_verified: "70dedada1ac73121fde73c19416418d6947b8b63"
-    status: "source_checkpoint_remote_verified_documentation_pending"
-    next_safe_entry_point: "Commit and push the UI-013 documentation checkpoint, then continue with UI-014 release gates."
+    documentation_commit: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
+    remote_head_verified: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-014 release gates before any public-visibility decision."
   following_delivery:
     iteration: "UI-012"
     source_commit: "dfedf420c741c1c6d7c9d2ecbae290a4c5386e9b"
@@ -1832,7 +1832,7 @@ project_plan:
     name: "Recovery panel action availability guidance"
     source_checkpoint: "70dedada1ac73121fde73c19416418d6947b8b63"
     user_promise: "A user understands why state-changing Recovery-panel actions are unavailable during a busy operation while review actions remain available, and the existing handlers, targets, and disabled-state gate remain unchanged."
-    status: "documentation_checkpoint_pending"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/RecoveryView.swift"
@@ -1862,7 +1862,7 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Record UI-013 requirement, slices, checksums, guards, host routing result, and the UI-014 re-entry point."
-        status: pending_commit
+        status: committed
     visual_evidence:
       source: "KeyBrake/UI/RecoveryView.swift"
       provenance: "source checkpoint 70dedada1ac73121fde73c19416418d6947b8b63; SwiftPM Release executable; cursor-safe Agent Display preflight and disposable Recovery-panel route"
@@ -1878,7 +1878,7 @@ project_plan:
       safety: "Only non-mutating source validation and disposable app staging/inspection were used; no host mutation, pointer action, emergency action, persistence action, TCC action, network action, launchd action, or signed-host claim was made."
     checksums:
       - "KeyBrake/UI/RecoveryView.swift sha256=c34a9f264eedafe8f53e347507ec62e13aa616c326390010e9e7cb1ebf8fbe03"
-      - "README.md and release documentation changed in pending UI-013 documentation checkpoint."
+      - "README.md and release documentation checkpoint committed at f3ae0961955a20867b43d797bc472e14cd4ab9c9."
     guards:
       - "Agent-Cache UI-013 mutation gate passed after live branch and PR #1 continuity were verified."
       - "RecoveryView.swift passed bounded frontend parsing."
@@ -1888,13 +1888,13 @@ project_plan:
       - "Agent Display preflight and provider checks passed; staging moved six windows, but exact isolation returned isolated=false/windowCount=0, so the visual boundary remains unproven."
     deferred:
       - "Exact Recovery-panel visual/accessibility proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Commit and push the UI-013 documentation checkpoint, then continue with UI-014 release gates before any public-visibility decision."
+    next_action: "Continue with UI-014 release gates before any public-visibility decision."
   upcoming_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
     source_file_shas:
       - "KeyBrake/UI/RecoveryView.swift=c34a9f264eedafe8f53e347507ec62e13aa616c326390010e9e7cb1ebf8fbe03"
-    documentation_commit: "pending"
-    remote_head_verified: "70dedada1ac73121fde73c19416418d6947b8b63"
-    status: "source_checkpoint_remote_verified_documentation_pending"
-    next_safe_entry_point: "Commit and push UI-013 documentation, then continue with UI-014 release gates."
+    documentation_commit: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
+    remote_head_verified: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-014 release gates before any public-visibility decision."
