@@ -16,6 +16,12 @@ public struct ProcessIdentity: Codable, Sendable, Equatable {
         self.effectiveUserIdentifier = effectiveUserIdentifier
         self.launchDate = launchDate
     }
+
+    public func matches(bundleIdentifier: String?, executableURL: URL?, launchDate: Date? = nil) -> Bool {
+        guard self.bundleIdentifier == bundleIdentifier, self.executableURL == executableURL else { return false }
+        guard let expectedLaunchDate = self.launchDate else { return true }
+        return expectedLaunchDate == launchDate
+    }
 }
 
 public struct ProcessTargetResult: Sendable, Equatable {
@@ -87,10 +93,11 @@ public final class SystemProcessController: ProcessControlling, @unchecked Senda
     }
 
     private func sameIdentity(_ application: NSRunningApplication, identity: ProcessIdentity) -> Bool {
-        guard application.bundleIdentifier == identity.bundleIdentifier,
-              application.executableURL == identity.executableURL else { return false }
-        guard let expectedLaunchDate = identity.launchDate else { return true }
-        return application.launchDate == expectedLaunchDate
+        identity.matches(
+            bundleIdentifier: application.bundleIdentifier,
+            executableURL: application.executableURL,
+            launchDate: application.launchDate
+        )
     }
 
     private func respawnedProcess(for identity: ProcessIdentity) -> ProcessIdentity? {

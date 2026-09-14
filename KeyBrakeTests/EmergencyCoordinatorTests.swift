@@ -7,6 +7,36 @@ private struct FixtureProcessController: ProcessControlling {
 }
 
 final class EmergencyCoordinatorTests: XCTestCase {
+    func testTerminationGateFailsClosedBeforeHydrationAndDuringTransactions() {
+        XCTAssertTrue(KeyBrakeTerminationGate.blocksTermination(state: .normal, launchRecoveryCheckCompleted: false, recoveryRequired: false, immediateQuitApproved: false))
+
+        for state in [KeyBrakeOperationalState.stoppingLocalAutomation, .isolating, .restoring] {
+            XCTAssertTrue(KeyBrakeTerminationGate.blocksTermination(state: state, launchRecoveryCheckCompleted: true, recoveryRequired: false, immediateQuitApproved: false))
+            XCTAssertTrue(KeyBrakeTerminationGate.blocksTermination(state: state, launchRecoveryCheckCompleted: true, recoveryRequired: false, immediateQuitApproved: true))
+        }
+
+        XCTAssertFalse(KeyBrakeTerminationGate.blocksTermination(state: .normal, launchRecoveryCheckCompleted: true, recoveryRequired: false, immediateQuitApproved: false))
+        XCTAssertFalse(KeyBrakeTerminationGate.blocksTermination(state: .isolated, launchRecoveryCheckCompleted: true, recoveryRequired: true, immediateQuitApproved: true))
+        XCTAssertTrue(KeyBrakeTerminationGate.blocksTermination(state: .isolated, launchRecoveryCheckCompleted: true, recoveryRequired: true, immediateQuitApproved: false))
+    }
+
+    func testProcessIdentityRequiresExactBundleExecutableAndLaunchDate() {
+        let launchDate = Date(timeIntervalSince1970: 1_725_000_000)
+        let executableURL = URL(fileURLWithPath: "/Applications/Example Agent.app/Contents/MacOS/Example Agent")
+        let identity = ProcessIdentity(
+            processIdentifier: 42,
+            bundleIdentifier: "com.example.agent",
+            executableURL: executableURL,
+            effectiveUserIdentifier: 501,
+            launchDate: launchDate
+        )
+
+        XCTAssertTrue(identity.matches(bundleIdentifier: "com.example.agent", executableURL: executableURL, launchDate: launchDate))
+        XCTAssertFalse(identity.matches(bundleIdentifier: "com.example.other", executableURL: executableURL, launchDate: launchDate))
+        XCTAssertFalse(identity.matches(bundleIdentifier: "com.example.agent", executableURL: URL(fileURLWithPath: "/Applications/Other Agent.app/Contents/MacOS/Other Agent"), launchDate: launchDate))
+        XCTAssertFalse(identity.matches(bundleIdentifier: "com.example.agent", executableURL: executableURL, launchDate: launchDate.addingTimeInterval(1)))
+    }
+
     func testStopRemoteAccessPersistsBeforeNetworkMutationAndPublishesIsolation() async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let runner = RecordingCommandRunner()

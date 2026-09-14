@@ -20,6 +20,7 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published var isShowingIncidentLog = false
     @Published var isShowingSettings = false
     private var allowImmediateQuit = false
+    private var launchRecoveryCheckCompleted = false
 
     let coordinator: EmergencyCoordinator
     let incidentStore: IncidentStore
@@ -43,19 +44,33 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     var isBusy: Bool {
-        [.stoppingLocalAutomation, .isolating, .restoring].contains(operationalState)
+        operationalState.isStateChanging
     }
 
     var hasRecovery: Bool {
-        unresolvedRecovery != nil || [.isolated, .partiallyIsolated, .recoveryRequired].contains(operationalState)
+        unresolvedRecovery != nil || operationalState.requiresRecoveryDecision
+    }
+
+    var shouldInterceptTermination: Bool {
+        KeyBrakeTerminationGate.blocksTermination(
+            state: operationalState,
+            launchRecoveryCheckCompleted: launchRecoveryCheckCompleted,
+            recoveryRequired: hasRecovery,
+            immediateQuitApproved: allowImmediateQuit
+        )
     }
 
     func refresh() async {
-        unresolvedRecovery = await coordinator.recoverUnresolvedStateAtLaunch()
-        operationalState = await coordinator.state()
-        latestIncident = await coordinator.latest()
-        incidents = (try? incidentStore.list()) ?? []
-        if unresolvedRecovery != nil || [.isolated, .partiallyIsolated, .recoveryRequired].contains(operationalState) {
+        let recovery = await coordinator.recoverUnresolvedStateAtLaunch()
+        let state = await coordinator.state()
+        let incident = await coordinator.latest()
+        let storedIncidents = (try? incidentStore.list()) ?? []
+        unresolvedRecovery = recovery
+        operationalState = state
+        latestIncident = incident
+        incidents = storedIncidents
+        launchRecoveryCheckCompleted = true
+        if hasRecovery {
             isShowingRecoveryPanel = true
         }
     }
@@ -101,9 +116,21 @@ final class KeyBrakeViewModel: ObservableObject {
         isShowingSettings = true
     }
 
-    var shouldAllowImmediateQuit: Bool { allowImmediateQuit }
-
     func requestQuit() {
+        guard launchRecoveryCheckCompleted else {
+            showTerminationBlockedAlert(
+                messageText: "Recovery status is still loading",
+                informativeText: "KeyBrake cannot quit until it confirms whether unresolved recovery exists."
+            )
+            return
+        }
+        guard !isBusy else {
+            showTerminationBlockedAlert(
+                messageText: "KeyBrake is completing an emergency action",
+                informativeText: "Quit is unavailable until the current state-changing operation finishes."
+            )
+            return
+        }
         if allowImmediateQuit || !hasRecovery {
             NSApplication.shared.terminate(nil)
             return
@@ -123,6 +150,14 @@ final class KeyBrakeViewModel: ObservableObject {
         default:
             break
         }
+    }
+
+    private func showTerminationBlockedAlert(messageText: String, informativeText: String) {
+        let alert = NSAlert()
+        alert.messageText = messageText
+        alert.informativeText = informativeText
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
     }
 
     func restoreNetworkOnly() {

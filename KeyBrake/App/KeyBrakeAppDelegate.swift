@@ -12,6 +12,9 @@ final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
     @MainActor
     func attach(model: KeyBrakeViewModel) {
         self.model = model
+        if model.isShowingRecoveryPanel {
+            recoveryPanelController?.show(model: model)
+        }
     }
 
     @MainActor
@@ -27,7 +30,10 @@ final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         MainActor.assumeIsolated {
-            guard let model, model.hasRecovery, !model.shouldAllowImmediateQuit else {
+            guard let model else {
+                return .terminateCancel
+            }
+            guard model.shouldInterceptTermination else {
                 return .terminateNow
             }
             model.requestQuit()

@@ -11,6 +11,7 @@ struct KeyBrakeApp: App {
                 .onAppear { appDelegate.attach(model: model) }
         } label: {
             WindowLaunchBridge(model: model)
+                .onAppear { appDelegate.attach(model: model) }
         }
         .menuBarExtraStyle(.menu)
         .onChange(of: model.isShowingRecoveryPanel) { _, show in
@@ -35,9 +36,6 @@ struct KeyBrakeApp: App {
                 .frame(minWidth: 680, minHeight: 460)
         }
 
-        Window("KeyBrake Recovery", id: "recovery") {
-            RecoveryView(model: model)
-        }
     }
 }
 

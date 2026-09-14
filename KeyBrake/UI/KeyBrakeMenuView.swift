@@ -18,7 +18,7 @@ struct KeyBrakeMenuView: View {
         Button("Revoke App Access…") { openWindow(id: "settings") }
             .disabled(model.isBusy)
         Divider()
-        Button("Restore Human Control") { openWindow(id: "recovery") }
+        Button("Restore Human Control") { model.isShowingRecoveryPanel = true }
             .disabled(!model.hasRecovery || model.isBusy)
         Button("Restart Espanso") { model.restartEspanso() }
             .disabled(model.isBusy)

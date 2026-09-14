@@ -22,6 +22,49 @@ public enum KeyBrakeOperationalState: String, Codable, Sendable, CaseIterable {
         case .recoveryRequired: return "Recovery Required"
         }
     }
+
+    public var isStateChanging: Bool {
+        switch self {
+        case .stoppingLocalAutomation, .isolating, .restoring:
+            return true
+        case .normal, .localAutomationStopped, .isolated, .partiallyIsolated, .recoveryRequired:
+            return false
+        }
+    }
+
+    public var requiresRecoveryDecision: Bool {
+        switch self {
+        case .isolated, .partiallyIsolated, .recoveryRequired:
+            return true
+        case .normal, .stoppingLocalAutomation, .localAutomationStopped, .isolating, .restoring:
+            return false
+        }
+    }
+}
+
+// Greppable:
+// canonical: keybrake-termination-gate
+// aliases: emergency quit guard; fail-closed startup recovery; transaction quit guard
+// forms: keybrake-termination-gate; terminationGate; launch-recovery-gate
+// descriptors: application termination policy; emergency transaction; recovery hydration
+// states: waiting; transaction-active; recovery-required; clear-to-terminate
+// consumers: KeyBrakeViewModel; KeyBrakeAppDelegate; EmergencyCoordinatorTests
+// owner: KeyBrakeTerminationGate
+public enum KeyBrakeTerminationGate {
+    public static func blocksTermination(
+        state: KeyBrakeOperationalState,
+        launchRecoveryCheckCompleted: Bool,
+        recoveryRequired: Bool,
+        immediateQuitApproved: Bool
+    ) -> Bool {
+        guard launchRecoveryCheckCompleted, !state.isStateChanging else {
+            return true
+        }
+        if immediateQuitApproved {
+            return false
+        }
+        return recoveryRequired || state.requiresRecoveryDecision
+    }
 }
 
 public enum OperationOutcome: String, Codable, Sendable, CaseIterable {
