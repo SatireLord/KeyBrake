@@ -18,10 +18,13 @@
 - Current UI-002 visual receipt: `.agent-cache/proofs/keybrake-ui-002-recovery-demo.png`; contained 760×652 Command Center capture, SHA-256 `bc52d0ebe45c6950c0bffd60080b1e5669adcdbb9bccf294bfe19935c73e4872`.
 - Version: `0.1.0` (build `1`).
 - Release judgments: GitHub visibility **HOLD**; downloadable binary **BLOCKED** (see `docs/KEYBRAKE_CAPABILITY_MATRIX.md`).
-- XcodeGen resource routing: the existing helper service plist, helper executable, and contract resource were verified in the prior unsigned Release bundle; UI-001 registers `CommandCenterView.swift` in the project file, and UI-002 changes only existing project members, so `project.yml` and project membership did not change. Current Xcode Release revalidation is held before source compilation by the host build-service stall below, so no newer unsigned Xcode bundle is claimed.
+- XcodeGen resource routing: the existing helper service plist, helper executable, and contract resource were verified in the prior unsigned Release bundle; UI-001 registers `CommandCenterView.swift` in the project file, and UI-002 through UI-004 change only existing project members, so `project.yml` and project membership did not change. Current Xcode Release revalidation is held before source compilation by the host build-service stall below, so no newer unsigned Xcode bundle is claimed.
 
 - Current UI-003 source checkpoint: ae31bc811087e512b8aec49a43fb7590b55b224f; this checkpoint adds the Review and configure navigation surface, incident and configured-target counts, readable descriptions, accessibility hints, and no emergency or recovery handler changes.
 - Current UI-003 visual receipt: .agent-cache/proofs/keybrake-ui-003-navigation.png; contained 760×652 Command Center capture, SHA-256 be1dc0521122fc33ffefe8c37bf71e45178a5a007535bfbde2132e2c0106098a.
+- Current UI-004 source checkpoint: 1f26ad20a86949dd14de03a407848e4b05680e5f; this checkpoint adds current protection-state orientation to Settings, record/recovery summary and empty-state guidance to Incident Log, destination accessibility identifiers, and deterministic non-mutating destination launch arguments.
+- Current UI-004 visual receipt: .agent-cache/proofs/keybrake-ui-004-settings.png; contained 620×592 Settings capture, SHA-256 a8508e19160452ea5fefc57ce0efebc90e63cdfa6e2299e1d4bd6d30f547e266.
+- Current UI-004 Incident Log inspection: contained 760×620 Incident Log window on Agent Display window ID 77942; accessibility inspection observed the record/recovery summary and empty state, but no second PNG was taken under the one-image SendMePics contract.
 
 ## Proof ledger
 
@@ -59,10 +62,14 @@ The entries below are updated with exact commands and actual results as implemen
 | UI-003 navigation build | swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI003 | pass; the production-mode app executable compiled and linked with the Review and configure navigation surface |
 | UI-003 navigation tests | swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI003 | pass; 35 tests, 0 failures |
 | UI-003 navigation staging | final SwiftPM Release app with --keybrake-command-center; cursor-safe Agent Display preflight, isolated window inspection, and contained capture by window ID 77782 | pass; one isolated 760×652 KeyBrake Command Center window rendered the Review and configure section with 0 recorded incidents and 8 configured targets; no pointer action was sent |
+| UI-004 destination build | swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI004Final | pass; the production-mode app executable compiled and linked with the destination summaries and deterministic Settings/Incident Log launch routes |
+| UI-004 destination tests | swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI004Final | pass; 35 tests, 0 failures |
+| UI-004 Settings staging and capture | temporary SwiftPM Release .app with --keybrake-settings; cursor-safe preflight; displayctl stage --app 42383 --position above --preset 16:9; displayctl inspect-ui --display agent-stage; displayctl is-isolated --app KeyBrake; contained capture by window ID 77923 | pass; one isolated 620×592 KeyBrake Settings window rendered Current protection state, 8 configured targets, 5 of 5 controls enabled, and no decision pending; PNG receipt is .agent-cache/proofs/keybrake-ui-004-settings.png with SHA-256 a8508e19160452ea5fefc57ce0efebc90e63cdfa6e2299e1d4bd6d30f547e266; no pointer action was sent |
+| UI-004 Incident Log staging and inspection | temporary SwiftPM Release .app with --keybrake-incident-log; cursor-safe preflight; displayctl stage --app 46028 --position above --preset 16:9; displayctl inspect-ui --display agent-stage; displayctl is-isolated --app KeyBrake | pass; one isolated 760×620 KeyBrake Incident Log window rendered 0 recorded incidents, No recovery decision pending, and No incidents recorded; no second PNG or pointer action was sent |
 | Verified launchd stop | `EmergencyCoordinator` fixture with an approved launch-agent label; helper target compiled in the Xcode app build | pass for typed coordinator-to-helper routing and helper identity-check implementation; live signed helper authorization, launchd mutation, and respawn proof remain host-unverified |
 | Signing | `codesign`/`spctl` | not claimed; the Release bundle is unsigned because local proof uses `CODE_SIGNING_ALLOWED=NO` and no Developer ID signing identity is configured |
 | Versioning | `SupportingFiles/Info.plist` | pass; `CFBundleShortVersionString` is `0.1.0` and `CFBundleVersion` is `1` |
-| Target settings and recovery UI | focused source review, UI-002 SwiftPM Release build, final 35-test SwiftPM suite, Agent Display accessibility inspection, contained PNG receipt, and disposable AppKit runtime observation | pass for persisted policy, helper status, fail-closed termination, one-panel recovery ownership, lazy panel provisioning, deterministic panel placement, synchronized dismissal state, independent network/sharing actions, busy-state guards, recovery inventory, and the Command Center hierarchy; current Xcode Release revalidation and live pointer proof are not claimed |
+| Target settings and recovery UI | focused source review, UI-004 SwiftPM Release build, final 35-test SwiftPM suite, Agent Display accessibility inspection, contained Settings PNG receipt, Incident Log inspection, and disposable AppKit runtime observation | pass for persisted policy, helper status, fail-closed termination, one-panel recovery ownership, lazy panel provisioning, deterministic panel placement, synchronized dismissal state, independent network/sharing actions, busy-state guards, recovery inventory, Command Center navigation hierarchy, Settings protection overview, and Incident Log empty-state guidance; current Xcode Release revalidation and live pointer proof are not claimed |
 
 ## Safety boundaries
 
@@ -73,6 +80,8 @@ No cloud CI, telemetry, remote logging, or runtime network dependency is added. 
 The SwiftPM proof validates the shared typed core and the UI-001/UI-002 debug and Release app products, including the Command Center and recovery-decision source. The UI-002 disposable route validates fixture snapshot creation, stored-incident fallback, AppKit recovery-panel presentation, and the no-host-mutation staging boundary; the panel reported visible during the task-local runtime trace, but the display harness exposed only the contained Command Center frame. The prior Xcode proof validates an unsigned app bundle, its embedded helper executable, the LaunchDaemons plist, the feature contract resource, the helper target, and the repaired AppKit lifecycle at the earlier release checkpoint; current UI-002 Xcode revalidation remains held in the host build service before KeyBrake source compilation. The cursor-safe preflight and Agent Display proof validate a contained, stageable Command Center window and readable visual hierarchy, but they do not prove pointer interaction or the Recovery panel’s mouse-only route. These commands do not prove archive output, Developer ID signing, SMAppService installation, live privileged-helper authorization, TCC behavior, live network isolation, or mouse-only interaction. Those boundaries remain visible in the master checklist and are not represented as completed runtime claims.
 
 The UI-003 proof establishes the navigation card layout and rendered counts in the contained Command Center frame. It does not establish that a pointer opened Incident Log or Settings, because the exact interaction target was not exposed by the cursor-safe harness; source routing remains the existing open-window path, and emergency/recovery handlers were not changed.
+
+The UI-004 proof establishes the rendered Settings protection overview and the rendered/accessibly inspected Incident Log destination state through deterministic launch arguments. The Settings capture is the single SendMePics PNG and is bound to contained window ID 77923; the Incident Log window was separately isolated and inspected as window ID 77942 without another image. These receipts prove destination layout and state communication only; they do not prove pointer opening from the Command Center, signed-host behavior, or live emergency mutation.
 
 ## Regression checksum anchors
 
@@ -88,12 +97,13 @@ c595a7172f250472c81a7788cdb13cd8f13f2493a79ed476c8ef1e9b3f83b323  KeyBrakeCore/N
 a228776765d99a6d93ab1a94100e61e1bdadd31290b71d2f2791c50002f3f847  KeyBrakeCore/SharingServiceController.swift
 9ecdf00f980551d8f767601bd3af21c255bbe0cdcf82e1629fb3910c74a4a5bd  KeyBrake/App/KeyBrakeViewModel.swift
 c268de0088f4c76dcd1f020f3691a48872f60345ff2bb1bee2d57eb6af82d914  KeyBrake/App/KeyBrakeAppDelegate.swift
-bfeb8076b2afdb221368f51932201ea686e3334aca2a7509336a9c71a524c069  KeyBrake/App/KeyBrakeApp.swift
+4c85dff2aadaae25bbaf26b213cdf982e7d8eb4d17877eaf3b1272b2af4c8b6c  KeyBrake/App/KeyBrakeApp.swift
 4e702ffedd39fd656205e75ce01e64310d801f439da776c72495432d0d513660  KeyBrake/UI/KeyBrakeMenuView.swift
 6bdc41a0dbb08df93db9fc4b6c139411ed7e13d70738874c2fc01ec5d30fc909  KeyBrake/UI/CommandCenterView.swift
 4914ce3e017d1bb8385ede6b30bdef180fc763e51a8bb26e3d9e00903b17983d  KeyBrake/UI/RecoveryPanelController.swift
 593936f603fc2eb8297bbdf0a8643381927b7a3d2098d2dea6d2d89986632e84  KeyBrakeCore/KeyBrakeOperationalState.swift
-865a0964e361b267563040205e45601b4219fbb9199db93402509614437a107c  KeyBrake/UI/SettingsView.swift
+30642e78ea682f14a74ec274566b9b2552cadfda1266751c92c8cbacf6b4ccb4  KeyBrake/UI/IncidentLogView.swift
+d736b48bfc8d90f7420795c14bc13ef6ba06e8746caf74178a72c4b89606762a  KeyBrake/UI/SettingsView.swift
 2bea449010ef8463e639f5ed2a478551a0a94183151e292d65ed253f1584003d  KeyBrake/UI/RecoveryView.swift
 8b7279ff324774a5f01f70e80bbf49277fa2291ac7ed75de124c9db179d2c0da  KeyBrakeCore/FeatureContract.swift
 3c3e614e2bee1e0638248ba51f58bf4d2950529f8137c35a41c1b4cf6b7866e1  KeyBrakeTests/FeatureContractTests.swift

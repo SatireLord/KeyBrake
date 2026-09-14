@@ -22,8 +22,9 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Capability | Status | Notes |
 | --- | --- | --- |
-| Menu-bar app shell | `implemented` | SwiftUI menu bar, Settings and Incident Log windows, and one AppKit-owned Recovery panel |
+| Menu-bar app shell | `implemented` | SwiftUI menu bar, readable Settings and Incident Log windows, and one AppKit-owned Recovery panel |
 | Command Center window | `implemented` | Stageable SwiftUI status surface with state explanation, full-width emergency actions, recorded recovery inventory, recovery routing, recent activity, and secondary navigation; UI-002 also corrects singular inventory labels and persists the latest stored incident for relaunch visibility |
+| Destination window orientation | `implemented` | Settings begins with current protection state, configured-target count, isolation-profile count, and recovery status; Incident Log begins with record/recovery counts and a useful empty state |
 | Recovery-required staging route | `fixture-only` | `--keybrake-recovery-demo` creates a UUID-named temporary snapshot and incident, uses fixture-backed controllers, and avoids real Application Support, network, sharing, TCC, and process mutation |
 | Serialized emergency coordinator | `implemented` | Actor boundary with fixture-backed tests |
 | Typed absolute-path commands | `implemented` | No shell interpolation |
@@ -52,7 +53,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Developer ID signing / notarization | `planned` | No signing identity is configured on this host |
 | Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
 
-UI-003 navigation refinement is source and SwiftPM Release proven, and the contained Agent Display receipt shows Incident Log and Settings as readable navigation cards with live counts. The receipt proves the Command Center presentation only; opening either window with a pointer remains unverified.
+UI-003 navigation refinement is source and SwiftPM Release proven, and the contained Agent Display receipt shows Incident Log and Settings as readable navigation cards with live counts. UI-004 is source and SwiftPM Release proven, and Agent Display accessibility inspection observed the new Settings overview and Incident Log empty state through deterministic destination launch arguments; the one retained SendMePics PNG covers Settings, while Incident Log was inspected without a second capture. The receipts prove rendered surfaces only; opening either window with a pointer remains unverified.
 
 ## Checklist realignment
 

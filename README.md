@@ -1,6 +1,6 @@
 # KeyBrake
 
-KeyBrake is a macOS menu-bar failsafe. Source implements mouse-driven controls that stop approved local automation, isolate selected network and remote-access paths, record exact outcomes, and recover only state KeyBrake changed. The menu-bar entry also opens a larger Command Center that keeps status, emergency actions, recovery routing, recovery inventory, and recent activity in one visible surface.
+KeyBrake is a macOS menu-bar failsafe. Source implements mouse-driven controls that stop approved local automation, isolate selected network and remote-access paths, record exact outcomes, and recover only state KeyBrake changed. The menu-bar entry also opens a larger Command Center that keeps status, emergency actions, recovery routing, recovery inventory, and recent activity in one visible surface, with labeled navigation cards into Incident Log and Settings.
 
 It is a command-driven recovery prototype, not an antivirus product and not a promise that every form of remote access can be eliminated. Claims are bounded by operations KeyBrake can observe and verify.
 
@@ -27,8 +27,8 @@ The menu keeps the physical mouse as a recovery path. The following behaviors ex
 - **Revoke App Access…** opens Settings, where one selected application can be stopped and selected TCC-managed privacy decisions reset. KeyBrake never edits the TCC database file and never performs a global reset without a bundle identifier.
 - **Restore Human Control** exposes independent mouse-driven actions for restoring network state, explicitly restoring sharing services, restarting Espanso, opening Privacy & Security settings, and reviewing the incident record.
 - **Restart Espanso** is separate from network recovery and never changes Espanso configuration, packages, matches, service registration, or privacy permissions.
-- **Open Incident Log** displays the local JSON-backed operation history.
-- **Open Command Center** opens the at-a-glance status and action surface without changing the underlying recovery semantics. It keeps full-width emergency actions prominent, surfaces recorded recovery inventory and unresolved recovery, and links to the Incident Log and Settings windows.
+- **Open Incident Log** displays the local JSON-backed operation history, its current record and recovery summary, and a clear empty state when no records exist.
+- **Open Command Center** opens the at-a-glance status and action surface without changing the underlying recovery semantics. It keeps full-width emergency actions prominent, surfaces recorded recovery inventory and unresolved recovery, and links to the Incident Log and Settings windows, which orient the user before their existing controls.
 
 The app reports states such as `Normal Input`, `Local Automation Stopped`, `Network Isolated`, `Partial Isolation`, and `Recovery Required`. Successful restore returns to `Normal Input`. It does not claim `Computer Secured`, `Hacker Removed`, `Threat Neutralized`, `System Safe`, or `All Remote Access Eliminated`.
 
@@ -65,6 +65,6 @@ MIT License. See [`LICENSE`](LICENSE), [`SECURITY.md`](SECURITY.md), [`CONTRIBUT
 
 ## Demonstration
 
-The Command Center now groups Incident Log and Settings into a Review and configure section that shows the current incident and configured-target counts, while the emergency and recovery actions keep their existing semantics.
+The Command Center groups Incident Log and Settings into a Review and configure section that shows the current incident and configured-target counts. UI-004 adds a current protection-state summary to Settings and a record/recovery summary plus empty state to Incident Log, while the emergency and recovery actions keep their existing semantics.
 
-Use the runbook in [`docs/KEYBRAKE_SAFE_DEMO.md`](docs/KEYBRAKE_SAFE_DEMO.md). It demonstrates the menu, the Command Center, a harmless fake command runner, the recovery contract, the incident log, and read-only network inventory without severing the active development session. For deterministic recovery-required staging, launch the temporary app with `--keybrake-command-center --keybrake-recovery-demo`; that route writes its fixture snapshot and incident into a UUID-named temporary directory and uses fixture-backed controllers, so it does not touch real Application Support, network, sharing, TCC, or process state. Live network isolation should only be performed from a separately staged human-controlled Mac session with a known recovery path.
+Use the runbook in [`docs/KEYBRAKE_SAFE_DEMO.md`](docs/KEYBRAKE_SAFE_DEMO.md). It demonstrates the menu, the Command Center, a harmless fake command runner, the recovery contract, the incident log, and read-only network inventory without severing the active development session. For deterministic destination staging, launch the temporary app with `--keybrake-settings` or `--keybrake-incident-log`; each argument opens only the named review window and performs no emergency operation. For deterministic recovery-required staging, launch the temporary app with `--keybrake-command-center --keybrake-recovery-demo`; that route writes its fixture snapshot and incident into a UUID-named temporary directory and uses fixture-backed controllers, so it does not touch real Application Support, network, sharing, TCC, or process state. Live network isolation should only be performed from a separately staged human-controlled Mac session with a known recovery path.
