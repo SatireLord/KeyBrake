@@ -22,6 +22,7 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Capability | Status | Notes |
 | --- | --- | --- |
+| State-aware history and menu affordances | implemented | Incident Log explains whether resolved records are available and disables its clear-history action when none exist; the menu uses stable symbols for its existing actions, and Settings reuses the shared state tint |
 | Menu-bar app shell | `implemented` | SwiftUI menu bar, readable Settings and Incident Log windows, and one AppKit-owned Recovery panel |
 | Command Center window | `implemented` | Stageable SwiftUI status surface with state explanation, full-width emergency actions, recorded recovery inventory, recovery routing, recent activity, and secondary navigation; UI-002 also corrects singular inventory labels and persists the latest stored incident for relaunch visibility |
 | Destination window orientation | `implemented` | Settings begins with current protection state, configured-target count, isolation-profile count, and recovery status; Incident Log begins with record/recovery counts and a useful empty state |
@@ -54,6 +55,8 @@ This document classifies every user-visible or safety-critical capability by imp
 | Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
 
 UI-003 navigation refinement is source and SwiftPM Release proven, and the contained Agent Display receipt shows Incident Log and Settings as readable navigation cards with live counts. UI-004 is source and SwiftPM Release proven, and Agent Display accessibility inspection observed the new Settings overview and Incident Log empty state through deterministic destination launch arguments; the one retained SendMePics PNG covers Settings, while Incident Log was inspected without a second capture. The receipts prove rendered surfaces only; opening either window with a pointer remains unverified.
+
+UI-005 is source and SwiftPM Release proven, and Agent Display inspection observed the new no-resolved-records guidance in Incident Log. The receipts prove rendered surfaces only; opening either window with a pointer remains unverified.
 
 ## Checklist realignment
 

@@ -29,6 +29,7 @@ The menu keeps the physical mouse as a recovery path. The following behaviors ex
 - **Restart Espanso** is separate from network recovery and never changes Espanso configuration, packages, matches, service registration, or privacy permissions.
 - **Open Incident Log** displays the local JSON-backed operation history, its current record and recovery summary, and a clear empty state when no records exist.
 - **Open Command Center** opens the at-a-glance status and action surface without changing the underlying recovery semantics. It keeps full-width emergency actions prominent, surfaces recorded recovery inventory and unresolved recovery, and links to the Incident Log and Settings windows, which orient the user before their existing controls.
+- **Clear resolved history** communicates its availability from recorded outcomes and remains unavailable when the Incident Log has no completed record to remove.
 
 The app reports states such as `Normal Input`, `Local Automation Stopped`, `Network Isolated`, `Partial Isolation`, and `Recovery Required`. Successful restore returns to `Normal Input`. It does not claim `Computer Secured`, `Hacker Removed`, `Threat Neutralized`, `System Safe`, or `All Remote Access Eliminated`.
 
@@ -64,6 +65,8 @@ All verification remains local. No GitHub Actions, telemetry, remote logging, an
 MIT License. See [`LICENSE`](LICENSE), [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 ## Demonstration
+
+UI-005 adds state-aware resolved-history guidance, stable menu action symbols, and shared Settings status tinting without changing emergency or recovery semantics.
 
 The Command Center groups Incident Log and Settings into a Review and configure section that shows the current incident and configured-target counts. UI-004 adds a current protection-state summary to Settings and a record/recovery summary plus empty state to Incident Log, while the emergency and recovery actions keep their existing semantics.
 

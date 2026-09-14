@@ -23,8 +23,9 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 - Release status: GitHub visibility **HOLD**; downloadable binary **BLOCKED** (unsigned local bundle only)
 - UI-003 checkpoint: ae31bc811087e512b8aec49a43fb7590b55b224f improves Command Center navigation with readable Incident Log and Settings cards, live counts, descriptions, accessibility hints, and no emergency or recovery handler changes
 - UI-004 checkpoint: 1f26ad20a86949dd14de03a407848e4b05680e5f improves the Incident Log and Settings destination windows with current-state summaries, readable empty-state guidance, accessibility identifiers, and deterministic non-mutating staging arguments
+- UI-005 checkpoint: c116059352571ac687e94e0958f46703d70bd298 improves resolved-history affordance clarity, adds stable menu action symbols, and applies the shared state tint to the Settings protection overview without changing action handlers
 - Version: `0.1.0` (build `1`)
-- Next action: continue with UI-005 release gates before any public-visibility decision. UI-004 now makes the destination windows self-orienting, while signed-host, helper-approval, live-recovery, and pointer-driven proof remain separate external gates
+- Next action: continue with UI-006 release gates before any public-visibility decision. UI-004 makes the destination windows self-orienting, and UI-005 makes history cleanup and menu scanning state-aware, while signed-host, helper-approval, live-recovery, and pointer-driven proof remain separate external gates
 - External blockers: signing/helper approval depends on a Developer ID identity; live destructive host verification and mouse-only proof remain intentionally deferred
 
 ## Feature inventory
@@ -41,7 +42,7 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 | TCC reset allowlist | missing | implemented |
 | Helper boundary | missing | source/build implemented; verified launchd identity checks and coordinator routing are fixture-proven; signed installation and live authorization remain host-unverified |
 | Network/sharing adapters | missing | parser, setter, helper routing, post-state verification, and focused fixture tests implemented; live mutation remains host-unverified |
-| Menu/recovery/settings UI | missing | one canonical AppKit recovery panel, fail-closed launch and transaction termination, synchronized Keep Isolation/title-bar-close state, independent restore actions, busy-state guards, recovery inventory, deterministic recovery and destination staging, panel placement beside the Command Center, review/configure navigation cards, and self-orienting Incident Log and Settings destinations implemented; live mouse proof remains unverified |
+| Menu/recovery/settings UI | missing | one canonical AppKit recovery panel, fail-closed launch and transaction termination, synchronized Keep Isolation/title-bar-close state, independent restore actions, busy-state guards, recovery inventory, deterministic recovery and destination staging, panel placement beside the Command Center, review/configure navigation cards, self-orienting Incident Log and Settings destinations, state-aware history cleanup, stable menu symbols, and shared status tinting implemented; live mouse proof remains unverified |
 | Focused tests | missing | 35 SwiftPM tests and 8 focused Xcode tests pass locally; process respawn, signed helper, and live host seams remain host-dependent |
 | Documentation | missing | README, capability matrix, verification ledger, license, security policy, and contributing guide are aligned to current proof |
 
@@ -156,7 +157,8 @@ Ship a native macOS menu-bar failsafe whose independent mouse-driven controls st
 [!] UI-002 Validate the recovery-required Command Center state with a disposable persisted snapshot, readable recovery inventory, deterministic AppKit panel presentation, and panel placement beside the staged surface. Source checkpoint `50c6a9816a026e06867f8d49caa71b41b569277a` passed the SwiftPM suite and Release build; final Agent Display capture passed for the contained Command Center, while the floating panel was visible in the disposable runtime trace but did not expose an exact harness target for pointer proof.
 [x] UI-003 Improve settings and incident-log navigation from the Command Center without changing action semantics. Source checkpoint ae31bc811087e512b8aec49a43fb7590b55b224f passed the Release build and 35-test suite; the contained Agent Display receipt shows the Review and configure cards with incident and target counts.
 [x] UI-004 Improve the Settings and Incident Log destination windows with current protection/record summaries, readable empty-state guidance, accessibility identifiers, and deterministic non-mutating launch routes. Source checkpoint `1f26ad20a86949dd14de03a407848e4b05680e5f` passed the SwiftPM Release build and 35-test suite; Agent Display isolated Settings and inspected both destinations, while one SendMePics PNG was retained for Settings.
-[ ] UI-005 Re-run the full release-source, signed-host, and live-interaction gates before public visibility.
+[x] UI-005 Improve resolved-history affordance clarity, menu action scanning, and Settings state communication without changing any emergency/recovery handler. Source checkpoint c116059352571ac687e94e0958f46703d70bd298 passed bounded parsing, the SwiftPM Release build, the 35-test suite, cursor-safe UI guard, and contained Agent Display Incident Log inspection; no second PNG or pointer action was used.
+[ ] UI-006 Re-run the full release-source, signed-host, and live-interaction gates before public visibility.
 
 ## Proof and handoff
 

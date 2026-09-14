@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "73b03650b80c10bd8018ca05706a8b3ec810759a"
+    head: "c116059352571ac687e94e0958f46703d70bd298"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "73b03650b80c10bd8018ca05706a8b3ec810759a"
-    status: "remote_verified_at_UI-004_documentation_checkpoint"
+    remote_head_verified: "c116059352571ac687e94e0958f46703d70bd298"
+    status: "remote_verified_at_UI-005_source_checkpoint_documentation_pending"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -324,6 +324,28 @@ project_plan:
         evidence: "The SHA-256 value was recomputed after the UI-003 source edit and before documentation delivery."
         authorization: "normal documentation update"
         status: pass
+      - checksum_id: "no-applicable-keybrake-boundary-ui-005"
+        manifest: "Agent-Cache checksum registries and predecessor LackeyDo ledger"
+        protected_path: "none"
+        span: "none"
+        current_identity: "no registered KeyBrake protected span at UI-005 source checkpoint c116059352571ac687e94e0958f46703d70bd298"
+        planned_touch: "no-applicable-checksum"
+        route: "validate"
+        why_exists_here: "UI-005 remains within the ordinary menu and destination presentation seams and does not cross a registered protected consumer boundary."
+        evidence: "Agent-Cache bootstrap reported no applicable KeyBrake protected span; source, parse, build, test, and Agent Display boundaries were checked separately."
+        authorization: "not_required_for_validate"
+        status: confirmed_no_applicable_checksum
+      - checksum_id: "keybrake-verification-sha-anchors-ui-005"
+        manifest: "docs/KEYBRAKE_VERIFICATION.md"
+        protected_path: "KeyBrake/UI/IncidentLogView.swift, KeyBrake/UI/KeyBrakeMenuView.swift, KeyBrake/UI/SettingsView.swift"
+        span: "whole-file SHA-256 documentation anchors"
+        current_identity: "UI-005 source values at c116059352571ac687e94e0958f46703d70bd298"
+        planned_touch: "outside"
+        route: "validate"
+        why_exists_here: "The verification record detects drift across the history, menu, and Settings presentation seams without claiming pointer behavior."
+        evidence: "SHA-256 values were recomputed after the UI-005 source edit and before documentation delivery."
+        authorization: "normal documentation update"
+        status: pass
   context_packet:
     repository: "KeyBrake at /Users/michaeltran/AntiGravity/KeyBrake"
     source_of_truth:
@@ -334,10 +356,10 @@ project_plan:
         owns: "command-center, Settings, and Incident Log Window scenes, disposable recovery-demo fixture, and explicit launch-argument presentation routes"
         consumers: ["SwiftUI scene runtime", "KeyBrake/App/KeyBrakeAppDelegate.swift", "Agent Display stage command"]
       - path: "KeyBrake/UI/IncidentLogView.swift"
-        owns: "incident record/recovery summary, empty-state guidance, clear-history action, and operation-step disclosure"
+        owns: "incident record/recovery summary, empty-state guidance, state-aware clear-history availability, clear-history action, and operation-step disclosure"
         consumers: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/UI/CommandCenterView.swift", "KeyBrake/App/KeyBrakeViewModel.swift", "Agent Display staged window"]
       - path: "KeyBrake/UI/SettingsView.swift"
-        owns: "current protection overview, configured-target summary, isolation-profile summary, and existing settings controls"
+        owns: "current protection overview, shared state tint, configured-target summary, isolation-profile summary, and existing settings controls"
         consumers: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrake/UI/CommandCenterView.swift", "KeyBrake/App/KeyBrakeViewModel.swift", "Agent Display staged window"]
       - path: "KeyBrake/App/KeyBrakeAppDelegate.swift"
         owns: "AppKit recovery-panel controller provisioning and presentation entry points"
@@ -358,11 +380,11 @@ project_plan:
       - path: "Agent-Cache bounded structural graph"
         covers: "KeyBrake UI symbols, scene routes, and function-call edges"
         refresh: "mcp__agent_cache__build_structural_graphs(repo_path=/Users/michaeltran/AntiGravity/KeyBrake, limit=120)"
-        freshness: "source-bound snapshot ed3384a311ed007f2b724f84cb7d61c68045f6c27c0761b89b572ea3db97baaf with graph key 69125423bc3786ee3b2c66a41617ae551b5becb804ae21a1a4de2e28f98c9e1c after UI-004 source implementation"
+        freshness: "last source-bound snapshot ed3384a311ed007f2b724f84cb7d61c68045f6c27c0761b89b572ea3db97baaf with graph key 69125423bc3786ee3b2c66a41617ae551b5becb804ae21a1a4de2e28f98c9e1c predates UI-005; the current CodeGraph query reports no local index, so bounded source and compiler checks are the active fallback"
       - path: "Greppable markers in KeyBrake UI source"
         covers: "command-center route, status presentation, and menu consumer vocabulary"
         refresh: "bounded rg -n over KeyBrake/App and KeyBrake/UI"
-        freshness: "refreshed after UI-004 implementation; recovery-demo, recovery-decision, inventory, panel-placement, command-center-navigation, destination-demo-routes, incident-log-destination, settings-destination, and owner markers resolve"
+        freshness: "refreshed after UI-005 implementation; recovery-demo, recovery-decision, inventory, panel-placement, command-center-navigation, destination-demo-routes, incident-log-destination, settings-destination, QoL-001, and owner markers resolve"
     automation:
       entrypoint: "discover -> update UI owner -> regenerate project membership if required -> focused tests/build -> Agent Display preflight/stage/inspect -> update docs/hashes -> commit/push -> Agent-Cache closeout"
       chain: ["repository truth", "source owner and visual evidence", "focused compile/test", "exact Release artifact", "cursor-safe Agent Display attempt", "documentation and checksum refresh", "remote delivery", "closeout receipt"]
@@ -382,6 +404,16 @@ project_plan:
         proves: "The final production-mode KeyBrake executable compiles and links after UI-004 destination-window changes"
       - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI004Final"
         proves: "The complete 35-test SwiftPM suite remains green after UI-004 destination-window changes"
+      - command: "swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI005"
+        proves: "The final production-mode KeyBrake executable compiles and links after UI-005 history, menu, and Settings affordance changes"
+      - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI005"
+        proves: "The complete 35-test SwiftPM suite remains green after UI-005 changes"
+      - command: "swiftc -frontend -parse KeyBrake/UI/IncidentLogView.swift KeyBrake/UI/KeyBrakeMenuView.swift KeyBrake/UI/SettingsView.swift"
+        proves: "All UI-005 source owners parse before runtime staging"
+      - command: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/IncidentLogView.swift KeyBrake/UI/KeyBrakeMenuView.swift KeyBrake/UI/SettingsView.swift"
+        proves: "The UI-005 source owners contain no prohibited interrupting UI path"
+      - command: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json"
+        proves: "No overlapping SwiftPM or Xcode build, test, or run command exists before UI-005 proof"
       - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeXcodeUI001 CODE_SIGNING_ALLOWED=NO -only-testing:KeyBrakeTests/FeatureContractTests test"
         proves: "Native Xcode test target compiles after the new menu contract"
       - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeReleaseUI001 CODE_SIGNING_ALLOWED=NO build"
@@ -473,6 +505,18 @@ project_plan:
       status: pass
       proof: "The disposable Release app accepted --keybrake-settings and --keybrake-incident-log; Settings isolated as window ID 77923 and produced the single PNG receipt sha256=a8508e19160452ea5fefc57ce0efebc90e63cdfa6e2299e1d4bd6d30f547e266, while Incident Log isolated as window ID 77942 and passed accessibility inspection without a second capture or pointer action."
       residual_risk: "The temporary SwiftPM .app wrapper and SwiftPM proof do not establish an Xcode-signed or notarized artifact."
+    - id: R014
+      requirement: "Incident Log clear-history availability must communicate whether a resolved record exists and must not present an actionable no-op when none exists."
+      owner: "KeyBrake/UI/IncidentLogView.swift and KeyBrakeCore/IncidentStore.swift"
+      status: pass
+      proof: "UI-005 source review binds the view count to IncidentRecord.finalState == .normal, the Release build and 35-test suite pass, and Agent Display inspection observed No resolved records are available to clear in the empty destination."
+      residual_risk: "The inspection covered the empty state; a populated visual record with an enabled clear action remains source/test covered but was not staged."
+    - id: R015
+      requirement: "Menu action symbols and Settings state tint must improve scanning without changing existing action targets, labels, disabled-state rules, or emergency/recovery semantics."
+      owner: "KeyBrake/UI/KeyBrakeMenuView.swift, KeyBrake/UI/SettingsView.swift, KeyBrake/App/KeyBrakeViewModel.swift"
+      status: pass
+      proof: "The UI-005 diff preserves every existing handler and disabled rule, the Release build and 35-test suite pass, and the shared KeyBrakeStatusPresentation tint remains the Settings state source."
+      residual_risk: "Menu symbol rendering is source and compile proven but was not separately pointer-tested."
   implementation_slices:
     - id: S001
       name: "Command Center visual surface"
@@ -539,6 +583,16 @@ project_plan:
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S012"]
       status: complete
+    - id: S014
+      name: "State-aware history and destination affordances"
+      files: ["KeyBrake/UI/IncidentLogView.swift", "KeyBrake/UI/KeyBrakeMenuView.swift", "KeyBrake/UI/SettingsView.swift"]
+      dependencies: ["S012", "R014", "R015"]
+      status: complete
+    - id: S015
+      name: "UI-005 verification and documentation"
+      files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
+      dependencies: ["S014"]
+      status: active
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -592,6 +646,14 @@ project_plan:
       command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; displayctl stage --app 42383 --position above --preset 16:9; displayctl inspect-ui --display agent-stage; displayctl is-isolated --app KeyBrake; displayctl capture --display agent-stage --window-id 77923 --out .agent-cache/proofs/keybrake-ui-004-settings.png; displayctl stage --app 46028 --position above --preset 16:9; displayctl inspect-ui --display agent-stage; displayctl is-isolated --app KeyBrake"
       status: pass
       result: "Settings was isolated as one 620x592 window and produced the single SendMePics PNG receipt sha256=a8508e19160452ea5fefc57ce0efebc90e63cdfa6e2299e1d4bd6d30f547e266; Incident Log was isolated as one 760x620 window and accessibility inspection observed its empty state; no pointer action or second image was sent."
+    - name: "UI-005 source, build, and test boundary"
+      command: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; swiftc -frontend -parse KeyBrake/UI/IncidentLogView.swift KeyBrake/UI/KeyBrakeMenuView.swift KeyBrake/UI/SettingsView.swift; python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/IncidentLogView.swift KeyBrake/UI/KeyBrakeMenuView.swift KeyBrake/UI/SettingsView.swift; swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI005; swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI005"
+      status: pass
+      result: "Single-flight reported no overlap; all three UI owners parsed; the cursor-safe guard passed; the Release build completed; and the complete 35-test suite passed with zero failures."
+    - name: "UI-005 Agent Display inspection boundary"
+      command: "agent_ui_preflight.py --app org.realitygood.KeyBrake --display virtual-16x9 --start-sentinel --json; /usr/bin/open -n /tmp/KeyBrakeUI004Settings.app --args --keybrake-incident-log; displayctl stage --app 8469 --position above --preset 16:9; displayctl is-isolated --app 8469; displayctl inspect-ui --display agent-stage"
+      status: pass
+      result: "One isolated 760x620 Incident Log window ID 78011 exposed No resolved records are available to clear and retained the existing record/recovery summaries and empty state; no pointer action or second PNG was sent; the temporary process was terminated."
   tests:
     - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI001"
       status: pass
@@ -660,18 +722,18 @@ project_plan:
     - item: "UI-004 documentation and delivery metadata remain open until the destination-window documentation reaches the private remote branch."
       status: resolved
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
-      next_action: "Preserve the UI-004 source/build/visual boundary and begin UI-005 release-source, signed-host, and live-interaction gates."
+      next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "73b03650b80c10bd8018ca05706a8b3ec810759a"
+  head: "c116059352571ac687e94e0958f46703d70bd298"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-002"
-    source_commit: "50c6a9816a026e06867f8d49caa71b41b569277a"
-    documentation_commit: "82001cb3e7805f7df82bf56fcde756f2d699e59f"
-    remote_head_verified: "82001cb3e7805f7df82bf56fcde756f2d699e59f"
-    status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "UI-003 settings and incident-log navigation; UI-004 remains the final Xcode, signed-host, and live-interaction gate."
+    iteration: "UI-005"
+    source_commit: "c116059352571ac687e94e0958f46703d70bd298"
+    documentation_commit: "not_yet_created_at_UI-005_source_checkpoint"
+    remote_head_verified: "c116059352571ac687e94e0958f46703d70bd298"
+    status: "source_checkpoint_remote_verified_documentation_pending"
+    next_safe_entry_point: "Complete the UI-005 documentation checkpoint, then continue with UI-006 release-source, signed-host, and live-interaction gates."
   following_delivery:
     iteration: "UI-003"
     source_commit: "ae31bc811087e512b8aec49a43fb7590b55b224f"
@@ -680,7 +742,7 @@ project_plan:
     remote_head_verified: "88153105edb8db583423b5cb3ec1e2f4a89efec3"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-004 release-source, signed-host, and live-interaction gates after UI-003 documentation delivery."
-  upcoming_iteration:
+  completed_iteration:
     id: "UI-004"
     name: "Destination window orientation and deterministic staging"
     source_checkpoint: "1f26ad20a86949dd14de03a407848e4b05680e5f"
@@ -729,8 +791,8 @@ project_plan:
       - "Agent Display containment was true for Settings window ID 77923 and Incident Log window ID 77942."
     deferred:
       - "Pointer opening from Command Center, mouse-only recovery-panel action, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Enter UI-005 release-source, signed-host, and live-interaction gates."
-  upcoming_delivery:
+    next_action: "Continue with the UI-005 state-aware history and menu-affordance slice."
+  completed_delivery:
     iteration: "UI-004"
     source_commit: "1f26ad20a86949dd14de03a407848e4b05680e5f"
     source_file_shas:
@@ -740,4 +802,59 @@ project_plan:
     documentation_commit: "73b03650b80c10bd8018ca05706a8b3ec810759a"
     remote_head_verified: "73b03650b80c10bd8018ca05706a8b3ec810759a"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "UI-005 release-source, signed-host, and live-interaction gates."
+    next_safe_entry_point: "UI-005 state-aware history and menu affordances."
+  upcoming_iteration:
+    id: "UI-005"
+    name: "State-aware history and menu affordances"
+    source_checkpoint: "c116059352571ac687e94e0958f46703d70bd298"
+    user_promise: "A user can tell whether incident history is clearable, scan existing menu actions quickly, and read protection state in Settings without encountering a no-op cleanup action or changed emergency semantics."
+    status: "complete_at_source_checkpoint_documentation_pending"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/IncidentLogView.swift"
+        owner: "IncidentLogView"
+        intended_change: "Count records whose final state is normal, explain clear-history availability, and disable the cleanup affordance when no resolved record exists."
+        status: implemented
+      - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
+        owner: "KeyBrakeMenuView"
+        intended_change: "Add stable symbols to existing menu actions without changing their handlers or disabled-state rules."
+        status: implemented
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "SettingsView"
+        intended_change: "Apply the shared KeyBrakeStatusPresentation tint to the current protection-state symbol after hydration."
+        status: implemented
+    visual_evidence:
+      source: "KeyBrake/UI/IncidentLogView.swift, KeyBrake/UI/KeyBrakeMenuView.swift, KeyBrake/UI/SettingsView.swift"
+      provenance: "source checkpoint c116059352571ac687e94e0958f46703d70bd298; SwiftPM Release executable; cursor-safe Agent Display staging"
+      state: "incident_log_staged_isolated_inspected"
+      observed: "Contained 760x620 Incident Log window ID 78011 shows No resolved records are available to clear, while record/recovery summaries and the empty state remain readable."
+      receipt: "No second PNG was captured under the one-image SendMePics contract; the retained UI-004 Settings PNG remains the visual artifact for this lane."
+      missing_evidence: "Menu symbol rendering was source and compile inspected but not separately pointer-tested; populated resolved-history state was not staged; Xcode Release and signed-host proof remain external."
+    proof:
+      tests: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI005; 35 tests, 0 failures"
+      release_build: "swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI005; pass"
+      staging: "agent_ui_preflight.py; displayctl stage; displayctl is-isolated; displayctl inspect-ui --display agent-stage; pass for one contained Incident Log window"
+      safety: "The destination launch argument was non-mutating, no pointer or emergency action was sent, and the disposable process was terminated after inspection."
+    checksums:
+      - "KeyBrake/UI/IncidentLogView.swift sha256=0283c9a53a77ea5b62843377d64b7760a0d44fcde76d16a04cc8fd969102070b"
+      - "KeyBrake/UI/KeyBrakeMenuView.swift sha256=9044c46a5664f79ece1e0e56d45bbddff7b6a82618101030150d21ba2c4f1dcd"
+      - "KeyBrake/UI/SettingsView.swift sha256=2aad778181b7899ff815c15babfd5152a3e03eece5fb301a1d2942a999debe67"
+    guards:
+      - "Agent-Cache workspace single-flight guard passed before the UI-005 Release build."
+      - "All three UI-005 Swift files passed bounded swiftc frontend parsing."
+      - "Cursor-safe non-interrupting UI guard passed for all three UI-005 Swift files."
+      - "Agent Display containment was true for Incident Log window ID 78011."
+    deferred:
+      - "Pointer opening from Command Center, mouse-only recovery-panel action, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+    next_action: "Complete the UI-005 documentation and remote checkpoint, then enter UI-006 release-source, signed-host, and live-interaction gates."
+  upcoming_delivery:
+    iteration: "UI-005"
+    source_commit: "c116059352571ac687e94e0958f46703d70bd298"
+    source_file_shas:
+      - "KeyBrake/UI/IncidentLogView.swift=0283c9a53a77ea5b62843377d64b7760a0d44fcde76d16a04cc8fd969102070b"
+      - "KeyBrake/UI/KeyBrakeMenuView.swift=9044c46a5664f79ece1e0e56d45bbddff7b6a82618101030150d21ba2c4f1dcd"
+      - "KeyBrake/UI/SettingsView.swift=2aad778181b7899ff815c15babfd5152a3e03eece5fb301a1d2942a999debe67"
+    documentation_commit: "not_yet_created_at_UI-005_source_checkpoint"
+    remote_head_verified: "c116059352571ac687e94e0958f46703d70bd298"
+    status: "source_checkpoint_remote_verified_documentation_pending"
+    next_safe_entry_point: "Complete UI-005 documentation and delivery metadata, then continue with UI-006 release-source, signed-host, and live-interaction gates."
