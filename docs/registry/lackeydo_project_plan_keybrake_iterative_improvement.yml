@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "1f26ad20a86949dd14de03a407848e4b05680e5f"
+    head: "73b03650b80c10bd8018ca05706a8b3ec810759a"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "1f26ad20a86949dd14de03a407848e4b05680e5f"
-    status: "remote_verified_at_UI-004_source_checkpoint"
+    remote_head_verified: "73b03650b80c10bd8018ca05706a8b3ec810759a"
+    status: "remote_verified_at_UI-004_documentation_checkpoint"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -538,7 +538,7 @@ project_plan:
       name: "UI-004 verification and documentation"
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S012"]
-      status: active
+      status: complete
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -658,11 +658,11 @@ project_plan:
       evidence: "The six UI-003 documentation paths were parsed and diff-checked, committed at 88153105edb8db583423b5cb3ec1e2f4a89efec3, pushed on codex/keybrake-complete-implementation, and verified against the private PR #1 head."
       next_action: "Preserve the UI-003 pointer-proof boundary, write the Agent-Cache closeout receipt, and continue with UI-004 release-source, signed-host, and live-interaction gates."
     - item: "UI-004 documentation and delivery metadata remain open until the destination-window documentation reaches the private remote branch."
-      status: active
-      evidence: "UI-004 source checkpoint 1f26ad20a86949dd14de03a407848e4b05680e5f is remote-verified; the six documentation paths are being aligned to the source, build, Agent Display, and checksum receipts."
-      next_action: "Run diff and YAML validation, commit the six documentation paths, push the existing private branch, verify the remote PR head, and write the Agent-Cache closeout receipt."
+      status: resolved
+      evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
+      next_action: "Preserve the UI-004 source/build/visual boundary and begin UI-005 release-source, signed-host, and live-interaction gates."
   branch: "codex/keybrake-complete-implementation"
-  head: "1f26ad20a86949dd14de03a407848e4b05680e5f"
+  head: "73b03650b80c10bd8018ca05706a8b3ec810759a"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
@@ -685,7 +685,7 @@ project_plan:
     name: "Destination window orientation and deterministic staging"
     source_checkpoint: "1f26ad20a86949dd14de03a407848e4b05680e5f"
     user_promise: "A user can understand current protection and recovery context immediately after opening Settings or Incident Log, while the existing emergency, recovery, persistence, and clear-history behavior remains unchanged."
-    status: "source_complete_documentation_in_progress"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/App/KeyBrakeApp.swift"
@@ -729,7 +729,7 @@ project_plan:
       - "Agent Display containment was true for Settings window ID 77923 and Incident Log window ID 77942."
     deferred:
       - "Pointer opening from Command Center, mouse-only recovery-panel action, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Complete the UI-004 documentation checkpoint, then enter UI-005 release-source, signed-host, and live-interaction gates."
+    next_action: "Enter UI-005 release-source, signed-host, and live-interaction gates."
   upcoming_delivery:
     iteration: "UI-004"
     source_commit: "1f26ad20a86949dd14de03a407848e4b05680e5f"
@@ -737,7 +737,7 @@ project_plan:
       - "KeyBrake/App/KeyBrakeApp.swift=4c85dff2aadaae25bbaf26b213cdf982e7d8eb4d17877eaf3b1272b2af4c8b6c"
       - "KeyBrake/UI/IncidentLogView.swift=30642e78ea682f14a74ec274566b9b2552cadfda1266751c92c8cbacf6b4ccb4"
       - "KeyBrake/UI/SettingsView.swift=d736b48bfc8d90f7420795c14bc13ef6ba06e8746caf74178a72c4b89606762a"
-    documentation_commit: "pending"
-    remote_head_verified: "1f26ad20a86949dd14de03a407848e4b05680e5f"
-    status: "source_checkpoint_remote_verified_documentation_in_progress"
-    next_safe_entry_point: "Finish the UI-004 documentation and Agent-Cache closeout, then begin UI-005 release gates."
+    documentation_commit: "73b03650b80c10bd8018ca05706a8b3ec810759a"
+    remote_head_verified: "73b03650b80c10bd8018ca05706a8b3ec810759a"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-005 release-source, signed-host, and live-interaction gates."
