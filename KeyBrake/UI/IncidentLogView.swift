@@ -9,12 +9,32 @@ import SwiftUI
 // states: empty; incident-present; recovery-required
 // consumers: KeyBrakeCommandCenterView; KeyBrakeMenuView; KeyBrakeViewModel
 // owner: IncidentLogView
+// QoL-001: clear-history availability follows recorded resolved outcomes; storage mutation remains owned by KeyBrakeViewModel.clearResolvedHistory.
 struct IncidentLogView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
     private var incidentCountTitle: String {
         let count = model.incidents.count
         return "\(count) recorded \(count == 1 ? "incident" : "incidents")"
+    }
+
+    private var resolvedIncidentCount: Int {
+        model.incidents.reduce(into: 0) { count, incident in
+            if incident.finalState == .normal {
+                count += 1
+            }
+        }
+    }
+
+    private var resolvedHistoryAvailabilityDetail: String {
+        switch resolvedIncidentCount {
+        case 0:
+            return "No resolved records are available to clear."
+        case 1:
+            return "1 resolved record can be cleared from this view."
+        default:
+            return "\(resolvedIncidentCount) resolved records can be cleared from this view."
+        }
     }
 
     private var recoveryStatusTitle: String {
@@ -37,6 +57,9 @@ struct IncidentLogView: View {
                 }
                 .accessibilityIdentifier("keybrake.incident-log.clear-resolved-history")
                 .accessibilityHint("Removes only incident records that ended in the normal state.")
+                .accessibilityValue("\(resolvedIncidentCount) resolved \(resolvedIncidentCount == 1 ? "record" : "records") available to clear")
+                .help(resolvedHistoryAvailabilityDetail)
+                .disabled(resolvedIncidentCount == 0)
             }
             Text("The log records observable actions and outcomes. It does not make a conclusion about compromise.")
                 .foregroundStyle(.secondary)
@@ -48,6 +71,10 @@ struct IncidentLogView: View {
                 summaryItem(title: recoveryStatusTitle, detail: recoveryStatusDetail)
             }
             .accessibilityIdentifier("keybrake.incident-log.summary")
+
+            Text(resolvedHistoryAvailabilityDetail)
+                .font(.caption)
+                .foregroundStyle(.secondary)
 
             if model.incidents.isEmpty {
                 emptyState

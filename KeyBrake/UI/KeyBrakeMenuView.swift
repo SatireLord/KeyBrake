@@ -9,34 +9,72 @@ import SwiftUI
 // states: checking; ready; busy; recovery-required
 // consumers: KeyBrakeApp; KeyBrakeCommandCenterView; KeyBrakeViewModel
 // owner: KeyBrakeMenuView
+// QoL-001: menu actions carry stable visual symbols while their existing targets, labels, and disabled-state rules remain unchanged.
 struct KeyBrakeMenuView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Text("KeyBrake").font(.headline)
+        Label("KeyBrake", systemImage: "checkmark.shield")
+            .font(.headline)
         Divider()
         Label(statusText, systemImage: statusSymbol)
             .accessibilityLabel("Current KeyBrake state: \(statusText)")
             .help(KeyBrakeStatusPresentation.detail(for: model.operationalState))
-        Button("Open Command Center") { openWindow(id: "command-center") }
+        Button {
+            openWindow(id: "command-center")
+        } label: {
+            Label("Open Command Center", systemImage: "rectangle.3.group")
+        }
             .help("Open the at-a-glance KeyBrake status and action surface")
         Divider()
-        Button("Stop Skynet Locally") { model.stopSkynetLocally() }
+        Button {
+            model.stopSkynetLocally()
+        } label: {
+            Label("Stop Skynet Locally", systemImage: "keyboard.badge.ellipsis")
+        }
             .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
-        Button("Stop Remote Access") { model.stopRemoteAccess() }
+        Button {
+            model.stopRemoteAccess()
+        } label: {
+            Label("Stop Remote Access", systemImage: "lock.shield")
+        }
             .disabled(model.isBusy)
-        Button("Revoke App Access…") { openWindow(id: "settings") }
+        Button {
+            openWindow(id: "settings")
+        } label: {
+            Label("Revoke App Access…", systemImage: "hand.raised.slash")
+        }
             .disabled(model.isBusy)
         Divider()
-        Button("Restore Human Control") { model.isShowingRecoveryPanel = true }
+        Button {
+            model.isShowingRecoveryPanel = true
+        } label: {
+            Label("Restore Human Control", systemImage: "arrow.uturn.backward.circle")
+        }
             .disabled(!model.hasRecovery || model.isBusy)
-        Button("Restart Espanso") { model.restartEspanso() }
+        Button {
+            model.restartEspanso()
+        } label: {
+            Label("Restart Espanso", systemImage: "arrow.clockwise.circle")
+        }
             .disabled(model.isBusy)
-        Button("Open Incident Log") { openWindow(id: "incidents") }
+        Button {
+            openWindow(id: "incidents")
+        } label: {
+            Label("Open Incident Log", systemImage: "list.bullet.clipboard")
+        }
         Divider()
-        Button("Settings…") { openWindow(id: "settings") }
-        Button("Quit KeyBrake") { model.requestQuit() }
+        Button {
+            openWindow(id: "settings")
+        } label: {
+            Label("Settings…", systemImage: "gearshape")
+        }
+        Button {
+            model.requestQuit()
+        } label: {
+            Label("Quit KeyBrake", systemImage: "power")
+        }
     }
 
     private var statusText: String {

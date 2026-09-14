@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
 // states: ready; helper-unavailable; recovery-required
 // consumers: KeyBrakeCommandCenterView; KeyBrakeMenuView; KeyBrakeViewModel
 // owner: SettingsView
+// QoL-001: the protection overview uses the shared state tint so the destination communicates status before controls.
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -69,7 +70,11 @@ struct SettingsView: View {
                         }
                     } icon: {
                         Image(systemName: protectionStateSymbol)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(
+                                model.isRecoveryStatusKnown
+                                    ? KeyBrakeStatusPresentation.tint(for: model.operationalState)
+                                    : Color.secondary
+                            )
                     }
 
                     Divider()
