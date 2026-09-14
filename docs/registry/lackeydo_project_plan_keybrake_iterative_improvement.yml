@@ -103,7 +103,7 @@ project_plan:
     name: "Command Center settings and incident-log navigation"
     source_checkpoint: "ae31bc811087e512b8aec49a43fb7590b55b224f"
     user_promise: "A user can move from the Command Center to recorded incidents or configuration with enough context to choose the right destination, while emergency and recovery actions remain unchanged."
-    status: "source_and_visual_complete_documentation_in_progress"
+    status: "partial_complete_pointer_deferred"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/CommandCenterView.swift"
@@ -133,7 +133,7 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Preserve UI-001 and UI-002 history while adding UI-003 owners, proof, checksum state, and the UI-004 re-entry point."
-        status: active
+        status: implemented
     visual_evidence:
       source: "KeyBrake/UI/CommandCenterView.swift"
       provenance: "source checkpoint ae31bc811087e512b8aec49a43fb7590b55b224f; SwiftPM Release executable; cursor-safe Agent Display staging"
@@ -506,7 +506,7 @@ project_plan:
       name: "UI-003 verification and documentation"
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S010"]
-      status: active
+      status: complete
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -610,9 +610,9 @@ project_plan:
       evidence: "The six documentation paths were parsed and diff-checked, committed at 82001cb3e7805f7df82bf56fcde756f2d699e59f, pushed on codex/keybrake-complete-implementation, and verified against the private PR #1 head."
       next_action: "Keep the UI-002 partial-proof boundary visible, preserve the Agent-Cache closeout receipt, and continue with the UI-003 documentation checkpoint."
     - item: "UI-003 documentation and delivery metadata remain open until the navigation documentation reaches the private remote branch."
-      status: active
-      evidence: "UI-003 source commit ae31bc811087e512b8aec49a43fb7590b55b224f is local; the six documentation paths are parsed and diff-checked but remain intentionally uncommitted while this ledger is finalized."
-      next_action: "Commit the exact UI-003 documentation paths, push without merging, verify the private PR #1 head, and write the Agent-Cache closeout receipt."
+      status: resolved
+      evidence: "The six UI-003 documentation paths were parsed and diff-checked, committed at 88153105edb8db583423b5cb3ec1e2f4a89efec3, pushed on codex/keybrake-complete-implementation, and verified against the private PR #1 head."
+      next_action: "Preserve the UI-003 pointer-proof boundary, write the Agent-Cache closeout receipt, and continue with UI-004 release-source, signed-host, and live-interaction gates."
   branch: "codex/keybrake-complete-implementation"
   head: "ebbc3d623806769752ef35557b2feddc147016d5"
   last_verified_at: "20260912 05:52:26"
@@ -628,7 +628,7 @@ project_plan:
     iteration: "UI-003"
     source_commit: "ae31bc811087e512b8aec49a43fb7590b55b224f"
     source_file_sha: "6bdc41a0dbb08df93db9fc4b6c139411ed7e13d70738874c2fc01ec5d30fc909"
-    documentation_commit: "pending"
-    remote_head_verified: "pending"
-    status: "source_and_visual_complete_documentation_in_progress"
+    documentation_commit: "88153105edb8db583423b5cb3ec1e2f4a89efec3"
+    remote_head_verified: "88153105edb8db583423b5cb3ec1e2f4a89efec3"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-004 release-source, signed-host, and live-interaction gates after UI-003 documentation delivery."
