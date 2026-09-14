@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "59b31a8e90156268643ffa53afd4867c644eac65"
+    head: "956809b853262ec8fc784345bc34e0c753b29017"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "59b31a8e90156268643ffa53afd4867c644eac65"
+    remote_head_verified: "956809b853262ec8fc784345bc34e0c753b29017"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -1233,7 +1233,7 @@ project_plan:
     iteration: "UI-014"
     source_commit: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
     documentation_commit: "59b31a8e90156268643ffa53afd4867c644eac65"
-    remote_head_verified: "59b31a8e90156268643ffa53afd4867c644eac65"
+    remote_head_verified: "956809b853262ec8fc784345bc34e0c753b29017"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-015 full release gates before any public-visibility decision."
   following_delivery:
@@ -2005,6 +2005,6 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/CommandCenterView.swift=ede1868c40ebb07ac09299b29ceaeb6f80dad6f117bf41ba7e55c1c83cc50e18"
     documentation_commit: "59b31a8e90156268643ffa53afd4867c644eac65"
-    remote_head_verified: "59b31a8e90156268643ffa53afd4867c644eac65"
+    remote_head_verified: "956809b853262ec8fc784345bc34e0c753b29017"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-015 full release gates before any public-visibility decision."
