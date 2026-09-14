@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "dacf9e888f0a642d215076bca0a974d980763866"
+    head: "824331fe4db569383d709f47b9aa3ef28607618f"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "dacf9e888f0a642d215076bca0a974d980763866"
-    status: "remote_verified_at_UI-008_source_checkpoint_documentation_pending"
+    remote_head_verified: "824331fe4db569383d709f47b9aa3ef28607618f"
+    status: "remote_verified_at_UI-008_documentation_checkpoint"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -754,7 +754,7 @@ project_plan:
       name: "UI-008 verification and documentation"
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S020"]
-      status: active
+      status: complete
   guards:
     - name: "Changed-line hygiene"
       command: "git diff --check -- <exact-owned-paths>"
@@ -910,16 +910,16 @@ project_plan:
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "dacf9e888f0a642d215076bca0a974d980763866"
+  head: "824331fe4db569383d709f47b9aa3ef28607618f"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-008"
     source_commit: "dacf9e888f0a642d215076bca0a974d980763866"
-    documentation_commit: "pending"
-    remote_head_verified: "dacf9e888f0a642d215076bca0a974d980763866"
-    status: "source_checkpoint_remote_verified_documentation_pending"
-    next_safe_entry_point: "Commit and push the UI-008 documentation checkpoint, then continue with UI-009 release gates."
+    documentation_commit: "824331fe4db569383d709f47b9aa3ef28607618f"
+    remote_head_verified: "824331fe4db569383d709f47b9aa3ef28607618f"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-009 release gates."
   following_delivery:
     iteration: "UI-007"
     source_commit: "1b1f89e3f84bcfbcc1d671f20a7d301d474fceba"
@@ -1190,7 +1190,7 @@ project_plan:
     name: "Hydration-aware menu status help"
     source_checkpoint: "dacf9e888f0a642d215076bca0a974d980763866"
     user_promise: "A user does not see menu-bar help describing the initial in-memory operational state as confirmed while recovery status is still hydrating, and every existing menu action remains unchanged."
-    status: "documentation_checkpoint_pending"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
@@ -1220,7 +1220,7 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Record UI-008 requirements, source and documentation slices, exact proof classes, checksum, graph freshness, routing boundary, and the UI-009 re-entry point."
-        status: pending_commit
+        status: committed
     visual_evidence:
       source: "KeyBrake/UI/KeyBrakeMenuView.swift"
       provenance: "source checkpoint dacf9e888f0a642d215076bca0a974d980763866; SwiftPM Release executable; cursor-safe Agent Display staging"
@@ -1236,7 +1236,7 @@ project_plan:
       safety: "Only non-mutating Command Center launch and containment inspection were used; no pointer, emergency, persistence, TCC, network, launchd, or signed-host action was claimed; PID 29831 was terminated after inspection."
     checksums:
       - "KeyBrake/UI/KeyBrakeMenuView.swift sha256=4b796d9a954044e4412c1225494dac2afed8ade2638f2bbd174365d5d9223bc3"
-      - "README.md and release documentation are changed in the pending UI-008 documentation checkpoint."
+      - "README.md and release documentation checkpoint committed at 824331fe4db569383d709f47b9aa3ef28607618f."
     guards:
       - "Agent-Cache workspace single-flight guard passed before the UI-008 Release build and test."
       - "KeyBrakeMenuView.swift passed bounded frontend parsing."
@@ -1245,13 +1245,13 @@ project_plan:
       - "Agent Display preflight passed; Command Center containment succeeded, but the menu popover remained unexposed to the exact harness target."
     deferred:
       - "Exact menu popover visual proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Commit and push the UI-008 documentation checkpoint, then continue with UI-009 release gates."
+    next_action: "Continue with UI-009 release gates."
   upcoming_delivery:
     iteration: "UI-008"
     source_commit: "dacf9e888f0a642d215076bca0a974d980763866"
     source_file_shas:
       - "KeyBrake/UI/KeyBrakeMenuView.swift=4b796d9a954044e4412c1225494dac2afed8ade2638f2bbd174365d5d9223bc3"
-    documentation_commit: "pending"
-    remote_head_verified: "dacf9e888f0a642d215076bca0a974d980763866"
-    status: "source_checkpoint_remote_verified_documentation_pending"
-    next_safe_entry_point: "Push the UI-008 documentation checkpoint, then continue with UI-009 release gates."
+    documentation_commit: "824331fe4db569383d709f47b9aa3ef28607618f"
+    remote_head_verified: "824331fe4db569383d709f47b9aa3ef28607618f"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-009 release gates."
