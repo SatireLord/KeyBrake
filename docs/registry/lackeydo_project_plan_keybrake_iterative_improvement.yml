@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
+    head: "4357035c3737301024dbfbbedbe85da3d3daf37b"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
-    status: "remote_verified_at_UI-010_source_checkpoint_documentation_pending"
+    remote_head_verified: "4357035c3737301024dbfbbedbe85da3d3daf37b"
+    status: "remote_verified_at_UI-010_documentation_checkpoint"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -1050,15 +1050,15 @@ project_plan:
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
+  head: "4357035c3737301024dbfbbedbe85da3d3daf37b"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-010"
     source_commit: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
-    documentation_commit: "pending"
-    remote_head_verified: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
-    status: "source_checkpoint_remote_verified_documentation_pending"
+    documentation_commit: "4357035c3737301024dbfbbedbe85da3d3daf37b"
+    remote_head_verified: "4357035c3737301024dbfbbedbe85da3d3daf37b"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Commit and push the UI-010 documentation checkpoint, then continue with UI-011 release gates."
   following_delivery:
     iteration: "UI-009"
@@ -1484,7 +1484,7 @@ project_plan:
     name: "Hydration-aware menu-bar extra icon"
     source_checkpoint: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
     user_promise: "A user does not see the menu-bar extra label present a normal or warning state before KeyBrake confirms recovery status, and the existing window-routing and menu actions remain unchanged."
-    status: "documentation_checkpoint_pending"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/App/KeyBrakeApp.swift"
@@ -1514,7 +1514,7 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Record UI-010 requirements, source and documentation slices, checksum, graph freshness, host routing result, and the UI-011 re-entry point."
-        status: pending_commit
+        status: committed
     visual_evidence:
       source: "KeyBrake/App/KeyBrakeApp.swift"
       provenance: "source checkpoint 2b633cedcefec7bb381d0feb350b56a9b47ea63a; SwiftPM Release executable; cursor-safe Agent Display preflight and disposable Command Center route"
@@ -1530,7 +1530,7 @@ project_plan:
       safety: "Only non-mutating Command Center launch and display inspection were attempted; no pointer, emergency, persistence, TCC, network, launchd, or signed-host action was claimed; the disposable process was not left running."
     checksums:
       - "KeyBrake/App/KeyBrakeApp.swift sha256=3a317e25e16b3d0cbd0c6032389d30216d386a5a895bc98f5abe5da3980573b5"
-      - "README.md and release documentation are changed in the pending UI-010 documentation checkpoint."
+      - "README.md and release documentation checkpoint committed at 4357035c3737301024dbfbbedbe85da3d3daf37b."
     guards:
       - "Agent-Cache workspace single-flight guard passed before the UI-010 Release build and test."
       - "KeyBrakeApp.swift passed bounded frontend parsing."
@@ -1539,13 +1539,13 @@ project_plan:
       - "Agent Display preflight passed; the subsequent disposable shell route did not expose a running exact target, so the visual boundary remains unproven."
     deferred:
       - "Exact menu-bar extra visual proof, contained destination visual proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
-    next_action: "Commit and push the UI-010 documentation checkpoint, then continue with UI-011 release gates."
+    next_action: "Continue with UI-011 release gates before any public-visibility decision."
   upcoming_delivery:
     iteration: "UI-010"
     source_commit: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
     source_file_shas:
       - "KeyBrake/App/KeyBrakeApp.swift=3a317e25e16b3d0cbd0c6032389d30216d386a5a895bc98f5abe5da3980573b5"
-    documentation_commit: "pending"
-    remote_head_verified: "2b633cedcefec7bb381d0feb350b56a9b47ea63a"
-    status: "source_checkpoint_remote_verified_documentation_pending"
-    next_safe_entry_point: "Push the UI-010 documentation checkpoint, then continue with UI-011 release gates."
+    documentation_commit: "4357035c3737301024dbfbbedbe85da3d3daf37b"
+    remote_head_verified: "4357035c3737301024dbfbbedbe85da3d3daf37b"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-011 release gates before any public-visibility decision."
