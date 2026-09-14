@@ -85,6 +85,7 @@ UI-010 keeps the menu-bar extra icon in the same checking state until recovery h
 UI-011 keeps the compact menu header icon aligned with the adjacent status row, so the menu cannot show a confirmed normal shield while recovery status is still checking.
 
 UI-012 explains why Restore Human Control is unavailable while KeyBrake is checking, completing another operation, or has no unresolved recovery snapshot, while the existing mouse-driven recovery gate remains unchanged.
+UI-013 explains why state-changing Recovery-panel actions are temporarily unavailable while an operation is running, while review actions remain available and existing handlers stay unchanged.
 
 The Command Center groups Incident Log and Settings into a Review and configure section that shows the current incident and configured-target counts. UI-004 adds a current protection-state summary to Settings and a record/recovery summary plus empty state to Incident Log, while the emergency and recovery actions keep their existing semantics.
 

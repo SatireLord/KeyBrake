@@ -27,6 +27,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Hydration-safe menu-bar shell icon | implemented | The menu-bar extra label uses the shared checking symbol until recovery-status hydration completes, then follows the confirmed operational state |
 | Hydration-safe compact menu header | implemented | The compact menu heading reuses the hydration-aware status symbol, so its title and status row agree while recovery status is checking |
 | State-aware recovery action explanation | implemented | Restore Human Control explains checking, busy, recovery-available, and no-snapshot states without changing its existing disabled-state gate or action target |
+| Recovery action availability guidance | implemented | Recovery panel explains the busy disabled state for state-changing actions while leaving Privacy & Security, Incident Log, Keep Isolation, and Quit routes unchanged |
 | Recovery hydration status | implemented | Recovery panel uses the shared checking state until launch recovery hydration completes, then presents the current operational state before its existing actions |
 | Recovery state orientation | implemented | The Recovery panel repeats the shared operational-state icon, tint, detail, and pending-decision explanation before its existing restore, keep-isolation, and quit actions |
 | State-aware history and menu affordances | implemented | Incident Log explains whether resolved records are available and disables its clear-history action when none exist; the menu uses stable symbols for its existing actions, and Settings reuses the shared state tint |
@@ -78,6 +79,8 @@ UI-010 is source and SwiftPM Release proven, and the menu-bar extra label now us
 UI-011 is source and SwiftPM Release proven, and the compact menu header now reuses the hydration-aware status symbol already used by its status row. Agent Display preflight passed, but the disposable app exposed no movable content window for exact containment; no pointer or additional PNG proof is claimed.
 
 UI-012 is source and SwiftPM Release proven, and Restore Human Control now exposes state-specific help and accessibility text while preserving its existing recovery gate and target. Agent Display preflight passed, but the unchanged compact-menu host route exposed no movable content window; no pointer or additional PNG proof is claimed.
+
+UI-013 is source and SwiftPM Release proven, and the Recovery panel now explains why state-changing actions are unavailable during a busy operation while review actions remain available. Agent Display preflight passed and the disposable route moved six KeyBrake windows through the virtual-display route, but the follow-up isolation check returned `isolated=false` with `windowCount=0`; the disposable process was terminated, and no pointer or additional PNG proof is claimed.
 
 ## Checklist realignment
 

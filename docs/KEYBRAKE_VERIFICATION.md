@@ -11,6 +11,8 @@
 
 ## Current release pass
 
+- Current UI-013 source checkpoint: 70dedada1ac73121fde73c19416418d6947b8b63; this checkpoint adds visible busy-state guidance and matching accessibility hints for Recovery-panel state-changing actions without changing their existing action targets, handlers, or disabled-state gate.
+- Current UI-013 Agent Display attempt: cursor-safe preflight passed, the disposable Release app staged six KeyBrake windows through the virtual-display route, and the follow-up isolation check returned `isolated=false` with `windowCount=0`; the disposable process was terminated, and no pointer or additional PNG proof is claimed.
 - Current UI-012 source checkpoint: dfedf420c741c1c6d7c9d2ecbae290a4c5386e9b; this checkpoint adds state-specific help and accessibility text to the compact menu’s Restore Human Control affordance without changing its existing action target or disabled-state gate.
 - Current UI-012 Agent Display attempt: cursor-safe preflight passed, but the unchanged compact-menu host route exposed no movable content window for exact Agent Display containment; no pointer or additional PNG proof is claimed.
 
@@ -128,6 +130,10 @@ The entries below are updated with exact commands and actual results as implemen
 | UI-012 Release build | /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI012 | pass; the production-mode app executable compiled and linked after the recovery-affordance explanation change |
 | UI-012 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI012 | pass; 35 tests, 0 failures |
 | UI-012 Agent Display staging | agent_ui_preflight.py; unchanged compact-menu route and display inspection | hold for host containment; refreshed preflight passed, but no movable content window was available for an exact target, so no contained visual, pointer, or PNG proof was claimed |
+| UI-013 source parse and UI guard | swiftc -frontend -parse KeyBrake/UI/RecoveryView.swift; non_interrupting_ui_guard.py --json KeyBrake/UI/RecoveryView.swift | pass; RecoveryView parsed and the cursor-safe guard found no prohibited interaction path after the busy-state guidance change |
+| UI-013 Release build | /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI013 | pass; the production-mode app executable compiled and linked after the Recovery-panel action-guidance change |
+| UI-013 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI013 | pass; 35 tests, 0 failures |
+| UI-013 Agent Display staging | agent_ui_preflight.py; disposable Release app; displayctl stage --app org.realitygood.KeyBrake --position above --preset 16:9; displayctl is-isolated --app org.realitygood.KeyBrake | hold for host containment; stage reported success with six moved windows, but the follow-up isolation check returned isolated=false with windowCount=0; the disposable process was terminated, and no contained visual, pointer, or PNG proof was claimed |
 
 ## Safety boundaries
 
@@ -157,6 +163,8 @@ The UI-011 proof establishes the compact menu header’s reuse of the hydration-
 
 The UI-012 proof establishes state-specific recovery-affordance help and accessibility text, its SwiftPM compilation, and the unchanged regression suite. The exact compact menu route remained unavailable after the UI-011 host failure, so no contained visual, pointer, or PNG claim is added.
 
+The UI-013 proof establishes the Recovery panel’s visible busy-state guidance and matching accessibility hint, its SwiftPM compilation, and the unchanged regression suite. Agent Display preflight and provider checks passed, and the disposable route moved six KeyBrake windows through the virtual-display route, but the exact follow-up isolation check returned `isolated=false` with `windowCount=0`; no contained visual, pointer, or PNG claim is added.
+
 ## Regression checksum anchors
 
 These SHA-256 values anchor the safety contract and the highest-risk command seams for this deliverable. They are recorded after the final source/doc edits; a later change must recompute and review the affected value.
@@ -178,7 +186,7 @@ c268de0088f4c76dcd1f020f3691a48872f60345ff2bb1bee2d57eb6af82d914  KeyBrake/App/K
 593936f603fc2eb8297bbdf0a8643381927b7a3d2098d2dea6d2d89986632e84  KeyBrakeCore/KeyBrakeOperationalState.swift
 343a9d24d6a2d268a21c0bba7d283968d6130d97ac3359898841a9209765fd37  KeyBrake/UI/IncidentLogView.swift
 94c2a02852c17df0b4438f6a5cf8d2ebafe76623ca5822239599a0c93544f51b  KeyBrake/UI/SettingsView.swift
-ac9dc0aed5c20ea62aa9cd0170d0196b80a205ef3a5240d95201eb64147f38b2  KeyBrake/UI/RecoveryView.swift
+c34a9f264eedafe8f53e347507ec62e13aa616c326390010e9e7cb1ebf8fbe03  KeyBrake/UI/RecoveryView.swift
 8b7279ff324774a5f01f70e80bbf49277fa2291ac7ed75de124c9db179d2c0da  KeyBrakeCore/FeatureContract.swift
 3c3e614e2bee1e0638248ba51f58bf4d2950529f8137c35a41c1b4cf6b7866e1  KeyBrakeTests/FeatureContractTests.swift
 401945f4b863aa9a16d0f73f082a61e3627b32a88fee711156b090c2117999d1  KeyBrakeCore/ProcessController.swift
