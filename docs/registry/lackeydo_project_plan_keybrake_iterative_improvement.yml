@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
+    head: "d4b0e94b65a6b2eb32d91b7be81ee6dec2eab668"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
+    remote_head_verified: "d4b0e94b65a6b2eb32d91b7be81ee6dec2eab668"
     status: "remote_verified_at_UI-012_documentation_checkpoint"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -1142,14 +1142,14 @@ project_plan:
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
+  head: "d4b0e94b65a6b2eb32d91b7be81ee6dec2eab668"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-012"
     source_commit: "dfedf420c741c1c6d7c9d2ecbae290a4c5386e9b"
     documentation_commit: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
-    remote_head_verified: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
+    remote_head_verified: "d4b0e94b65a6b2eb32d91b7be81ee6dec2eab668"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-013 release gates before any public-visibility decision."
   following_delivery:
@@ -1778,6 +1778,6 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/KeyBrakeMenuView.swift=33a49f7a07c3ffb8c91e0c91a67547d09fb25a475fce8de9f5a95aa102b64d47"
     documentation_commit: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
-    remote_head_verified: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
+    remote_head_verified: "d4b0e94b65a6b2eb32d91b7be81ee6dec2eab668"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-013 release gates before any public-visibility decision."
