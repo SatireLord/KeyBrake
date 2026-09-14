@@ -225,30 +225,75 @@ struct KeyBrakeCommandCenterView: View {
     }
 
     private var secondaryActions: some View {
-        HStack(spacing: 10) {
-            Button {
-                openWindow(id: "incidents")
-            } label: {
-                Label("Incident Log", systemImage: "list.bullet.clipboard")
-            }
-            .buttonStyle(.bordered)
-            .accessibilityIdentifier("keybrake.command-center.open-incident-log")
+        VStack(alignment: .leading, spacing: 10) {
+            sectionHeading(
+                title: "Review and configure",
+                subtitle: "Inspect recorded outcomes or adjust approved targets and isolation policy."
+            )
 
-            Button {
-                openWindow(id: "settings")
-            } label: {
-                Label("Settings", systemImage: "gearshape")
-            }
-            .buttonStyle(.bordered)
-            .accessibilityIdentifier("keybrake.command-center.open-settings")
+            HStack(spacing: 10) {
+                Button {
+                    openWindow(id: "incidents")
+                } label: {
+                    navigationLabel(
+                        title: "Incident Log",
+                        detail: "\(model.incidents.count) recorded \(model.incidents.count == 1 ? "incident" : "incidents")",
+                        systemImage: "list.bullet.clipboard"
+                    )
+                }
+                .buttonStyle(.bordered)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityIdentifier("keybrake.command-center.open-incident-log")
+                .accessibilityHint("Opens the recorded incident history")
 
-            Spacer(minLength: 12)
-            Text("Mouse-operated recovery")
+                Button {
+                    openWindow(id: "settings")
+                } label: {
+                    navigationLabel(
+                        title: "Settings",
+                        detail: "\(model.configuredTargets.count) configured \(model.configuredTargets.count == 1 ? "target" : "targets")",
+                        systemImage: "gearshape"
+                    )
+                }
+                .buttonStyle(.bordered)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityIdentifier("keybrake.command-center.open-settings")
+                .accessibilityHint("Opens approved targets and isolation policy settings")
+            }
+
+            Text("Mouse-operated recovery remains available from the menu and recovery panel.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
     }
 
+    private func navigationLabel(title: String, detail: String, systemImage: String) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: systemImage)
+                .font(.title3)
+                .frame(width: 24)
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.headline)
+                Text(detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 3)
+    }
+
+// Greppable:
+// canonical: keybrake-command-center-navigation
+// aliases: review and configure; incident history; target settings
+// forms: keybrake-command-center-navigation; Incident Log; Settings
+// descriptors: navigation cards; recorded incident count; configured target count
+// states: empty; incident-present; targets-configured; recovery-required
+// consumers: KeyBrakeCommandCenterView; IncidentLogView; SettingsView; WindowLaunchBridge
+// owner: KeyBrakeCommandCenterView.secondaryActions
+// boundary: navigation-only; emergency and recovery handlers remain unchanged
     @ViewBuilder
     private var statusBadge: some View {
         if !model.isRecoveryStatusKnown {
