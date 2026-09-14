@@ -3,6 +3,14 @@ import KeyBrakeCore
 import SwiftUI
 import UniformTypeIdentifiers
 
+// Greppable:
+// canonical: keybrake-settings-destination
+// aliases: target configuration; isolation policy; privacy reset settings
+// forms: keybrake-settings-destination; Emergency Isolation; Privacy Reset Profile
+// descriptors: configured targets; isolation profile; helper status
+// states: ready; helper-unavailable; recovery-required
+// consumers: KeyBrakeCommandCenterView; KeyBrakeMenuView; KeyBrakeViewModel
+// owner: SettingsView
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -17,8 +25,68 @@ struct SettingsView: View {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
 
+    private var protectionStateTitle: String {
+        model.isRecoveryStatusKnown ? model.operationalState.displayTitle : "Checking Recovery Status"
+    }
+
+    private var protectionStateDetail: String {
+        model.isRecoveryStatusKnown
+            ? KeyBrakeStatusPresentation.detail(for: model.operationalState)
+            : "KeyBrake is confirming whether an unresolved recovery snapshot exists."
+    }
+
+    private var protectionStateSymbol: String {
+        model.isRecoveryStatusKnown ? KeyBrakeStatusPresentation.symbol(for: model.operationalState) : "hourglass"
+    }
+
+    private var enabledIsolationControlCount: Int {
+        [
+            model.isolationPolicy.disableWiFi,
+            model.isolationPolicy.disableEthernet,
+            model.isolationPolicy.disconnectVPN,
+            model.isolationPolicy.disableRemoteLogin,
+            model.isolationPolicy.disableRemoteAppleEvents
+        ].filter(\.self).count
+    }
+
+    private var configuredTargetsSummary: String {
+        let count = model.configuredTargets.count
+        return "\(count) configured \(count == 1 ? "target" : "targets")"
+    }
+
     var body: some View {
         Form {
+            Section("Current protection state") {
+                VStack(alignment: .leading, spacing: 10) {
+                    Label {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(protectionStateTitle)
+                                .font(.headline)
+                            Text(protectionStateDetail)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    } icon: {
+                        Image(systemName: protectionStateSymbol)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Divider()
+
+                    LabeledContent("Configured targets", value: configuredTargetsSummary)
+                    LabeledContent(
+                        "Isolation profile",
+                        value: "\(enabledIsolationControlCount) of 5 controls enabled"
+                    )
+                    LabeledContent(
+                        "Recovery",
+                        value: model.hasRecovery ? "Decision pending" : "No decision pending"
+                    )
+                }
+                .accessibilityIdentifier("keybrake.settings.overview")
+            }
+
             Section("General") {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
                 LabeledContent("Privileged Helper") {

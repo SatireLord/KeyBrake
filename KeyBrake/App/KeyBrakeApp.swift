@@ -116,6 +116,14 @@ private enum KeyBrakeLaunchConfiguration {
     }
 }
 
+// Greppable:
+// canonical: keybrake-destination-demo-routes
+// aliases: incident-log staging; settings staging; destination launch argument
+// forms: keybrake-incident-log; keybrake-settings; --keybrake-incident-log; --keybrake-settings
+// descriptors: deterministic destination staging; Agent Display route
+// states: incident-log; settings; command-center; recovery-demo
+// consumers: WindowLaunchBridge; Agent Display
+// owner: KeyBrakeLaunchArgument
 private struct WindowLaunchBridge: View {
     @ObservedObject var model: KeyBrakeViewModel
     let appDelegate: KeyBrakeAppDelegate
@@ -153,10 +161,22 @@ private struct WindowLaunchBridge: View {
 
     private func openCommandCenterIfRequested() {
         let launchArguments = ProcessInfo.processInfo.arguments
-        let shouldOpenCommandCenter = launchArguments.contains(KeyBrakeLaunchArgument.commandCenter) || launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo)
-        guard !didOpenLaunchRequestedCommandCenter, shouldOpenCommandCenter else { return }
+        let shouldOpenIncidentLog = launchArguments.contains(KeyBrakeLaunchArgument.incidentLog)
+        let shouldOpenSettings = launchArguments.contains(KeyBrakeLaunchArgument.settings)
+        let shouldOpenCommandCenter = (launchArguments.contains(KeyBrakeLaunchArgument.commandCenter) || launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo))
+            && !shouldOpenIncidentLog
+            && !shouldOpenSettings
+        guard !didOpenLaunchRequestedCommandCenter, shouldOpenCommandCenter || shouldOpenIncidentLog || shouldOpenSettings else { return }
         didOpenLaunchRequestedCommandCenter = true
         Task { @MainActor in
+            if shouldOpenIncidentLog {
+                openWindow(id: "incidents")
+                return
+            }
+            if shouldOpenSettings {
+                openWindow(id: "settings")
+                return
+            }
             openWindow(id: "command-center")
             guard launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo) else { return }
             try? await Task.sleep(nanoseconds: 500_000_000)
@@ -168,4 +188,6 @@ private struct WindowLaunchBridge: View {
 private enum KeyBrakeLaunchArgument {
     static let commandCenter = "--keybrake-command-center"
     static let recoveryDemo = "--keybrake-recovery-demo"
+    static let incidentLog = "--keybrake-incident-log"
+    static let settings = "--keybrake-settings"
 }
