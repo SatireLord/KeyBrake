@@ -13,6 +13,8 @@
 
 - Current UI-013 source checkpoint: 70dedada1ac73121fde73c19416418d6947b8b63; this checkpoint adds visible busy-state guidance and matching accessibility hints for Recovery-panel state-changing actions without changing their existing action targets, handlers, or disabled-state gate.
 - Current UI-013 Agent Display attempt: cursor-safe preflight passed, the disposable Release app staged six KeyBrake windows through the virtual-display route, and the follow-up isolation check returned `isolated=false` with `windowCount=0`; the disposable process was terminated, and no pointer or additional PNG proof is claimed.
+- Current UI-014 source checkpoint: 49b7665e4eb1c29447289395c7ebdad3836f9c01; this checkpoint adds visible busy-state guidance and matching accessibility hints for Command Center emergency and recovery actions without changing their existing action targets, handlers, identifiers, or disabled-state gates.
+- Current UI-014 Agent Display attempt: cursor-safe preflight passed; the original disposable identifier did not register, and an alternate disposable identifier staged four windows through accessibility, but the follow-up isolation check returned `isolated=false` with `windowCount=0`; the disposable process was terminated, and no pointer or additional PNG proof is claimed.
 - Current UI-012 source checkpoint: dfedf420c741c1c6d7c9d2ecbae290a4c5386e9b; this checkpoint adds state-specific help and accessibility text to the compact menu’s Restore Human Control affordance without changing its existing action target or disabled-state gate.
 - Current UI-012 Agent Display attempt: cursor-safe preflight passed, but the unchanged compact-menu host route exposed no movable content window for exact Agent Display containment; no pointer or additional PNG proof is claimed.
 
@@ -134,6 +136,10 @@ The entries below are updated with exact commands and actual results as implemen
 | UI-013 Release build | /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI013 | pass; the production-mode app executable compiled and linked after the Recovery-panel action-guidance change |
 | UI-013 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI013 | pass; 35 tests, 0 failures |
 | UI-013 Agent Display staging | agent_ui_preflight.py; disposable Release app; displayctl stage --app org.realitygood.KeyBrake --position above --preset 16:9; displayctl is-isolated --app org.realitygood.KeyBrake | hold for host containment; stage reported success with six moved windows, but the follow-up isolation check returned isolated=false with windowCount=0; the disposable process was terminated, and no contained visual, pointer, or PNG proof was claimed |
+| UI-014 source parse and UI guard | swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift; non_interrupting_ui_guard.py --json KeyBrake/UI/CommandCenterView.swift | pass; CommandCenterView parsed and the cursor-safe guard found no prohibited interaction path after the busy-state guidance change |
+| UI-014 Release build | /Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI014 | pass; the production-mode app executable compiled and linked after the Command Center action-guidance change |
+| UI-014 complete tests | /Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI014 | pass; 35 tests, 0 failures |
+| UI-014 Agent Display staging | agent_ui_preflight.py; disposable Release app with original and alternate identifiers; displayctl stage; displayctl is-isolated | hold for host containment; preflight passed, the original identifier did not register, the alternate identifier staged four windows through accessibility, and the follow-up isolation check returned isolated=false with windowCount=0; the disposable process was terminated, and no contained visual, pointer, or PNG proof was claimed |
 
 ## Safety boundaries
 
@@ -165,6 +171,8 @@ The UI-012 proof establishes state-specific recovery-affordance help and accessi
 
 The UI-013 proof establishes the Recovery panel’s visible busy-state guidance and matching accessibility hint, its SwiftPM compilation, and the unchanged regression suite. Agent Display preflight and provider checks passed, and the disposable route moved six KeyBrake windows through the virtual-display route, but the exact follow-up isolation check returned `isolated=false` with `windowCount=0`; no contained visual, pointer, or PNG claim is added.
 
+The UI-014 proof establishes the Command Center’s visible busy-state guidance and matching accessibility hints, its SwiftPM compilation, and the unchanged regression suite. Agent Display preflight and provider checks passed; the original disposable identifier did not register, and the alternate identifier staged four windows through accessibility, but the follow-up isolation check returned `isolated=false` with `windowCount=0`; no contained visual, pointer, or PNG claim is added.
+
 ## Regression checksum anchors
 
 These SHA-256 values anchor the safety contract and the highest-risk command seams for this deliverable. They are recorded after the final source/doc edits; a later change must recompute and review the affected value.
@@ -181,7 +189,7 @@ a228776765d99a6d93ab1a94100e61e1bdadd31290b71d2f2791c50002f3f847  KeyBrakeCore/S
 c268de0088f4c76dcd1f020f3691a48872f60345ff2bb1bee2d57eb6af82d914  KeyBrake/App/KeyBrakeAppDelegate.swift
 3a317e25e16b3d0cbd0c6032389d30216d386a5a895bc98f5abe5da3980573b5  KeyBrake/App/KeyBrakeApp.swift
 33a49f7a07c3ffb8c91e0c91a67547d09fb25a475fce8de9f5a95aa102b64d47  KeyBrake/UI/KeyBrakeMenuView.swift
-8ed69586938c330c195d2fa8544970a502af8c7a3d2984fc1bbf7fcf3d7dd09d  KeyBrake/UI/CommandCenterView.swift
+ede1868c40ebb07ac09299b29ceaeb6f80dad6f117bf41ba7e55c1c83cc50e18  KeyBrake/UI/CommandCenterView.swift
 4914ce3e017d1bb8385ede6b30bdef180fc763e51a8bb26e3d9e00903b17983d  KeyBrake/UI/RecoveryPanelController.swift
 593936f603fc2eb8297bbdf0a8643381927b7a3d2098d2dea6d2d89986632e84  KeyBrakeCore/KeyBrakeOperationalState.swift
 343a9d24d6a2d268a21c0bba7d283968d6130d97ac3359898841a9209765fd37  KeyBrake/UI/IncidentLogView.swift

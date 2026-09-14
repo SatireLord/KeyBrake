@@ -58,6 +58,7 @@ This document classifies every user-visible or safety-critical capability by imp
 | Helper status in Settings | `implemented` | Derived from `SMAppService` daemon status |
 | Independent sharing restore | `implemented` | Network-only restore does not clear unresolved sharing |
 | Feature contract resource | `implemented` | Bundled JSON with regression test |
+| Command Center action availability guidance | `implemented` | Command Center explains busy-state unavailability for emergency and recovery actions while Incident Log and Settings navigation remains available; existing handlers, targets, identifiers, and disabled-state gates remain unchanged |
 | Mouse-only UI proof | `host-unverified` | UI-002 has an isolated 760×652 Command Center Agent Display capture with readable recovery-required inventory and action hierarchy; the disposable AppKit trace observed a visible recovery panel, but the harness exposed no exact panel target and no pointer action was sent |
 | Developer ID signing / notarization | `planned` | No signing identity is configured on this host |
 | Open-source license file | `implemented` | MIT `LICENSE` at repository root on the implementation branch; GitHub `licenseInfo` stays empty until that file reaches default `main` |
@@ -81,6 +82,8 @@ UI-011 is source and SwiftPM Release proven, and the compact menu header now reu
 UI-012 is source and SwiftPM Release proven, and Restore Human Control now exposes state-specific help and accessibility text while preserving its existing recovery gate and target. Agent Display preflight passed, but the unchanged compact-menu host route exposed no movable content window; no pointer or additional PNG proof is claimed.
 
 UI-013 is source and SwiftPM Release proven, and the Recovery panel now explains why state-changing actions are unavailable during a busy operation while review actions remain available. Agent Display preflight passed and the disposable route moved six KeyBrake windows through the virtual-display route, but the follow-up isolation check returned `isolated=false` with `windowCount=0`; the disposable process was terminated, and no pointer or additional PNG proof is claimed.
+
+UI-014 is source and SwiftPM Release proven, and the Command Center now explains why emergency and recovery actions are unavailable during a busy operation while Incident Log and Settings navigation remains available. Agent Display preflight passed; the original disposable identifier did not register, and an alternate disposable identifier staged four windows through accessibility, but the follow-up isolation check returned `isolated=false` with `windowCount=0`; the process was terminated, and no pointer or additional PNG proof is claimed.
 
 ## Checklist realignment
 

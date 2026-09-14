@@ -6,10 +6,10 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "3cfd57561a1f7b78f37accd07ca393ae6f426ed8"
+    head: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "3cfd57561a1f7b78f37accd07ca393ae6f426ed8"
-    status: "documentation_checkpoint_remote_verified"
+    remote_head_verified: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
+    status: "remote_verified_at_UI-014_source_checkpoint_documentation_pending"
     verified_at: "20260912 05:52:26"
   iteration:
     id: "UI-001"
@@ -544,6 +544,28 @@ project_plan:
         evidence: "The SHA-256 value was recomputed after the UI-013 source edit and before documentation delivery."
         authorization: "normal documentation update"
         status: pass
+      - checksum_id: "no-applicable-keybrake-boundary-ui-014"
+        manifest: "Agent-Cache checksum registries and predecessor LackeyDo ledger"
+        protected_path: "none"
+        span: "none"
+        current_identity: "no registered KeyBrake protected span at UI-014 source checkpoint 49b7665e4eb1c29447289395c7ebdad3836f9c01"
+        planned_touch: "no-applicable-checksum"
+        route: "validate"
+        why_exists_here: "UI-014 remains within the Command Center presentation seam and does not cross a registered protected consumer boundary."
+        evidence: "Agent-Cache bootstrap reported no applicable KeyBrake protected span; source, parse, build, test, and Agent Display boundaries were checked separately."
+        authorization: "not_required_for_validate"
+        status: confirmed_no_applicable_checksum
+      - checksum_id: "keybrake-verification-sha-anchors-ui-014-command-center"
+        manifest: "docs/KEYBRAKE_VERIFICATION.md"
+        protected_path: "KeyBrake/UI/CommandCenterView.swift"
+        span: "whole-file SHA-256 documentation anchor"
+        current_identity: "UI-014 source value at 49b7665e4eb1c29447289395c7ebdad3836f9c01; sha256=ede1868c40ebb07ac09299b29ceaeb6f80dad6f117bf41ba7e55c1c83cc50e18"
+        planned_touch: "outside"
+        route: "validate"
+        why_exists_here: "The verification record detects drift across the busy-state Command Center action-guidance seam without claiming pointer behavior."
+        evidence: "The SHA-256 value was recomputed after the UI-014 source edit and before documentation delivery."
+        authorization: "normal documentation update"
+        status: pass
   context_packet:
     repository: "KeyBrake at /Users/michaeltran/AntiGravity/KeyBrake"
     source_of_truth:
@@ -837,6 +859,12 @@ project_plan:
       status: pass
       proof: "UI-013 source review binds the visible busy-state explanation and recoveryActionHint to the existing Recovery panel action groups; state-changing actions retain disablesWhileBusy && model.isBusy, review actions retain disablesWhileBusy: false, all handlers and identifiers remain unchanged, the source parses, the Release build passes, and the 35-test suite remains green."
       residual_risk: "The disposable Recovery-panel route moved six windows through the Agent Display route, but the follow-up isolation check returned isolated=false with windowCount=0, so contained visual and pointer proof remain unverified."
+    - id: R028
+      requirement: "The Command Center must explain why its state-changing emergency and recovery actions are unavailable during a busy operation while Incident Log and Settings navigation remains available, without changing existing handlers, targets, identifiers, or disabled-state gates."
+      owner: "KeyBrake/UI/CommandCenterView.swift, KeyBrake/App/KeyBrakeViewModel.swift"
+      status: pass
+      proof: "UI-014 source review binds the visible busy-state explanations and commandCenterActionHint to the existing emergencyActions and recoveryCard controls; stop-local retains model.stopSkynetLocally(), stop-remote retains model.stopRemoteAccess(), recovery retains model.isShowingRecoveryPanel = true, identifiers are unchanged, existing busy gates remain, the source parses, the Release build passes, and the 35-test suite remains green."
+      residual_risk: "The original disposable bundle identifier did not register with Agent Display; an alternate identifier staged four windows through accessibility, but the follow-up isolation check returned isolated=false with windowCount=0, so contained visual and pointer proof remain unverified."
   implementation_slices:
     - id: S001
       name: "Command Center visual surface"
@@ -992,6 +1020,16 @@ project_plan:
       name: "UI-013 verification and documentation"
       files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
       dependencies: ["S030"]
+      status: complete
+    - id: S032
+      name: "Command Center action availability guidance"
+      files: ["KeyBrake/UI/CommandCenterView.swift"]
+      dependencies: ["S030", "R028"]
+      status: complete
+    - id: S033
+      name: "UI-014 verification and documentation"
+      files: ["README.md", "docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_MASTER_PLAN.md", "docs/KEYBRAKE_SAFE_DEMO.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"]
+      dependencies: ["S032"]
       status: active
   guards:
     - name: "Changed-line hygiene"
@@ -1188,25 +1226,25 @@ project_plan:
       evidence: "The six UI-004 documentation paths passed git diff --check and Ruby YAML parsing, were committed at 73b03650b80c10bd8018ca05706a8b3ec810759a, pushed on codex/keybrake-complete-implementation, and verified against the private remote branch head."
       next_action: "Preserve the UI-004 source/build/visual boundary and continue with the UI-005 state-aware history and menu-affordance slice."
   branch: "codex/keybrake-complete-implementation"
-  head: "3cfd57561a1f7b78f37accd07ca393ae6f426ed8"
+  head: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
+    iteration: "UI-014"
+    source_commit: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
+    documentation_commit: "pending"
+    remote_head_verified: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
+    status: "source_checkpoint_remote_verified_documentation_pending"
+    next_safe_entry_point: "Commit and push the UI-014 documentation checkpoint, then continue with UI-015 full release gates."
+  following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
+    source_file_shas:
+      - "KeyBrake/UI/RecoveryView.swift=c34a9f264eedafe8f53e347507ec62e13aa616c326390010e9e7cb1ebf8fbe03"
     documentation_commit: "f3ae0961955a20867b43d797bc472e14cd4ab9c9"
     remote_head_verified: "3cfd57561a1f7b78f37accd07ca393ae6f426ed8"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-014 release gates before any public-visibility decision."
-  following_delivery:
-    iteration: "UI-012"
-    source_commit: "dfedf420c741c1c6d7c9d2ecbae290a4c5386e9b"
-    source_file_shas:
-      - "KeyBrake/UI/KeyBrakeMenuView.swift=33a49f7a07c3ffb8c91e0c91a67547d09fb25a475fce8de9f5a95aa102b64d47"
-    documentation_commit: "c3460373a8b24ef2d6a4d8f76860941dab89048a"
-    remote_head_verified: "b3465369f7fe56b566e21fb90084b7b2b6233df8"
-    status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "UI-013 Recovery-panel action guidance and documentation checkpoint."
+    next_safe_entry_point: "UI-014 Command Center action availability guidance and documentation checkpoint."
   completed_iteration:
     id: "UI-004"
     name: "Destination window orientation and deterministic staging"
@@ -1827,7 +1865,7 @@ project_plan:
     remote_head_verified: "b3465369f7fe56b566e21fb90084b7b2b6233df8"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-013 release gates before any public-visibility decision."
-  upcoming_iteration:
+  completed_iteration_ui013:
     id: "UI-013"
     name: "Recovery panel action availability guidance"
     source_checkpoint: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -1889,7 +1927,7 @@ project_plan:
     deferred:
       - "Exact Recovery-panel visual/accessibility proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
     next_action: "Continue with UI-014 release gates before any public-visibility decision."
-  upcoming_delivery:
+  completed_delivery_ui013:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
     source_file_shas:
@@ -1898,3 +1936,75 @@ project_plan:
     remote_head_verified: "3cfd57561a1f7b78f37accd07ca393ae6f426ed8"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-014 release gates before any public-visibility decision."
+  upcoming_iteration:
+    id: "UI-014"
+    name: "Command Center action availability guidance"
+    source_checkpoint: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
+    user_promise: "A user understands why Command Center emergency and recovery actions are unavailable during a busy operation while review navigation remains available, and existing handlers, targets, identifiers, and disabled-state gates remain unchanged."
+    status: "documentation_checkpoint_pending"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView.emergencyActions, recoveryCard, and commandCenterActionHint"
+        intended_change: "Add visible busy-state guidance and matching accessibility hints without changing existing emergency/recovery handlers, targets, identifiers, or disabled-state gates."
+        status: implemented
+      - path: "README.md"
+        owner: "Command Center boundaries and demonstration sections"
+        intended_change: "Document busy-state Command Center action guidance and its proof boundary."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record Command Center action availability guidance as implemented and preserve the Agent Display host boundary."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-014 at its source checkpoint and route the next work to UI-015 full release gates."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration sequence"
+        intended_change: "Explain the busy-state Command Center action guidance."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger and source SHA anchors"
+        intended_change: "Record UI-014 source, parse, Release build, test, Agent Display preflight/staging result, checksum, and unclaimed visual or pointer evidence."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-014 requirement, slices, checksums, guards, host routing result, and the UI-015 re-entry point."
+        status: pending_commit
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift"
+      provenance: "source checkpoint 49b7665e4eb1c29447289395c7ebdad3836f9c01; SwiftPM Release executable; cursor-safe Agent Display preflight and disposable Command Center route"
+      state: "command_center_not_available_for_exact_containment"
+      observed: "Cursor-safe preflight and provider checks passed; the original disposable identifier did not register; the alternate identifier staged four windows through accessibility, but the follow-up isolation check returned isolated=false with windowCount=0."
+      receipt: "No UI-014 PNG was captured; retained UI-004 Settings PNG remains the single visual artifact for this lane."
+      missing_evidence: "Exact Command Center busy-state visual/accessibility inspection, direct pointer activation, Xcode Release, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd, and respawn proof remain unverified."
+    proof:
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift; pass"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI014; 35 tests, 0 failures"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI014; pass"
+      staging: "agent_ui_preflight.py preflight for org.realitygood.KeyBrake and org.realitygood.KeyBrake.UI014; provider checks passed; original identifier did not register; alternate stage moved four windows; is-isolated returned isolated=false with windowCount=0; process terminated; no pointer or additional PNG proof"
+      safety: "Only non-mutating source validation and disposable app staging/inspection were used; no host mutation, pointer action, emergency action, persistence action, TCC action, network action, launchd action, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=ede1868c40ebb07ac09299b29ceaeb6f80dad6f117bf41ba7e55c1c83cc50e18"
+      - "README.md and release documentation changed in pending UI-014 documentation checkpoint."
+    guards:
+      - "Agent-Cache UI-014 mutation gate passed after live branch and PR #1 continuity were verified."
+      - "CommandCenterView.swift passed bounded frontend parsing."
+      - "Cursor-safe non-interrupting UI guard passed for CommandCenterView.swift."
+      - "Agent-Cache workspace single-flight guard passed before UI-014 Release build and test; no overlap was reported."
+      - "CodeGraph query was attempted before the edit; the connector reported CodeGraph not initialized, so no new graph snapshot is claimed beyond preserved UI-013 source-bound context."
+      - "Agent Display preflight and provider checks passed; original identifier did not register; alternate staged four windows; exact isolation returned isolated=false/windowCount=0, so visual boundary remains unproven."
+      - "Agent-Cache repo_snapshot_files could not create WorkBeginOrder because database was locked; direct current-source validation and bounded compiler/build/test proof were used."
+    deferred:
+      - "Exact Command Center visual/accessibility proof, direct pointer activation, Xcode Release revalidation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+    next_action: "Commit and push the UI-014 documentation checkpoint, then continue with UI-015 full release gates before any public-visibility decision."
+  upcoming_delivery:
+    iteration: "UI-014"
+    source_commit: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=ede1868c40ebb07ac09299b29ceaeb6f80dad6f117bf41ba7e55c1c83cc50e18"
+    documentation_commit: "pending"
+    remote_head_verified: "49b7665e4eb1c29447289395c7ebdad3836f9c01"
+    status: "source_checkpoint_remote_verified_documentation_pending"
+    next_safe_entry_point: "Commit and push UI-014 documentation, then continue with UI-015 full release gates."
