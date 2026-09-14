@@ -10,6 +10,7 @@ import SwiftUI
 // consumers: RecoveryPanelController; KeyBrakeViewModel; KeyBrakeCommandCenterView
 // owner: RecoveryView
 // QoL-002: the recovery state card reuses the shared state hierarchy so the decision panel explains status before actions.
+// QoL-003: the recovery state card stays honest while launch hydration is incomplete by showing the shared checking state.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -124,18 +125,26 @@ struct RecoveryView: View {
     private var stateSummary: some View {
         GroupBox {
             HStack(alignment: .top, spacing: 12) {
-                Image(systemName: KeyBrakeStatusPresentation.symbol(for: model.operationalState))
+                Image(systemName: model.isRecoveryStatusKnown ? KeyBrakeStatusPresentation.symbol(for: model.operationalState) : "hourglass")
                     .font(.title2)
-                    .foregroundStyle(KeyBrakeStatusPresentation.tint(for: model.operationalState))
+                    .foregroundStyle(
+                        model.isRecoveryStatusKnown
+                            ? KeyBrakeStatusPresentation.tint(for: model.operationalState)
+                            : Color.secondary
+                    )
                     .frame(width: 32, height: 32)
 
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Current state")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text(model.operationalState.displayTitle)
+                    Text(model.isRecoveryStatusKnown ? model.operationalState.displayTitle : "Checking Recovery Status")
                         .font(.headline)
-                    Text(KeyBrakeStatusPresentation.detail(for: model.operationalState))
+                    Text(
+                        model.isRecoveryStatusKnown
+                            ? KeyBrakeStatusPresentation.detail(for: model.operationalState)
+                            : "KeyBrake is confirming whether an unresolved recovery snapshot exists."
+                    )
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
