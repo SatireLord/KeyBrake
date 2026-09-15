@@ -1545,17 +1545,25 @@ project_plan:
       status: accepted_deferred
       evidence: "The UI-030 source, static, Release build, test, and Agent Display evidence was appended to the durable task event log, but agent_cache_chatgpt_record_work_receipt returned evidence_recorded_projection_skipped with projection_not_advanced_without_revision; no complete connector projection is claimed."
       next_action: "Use the durable event log and direct source/build/test/display evidence; do not treat the skipped projection as complete proof."
+    - item: "UI-031 exact Agent Display containment remains unavailable for the recovery inventory reading-order slice."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the unique org.realitygood.KeyBrake.UI031 bundle launched through LaunchServices as PID 72658, identifier and PID staging attempts failed, bounded staging remained silent for about 60 seconds and was stopped with SIGINT, inspect-ui exposed another application's Recovery surface while the host window inventory briefly showed the KeyBrake Command Center, the exact PID route remained silent, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, runtime accessibility, or PNG proof was claimed."
+      next_action: "Repair the exact Agent Display routing and ownership path; keep the private PR boundary unchanged and do not repeat unchanged staging calls."
+    - item: "UI-031 Agent-Cache snapshot and receipt projection remain incomplete."
+      status: accepted_deferred
+      evidence: "The exact UI-031 source snapshot endpoint returned work_begin_order_failed; source, static, Release build, test, and Agent Display evidence was appended to the durable task event log, but receipt recording returned projection_not_advanced_without_revision; no complete connector projection is claimed."
+      next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
+  head: "32608c7186114e2fb885b1a5129b9681a3e99b04"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-030"
-    source_commit: "577f48eed3f0e2f75f86ad70c7eb14a44a2ee3aa"
-    documentation_commit: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
-    remote_head_verified: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
+    iteration: "UI-031"
+    source_commit: "108c23d2d169c7a99fcfd63f59be8af2f0f20afe"
+    documentation_commit: "32608c7186114e2fb885b1a5129b9681a3e99b04"
+    remote_head_verified: "32608c7186114e2fb885b1a5129b9681a3e99b04"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with UI-031 recovery inventory reading-order inspection while preserving the private PR."
+    next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with UI-032 recovery-card child traversal inspection while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -3559,10 +3567,87 @@ project_plan:
     remote_head_verified: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with UI-031 recovery inventory reading-order inspection while preserving the private PR."
-  upcoming_iteration:
+  completed_iteration_ui031:
     id: "UI-031"
     name: "Command Center recovery inventory reading order"
     user_promise: "The containing recovery inventory presents its parent orientation before the existing child metric summaries while preserving metric values, identifiers, spoken labels, visible layout, recovery behavior, and the private release boundary."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView.recoveryInventory recoveryMetric helper"
+        intended_change: "Add the QoL-025 marker and apply .accessibilitySortPriority(-1) to each existing metric Label so child summaries remain behind the containing inventory orientation without changing visible text, values, icons, identifiers, parent grouping, layout, or recovery behavior."
+        status: implemented
+      - path: "README.md"
+        owner: "Release status and portfolio demonstration boundary"
+        intended_change: "Document the UI-031 recovery-inventory reading order and the exact Agent Display containment boundary."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record recovery inventory reading order as implemented and preserve host-unverified runtime proof."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-031 source checkpoint, checklist proof, and UI-032 entry point."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Document that UI-031 changes only accessibility traversal ordering and does not change safe-demo mutation boundaries."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-031 source, parse, guard, single-flight, Release build, tests, Agent Display, Agent-Cache, and checksum evidence."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-031 requirements, source/doc checkpoints, exact proof classes, checksum, accepted deferred holds, and UI-032 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift"
+      provenance: "Source checkpoint 108c23d2d169c7a99fcfd63f59be8af2f0f20afe; bounded Swift parse; cursor-safe UI guard; workspace single-flight; SwiftPM Release build and complete test suite; Agent Display preflight/provider checks; LaunchServices-launched disposable bundle"
+      state: "recovery_inventory_reading_order_containment_unverified"
+      observed: "Each recovery metric Label carries .accessibilitySortPriority(-1), and the containing recovery inventory retains its existing .contain, parent label, and identifier. The unique org.realitygood.KeyBrake.UI031 bundle launched as PID 72658; identifier and PID staging attempts failed, bounded staging remained silent for about 60 seconds and was stopped with SIGINT, inspect-ui exposed another application's Recovery surface, the host window inventory briefly showed KeyBrake Command Center, the exact PID route remained silent, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated."
+      receipt: "No UI-031 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane under the one-image SendMePics contract."
+      missing_evidence: "Contained UI-031 visual and runtime accessibility inspection, direct pointer activation, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd mutation, respawn proof, and complete Agent-Cache projection remain unverified."
+    proof:
+      codegraph: "CodeGraph status reported not initialized and the exact recoveryInventory query and exploration returned codegraph_unavailable; no graph proof is claimed"
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/CommandCenterView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI031; pass in 10.55s"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI031; 35 tests, 0 failures"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI031 --display agent-stage --start-sentinel --json; pass; displayctl doctor HEALTHY; displayctl capabilities owned-cgvirtualdisplay; LaunchServices PID 72658; identifier/PID stage exit4; bounded stage silent ~60s SIGINT exit1; inspect-ui other app Recovery; host inventory KeyBrake window; exact route silent/stopped; is-isolated false/windowCount=0; exact PID terminated; no pointer/visual/runtime/PNG proof"
+      agent_cache_receipt: "Exact repo snapshot endpoint returned work_begin_order_failed; source/runtime evidence receipts returned evidence_recorded_projection_skipped with projection_not_advanced_without_revision; durable events retained and no complete projection claimed"
+      safety: "Only source validation, Release build, local tests, and disposable fixture staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, screenshot, or signed-host claim."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=4853c155756a4fc90a91c7916c535b0e498570249741a6e4626285a241db98c8"
+      - "UI-031 source checkpoint 108c23d2d169c7a99fcfd63f59be8af2f0f20afe"
+      - "UI-031 documentation checkpoint 32608c7186114e2fb885b1a5129b9681a3e99b04"
+    guards:
+      - "Agent-Cache UI-031 mutation gate passed after live branch and PR #1 continuity were verified."
+      - "CodeGraph status/query/explore attempted before editing; index uninitialized; no graph proof claimed."
+      - "CommandCenterView.swift passed bounded frontend parsing and cursor-safe UI guard."
+      - "Workspace single-flight passed before Release build; no overlap."
+      - "Agent Display preflight/doctor/provider passed; containment remained unproven."
+      - "Only exact verified disposable PID72658 was terminated."
+      - "No new PNG captured; retained UI004 Settings artifact preserved."
+    deferred:
+      - "Exact Agent Display containment/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache projection."
+      - "Release-focused Xcode tests until existing Release testability architecture configuration repaired."
+    next_action: "Repair exact Agent Display routing/ownership path or continue with UI-032 recovery-card child traversal inspection while preserving private PR."
+  completed_delivery_ui031:
+    iteration: "UI-031"
+    source_commit: "108c23d2d169c7a99fcfd63f59be8af2f0f20afe"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=4853c155756a4fc90a91c7916c535b0e498570249741a6e4626285a241db98c8"
+    documentation_commit: "32608c7186114e2fb885b1a5129b9681a3e99b04"
+    remote_head_verified: "32608c7186114e2fb885b1a5129b9681a3e99b04"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Repair exact Agent Display routing/ownership path or continue with UI-032 recovery-card child traversal inspection while preserving private PR."
+  upcoming_iteration:
+    id: "UI-032"
+    name: "Command Center recovery card child traversal"
+    user_promise: "The recovery card presents its decision orientation, inventory, busy guidance, and recovery action in a predictable accessibility sequence while preserving recovery semantics, visible layout, and the private release boundary."
     status: "planned"
     scope_preserved: true
-    next_action: "Run the CodeGraph/source-owner check for recoveryInventory accessibility modifiers and inspect current traversal semantics before selecting the smallest safe source seam."
+    next_action: "Run CodeGraph and a bounded source-owner inspection for the recoveryCard accessibility modifiers before selecting the smallest source-backed seam."
