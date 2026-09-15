@@ -122,3 +122,5 @@ UI-035 combines each sandbox scenario title with its explanatory detail as one a
 UI-036 keeps the outer Command Center sandbox banner as a containing accessibility surface, so the scenario identity and host-operation boundary remain independently inspectable beneath the banner identifier. The visible sandbox layout and all fixture and production behavior remain unchanged.
 
 UI-037 gives the existing host-operation warning its own stable accessibility identifier in both review surfaces: `keybrake.command-center.network-sandbox-host-boundary` and `keybrake.settings.network-sandbox-host-boundary`. The safety boundary is therefore directly addressable during inspection without changing visible copy, fixture behavior, disabled controls, or host-operation semantics.
+
+UI-038 gives the Settings Network sandbox section its own stable container identifier, `keybrake.settings.network-sandbox-section`, while preserving the existing scenario and host-boundary identifiers beneath it. This makes the complete Settings safety surface directly addressable during inspection without changing visible layout, fixture behavior, disabled controls, or host-operation semantics.
