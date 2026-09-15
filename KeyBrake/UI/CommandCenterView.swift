@@ -23,6 +23,7 @@ import SwiftUI
 // QoL-019: Recovery-card busy-state guidance exposes one stable accessibility inspection anchor without changing its visible explanation or gate.
 // QoL-020: Recovery inventory exposes one stable accessibility inspection anchor without changing its live counts or combined label.
 // QoL-021: Recovery card exposes one stable container-level accessibility inspection anchor without changing child surfaces or controls.
+// QoL-022: Recovery metrics expose stable inspection anchors without changing their live summaries or the combined recovery-inventory surface.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -211,9 +212,21 @@ struct KeyBrakeCommandCenterView: View {
         let unresolvedSummary = recoveryMetricDescription(snapshot.unresolvedSteps.count, singular: "unresolved step", plural: "unresolved steps")
 
         return HStack(spacing: 14) {
-            recoveryMetric(summary: networkSummary, systemImage: "network")
-            recoveryMetric(summary: sharingSummary, systemImage: "person.2.badge.gearshape")
-            recoveryMetric(summary: unresolvedSummary, systemImage: "exclamationmark.circle")
+            recoveryMetric(
+                summary: networkSummary,
+                systemImage: "network",
+                accessibilityIdentifier: "keybrake.command-center.recovery-metric.network"
+            )
+            recoveryMetric(
+                summary: sharingSummary,
+                systemImage: "person.2.badge.gearshape",
+                accessibilityIdentifier: "keybrake.command-center.recovery-metric.sharing"
+            )
+            recoveryMetric(
+                summary: unresolvedSummary,
+                systemImage: "exclamationmark.circle",
+                accessibilityIdentifier: "keybrake.command-center.recovery-metric.unresolved"
+            )
         }
         .padding(.vertical, 2)
         .accessibilityElement(children: .combine)
@@ -225,7 +238,11 @@ struct KeyBrakeCommandCenterView: View {
         "\(value) \(value == 1 ? singular : plural)"
     }
 
-    private func recoveryMetric(summary: String, systemImage: String) -> some View {
+    private func recoveryMetric(
+        summary: String,
+        systemImage: String,
+        accessibilityIdentifier: String
+    ) -> some View {
         Label {
             Text(summary)
                 .font(.caption)
@@ -234,6 +251,7 @@ struct KeyBrakeCommandCenterView: View {
             Image(systemName: systemImage)
                 .foregroundStyle(.orange)
         }
+        .accessibilityIdentifier(accessibilityIdentifier)
     }
 
     private var recentIncidentCard: some View {
