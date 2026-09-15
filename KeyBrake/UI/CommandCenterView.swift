@@ -17,6 +17,7 @@ import SwiftUI
 // QoL-013: Current protection state combines its visible state, detail, and badge into one stable accessibility surface for fast orientation.
 // QoL-014: Review navigation cards combine each visible destination and count into one stable accessibility surface.
 // QoL-015: Command Center section headings combine their visible title and explanation and publish heading semantics.
+// QoL-016: Command Center emergency actions combine their visible title and explanation into one stable actionable accessibility surface.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -126,6 +127,7 @@ struct KeyBrakeCommandCenterView: View {
                 }
                 .buttonStyle(.bordered)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("keybrake.command-center.stop-local-automation")
                 .accessibilityHint(commandCenterActionHint(description: "Stops approved local input automation without changing network or privacy settings", disablesWhileBusy: true))
                 .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
@@ -142,6 +144,7 @@ struct KeyBrakeCommandCenterView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("keybrake.command-center.stop-remote-access")
                 .accessibilityHint(commandCenterActionHint(description: "Saves recovery state before applying the selected isolation profile", disablesWhileBusy: true))
                 .disabled(model.isBusy)
