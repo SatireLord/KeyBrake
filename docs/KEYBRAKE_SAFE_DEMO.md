@@ -55,6 +55,8 @@ UI-056 makes target enrollment paths explicit during safe review. The Local Auto
 
 UI-057 makes custom-target removal explicit during safe review. Each existing custom-target Remove action explains which configured identity is removed, while the network sandbox explanation states that no removal request is sent during sandbox review and built-in targets remain protected.
 
+UI-058 makes Application Access inputs explicit during safe review. The application picker and Privacy Reset Profile toggles explain current selection, required inputs, reset scope, and the TCC boundary, while the network sandbox explanation states that host privacy settings remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

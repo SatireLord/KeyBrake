@@ -162,3 +162,5 @@ UI-055 makes Emergency Isolation policy effects self-explanatory. The five exist
 UI-056 makes target enrollment paths self-explanatory. The Local Automation and Remote Access Add Application controls now describe their destination, exact bundle-and-executable identity capture, and Remote Access approval requirement; sandbox review remains non-mutating and the existing picker validation is unchanged.
 
 UI-057 makes custom-target removal self-explanatory. Each existing custom-target Remove action now states that the configured target identity, including its exact bundle identifier and executable path, will no longer be used; sandbox review remains non-mutating and built-in targets stay protected.
+
+UI-058 makes Application Access inputs self-explanatory. The application picker and Privacy Reset Profile toggles now state the current selection, required inputs, reset scope, and sandbox boundary; the existing TCC-safe reset action remains unchanged.
