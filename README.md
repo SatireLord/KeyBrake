@@ -180,3 +180,5 @@ UI-064 makes the configured-target overview scannable. The existing count now di
 UI-065 makes the Settings protection state scannable. The existing title and explanation now form one deterministic accessibility surface with a stable inspection anchor, while recovery-state behavior remains unchanged.
 
 UI-066 makes the Emergency Isolation capability boundary scannable. The existing unsupported-sharing explanation now has a stable inspection anchor, while isolation policy, next-operation routing, and sandbox behavior remain unchanged.
+
+UI-067 makes the Application Access TCC boundary scannable. The existing reset explanation now has a stable inspection anchor, while service selection, reset gating, and host privacy behavior remain unchanged.
