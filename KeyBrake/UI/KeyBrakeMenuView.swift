@@ -49,6 +49,7 @@ struct KeyBrakeMenuView: View {
         }
             .help(stopRemoteAccessActionHint)
             .accessibilityHint(stopRemoteAccessActionHint)
+            .accessibilityIdentifier("keybrake.menu.stop-remote-access")
             .disabled(model.isBusy)
         Button {
             openWindow(id: "settings")
