@@ -433,6 +433,7 @@ struct SettingsView: View {
                         }
                         .help(remoteAccessApprovalHint(for: target))
                         .accessibilityHint(remoteAccessApprovalHint(for: target))
+                        .accessibilityIdentifier("keybrake.settings.remote-access.target.\(target.id).approval")
                         if !builtInTargetIDs.contains(target.id) {
                             Button("Remove \(target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
                                 .help(targetRemovalHint(targetName: target.displayName))
