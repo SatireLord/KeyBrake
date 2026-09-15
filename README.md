@@ -150,3 +150,5 @@ UI-049 makes busy menu actions explain their availability. Stop Skynet Locally, 
 UI-050 makes menu Quit KeyBrake explain its current availability. The existing action now exposes hydration, busy, recovery-required, and normal-state guidance while remaining enabled so `requestQuit()` can preserve its existing guards and mouse-operated recovery decision flow.
 
 UI-051 gives every menu navigation destination explicit guidance. Open Command Center, Open Incident Log, and Settings… now explain the surface they open through help and accessibility hints, while their existing window routes and handlers remain unchanged.
+
+UI-052 gives Recovery actions matching visible and spoken guidance. Keep Isolation and the shared recovery actions now expose help that follows their existing descriptions and busy-state accessibility hints, while recovery behavior remains unchanged.
