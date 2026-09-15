@@ -315,6 +315,7 @@ struct SettingsView: View {
                     )
                     .help(isolationProfileSummaryDetail)
                     .accessibilityHint(isolationProfileSummaryDetail)
+                    .accessibilityIdentifier("keybrake.settings.overview.isolation-profile")
                     LabeledContent(
                         "Recovery",
                         value: recoverySummaryTitle
