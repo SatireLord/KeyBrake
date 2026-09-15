@@ -81,6 +81,8 @@ UI-069 makes the Local Automation exact-identity boundary explicit during safe r
 
 UI-070 makes the Privileged Helper status explicit during safe review. The existing status text is deterministically inspectable, while helper registration, approval state, sandbox behavior, and host operations remain unchanged.
 
+UI-071 makes the Privileged Helper error state explicit during safe review. The existing conditional error text is deterministically inspectable, while helper registration, error handling, approval state, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

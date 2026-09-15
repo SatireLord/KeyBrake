@@ -188,3 +188,5 @@ UI-068 makes the Settings Recovery contract scannable. The existing recovery exp
 UI-069 makes the Local Automation exact-identity boundary scannable. The existing bundle-and-executable matching explanation now has a stable inspection anchor, while target storage, process matching, and sandbox behavior remain unchanged.
 
 UI-070 makes the Privileged Helper status scannable. The existing status text now has a stable inspection anchor, while helper registration, approval state, and sandbox behavior remain unchanged.
+
+UI-071 makes the Privileged Helper error state scannable. The existing conditional error text now has a stable inspection anchor, while helper registration, error handling, approval state, and sandbox behavior remain unchanged.
