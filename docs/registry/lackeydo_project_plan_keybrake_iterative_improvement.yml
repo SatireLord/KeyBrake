@@ -7266,41 +7266,41 @@ project_plan:
     remote_head_verified: "pending_push"
     status: "documentation_checkpoint_pending_remote_verification"
     next_safe_entry_point: "UI-071 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui071:
     id: "UI-071"
     name: "Privileged Helper error inspection anchor"
     user_promise: "Make the existing Privileged Helper error message deterministically inspectable during safe review while preserving helper registration behavior, error handling, sandbox gating, and the private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "Privileged Helper error inspection anchor"
         intended_change: "Add a stable accessibility identifier to the existing conditional Privileged Helper error text without changing helper registration, error handling, or host operations."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document the Privileged Helper error inspection anchor."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the Privileged Helper error inspection anchor as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-071 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain deterministic inspection of the Privileged Helper error message during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-071 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-071 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: active
+        status: committed
     pre_edit:
       baseline_head: "25f42a33edad1e13ddf16ba645f61859707c79cf"
       baseline_remote_head: "69922e3d0eb6104a06783ae8c5a7c2c58c6050b0"
@@ -7314,12 +7314,104 @@ project_plan:
       - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint 50c8b39dc0a56d0add460b60799f3de1e9f1d4b9; direct bounded source reads; bounded source parsing; cursor-safe UI guard and preflight; exact committed-HEAD disposable archive; Agent-Cache single-flight admission; focused coordinator tests; SwiftPM Release build; native Xcode Release build and artifact inspection."
+      state: "source_verified_runtime_unverified"
+      observed: "The existing conditional Privileged Helper error Text now exposes stable identifier keybrake.settings.privileged-helper.error while its copy, conditional rendering, helper registration path, error handling, approval state, sandbox gating, and host operations remain unchanged."
+      receipt: "No UI-071 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=3fbaf77a8ff385772a810f322edf3f26ef464bc5d66a23b1489924d1675269b7"
+      source_commit: "50c8b39dc0a56d0add460b60799f3de1e9f1d4b9"
+      documentation_commit: "6177ac8f42cb37183d752138b2ac8df6a5c54bad"
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/SettingsView.swift passed; non_interrupting_ui_guard.py exited 0; agent_ui_preflight.py reported status=pass on virtual-16x9, with no app route because no KeyBrake app was running"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI071 --filter EmergencyCoordinatorTests, run from exact committed-HEAD archive /tmp/KeyBrakeUI071.0RTAfI; 8 tests, 0 failures; build complete in 19.74s and test command completed in 20.85s"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI071, run from exact committed-HEAD archive /tmp/KeyBrakeUI071.0RTAfI; pass in 16.08s"
+      xcode_release_build: "xcodebuild -project /tmp/KeyBrakeUI071.0RTAfI/KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI071 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; KeyBrakePrivilegedHelper and org.realitygood.KeyBrake.Helper.plist present; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Cursor-safe preflight passed, but no KeyBrake app route was running and Agent Display was not reopened because the unchanged staging path remained uncontained and host-unverified; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "The canonical workspace single-flight guard was blocked by three orphaned external MyOwnCosplay Xcode jobs; the exact committed-HEAD disposable package passed Agent-Cache single-flight admission before focused validation and Release builds."
+      safety: "Only non-mutating source validation, an exact committed-HEAD disposable archive, local tests, and disposable builds were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=1d61d65c492cd41e5ae5a574637da67bb59631f20e039724259700af331b2a4c"
+      - "KeyBrake/UI/SettingsView.swift final sha256=3fbaf77a8ff385772a810f322edf3f26ef464bc5d66a23b1489924d1675269b7"
+      - "UI-071 source checkpoint 50c8b39dc0a56d0add460b60799f3de1e9f1d4b9"
+      - "UI-071 documentation checkpoint 6177ac8f42cb37183d752138b2ac8df6a5c54bad"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
     guards:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
       - "Keep the write set limited to SettingsView and matching documentation/ledger files."
       - "Do not change the Privileged Helper error copy, conditional rendering, registerPrivilegedHelper, approval state, sandbox gating, or host-operation behavior in this presentation-only iteration."
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+      - "The source parse, cursor-safe checks, exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-071 Privileged Helper error inspection seam after this registry checkpoint is committed."
+    next_action: "Verify private remote parity and PR state after the pending push, then continue UI-072 with the recorded Launch-at-Login error inspection seam."
+  completed_delivery_ui071:
+    iteration: "UI-071"
+    source_commit: "50c8b39dc0a56d0add460b60799f3de1e9f1d4b9"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=3fbaf77a8ff385772a810f322edf3f26ef464bc5d66a23b1489924d1675269b7"
+    documentation_commit: "6177ac8f42cb37183d752138b2ac8df6a5c54bad"
+    remote_head_verified: "pending_push"
+    status: "documentation_checkpoint_pending_remote_verification"
+    next_safe_entry_point: "UI-072 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-072"
+    name: "Launch-at-Login error inspection anchor"
+    user_promise: "Make the existing Launch-at-Login error message deterministically inspectable during safe review while preserving launch-at-login behavior, error handling, sandbox gating, and the private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Launch-at-Login error inspection anchor"
+        intended_change: "Add a stable accessibility identifier to the existing conditional Launch-at-Login error text without changing launch-at-login behavior, error handling, or host operations."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document the Launch-at-Login error inspection anchor."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the Launch-at-Login error inspection anchor as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-072 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain deterministic inspection of the Launch-at-Login error message during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-072 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-072 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "6177ac8f42cb37183d752138b2ac8df6a5c54bad"
+      baseline_remote_head: "69922e3d0eb6104a06783ae8c5a7c2c58c6050b0"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=3fbaf77a8ff385772a810f322edf3f26ef464bc5d66a23b1489924d1675269b7"
+      source_read: "Direct bounded reads confirmed the General section contains the existing conditional launchAtLoginError Text at SettingsView.swift:373-376; the error copy and conditional rendering have no stable inspection identifier, while launch-at-login behavior, error handling, approval state, sandbox gating, and host-operation behavior remain the behavior boundary."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-072 follows the live SettingsView General section and its existing launchAtLoginError conditional; current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
+    acceptance:
+      - "The existing conditional Launch-at-Login error text exposes stable identifier keybrake.settings.launch-at-login.error."
+      - "The error copy, conditional rendering, launch-at-login handler, error handling, approval state, sandbox gating, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change the Launch-at-Login error copy, conditional rendering, setLaunchAtLogin, approval state, sandbox gating, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "Implement only the recorded UI-072 Launch-at-Login error inspection seam after this registry checkpoint is committed."
