@@ -13,6 +13,7 @@ import SwiftUI
 // QoL-005: the Command Center header, state card, recovery card, and badge share the hydration-aware state boundary.
 // QoL-010: Command Center state-changing controls explain their busy disabled state while review navigation remains available.
 // QoL-011: Recent activity reuses the shared operational-state symbol and tint so the latest recorded outcome is scannable before its detail text.
+// QoL-012: Empty recent activity exposes its visible no-record message as one stable accessibility surface.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -261,6 +262,9 @@ struct KeyBrakeCommandCenterView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Recent activity: No incidents recorded. KeyBrake will keep the next operation and its outcome here.")
+                .accessibilityIdentifier("keybrake.command-center.recent-activity.empty")
             }
         } label: {
             Text("Recent activity")
