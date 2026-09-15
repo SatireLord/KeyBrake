@@ -80,6 +80,14 @@ struct SettingsView: View {
         }
     }
 
+    private func isolationControlHint(effectDescription: String, enabled: Bool) -> String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; fixture network state remains unchanged. \(effectDescription) is not applied during sandbox review."
+        }
+        let currentState = enabled ? "enabled" : "disabled"
+        return "\(effectDescription). This setting is currently \(currentState) and is applied by the next Stop Remote Access operation."
+    }
+
     private var builtInTargetIDs: Set<String> {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
@@ -336,10 +344,20 @@ struct SettingsView: View {
 
             Section("Emergency Isolation") {
                 Toggle("Disable Wi-Fi", isOn: policyBinding(\.disableWiFi))
+                    .help(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
                 Toggle("Disable physical Ethernet", isOn: policyBinding(\.disableEthernet))
+                    .help(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
                 Toggle("Disconnect VPNs", isOn: policyBinding(\.disconnectVPN))
+                    .help(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
                 Toggle("Disable Remote Login", isOn: policyBinding(\.disableRemoteLogin))
+                    .help(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
                 Toggle("Disable Remote Apple Events", isOn: policyBinding(\.disableRemoteAppleEvents))
+                    .help(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
                 Text("Unsupported sharing capabilities are reported as unsupported and do not block independent network isolation.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
