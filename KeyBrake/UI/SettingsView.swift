@@ -45,6 +45,41 @@ struct SettingsView: View {
         return "Requests a reset for the selected macOS privacy services. KeyBrake does not edit the TCC database or restore grants automatically."
     }
 
+    private var launchAtLoginActionHint: String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; host launch-at-login registration remains unchanged."
+        }
+        if let launchAtLoginError = model.launchAtLoginError {
+            return "Launch at Login could not be updated: \(launchAtLoginError)"
+        }
+        return model.launchAtLoginEnabled
+            ? "Launch KeyBrake at login is enabled. Toggle to ask macOS to unregister it."
+            : "Launch KeyBrake at login is disabled. Toggle to ask macOS to register it."
+    }
+
+    private var privilegedHelperActionHint: String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; no helper registration request is sent to macOS."
+        }
+        if let privilegedHelperError = model.privilegedHelperError {
+            return "The last privileged helper registration request failed: \(privilegedHelperError)"
+        }
+        switch model.privilegedHelperStatus {
+        case "Enabled":
+            return "The privileged helper is registered. Registering again asks macOS to refresh the registration."
+        case "Approval required":
+            return "macOS requires approval before the privileged helper can be used."
+        case "Not registered":
+            return "Requests macOS to register KeyBrake's privileged helper; macOS may require approval."
+        case "Not found in app bundle":
+            return "The helper is not present in this app bundle, so registration cannot proceed."
+        case "Requires macOS 13+":
+            return "Privileged helper registration requires macOS 13 or later."
+        default:
+            return "Requests macOS to register KeyBrake's privileged helper; macOS controls approval and authorization."
+        }
+    }
+
     private var builtInTargetIDs: Set<String> {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
@@ -211,10 +246,14 @@ struct SettingsView: View {
             Group {
             Section("General") {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
+                    .help(launchAtLoginActionHint)
+                    .accessibilityHint(launchAtLoginActionHint)
                 LabeledContent("Privileged Helper") {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(model.privilegedHelperStatus)
                         Button("Register Privileged Helper") { model.registerPrivilegedHelper() }
+                            .help(privilegedHelperActionHint)
+                            .accessibilityHint(privilegedHelperActionHint)
                     }
                 }
                 if let privilegedHelperError = model.privilegedHelperError {
