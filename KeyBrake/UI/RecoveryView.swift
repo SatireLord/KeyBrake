@@ -12,6 +12,7 @@ import SwiftUI
 // QoL-002: the recovery state card reuses the shared state hierarchy so the decision panel explains status before actions.
 // QoL-003: the recovery state card stays honest while launch hydration is incomplete by showing the shared checking state.
 // QoL-009: state-changing recovery actions explain their busy disabled state while review actions remain available.
+// QoL-042: the Recovery quit affordance follows the existing busy termination guard while Keep Isolation remains available.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -99,7 +100,9 @@ struct RecoveryView: View {
                     Button("Quit KeyBrake", role: .destructive) { model.requestQuit() }
                         .buttonStyle(.borderedProminent)
                         .accessibilityIdentifier("keybrake.recovery.quit")
-                        .accessibilityHint("Requests quit and keeps the unresolved recovery warning when required")
+                        .help(recoveryQuitActionHint)
+                        .accessibilityHint(recoveryQuitActionHint)
+                        .disabled(model.isBusy)
                 }
 
                 Text("Closing this panel does not resolve the recovery decision.")
@@ -231,6 +234,12 @@ struct RecoveryView: View {
     private func recoveryActionHint(description: String, disablesWhileBusy: Bool) -> String {
         guard disablesWhileBusy && model.isBusy else { return description }
         return "Unavailable while KeyBrake completes the current operation."
+    }
+
+    private var recoveryQuitActionHint: String {
+        model.isBusy
+            ? "Unavailable while KeyBrake completes the current operation."
+            : "Requests quit and keeps the unresolved recovery warning when required"
     }
 
     private func recoveryActionLabel(title: String, description: String, systemImage: String, prominent: Bool) -> some View {
