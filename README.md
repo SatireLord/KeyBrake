@@ -152,3 +152,5 @@ UI-050 makes menu Quit KeyBrake explain its current availability. The existing a
 UI-051 gives every menu navigation destination explicit guidance. Open Command Center, Open Incident Log, and Settings… now explain the surface they open through help and accessibility hints, while their existing window routes and handlers remain unchanged.
 
 UI-052 gives Recovery actions matching visible and spoken guidance. Keep Isolation and the shared recovery actions now expose help that follows their existing descriptions and busy-state accessibility hints, while recovery behavior remains unchanged.
+
+UI-053 explains Application Access reset availability. The existing privacy-reset action now states whether the network sandbox, application selection, or privacy-service selection is preventing use, while its existing TCC boundary and disabled gate remain unchanged.

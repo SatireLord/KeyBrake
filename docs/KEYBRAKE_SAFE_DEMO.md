@@ -45,6 +45,8 @@ UI-051 makes the menu's navigation destinations explicit during safe review. Ope
 
 UI-052 makes Recovery action hover guidance match the spoken descriptions during safe review. Keep Isolation and the shared recovery actions expose visible help for their normal descriptions and their existing busy-disabled explanation, while selecting them still follows the existing recovery handlers and gates.
 
+UI-053 makes Application Access reset availability explicit during safe review. The existing Revoke Selected Access action explains whether the network sandbox or a missing application or privacy-service selection prevents use, while the action still follows its existing selection gate and privacy boundary.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
