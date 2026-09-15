@@ -112,13 +112,16 @@ struct SettingsView: View {
                 Section("Network sandbox") {
                     Label("Host operations disabled", systemImage: "shield.checkered")
                         .foregroundStyle(.blue)
-                    Text("Scenario: \(model.networkSandboxScenario?.displayTitle ?? "Fixture simulation")")
-                        .font(.subheadline.weight(.semibold))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Scenario: \(model.networkSandboxScenario?.displayTitle ?? "Fixture simulation")")
+                            .font(.subheadline.weight(.semibold))
+                        Text(model.networkSandboxScenario?.displayDetail ?? "This run uses local Wi-Fi and VPN fixtures.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .accessibilityElement(children: .combine)
                         .accessibilityIdentifier("keybrake.settings.network-sandbox-scenario")
-                    Text(model.networkSandboxScenario?.displayDetail ?? "This run uses local Wi-Fi and VPN fixtures.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
                     Text("Settings changes, privacy requests, helper registration, and launch-at-login changes are unavailable; sandbox recovery state stays in a UUID-named temporary store.")
                         .font(.caption)
                         .foregroundStyle(.secondary)

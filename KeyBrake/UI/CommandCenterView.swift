@@ -30,6 +30,7 @@ import SwiftUI
 // QoL-026: The recovery-card container owns its stable accessibility identifier while preserving emergency-action ownership and all child surfaces.
 // QoL-027: Network sandbox mode publishes its non-mutating boundary before controls so staged Wi-Fi and VPN exercise cannot be mistaken for host operations.
 // QoL-028: Network sandbox mode identifies its connected or deterministic-failure fixture before its disabled host-operation boundary.
+// QoL-029: Network sandbox scenario title and detail combine into one inspection surface without absorbing the host-operation boundary.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -126,13 +127,16 @@ struct KeyBrakeCommandCenterView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Network sandbox active")
                     .font(.headline)
-                Text("Scenario: \(model.networkSandboxScenario?.displayTitle ?? "Fixture simulation")")
-                    .font(.subheadline.weight(.semibold))
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Scenario: \(model.networkSandboxScenario?.displayTitle ?? "Fixture simulation")")
+                        .font(.subheadline.weight(.semibold))
+                    Text(model.networkSandboxScenario?.displayDetail ?? "Wi-Fi and VPN are simulated with local fixtures.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
                     .accessibilityIdentifier("keybrake.command-center.network-sandbox-scenario")
-                Text(model.networkSandboxScenario?.displayDetail ?? "Wi-Fi and VPN are simulated with local fixtures.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
                 Text("Host network, process, privacy, sharing, and user-settings persistence operations are disabled; sandbox recovery state stays in a UUID-named temporary store.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
