@@ -186,3 +186,5 @@ UI-067 makes the Application Access TCC boundary scannable. The existing reset e
 UI-068 makes the Settings Recovery contract scannable. The existing recovery explanation now has a stable inspection anchor, while recovery routing, incident retention, and sandbox behavior remain unchanged.
 
 UI-069 makes the Local Automation exact-identity boundary scannable. The existing bundle-and-executable matching explanation now has a stable inspection anchor, while target storage, process matching, and sandbox behavior remain unchanged.
+
+UI-070 makes the Privileged Helper status scannable. The existing status text now has a stable inspection anchor, while helper registration, approval state, and sandbox behavior remain unchanged.
