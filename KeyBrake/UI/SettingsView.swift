@@ -374,6 +374,7 @@ struct SettingsView: View {
                     Text(launchAtLoginError)
                         .font(.caption)
                         .foregroundStyle(.red)
+                        .accessibilityIdentifier("keybrake.settings.launch-at-login.error")
                 }
             }
 
