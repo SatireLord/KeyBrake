@@ -435,6 +435,7 @@ struct SettingsView: View {
                     .help(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
                     .accessibilityHint(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
             }
+            .accessibilityIdentifier("keybrake.settings.remote-access-section")
 
             Section("Application Access") {
                 Picker("Application", selection: $selectedTargetID) {
