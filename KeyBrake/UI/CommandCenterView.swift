@@ -34,6 +34,7 @@ import SwiftUI
 // QoL-030: Network sandbox banner contains its scenario and host-boundary surfaces so each stable inspection anchor remains independently reachable.
 // QoL-031: Network sandbox host-operation boundary publishes its own inspection anchor in the containing banner.
 // QoL-033: Network sandbox status text publishes an explicit active-state inspection anchor before scenario and boundary details.
+// QoL-035: Network sandbox review lists each immutable fixture service before the host-operation boundary so Wi-Fi and VPN inputs are directly inspectable.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -141,6 +142,7 @@ struct KeyBrakeCommandCenterView: View {
                 }
                 .accessibilityElement(children: .combine)
                     .accessibilityIdentifier("keybrake.command-center.network-sandbox-scenario")
+                networkSandboxFixtureInventory
                 Text("Host network, process, privacy, sharing, and user-settings persistence operations are disabled; sandbox recovery state stays in a UUID-named temporary store.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -158,6 +160,50 @@ struct KeyBrakeCommandCenterView: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("keybrake.command-center.network-sandbox-banner")
+    }
+
+    private var networkSandboxFixtureInventory: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Fixture network inventory")
+                .font(.caption.weight(.semibold))
+            ForEach(networkSandboxFixtureServices) { service in
+                HStack(spacing: 8) {
+                    Label(service.displayName, systemImage: networkSandboxServiceSymbol(for: service.kind))
+                    Spacer(minLength: 8)
+                    Text(networkSandboxServiceState(for: service))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("keybrake.command-center.network-sandbox-service.\(service.id)")
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("keybrake.command-center.network-sandbox-inventory")
+    }
+
+    private var networkSandboxFixtureServices: [NetworkService] {
+        guard let scenario = model.networkSandboxScenario else { return [] }
+        return NetworkSandboxFixture.fixture(for: scenario).services
+    }
+
+    private func networkSandboxServiceSymbol(for kind: NetworkServiceKind) -> String {
+        switch kind {
+        case .wifi:
+            return "wifi"
+        case .vpn:
+            return "lock.shield"
+        case .loopback:
+            return "arrow.triangle.2.circlepath"
+        case .ethernet, .usbEthernet, .thunderbolt, .bridge, .other:
+            return "network"
+        }
+    }
+
+    private func networkSandboxServiceState(for service: NetworkService) -> String {
+        let state = service.active ? "active" : (service.enabled ? "enabled" : "disabled")
+        guard let device = service.device else { return state }
+        return "\(state) · \(device)"
     }
 
     private var emergencyActions: some View {
