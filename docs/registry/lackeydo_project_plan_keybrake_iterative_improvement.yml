@@ -1446,16 +1446,16 @@ project_plan:
       evidence: "The requested Agent-Cache source snapshot could not create WorkBeginOrder because the database was locked; evidence was appended to the durable task event log, but the connector returned an incomplete projection after the source checkout became dirty."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "0ebd2295803db5123dbd2c940f50953104c61bbf"
+  head: "342f2956e097eb1c1b8791b5ce5562b2629f12af"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-017"
     source_commit: "0ebd2295803db5123dbd2c940f50953104c61bbf"
-    documentation_commit: "pending after diff validation"
-    remote_head_verified: "0ebd2295803db5123dbd2c940f50953104c61bbf"
-    status: "source_checkpoint_documentation_pending"
-    next_safe_entry_point: "Complete the UI-017 documentation checkpoint, then continue with UI-018 exact Agent Display containment and signed-host release gates before any public-visibility decision."
+    documentation_commit: "342f2956e097eb1c1b8791b5ce5562b2629f12af"
+    remote_head_verified: "342f2956e097eb1c1b8791b5ce5562b2629f12af"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-018 exact Agent Display containment and signed-host release gates while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -2415,7 +2415,7 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Record UI-017 requirement, slice, checksums, guards, test receipts, tooling holds, source checkpoint, documentation checkpoint, and UI-018 entry point."
-        status: pending_documentation_commit
+        status: committed
     visual_evidence:
       source: "KeyBrake/UI/CommandCenterView.swift"
       provenance: "source checkpoint 0ebd2295803db5123dbd2c940f50953104c61bbf; bounded Swift parse; cursor-safe UI guard; SwiftPM Release build and complete test suite; Agent Display preflight/provider checks; unique disposable bundle launch"
@@ -2436,7 +2436,7 @@ project_plan:
     checksums:
       - "KeyBrake/UI/CommandCenterView.swift sha256=efc173458e3c6d7c64790fcee3b0a26add980fc602153325dfbac08fa7c3f54c"
       - "UI-017 source checkpoint 0ebd2295803db5123dbd2c940f50953104c61bbf"
-      - "UI-017 documentation checkpoint will be bound to the private remote commit after diff validation."
+      - "UI-017 documentation checkpoint 342f2956e097eb1c1b8791b5ce5562b2629f12af is bound to the private remote commit after diff validation."
     guards:
       - "Agent-Cache UI-017 mutation gate passed after live branch and PR #1 continuity were verified."
       - "CodeGraph query was attempted before the source edit; the connector reported CodeGraph not initialized, so no new graph snapshot is claimed."
@@ -2454,7 +2454,7 @@ project_plan:
     source_commit: "0ebd2295803db5123dbd2c940f50953104c61bbf"
     source_file_shas:
       - "KeyBrake/UI/CommandCenterView.swift=efc173458e3c6d7c64790fcee3b0a26add980fc602153325dfbac08fa7c3f54c"
-    documentation_commit: "pending after diff validation"
-    remote_head_verified: "0ebd2295803db5123dbd2c940f50953104c61bbf"
-    status: "source_checkpoint_documentation_pending"
-    next_safe_entry_point: "Complete the UI-017 documentation checkpoint, then continue with UI-018 exact Agent Display containment and signed-host release gates before any public-visibility decision."
+    documentation_commit: "342f2956e097eb1c1b8791b5ce5562b2629f12af"
+    remote_head_verified: "342f2956e097eb1c1b8791b5ce5562b2629f12af"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-018 exact Agent Display containment and signed-host release gates while preserving the private PR."
