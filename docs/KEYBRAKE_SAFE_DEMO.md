@@ -23,6 +23,8 @@ UI-040 makes the Settings Network sandbox section a containing accessibility sur
 
 UI-041 adds a visible fixture network inventory to the Command Center sandbox banner. The inventory lists Wi-Fi, USB Ethernet, Work VPN, and loopback from the same immutable fixture used by the controller, and each row reports its simulated state and device when available. This makes the inputs inspectable before an isolation or recovery action without adding host network access or changing the production route.
 
+UI-042 mirrors that inventory in the Settings Network sandbox section, before the settings form is disabled. The section uses the same immutable fixture and exposes `keybrake.settings.network-sandbox-inventory` plus stable per-service identifiers, so Settings and Command Center show identical simulated Wi-Fi/VPN inputs without adding host network access or changing the production route.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
@@ -42,6 +44,10 @@ The Command Center review path keeps emergency actions separate from navigation:
 Use the temporary app bundle produced by the Release build:
 
 `/usr/bin/open -n /path/to/KeyBrake.app --args --keybrake-network-sandbox`
+
+To open the Settings review surface with the same sandbox, use:
+
+`/usr/bin/open -n /path/to/KeyBrake.app --args --keybrake-settings --keybrake-network-sandbox`
 
 The connected route opens Command Center in normal state and labels itself `Connected fixture`; choose `Stop Remote Access` to exercise fixture isolation, then use `Restore Network` in the mouse-operated recovery panel. Wi-Fi restores to its recorded enabled state, while VPN remains disconnected per the recovery contract.
 

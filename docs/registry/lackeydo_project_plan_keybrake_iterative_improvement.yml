@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "1359d6db5fa20ae508a81cc2f486c056db7389fc"
+    head: "eff6c4105d00c416c8f8e447f81bd757a1e487d2"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "1359d6db5fa20ae508a81cc2f486c056db7389fc"
+    remote_head_verified: "eff6c4105d00c416c8f8e447f81bd757a1e487d2"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -4532,10 +4532,88 @@ project_plan:
     remote_head_verified: "1359d6db5fa20ae508a81cc2f486c056db7389fc"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the exact Agent Display and signed-host holds and the private PR."
-  upcoming_iteration:
+  completed_iteration_ui042:
     id: "UI-042"
-    name: "Next source-backed QoL seam"
-    user_promise: "Improve the next measured app surface without changing the recovery contract or private release boundary."
+    name: "Network sandbox Settings fixture inventory"
+    user_promise: "The Settings sandbox review shows the same immutable Wi-Fi, USB Ethernet, Work VPN, and loopback fixture inputs as Command Center before the settings form, so both review surfaces make the simulated test state explicit without changing host networking."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "SettingsView network sandbox section"
+        intended_change: "Add the existing NetworkSandboxFixture service rows, simulated state, device details, and stable Settings-scoped inspection identifiers beneath the current scenario context while preserving the containing section, disabled form, fixture controller, and host-operation boundary."
+        status: implemented
+      - path: "README.md"
+        owner: "Portfolio and safe sandbox documentation"
+        intended_change: "Document that Settings exposes the same fixture inventory as Command Center without claiming live network isolation or host mutation."
+        status: committed
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the Settings fixture inventory as implemented and fixture-only."
+        status: committed
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-042 source, focused proof, evidence limits, and the next safe entry point."
+        status: committed
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain that the Settings route exposes the same local fixture inputs before controls while retaining the non-mutating sandbox boundary."
+        status: committed
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-042 source parsing, focused tests/builds, Agent Display attempt if run, exact source hash, and unverified runtime/network limits."
+        status: committed
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record the UI-042 active write set, checksum map, proof classes, deferred holds, and eventual remote checkpoint."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint eff6c4105d00c416c8f8e447f81bd757a1e487d2; direct bounded source read; CodeGraph status checked and uninitialized; SwiftPM Release build; focused fixture tests; native Xcode Release bundle; cursor-safe Agent Display preflight and virtual-display capability checks."
+      state: "fixture_inventory_source_verified_runtime_unverified"
+      observed: "The Settings Network sandbox section contains its status, combined scenario, fixture inventory, host-boundary children, and containing accessibility relationship; each service row is derived from the same immutable fixture used by the controller and the complete form remains disabled in sandbox mode. The unique org.realitygood.KeyBrake.UI042 bundle launched as PID 89942, staging remained silent for about 30 seconds, inspect-ui exposed Eoco Nota Agent-Alpha, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated."
+      receipt: "No UI-042 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, live OS-level Wi-Fi/VPN isolation, Developer ID, notarization, helper approval, TCC, launchd, respawn, and complete Agent-Cache execution-ledger projection remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=256929a6a92abacc07dabb2dc23a2cf17c55e397ca59c6990318b981cf249720"
+      source_commit: "eff6c4105d00c416c8f8e447f81bd757a1e487d2"
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      source_read: "Direct bounded reads of SettingsView.swift, CommandCenterView.swift, NetworkController.swift, and NetworkControllerTests.swift established the existing owner, fixture definition, and focused test seams."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/SettingsView.swift; pass"
+      ui_guard: "non_interrupting_ui_guard.py --json KeyBrake/UI/SettingsView.swift; pass"
+      singleflight: "workspace singleflight --kind swiftpm; manual review because an unrelated MB4Notes swift-test process had no provable package path; direct process inspection found no blocking KeyBrake build/test overlap and preserved the other process"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI042; pass in 13.42s"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI042 --filter NetworkControllerTests; 9 tests, 0 failures"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI042 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED; universal arm64/x86_64 app with expected executable metadata, helper plist, helper executable, and feature-contract resource; ad-hoc local signing is not Developer ID distribution signing"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI042 --start-sentinel --json; displayctl doctor; displayctl capabilities; disposable Settings sandbox bundle PID 89942; bounded displayctl stage stopped with SIGINT after about 30 seconds; inspect-ui exposed Eoco Nota Agent-Alpha; is-isolated false/windowCount 0; exact PID terminated; no pointer, contained visual, runtime accessibility, or PNG proof"
+      agent_cache_context: "bootstrap_context passed with clean repository truth, active keybrake product binding, protected_region_count=0, task-relevant count=0, and missing docs/regression-checksums.json warning; the explicit enforce CLI retry hung without output and was terminated as an owned tooling process after its 30-second bound; no new checksum guard was created."
+      safety: "The UI-042 change is presentation-only: NetworkSandboxFixture is read-only, Settings remains disabled in sandbox mode, and no production controller, process lookup, command runner, helper, persistence, TCC, launchd, or host network path changed."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift sha256=256929a6a92abacc07dabb2dc23a2cf17c55e397ca59c6990318b981cf249720"
+      - "UI-042 source checkpoint eff6c4105d00c416c8f8e447f81bd757a1e487d2"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live bootstrap packet."
+      - "No new regression checksum row is authorized or applicable; refresh whole-file documentation SHA anchors only after final source bytes."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths; current worktree is clean."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Do not claim fixture rows as live OS network isolation."
+    deferred:
+      - "Exact Agent Display containment/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
+    next_action: "Bind the documentation checkpoint and remote head after the exact documentation commit, then continue with UI-043 without reopening unchanged Agent Display staging."
+  completed_delivery_ui042:
+    iteration: "UI-042"
+    source_commit: "eff6c4105d00c416c8f8e447f81bd757a1e487d2"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=256929a6a92abacc07dabb2dc23a2cf17c55e397ca59c6990318b981cf249720"
+    documentation_commit: "pending_documentation_commit"
+    remote_head_verified: "eff6c4105d00c416c8f8e447f81bd757a1e487d2"
+    status: "source_checkpoint_remote_verified_documentation_pending"
+    next_safe_entry_point: "Complete the exact documentation checkpoint, then continue with the next source-backed QoL seam while preserving the Agent Display and signed-host holds."
+  upcoming_iteration:
+    id: "UI-043"
+    name: "Next source-backed QoL seam after Settings fixture inventory"
+    user_promise: "Improve the next measured app surface without changing the recovery contract, fixture safety boundary, or private release boundary."
     status: "planned"
     scope_preserved: true
     next_action: "Select the next source-backed QoL seam from current evidence; do not reopen unchanged Agent Display staging."
