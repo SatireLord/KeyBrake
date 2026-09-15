@@ -261,9 +261,18 @@ public enum NetworkSandboxScenario: String, Codable, CaseIterable, Sendable {
     public var displayTitle: String {
         switch self {
         case .connected:
-            return "Connected Wi-Fi and VPN"
+            return "Connected fixture"
         case .isolationFailure:
-            return "Isolation failure"
+            return "Isolation failure fixture"
+        }
+    }
+
+    public var displayDetail: String {
+        switch self {
+        case .connected:
+            return "Simulates enabled Wi-Fi and Work VPN, disabled USB Ethernet, and active loopback."
+        case .isolationFailure:
+            return "Simulates Wi-Fi and VPN isolation failures while leaving host network state untouched."
         }
     }
 }

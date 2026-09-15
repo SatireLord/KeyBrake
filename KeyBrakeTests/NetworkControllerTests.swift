@@ -82,6 +82,13 @@ final class NetworkControllerTests: XCTestCase {
         XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-usb-ethernet" })?.outcome, .alreadyInDesiredState)
     }
 
+    func testNetworkSandboxScenarioNamesConnectedAndFailureProfiles() {
+        XCTAssertEqual(NetworkSandboxScenario.connected.displayTitle, "Connected fixture")
+        XCTAssertEqual(NetworkSandboxScenario.isolationFailure.displayTitle, "Isolation failure fixture")
+        XCTAssertTrue(NetworkSandboxScenario.connected.displayDetail.contains("enabled Wi-Fi"))
+        XCTAssertTrue(NetworkSandboxScenario.isolationFailure.displayDetail.contains("isolation failures"))
+    }
+
     func testSystemNetworkIsolationUsesHelperAndVerifiesDisabledState() async {
         let runner = RecordingCommandRunner(results: [.success(commandResult(output: "Network service is disabled.\n"))])
         let helper = RecordingHelper()

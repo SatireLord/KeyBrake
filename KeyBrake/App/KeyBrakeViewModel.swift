@@ -26,6 +26,7 @@ final class KeyBrakeViewModel: ObservableObject {
     let incidentStore: IncidentStore
     let featureContract: FeatureContract
     let isNetworkSandbox: Bool
+    let networkSandboxScenario: NetworkSandboxScenario?
 
     private static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
     private static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
@@ -34,12 +35,14 @@ final class KeyBrakeViewModel: ObservableObject {
         coordinator: EmergencyCoordinator = .live(),
         incidentStore: IncidentStore = IncidentStore(),
         initialIsolationPolicy: EmergencyIsolationPolicy? = nil,
+        networkSandboxScenario: NetworkSandboxScenario? = nil,
         isNetworkSandbox: Bool = false
     ) {
         self.coordinator = coordinator
         self.incidentStore = incidentStore
         self.featureContract = FeatureContract.current()
         self.isNetworkSandbox = isNetworkSandbox
+        self.networkSandboxScenario = isNetworkSandbox ? networkSandboxScenario : nil
         self.configuredTargets = isNetworkSandbox ? TargetRegistry.builtInRemoteAccess : Self.loadConfiguredTargets()
         self.isolationPolicy = initialIsolationPolicy ?? Self.loadIsolationPolicy()
         self.launchAtLoginEnabled = isNetworkSandbox ? false : Self.readLaunchAtLoginStatus()

@@ -152,6 +152,7 @@ private enum KeyBrakeLaunchConfiguration {
             coordinator: coordinator,
             incidentStore: incidentStore,
             initialIsolationPolicy: .standard,
+            networkSandboxScenario: scenario,
             isNetworkSandbox: true
         )
     }
