@@ -8744,16 +8744,16 @@ project_plan:
       - "The source parse, cursor-safe checks, routed exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Verify private remote parity and PR state at the UI-086 documentation checkpoint, then continue UI-087 with the recorded Launch-at-Login control inspection seam."
+    next_action: "Continue UI-087 with the recorded Launch-at-Login control inspection seam while preserving the exact Agent Display, unsigned-host, and private PR holds."
   completed_delivery_ui086:
     iteration: "UI-086"
     source_commit: "91e8a520721b0406133338fbf55281c6ba7e14e4"
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=ba32909b930a0fa8f5689e9dfdbaadbf7998a0d52ae6132c89a3908de1dd86ae"
     documentation_commit: "ee83ac4696b039487268acfb264e3feaaab46b90"
-    remote_head_verified: "87166f62297f02777d382ed9f637bd250596142d"
-    status: "documentation_checkpoint_pending_push"
-    next_safe_entry_point: "Push and verify the UI-086 source/documentation checkpoint before editing UI-087; preserve the exact Agent Display, unsigned-host, and private PR holds."
+    remote_head_verified: "42971c2620f4e0b8ce3a34eb8160f78aa873fc71"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-087 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   upcoming_iteration:
     id: "UI-087"
     name: "Launch-at-Login control inspection anchor"
@@ -8790,8 +8790,8 @@ project_plan:
         intended_change: "Track UI-087 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
         status: active
     pre_edit:
-      baseline_head: "ee83ac4696b039487268acfb264e3feaaab46b90"
-      baseline_remote_head: "87166f62297f02777d382ed9f637bd250596142d"
+      baseline_head: "42971c2620f4e0b8ce3a34eb8160f78aa873fc71"
+      baseline_remote_head: "42971c2620f4e0b8ce3a34eb8160f78aa873fc71"
       source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=ba32909b930a0fa8f5689e9dfdbaadbf7998a0d52ae6132c89a3908de1dd86ae"
       source_read: "Direct bounded reads confirmed the existing Launch KeyBrake at Login Toggle at SettingsView.swift:359-362 uses the existing launchAtLoginEnabled binding and launchAtLoginActionHint but has no stable control inspection identifier, while host-settings semantics, helper boundaries, hydration-aware protection state, sandbox behavior, and host-operation behavior remain the behavior boundary."
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
