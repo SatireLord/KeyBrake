@@ -119,6 +119,8 @@ UI-088 makes the Privileged Helper summary explicit during safe review. The exis
 
 UI-089 makes the Local Automation Add Application action explicit during safe review. The existing enrollment action is deterministically inspectable, while its handler, exact target identity semantics, enrollment guidance, hydration behavior, sandbox behavior, and host operations remain unchanged.
 
+UI-090 makes the Remote Access Add Application action explicit during safe review. The existing approval-aware enrollment action is deterministically inspectable, while its handler, target identity semantics, approval guidance, hydration behavior, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

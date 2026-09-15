@@ -226,3 +226,5 @@ UI-087 makes the Launch-at-Login control scannable. The existing General-section
 UI-088 makes the Privileged Helper summary scannable. The existing General-section summary now has a stable inspection anchor, while its status, registration action, error surfaces, helper semantics, host-settings boundaries, hydration behavior, and sandbox behavior remain unchanged.
 
 UI-089 makes the Local Automation Add Application action scannable. The existing enrollment action now has a stable inspection anchor, while its handler, exact target identity semantics, enrollment guidance, hydration behavior, and sandbox behavior remain unchanged.
+
+UI-090 makes the Remote Access Add Application action scannable. The existing approval-aware enrollment action now has a stable inspection anchor, while its handler, target identity semantics, approval guidance, hydration behavior, and sandbox behavior remain unchanged.
