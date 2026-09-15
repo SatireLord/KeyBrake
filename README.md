@@ -250,3 +250,5 @@ UI-099 makes the menu Restore Human Control action scannable. The existing recov
 UI-100 makes the menu Stop Remote Access action scannable. The existing emergency action now has a stable identifier, while its label, busy-state gate, handler, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-101 makes the menu Stop Skynet Locally action scannable. The existing emergency action now has a stable identifier, while its label, already-stopped and busy-state gates, handler, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-102 makes the menu Open App Access Settings action scannable. The existing Settings navigation action now has a stable identifier, while its label, Settings route, busy-state gate, handler, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
