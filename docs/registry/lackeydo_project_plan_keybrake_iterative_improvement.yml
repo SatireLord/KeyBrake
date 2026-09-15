@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "862f6b9fc0c16831eed32fda376ab4f2639c3c1f"
+    head: "933df138061a0696dedc676079a8b730a3d885e2"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "862f6b9fc0c16831eed32fda376ab4f2639c3c1f"
+    remote_head_verified: "933df138061a0696dedc676079a8b730a3d885e2"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -4491,7 +4491,7 @@ project_plan:
         status: committed
     visual_evidence:
       source: "KeyBrake/UI/CommandCenterView.swift"
-      provenance: "Source checkpoint 3f8ad05caf5f9adad248b7adadb26d5f88cca58d; bounded Swift parsing; cursor-safe UI guard; workspace single-flight pass; SwiftPM Release build; 39 tests; Agent Display preflight/provider checks; disposable ad-hoc-signed app bundle."
+      provenance: "Source checkpoint 3f8ad05caf5f9adad248b7adadb26d5f88cca58d; bounded Swift parsing; cursor-safe UI guard; workspace single-flight pass; SwiftPM Release build; 39 tests; Agent Display cursor-safe preflight and virtual-display availability check; disposable ad-hoc-signed app bundle."
       state: "fixture_inventory_source_verified_runtime_unverified"
       observed: "The sandbox banner lists Wi-Fi on en0, disabled USB Ethernet on en5, active Work VPN, and active loopback on lo0 from the same immutable fixture used by the controller, with stable per-service inspection identifiers. The unique org.realitygood.KeyBrake.UI041 bundle launched as PID 93877; bounded staging remained silent for about 30 seconds, inspect-ui exposed Eoco Nota Agent-Alpha, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated."
       receipt: "No UI-041 PNG was captured; retained UI-004 Settings PNG remains the single visual artifact under the one-image SendMePics contract."
@@ -4503,18 +4503,18 @@ project_plan:
       singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlapping proven SwiftPM/Xcode build or test command"
       release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI041; pass in 15.87s"
       tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI041; 39 tests, 0 failures"
-      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI041 --start-sentinel --json; pass; displayctl doctor/provider checks passed; disposable app launched as PID 93877 with --keybrake-network-sandbox; bounded stage silent ~30s and stopped SIGINT; inspect-ui exposed Eoco Nota Agent-Alpha; is-isolated false/windowCount=0; exact PID 93877 terminated; no pointer/visual/runtime/PNG proof"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI041 --start-sentinel --json; pass with virtual display present; disposable app launched as PID 93877 with --keybrake-network-sandbox; bounded stage silent ~30s and stopped SIGINT; inspect-ui exposed Eoco Nota Agent-Alpha; is-isolated false/windowCount=0; exact PID 93877 terminated; no pointer/visual/runtime/PNG proof"
       agent_cache_context: "The UI-041 Agent-Cache bootstrap confirmed clean repository truth, zero protected regions, and no execution ledger; its missing docs/regression-checksums.json registry warning remains documented, and no new guard was created."
       safety: "Only source validation, Release build, local tests, and disposable fixture staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, screenshot, or signed-host claim."
     checksums:
       - "KeyBrake/UI/CommandCenterView.swift sha256=513d08d384f9d4c831a65f800cd3ca407395d1810e15641722ecf00c5669bc2b"
       - "UI-041 source checkpoint 3f8ad05caf5f9adad248b7adadb26d5f88cca58d"
-      - "UI-041 documentation checkpoint 862f6b9fc0c16831eed32fda376ab4f2639c3c1f"
+      - "UI-041 documentation checkpoint 933df138061a0696dedc676079a8b730a3d885e2"
     guards:
       - "CodeGraph status was checked before editing; the index was uninitialized and no graph proof was claimed."
       - "The changed Swift file passed bounded frontend parsing and the cursor-safe UI guard."
       - "The workspace single-flight guard passed with no overlapping proven package command."
-      - "Agent Display preflight, doctor, and provider checks passed; exact containment remained unproven."
+      - "Agent Display cursor-safe preflight passed and the virtual display was present; exact containment remained unproven."
       - "Only exact verified disposable PID 93877 was terminated."
       - "No new PNG was captured; retained UI-004 Settings artifact was preserved."
     deferred:
@@ -4527,8 +4527,8 @@ project_plan:
     source_commit: "3f8ad05caf5f9adad248b7adadb26d5f88cca58d"
     source_file_shas:
       - "KeyBrake/UI/CommandCenterView.swift=513d08d384f9d4c831a65f800cd3ca407395d1810e15641722ecf00c5669bc2b"
-    documentation_commit: "862f6b9fc0c16831eed32fda376ab4f2639c3c1f"
-    remote_head_verified: "862f6b9fc0c16831eed32fda376ab4f2639c3c1f"
+    documentation_commit: "933df138061a0696dedc676079a8b730a3d885e2"
+    remote_head_verified: "933df138061a0696dedc676079a8b730a3d885e2"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the exact Agent Display and signed-host holds and the private PR."
   upcoming_iteration:
