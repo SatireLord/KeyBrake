@@ -133,6 +133,8 @@ UI-095 makes the existing Disable Remote Apple Events Emergency Isolation contro
 
 UI-096 makes each existing Privacy Reset Profile service control explicit during safe review. Each service toggle is deterministically inspectable through its TCC service value, while descriptor order, display labels, selection binding semantics, TCC reset boundaries, hydration behavior, sandbox behavior, and host operations remain unchanged.
 
+UI-097 makes each existing non-built-in configured target removal control explicit during safe review. The Local Automation and Remote Access removal buttons are deterministically inspectable through their existing TargetDefinition.id values, while labels, built-in-target filtering, target identity details, removal semantics, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

@@ -9614,51 +9614,144 @@ project_plan:
     remote_head_verified: "fbfb0bf1cacf64c5578381aa33b7e9e6de5ca3c4"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-096 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui096:
     id: "UI-096"
     name: "Privacy Reset Profile service control inspection anchors"
     user_promise: "Make each existing Privacy Reset Profile service control deterministically inspectable during safe review while preserving descriptor order, display names, selection binding semantics, TCC reset boundaries, sandbox behavior, host-operation boundaries, and the private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "Privacy Reset Profile service control inspection anchors"
         intended_change: "Add stable per-service accessibility identifiers to the existing Privacy Reset Profile controls without changing descriptor order, display names, selection binding semantics, TCC reset boundaries, sandbox behavior, or host operations."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document the Privacy Reset Profile service control inspection anchors."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the Privacy Reset Profile service control inspection anchors as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-096 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain deterministic inspection of the Privacy Reset Profile service controls during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-096 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-096 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: active
+        status: committed
     pre_edit:
-      baseline_head: "fbfb0bf1cacf64c5578381aa33b7e9e6de5ca3c4"
-      baseline_remote_head: "fbfb0bf1cacf64c5578381aa33b7e9e6de5ca3c4"
+      baseline_head: "5a67197f689bcbeb9bfed395163ef5a28824e286"
+      baseline_remote_head: "5a67197f689bcbeb9bfed395163ef5a28824e286"
       source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=7b6f9f1ff070a387cb76a8a9b8e9a2a9e05229b40b047e9b1e4cc05059ddfb98"
       source_read: 'Direct bounded reads confirmed the existing ForEach(PrivacyServiceCatalog.descriptors) service Toggle at SettingsView.swift:508-518 uses descriptor.displayName, selectedPrivacyServices binding, and privacyServiceSelectionHint(for:) guidance but has no stable per-service control inspection identifier; descriptor order, selection semantics, TCC reset boundary, sandbox behavior, and host-operation behavior remain the behavior boundary.'
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
-      route: "UI-096 follows the live SettingsView Privacy Reset Profile ForEach and its existing descriptor.displayName labels, selectedPrivacyServices Binding, and privacyServiceSelectionHint(for:) guidance; each identifier will use the existing TCCService.rawValue, while current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
+      route: "UI-096 follows the live SettingsView Privacy Reset Profile ForEach and its existing descriptor.displayName labels, selectedPrivacyServices Binding, and privacyServiceSelectionHint(for:) guidance; each identifier uses the existing TCCService.rawValue, while current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
     acceptance:
       - "Each existing Privacy Reset Profile service control exposes stable identifier prefix keybrake.settings.privacy-reset-profile.service.<TCCService.rawValue>."
       - "The visible labels, descriptor order, selection binding semantics, TCC reset boundary, hydration-aware protection state, sandbox behavior, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint 5c8c422e574a99a20d0457dbe66639de97788732; direct bounded source reads; bounded source parsing; cursor-safe UI guard and preflight; exact committed-HEAD disposable archive; routed Agent-Cache single-flight admission; focused coordinator tests; SwiftPM Release build; native Xcode Release build and artifact inspection."
+      state: "source_verified_runtime_unverified"
+      observed: "Each existing Privacy Reset Profile service control now exposes a stable identifier derived from its TCCService.rawValue while descriptor order, display labels, selection binding semantics, TCC reset boundaries, hydration behavior, sandbox behavior, and host operations remain unchanged."
+      receipt: "No UI-096 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=a948455bb1e727f9cc5bd00f1897d5c3644cb180bff0ab300b011e21900cb2bd"
+      source_commit: "5c8c422e574a99a20d0457dbe66639de97788732"
+      documentation_commit: "3e6d25bb4194b4026133be1e4744b57da7eef080"
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/SettingsView.swift passed; non_interrupting_ui_guard.py exited 0; agent_ui_preflight.py reported status=pass on virtual-16x9 with isolated=false, windowCount=0, and no running KeyBrake app route"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI096.UkQvzN --filter EmergencyCoordinatorTests, run from exact committed-HEAD archive /tmp/KeyBrakeUI096.VnTMtR; 8 tests, 0 failures; build complete in 22.35s and test command completed in 24.12s"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI096.0W257L, run from exact committed-HEAD archive /tmp/KeyBrakeUI096.VnTMtR; exit 0, build complete in 19.81s, and command completed in 20.34s"
+      xcode_release_build: "xcodebuild -project /tmp/KeyBrakeUI096.VnTMtR/KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI096.BFK2MY CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; supported routed Agent-Cache admission passed; native log ended with BUILD SUCCEEDED after 31.39s; shell exit code was not observed at the tool boundary"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; KeyBrakePrivilegedHelper and org.realitygood.KeyBrake.Helper.plist present; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Cursor-safe preflight passed, but no KeyBrake app route was running and Agent Display was not reopened because the unchanged staging path remained uncontained and host-unverified; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "The routed supported Agent-Cache single-flight admission passed before focused validation, after focused validation, before the SwiftPM Release build, and after the native Xcode Release build; no blocked or manual-review events were reported. The separate xcodebuild kind is unsupported by the guard and was not represented as a pass."
+      safety: "Only non-mutating source validation, an exact committed-HEAD disposable archive, local tests, and disposable builds were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=7b6f9f1ff070a387cb76a8a9b8e9a2a9e05229b40b047e9b1e4cc05059ddfb98"
+      - "KeyBrake/UI/SettingsView.swift final sha256=a948455bb1e727f9cc5bd00f1897d5c3644cb180bff0ab300b011e21900cb2bd"
+      - "UI-096 source checkpoint 5c8c422e574a99a20d0457dbe66639de97788732"
+      - "UI-096 documentation checkpoint 3e6d25bb4194b4026133be1e4744b57da7eef080"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change Privacy Reset Profile labels, descriptor order, selection binding semantics, privacyServiceSelectionHint(for:) guidance, TCC reset boundary, hydration-aware protection state, sandbox behavior, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+      - "The source parse, cursor-safe checks, routed exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "UI-097 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  completed_delivery_ui096:
+    iteration: "UI-096"
+    source_commit: "5c8c422e574a99a20d0457dbe66639de97788732"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=a948455bb1e727f9cc5bd00f1897d5c3644cb180bff0ab300b011e21900cb2bd"
+    documentation_commit: "3e6d25bb4194b4026133be1e4744b57da7eef080"
+    remote_head_verified: "5a67197f689bcbeb9bfed395163ef5a28824e286"
+    status: "documentation_checkpoint_pending_remote_push"
+    next_safe_entry_point: "UI-097 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-097"
+    name: "Configured target removal control inspection anchors"
+    user_promise: "Make each existing configurable target removal control deterministically inspectable during safe review while preserving target identity details, built-in-target protection, removal semantics, sandbox behavior, host-operation boundaries, and the private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Configured target removal control inspection anchors"
+        intended_change: "Add stable target-scoped accessibility identifiers to the existing Local Automation and Remote Access removal controls without changing labels, built-in-target filtering, target identity details, removal semantics, hints, sandbox behavior, or host operations."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document the configured target removal control inspection anchors."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the configured target removal control inspection anchors as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-097 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain deterministic inspection of configured target removal controls during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-097 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-097 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "3e6d25bb4194b4026133be1e4744b57da7eef080"
+      baseline_remote_head: "5a67197f689bcbeb9bfed395163ef5a28824e286"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=a948455bb1e727f9cc5bd00f1897d5c3644cb180bff0ab300b011e21900cb2bd"
+      source_read: 'Direct bounded reads confirmed the existing Local Automation targetRow(_:) at SettingsView.swift:547-555 and the existing Remote Access removal Button at SettingsView.swift:436-440 both remove only non-built-in targets, preserve their existing targetRemovalHint(targetName:) guidance, and currently have no target-scoped control inspection identifier; TargetDefinition.id is the existing stable target identity boundary.'
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-097 follows the existing targetRow(_:) Local Automation removal control and the Remote Access ForEach removal control; each identifier will use the existing TargetDefinition.id, while built-in-target filtering, targetRemovalHint(targetName:), model.removeTarget(targetID:), sandbox behavior, host operations, and current Git truth remain unchanged."
+    acceptance:
+      - "Each non-built-in Local Automation removal control exposes keybrake.settings.local-automation.target.<TargetDefinition.id>.remove."
+      - "Each non-built-in Remote Access removal control exposes keybrake.settings.remote-access.target.<TargetDefinition.id>.remove."
+      - "The visible labels, built-in-target filtering, target identity details, targetRemovalHint(targetName:) guidance, model.removeTarget(targetID:) semantics, sandbox behavior, and host-operation behavior remain unchanged."
       - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
@@ -9666,8 +9759,8 @@ project_plan:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
       - "Keep the write set limited to SettingsView and matching documentation/ledger files."
-      - "Do not change Privacy Reset Profile labels, descriptor order, selection binding semantics, privacyServiceSelectionHint(for:) guidance, TCC reset boundary, hydration-aware protection state, sandbox behavior, or host-operation behavior in this presentation-only iteration."
+      - "Do not change target removal labels, built-in-target filtering, target identity details, targetRemovalHint(targetName:) guidance, model.removeTarget(targetID:) semantics, sandbox behavior, or host-operation behavior in this presentation-only iteration."
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-096 Privacy Reset Profile service control inspection anchors after the UI-095 remote checkpoint is verified."
+    next_action: "Implement only the recorded UI-097 configured target removal control inspection anchors after the UI-096 documentation checkpoint is pushed privately and the remote head is verified."
