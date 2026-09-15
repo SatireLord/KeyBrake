@@ -399,6 +399,7 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
                     .accessibilityIdentifier("keybrake.settings.local-automation.identity-boundary")
             }
+            .accessibilityIdentifier("keybrake.settings.local-automation-section")
 
             Section("Remote Access") {
                 Text(remoteAccessApprovalSummary)
