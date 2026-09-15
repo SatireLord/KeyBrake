@@ -88,6 +88,16 @@ struct SettingsView: View {
         return "\(effectDescription). This setting is currently \(currentState) and is applied by the next Stop Remote Access operation."
     }
 
+    private func targetEnrollmentHint(destination: String, requiresApproval: Bool) -> String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; target enrollment for \(destination) does not change sandbox fixtures or host configuration."
+        }
+        if requiresApproval {
+            return "Choose an application to add to \(destination). Approve the target before Stop Remote Access can include it; KeyBrake records its exact bundle identifier and executable path."
+        }
+        return "Choose an application to add to \(destination); KeyBrake records its exact bundle identifier and executable path."
+    }
+
     private var builtInTargetIDs: Set<String> {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
@@ -289,6 +299,8 @@ struct SettingsView: View {
                     }
                 }
                 Button("Add Application…") { chooseApplication(category: .localAutomation) }
+                    .help(targetEnrollmentHint(destination: "Stop Skynet Locally", requiresApproval: false))
+                    .accessibilityHint(targetEnrollmentHint(destination: "Stop Skynet Locally", requiresApproval: false))
                 Text("Added applications are matched by their exact bundle identifier and executable path.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -319,6 +331,8 @@ struct SettingsView: View {
                     }
                 }
                 Button("Add Application…") { chooseApplication(category: .remoteAccess) }
+                    .help(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
+                    .accessibilityHint(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
                 Text("Only targets you approve are stopped. KeyBrake never stops a target by name alone.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
