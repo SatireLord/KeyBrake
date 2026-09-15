@@ -437,6 +437,7 @@ struct SettingsView: View {
                             Button("Remove \(target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
                                 .help(targetRemovalHint(targetName: target.displayName))
                                 .accessibilityHint(targetRemovalHint(targetName: target.displayName))
+                                .accessibilityIdentifier("keybrake.settings.remote-access.target.\(target.id).remove")
                         }
                     }
                 }
@@ -552,6 +553,7 @@ struct SettingsView: View {
                     Button("Remove", role: .destructive) { model.removeTarget(targetID: target.id) }
                         .help(targetRemovalHint(targetName: target.displayName))
                         .accessibilityHint(targetRemovalHint(targetName: target.displayName))
+                        .accessibilityIdentifier("keybrake.settings.local-automation.target.\(target.id).remove")
                 }
             }
         }
