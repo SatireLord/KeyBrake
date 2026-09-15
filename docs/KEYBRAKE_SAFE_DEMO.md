@@ -7,6 +7,8 @@ UI-032 changes only accessibility-identifier ownership: `keybrake.command-center
 
 UI-033 adds explicit `--keybrake-network-sandbox` and optional `--keybrake-network-sandbox-failure` routes. The route opens the Command Center with a visible Network sandbox active boundary, uses deterministic fixture-backed Wi-Fi, USB Ethernet, Work VPN, and loopback observations, and keeps Settings controls disabled. Stop Remote Access, restore, and failure outcomes exercise only the fixture controller; UUID temporary stores, `RecordingCommandRunner`, and a no-op process controller prevent host network, process, privacy, sharing, TCC, launchd, and user-settings mutations. This is a source/test and local runtime route; it is not OS-level network namespace or live VPN isolation.
 
+UI-034 identifies the selected fixture in both review surfaces. The connected route shows `Connected fixture`, the failure route shows `Isolation failure fixture`, and Command Center and Settings expose stable scenario identifiers for those labels. This removes ambiguity during a failure demonstration without changing the fixture controller, production route, or host-operation boundary.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
@@ -27,8 +29,8 @@ Use the temporary app bundle produced by the Release build:
 
 `/usr/bin/open -n /path/to/KeyBrake.app --args --keybrake-network-sandbox`
 
-The connected route opens Command Center in normal state; choose `Stop Remote Access` to exercise fixture isolation, then use `Restore Network` in the mouse-operated recovery panel. Wi-Fi restores to its recorded enabled state, while VPN remains disconnected per the recovery contract.
+The connected route opens Command Center in normal state and labels itself `Connected fixture`; choose `Stop Remote Access` to exercise fixture isolation, then use `Restore Network` in the mouse-operated recovery panel. Wi-Fi restores to its recorded enabled state, while VPN remains disconnected per the recovery contract.
 
-Use `--keybrake-network-sandbox-failure` instead to exercise deterministic Wi-Fi/VPN failure outcomes. Both routes are local fixture simulations and never alter host Wi-Fi, VPN, sharing, process, privacy, launchd, or user settings. Do not combine these flags with a live-host isolation test.
+Use `--keybrake-network-sandbox-failure` instead to exercise deterministic Wi-Fi/VPN failure outcomes; that route labels itself `Isolation failure fixture`. Both routes are local fixture simulations and never alter host Wi-Fi, VPN, sharing, process, privacy, launchd, or user settings. Do not combine these flags with a live-host isolation test.
 
 The demo must say `Network Isolated` or `Partial Isolation`, not that the computer is safe or that all remote access is eliminated.
