@@ -9151,9 +9151,9 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=9088cadd9ec07899cd7be17b459dae9e1a72eab4c07cb1ff761d64f32e0d06a8"
     documentation_commit: "65953ae8531fffcbad5e0a798dd5a4b367b6b8e7"
-    remote_head_verified: "f45c985a3174546fe7d36cbb69ef492dd5cb4394"
-    status: "documentation_checkpoint_pending_push"
-    next_safe_entry_point: "Push and verify the UI-090 source/documentation checkpoint before editing UI-091; preserve the exact Agent Display, unsigned-host, and private PR holds."
+    remote_head_verified: "3a088aaca2e856423db063376f0569a54dc795bf"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-091 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   upcoming_iteration:
     id: "UI-091"
     name: "Disable Wi-Fi policy control inspection anchor"
@@ -9190,8 +9190,8 @@ project_plan:
         intended_change: "Track UI-091 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
         status: active
     pre_edit:
-      baseline_head: "65953ae8531fffcbad5e0a798dd5a4b367b6b8e7"
-      baseline_remote_head: "f45c985a3174546fe7d36cbb69ef492dd5cb4394"
+      baseline_head: "3a088aaca2e856423db063376f0569a54dc795bf"
+      baseline_remote_head: "3a088aaca2e856423db063376f0569a54dc795bf"
       source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=9088cadd9ec07899cd7be17b459dae9e1a72eab4c07cb1ff761d64f32e0d06a8"
       source_read: 'Direct bounded reads confirmed the existing Disable Wi-Fi Toggle at SettingsView.swift:471-474 uses policyBinding(\\.disableWiFi) and isolationControlHint(effectDescription: "Disables Wi-Fi interfaces") but has no stable control inspection identifier, while policy binding semantics, isolation guidance, sandbox behavior, and host-operation behavior remain the behavior boundary.'
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
