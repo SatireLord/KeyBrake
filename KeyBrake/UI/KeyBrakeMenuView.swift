@@ -13,6 +13,7 @@ import SwiftUI
 // QoL-004: the menu status label and its help text share the same hydration-aware state explanation.
 // QoL-007: the menu header uses the same hydration-aware symbol as the adjacent status row.
 // QoL-008: the recovery affordance explains its hydration, busy, and no-snapshot disabled states without changing its gate.
+// QoL-041: the App Access menu entry names its Settings destination because its existing action opens Settings rather than revoking access immediately.
 struct KeyBrakeMenuView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -46,8 +47,10 @@ struct KeyBrakeMenuView: View {
         Button {
             openWindow(id: "settings")
         } label: {
-            Label("Revoke App Access…", systemImage: "hand.raised.slash")
+            Label("Open App Access Settings…", systemImage: "hand.raised.slash")
         }
+            .help("Open Settings to review or change application access")
+            .accessibilityHint("Opens Settings so you can review or change application access")
             .disabled(model.isBusy)
         Divider()
         Button {
