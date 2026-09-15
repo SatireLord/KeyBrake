@@ -149,6 +149,8 @@ UI-103 makes the existing menu Open Command Center action explicit during safe r
 
 UI-104 makes the existing menu Open Incident Log action explicit during safe review. The history navigation action is deterministically inspectable through its stable identifier, while its label, Incident Log route, guidance, menu ordering, sandbox behavior, and host operations remain unchanged.
 
+UI-105 makes the existing menu Settings action explicit during safe review. The Settings navigation action is deterministically inspectable through its stable identifier, while its label, Settings route, guidance, menu ordering, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

@@ -256,3 +256,5 @@ UI-102 makes the menu Open App Access Settings action scannable. The existing Se
 UI-103 makes the menu Open Command Center action scannable. The existing status navigation action now has a stable identifier, while its label, command-center route, guidance, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-104 makes the menu Open Incident Log action scannable. The existing history navigation action now has a stable identifier, while its label, Incident Log route, guidance, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-105 makes the menu Settings action scannable. The existing Settings navigation action now has a stable identifier, while its label, Settings route, guidance, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
