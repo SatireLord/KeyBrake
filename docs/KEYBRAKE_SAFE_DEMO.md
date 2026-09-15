@@ -5,6 +5,8 @@ UI-031 applies only an accessibility traversal priority to the existing recovery
 
 UI-032 changes only accessibility-identifier ownership: `keybrake.command-center.recovery-card` is attached to the recovery-card GroupBox and is no longer attached to `emergencyActions`, while the safe-demo route, fixture state, visible copy, recovery actions, child surfaces, and host mutation boundary remain unchanged. The unique LaunchServices-launched bundle was staged through Agent Display as PID 93334, but staging remained silent for about 40 seconds and was stopped with SIGINT when the testing lane changed to the non-mutating network-sandbox request, `is-isolated` returned `isolated=false` with `windowCount=0` after cleanup, and the exact process was terminated; no contained visual, runtime accessibility, pointer, or additional PNG proof is claimed.
 
+UI-033 adds explicit `--keybrake-network-sandbox` and optional `--keybrake-network-sandbox-failure` routes. The route opens the Command Center with a visible Network sandbox active boundary, uses deterministic fixture-backed Wi-Fi, USB Ethernet, Work VPN, and loopback observations, and keeps Settings controls disabled. Stop Remote Access, restore, and failure outcomes exercise only the fixture controller; UUID temporary stores, `RecordingCommandRunner`, and a no-op process controller prevent host network, process, privacy, sharing, TCC, launchd, and user-settings mutations. This is a source/test and local runtime route; it is not OS-level network namespace or live VPN isolation.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
@@ -18,5 +20,15 @@ The Command Center review path keeps emergency actions separate from navigation:
 7. Demonstrate privacy reset command formation with a disposable fixture bundle identifier and a fake runner. Never reset Terminal, Codex, Cursor, Espanso, KeyBrake, or another daily-use app merely to create a receipt.
 8. Use read-only network inventory for the normal demo. Show the recovery contract and explain that a full live isolation test requires a separately staged session because it intentionally disconnects the active network.
 9. For a deterministic recovery walkthrough, use the `--keybrake-command-center --keybrake-recovery-demo` route, relaunch the temporary app, show `Recovery Required` in the Command Center, open the recovery panel, and demonstrate the mouse-only quit warning. Seed the real `CurrentRecovery.json` only from a separately staged, human-controlled session with a known recovery path.
+
+## Network sandbox route
+
+Use the temporary app bundle produced by the Release build:
+
+`/usr/bin/open -n /path/to/KeyBrake.app --args --keybrake-network-sandbox`
+
+The connected route opens Command Center in normal state; choose `Stop Remote Access` to exercise fixture isolation, then use `Restore Network` in the mouse-operated recovery panel. Wi-Fi restores to its recorded enabled state, while VPN remains disconnected per the recovery contract.
+
+Use `--keybrake-network-sandbox-failure` instead to exercise deterministic Wi-Fi/VPN failure outcomes. Both routes are local fixture simulations and never alter host Wi-Fi, VPN, sharing, process, privacy, launchd, or user settings. Do not combine these flags with a live-host isolation test.
 
 The demo must say `Network Isolated` or `Partial Isolation`, not that the computer is safe or that all remote access is eliminated.
