@@ -228,3 +228,5 @@ UI-088 makes the Privileged Helper summary scannable. The existing General-secti
 UI-089 makes the Local Automation Add Application action scannable. The existing enrollment action now has a stable inspection anchor, while its handler, exact target identity semantics, enrollment guidance, hydration behavior, and sandbox behavior remain unchanged.
 
 UI-090 makes the Remote Access Add Application action scannable. The existing approval-aware enrollment action now has a stable inspection anchor, while its handler, target identity semantics, approval guidance, hydration behavior, and sandbox behavior remain unchanged.
+
+UI-091 makes the Disable Wi-Fi control scannable. The existing Emergency Isolation toggle now has a stable inspection anchor, while its policy binding, isolation guidance, hydration behavior, sandbox behavior, and host-operation behavior remain unchanged.
