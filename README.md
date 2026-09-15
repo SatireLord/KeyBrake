@@ -148,3 +148,5 @@ UI-048 makes the Recovery panel's quit affordance match the existing busy-state 
 UI-049 makes busy menu actions explain their availability. Stop Skynet Locally, Stop Remote Access, Open App Access Settings…, and Restart Espanso now expose matching help and accessibility text, including the already-stopped local automation state; their handlers and busy gates remain unchanged.
 
 UI-050 makes menu Quit KeyBrake explain its current availability. The existing action now exposes hydration, busy, recovery-required, and normal-state guidance while remaining enabled so `requestQuit()` can preserve its existing guards and mouse-operated recovery decision flow.
+
+UI-051 gives every menu navigation destination explicit guidance. Open Command Center, Open Incident Log, and Settings… now explain the surface they open through help and accessibility hints, while their existing window routes and handlers remain unchanged.

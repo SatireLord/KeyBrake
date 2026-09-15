@@ -41,6 +41,8 @@ UI-049 makes the busy state explicit in the menu during safe review. The existin
 
 UI-050 makes menu Quit KeyBrake state-aware during safe review. The existing enabled action explains when recovery status is loading, when an emergency action is busy, when recovery choices remain required, and when KeyBrake can quit normally; selecting it still follows `requestQuit()` and its existing mouse-operated recovery flow.
 
+UI-051 makes the menu's navigation destinations explicit during safe review. Open Command Center, Open Incident Log, and Settings… explain the surfaces they open through help and accessibility hints, while selecting them still follows the existing window routes.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
