@@ -258,3 +258,5 @@ UI-103 makes the menu Open Command Center action scannable. The existing status 
 UI-104 makes the menu Open Incident Log action scannable. The existing history navigation action now has a stable identifier, while its label, Incident Log route, guidance, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-105 makes the menu Settings action scannable. The existing Settings navigation action now has a stable identifier, while its label, Settings route, guidance, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-106 makes the menu Restart Espanso action scannable. The existing local-automation recovery action now has a stable identifier, while its label, busy-state gate, handler, guidance, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
