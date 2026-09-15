@@ -107,6 +107,18 @@ struct SettingsView: View {
         return "\(target.displayName) is currently \(inclusionState) in Stop Remote Access. \(toggleAction) this exact application; KeyBrake preserves its bundle identifier and executable path as the target identity."
     }
 
+    private var remoteAccessApprovalSummary: String {
+        let configuredTargetCount = remoteAccessTargets.count
+        let approvedTargetCount = remoteAccessTargets.filter(\.approvedByUser).count
+        if model.isNetworkSandbox {
+            return "Sandbox review: \(approvedTargetCount) of \(configuredTargetCount) remote access targets are marked approved locally; host target configuration remains unchanged."
+        }
+        guard configuredTargetCount > 0 else {
+            return "No remote access targets configured. Add an application, then approve it before Stop Remote Access can include it."
+        }
+        return "\(approvedTargetCount) of \(configuredTargetCount) remote access targets approved. Only approved targets are stopped; KeyBrake never stops a target by name alone."
+    }
+
     private func targetRemovalHint(targetName: String) -> String {
         if model.isNetworkSandbox {
             return "Unavailable in the network sandbox; no target removal request is sent during sandbox review."
@@ -354,6 +366,11 @@ struct SettingsView: View {
             }
 
             Section("Remote Access") {
+                Text(remoteAccessApprovalSummary)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("keybrake.settings.remote-access.summary")
                 if remoteAccessTargets.isEmpty {
                     targetListEmptyState(
                         title: "No remote access targets configured",
@@ -383,9 +400,6 @@ struct SettingsView: View {
                 Button("Add Application…") { chooseApplication(category: .remoteAccess) }
                     .help(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
                     .accessibilityHint(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
-                Text("Only targets you approve are stopped. KeyBrake never stops a target by name alone.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
 
             Section("Application Access") {
