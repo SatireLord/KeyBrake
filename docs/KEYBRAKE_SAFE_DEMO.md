@@ -67,6 +67,8 @@ UI-062 makes Remote Access configuration scannable during safe review. The secti
 
 UI-063 makes the Settings Isolation profile explicit during safe review. The profile explains how many of the five controls are enabled, what the next Stop Remote Access operation will apply, and that sandbox review does not change fixture or host state.
 
+UI-064 makes configured-target scope explicit during safe review. The overview distinguishes local-automation and remote-access targets and repeats that actions use exact bundle-and-executable identity while sandbox review leaves host configuration unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

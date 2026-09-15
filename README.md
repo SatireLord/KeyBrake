@@ -174,3 +174,5 @@ UI-061 makes the Settings Recovery overview accessibility-parity complete. The e
 UI-062 makes Remote Access configuration scannable. The existing section now shows approved versus configured target counts and preserves the exact-identity and sandbox boundaries while target behavior remains unchanged.
 
 UI-063 makes the Settings Isolation profile scannable. The existing five-control count now explains zero, enabled, and sandbox-review states and identifies the next Stop Remote Access operation without changing policy behavior.
+
+UI-064 makes the configured-target overview scannable. The existing count now distinguishes local-automation and remote-access scope and repeats exact bundle-and-executable matching and sandbox boundaries without changing target behavior.
