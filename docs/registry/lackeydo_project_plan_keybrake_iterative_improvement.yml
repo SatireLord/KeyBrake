@@ -8944,16 +8944,16 @@ project_plan:
       - "The source parse, cursor-safe checks, routed exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Verify private remote parity and PR state at the UI-088 documentation checkpoint, then continue UI-089 with the recorded Local Automation Add Application action inspection seam."
+    next_action: "Continue UI-089 with the recorded Local Automation Add Application action inspection seam while preserving the exact Agent Display, unsigned-host, and private PR holds."
   completed_delivery_ui088:
     iteration: "UI-088"
     source_commit: "f4828fdfdb6d79a4efaf7f3e02df8b2a1b734e83"
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=251c2b379de13552522cc330cc99515d09b9d03aca25bf38af33df36c64ad653"
     documentation_commit: "388462fbc7ea4b39acf695ff8d0e03a10a171774"
-    remote_head_verified: "25581cac5392293e32f5602bbb9de8d5a3654d05"
-    status: "documentation_checkpoint_pending_push"
-    next_safe_entry_point: "Push and verify the UI-088 source/documentation checkpoint before editing UI-089; preserve the exact Agent Display, unsigned-host, and private PR holds."
+    remote_head_verified: "09678e15cfa5fc9f37a89ff3097089bd4b27e3b0"
+    status: "documentation_checkpoint_remote_sha_verified"
+    next_safe_entry_point: "UI-089 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   upcoming_iteration:
     id: "UI-089"
     name: "Local Automation Add Application action inspection anchor"
@@ -8990,8 +8990,8 @@ project_plan:
         intended_change: "Track UI-089 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
         status: active
     pre_edit:
-      baseline_head: "388462fbc7ea4b39acf695ff8d0e03a10a171774"
-      baseline_remote_head: "25581cac5392293e32f5602bbb9de8d5a3654d05"
+      baseline_head: "09678e15cfa5fc9f37a89ff3097089bd4b27e3b0"
+      baseline_remote_head: "09678e15cfa5fc9f37a89ff3097089bd4b27e3b0"
       source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=251c2b379de13552522cc330cc99515d09b9d03aca25bf38af33df36c64ad653"
       source_read: "Direct bounded reads confirmed the existing Local Automation Add Application button at SettingsView.swift:398-401 calls chooseApplication(category: .localAutomation) and publishes targetEnrollmentHint guidance but has no stable action inspection identifier, while exact bundle-and-executable identity semantics, enrollment guidance, sandbox behavior, and host-operation behavior remain the behavior boundary."
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
