@@ -367,6 +367,7 @@ struct SettingsView: View {
                         Button("Register Privileged Helper") { model.registerPrivilegedHelper() }
                             .help(privilegedHelperActionHint)
                             .accessibilityHint(privilegedHelperActionHint)
+                            .accessibilityIdentifier("keybrake.settings.general.register-privileged-helper")
                     }
                 }
                 .accessibilityIdentifier("keybrake.settings.general.privileged-helper")
