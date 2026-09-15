@@ -24,6 +24,7 @@ import SwiftUI
 // QoL-020: Recovery inventory exposes one stable accessibility inspection anchor without changing its live counts or combined label.
 // QoL-021: Recovery card exposes one stable container-level accessibility inspection anchor without changing child surfaces or controls.
 // QoL-022: Recovery metrics expose stable inspection anchors without changing their live summaries or the combined recovery-inventory surface.
+// QoL-023: Recovery inventory contains its stable metric children so each existing summary remains inspectable without changing the parent label or visible layout.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -229,7 +230,7 @@ struct KeyBrakeCommandCenterView: View {
             )
         }
         .padding(.vertical, 2)
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .contain)
         .accessibilityLabel("Recovery inventory: \(networkSummary), \(sharingSummary), \(unresolvedSummary)")
         .accessibilityIdentifier("keybrake.command-center.recovery-inventory")
     }
