@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "7950a8ac176fb5b6916087b287a3097d486a1831"
+    head: "af96378752ae5318f26199f47c6e73880b957bf0"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "7950a8ac176fb5b6916087b287a3097d486a1831"
+    remote_head_verified: "af96378752ae5318f26199f47c6e73880b957bf0"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -4134,8 +4134,91 @@ project_plan:
     remote_head_verified: "7950a8ac176fb5b6916087b287a3097d486a1831"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the exact Agent Display and signed-host holds and the private PR."
-  upcoming_iteration:
+  completed_iteration_ui037:
     id: "UI-037"
+    name: "Network sandbox host-boundary accessibility inspection"
+    user_promise: "The existing network-sandbox host-operation warning has direct, stable inspection anchors in Command Center and Settings, so review can address the safety boundary without changing visible behavior or host-operation semantics."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView network sandbox host-operation warning"
+        intended_change: "Add the stable host-boundary accessibility identifier to the existing warning Text and preserve its visible copy, layout, fixture behavior, and host-operation semantics."
+        status: implemented
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "SettingsView network sandbox host-operation warning"
+        intended_change: "Add the stable host-boundary accessibility identifier to the existing warning Text and preserve its visible copy, layout, fixture behavior, and host-operation semantics."
+        status: implemented
+      - path: "README.md"
+        owner: "Portfolio and launch-route documentation"
+        intended_change: "Document the direct host-boundary inspection anchors without expanding the sandbox safety claim."
+        status: committed
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record host-boundary inspection as implemented while preserving the fixture-only and host-unverified limits."
+        status: committed
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record the UI-037 source checkpoint, focused proof, checklist completion, and UI-038 entry point."
+        status: committed
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain the stable host-boundary inspection identifiers without changing the safe demo route."
+        status: committed
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-037 parsing, UI guard, single-flight, Release build, tests, Agent Display, safety, and checksum evidence."
+        status: committed
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-037 requirements, exact source and documentation checkpoints, proof classes, checksums, accepted deferred holds, and the UI-038 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift; KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint e74eb2fcc3be5402fb06b2123e3a64ce7d9d6cf2; bounded Swift parsing; cursor-safe UI guards; workspace single-flight; SwiftPM Release build; 39 tests; Agent Display preflight/provider checks; disposable ad-hoc-signed app bundle."
+      state: "host_boundary_inspection_source_verified_runtime_unverified"
+      observed: "The existing host-operation warning publishes keybrake.command-center.network-sandbox-host-boundary and keybrake.settings.network-sandbox-host-boundary in the source hierarchy. The unique org.realitygood.KeyBrake.UI037 bundle launched as PID 37983 with the deterministic failure flag; bounded staging remained silent for about 50 seconds, inspect-ui exposed Eoco Nota Agent-Alpha, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated."
+      receipt: "No UI-037 PNG was captured; retained UI-004 Settings PNG remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility inspection, direct pointer activation, OS-level live Wi-Fi/VPN isolation, Developer ID, notarization, helper approval, TCC, launchd, respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      codegraph: "CodeGraph status was checked before editing; the index was uninitialized and no graph proof is claimed."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift KeyBrake/UI/SettingsView.swift; pass"
+      ui_guard: "non_interrupting_ui_guard.py --json on KeyBrake/UI/CommandCenterView.swift and KeyBrake/UI/SettingsView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no blocking KeyBrake overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI037; pass in 12.02s"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI037; 39 tests, 0 failures"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI037 --start-sentinel --json; pass; displayctl doctor HEALTHY; owned-cgvirtualdisplay provider; disposable app launched as PID 37983 with --keybrake-network-sandbox-failure; bounded stage silent ~50s and stopped SIGINT; inspect-ui exposed Eoco Nota Agent-Alpha; is-isolated false/windowCount=0; exact PID 37983 terminated; no pointer/visual/runtime/PNG proof"
+      agent_cache_context: "No new Agent-Cache execution-ledger bootstrap was made for UI-037; the preceding read-only bootstrap warning for missing docs/regression-checksums.json remains documented, and no new guard was created."
+      safety: "Only source validation, Release build, local tests, and disposable fixture staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, screenshot, or signed-host claim."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=9cc404351b3c1042209f61b432c087a84af96b114003cb1c176612e6a4a32d1b"
+      - "KeyBrake/UI/SettingsView.swift sha256=ddd7cd0bf8cae4bce596e89a6aa12bb9bdd97560c109b7ecbc73192330d99205"
+      - "UI-037 source checkpoint e74eb2fcc3be5402fb06b2123e3a64ce7d9d6cf2"
+      - "UI-037 documentation checkpoint af96378752ae5318f26199f47c6e73880b957bf0"
+    guards:
+      - "CodeGraph status was checked before editing; the index was uninitialized and no graph proof was claimed."
+      - "Both changed Swift files passed bounded frontend parsing and the cursor-safe UI guard."
+      - "Workspace single-flight passed before the Release build; no blocking KeyBrake overlap was found."
+      - "Agent Display preflight, doctor, and provider checks passed; exact containment remained unproven."
+      - "Only exact verified disposable PID 37983 was terminated."
+      - "No new PNG was captured; retained UI-004 Settings artifact was preserved."
+    deferred:
+      - "Exact Agent Display containment/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "The Agent-Cache bootstrap warning for missing docs/regression-checksums.json registry; no new checksum guard was added because the task did not authorize a new control."
+      - "Release-focused Xcode tests until the existing Release testability architecture configuration is repaired."
+    next_action: "Continue with the next source-backed QoL seam while preserving the private PR and the exact Agent Display and signed-host holds."
+  completed_delivery_ui037:
+    iteration: "UI-037"
+    source_commit: "e74eb2fcc3be5402fb06b2123e3a64ce7d9d6cf2"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=9cc404351b3c1042209f61b432c087a84af96b114003cb1c176612e6a4a32d1b"
+      - "KeyBrake/UI/SettingsView.swift=ddd7cd0bf8cae4bce596e89a6aa12bb9bdd97560c109b7ecbc73192330d99205"
+    documentation_commit: "af96378752ae5318f26199f47c6e73880b957bf0"
+    remote_head_verified: "af96378752ae5318f26199f47c6e73880b957bf0"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the exact Agent Display and signed-host holds and the private PR."
+  upcoming_iteration:
+    id: "UI-038"
     name: "Next source-backed QoL seam"
     user_promise: "Improve the next measured app surface without changing the recovery contract or private release boundary."
     status: "planned"
