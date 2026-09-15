@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
+    head: "6ea44c5db524acad88f1edf5479f542c47d1840c"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
+    remote_head_verified: "6ea44c5db524acad88f1edf5479f542c47d1840c"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -1569,17 +1569,25 @@ project_plan:
       status: accepted_deferred
       evidence: "The exact UI-033 source snapshot endpoint returned work_begin_order_failed; source, static, Release build, test, and Agent Display evidence was appended to the durable task event log, while receipt results reported lane_repository_truth_mismatch with an incomplete projection; no complete connector projection is claimed."
       next_action: "Use direct Git, compiler, build, test, and Agent Display evidence; do not repeat unchanged snapshot or projection calls."
+    - item: "UI-034 exact Agent Display containment remains unavailable for scenario visibility."
+      status: accepted_deferred
+      evidence: "Preflight and provider checks passed; the unique org.realitygood.KeyBrake.UI034 bundle launched as PID 4155, bounded staging remained silent for about 60 seconds and was stopped with SIGINT, inspect-ui exposed another application, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no contained visual, runtime accessibility, pointer, or PNG proof was claimed."
+      next_action: "Repair the exact Agent Display routing and ownership path; do not repeat unchanged staging calls."
+    - item: "UI-034 Agent-Cache admission remains unavailable."
+      status: accepted_deferred
+      evidence: "The UI-034 agent_cache_chatgpt_start_work call returned HTTP 504 before a task id or ledger was returned; no connector projection is claimed."
+      next_action: "Use direct Git, compiler, build, test, and Agent Display evidence; do not repeat the unchanged Agent-Cache start call."
   branch: "codex/keybrake-complete-implementation"
-  head: "a20d18aa8e7f07e0e4f9a5243c49e1f4f1eb9ad5"
+  head: "6ea44c5db524acad88f1edf5479f542c47d1840c"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-033"
-    source_commit: "d8c426b8c6248aa0119f680d15482b302eb89a46"
-    documentation_commit: "a20d18aa8e7f07e0e4f9a5243c49e1f4f1eb9ad5"
-    remote_head_verified: "a20d18aa8e7f07e0e4f9a5243c49e1f4f1eb9ad5"
+    iteration: "UI-034"
+    source_commit: "dfc8e7522625576edf7c33cc14e1e893a4c1096e"
+    documentation_commit: "6ea44c5db524acad88f1edf5479f542c47d1840c"
+    remote_head_verified: "6ea44c5db524acad88f1edf5479f542c47d1840c"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the private PR and the exact Agent Display and signed-host holds."
+    next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the private PR, the exact Agent Display hold, and the signed-host hold."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -3844,8 +3852,117 @@ project_plan:
     remote_head_verified: "a20d18aa8e7f07e0e4f9a5243c49e1f4f1eb9ad5"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the exact Agent Display and signed-host holds and the private PR."
-  upcoming_iteration:
+  completed_iteration_ui034:
     id: "UI-034"
+    name: "Network sandbox scenario visibility"
+    user_promise: "A sandbox run identifies its connected or isolation-failure fixture in every review surface, so a failure demonstration cannot be mistaken for a connected simulation while production host behavior remains unchanged."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrakeCore/NetworkController.swift"
+        owner: "NetworkSandboxScenario"
+        intended_change: "Publish explicit connected and isolation-failure display titles and details for the existing fixture profiles without changing fixture operations."
+        status: implemented
+      - path: "KeyBrake/App/KeyBrakeApp.swift"
+        owner: "KeyBrakeLaunchConfiguration and sandbox route"
+        intended_change: "Preserve the explicit connected and failure launch arguments and pass the selected scenario into the sandbox-only view-model route."
+        status: implemented
+      - path: "KeyBrake/App/KeyBrakeViewModel.swift"
+        owner: "KeyBrakeViewModel sandbox boundary"
+        intended_change: "Carry the selected scenario only for sandbox runs while preserving production live-controller routing and host-operation guards."
+        status: implemented
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView sandbox identity"
+        intended_change: "Show the selected fixture title and detail beside the existing sandbox boundary with a stable scenario identifier."
+        status: implemented
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "KeyBrakeSettingsView sandbox identity"
+        intended_change: "Show the selected fixture title and detail in the disabled sandbox Settings surface with a stable scenario identifier."
+        status: implemented
+      - path: "KeyBrakeTests/NetworkControllerTests.swift"
+        owner: "NetworkSandboxScenario tests"
+        intended_change: "Verify the connected and isolation-failure profiles publish distinct titles and details."
+        status: implemented
+      - path: "README.md"
+        owner: "Portfolio and launch-route documentation"
+        intended_change: "Document the visible connected and isolation-failure scenario labels and stable identifiers."
+        status: committed
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record scenario identity as implemented while preserving fixture-only and host-containment limits."
+        status: committed
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record the UI-034 source checkpoint, test count, checklist proof, and next source-backed entry point."
+        status: committed
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain the connected and isolation-failure labels in the sandbox runbook."
+        status: committed
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-034 source, focused test, parsing, UI guard, single-flight, Release build, complete tests, Agent Display, Agent-Cache, safety, and checksum evidence."
+        status: committed
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-034 requirements, exact source and documentation checkpoints, proof classes, checksums, accepted deferred holds, and the UI-035 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift and KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint dfc8e7522625576edf7c33cc14e1e893a4c1096e; bounded Swift parsing; cursor-safe UI guards; focused scenario-name test; workspace single-flight review; SwiftPM Release build; 39 tests; Agent Display preflight/provider checks; disposable LaunchServices app."
+      state: "scenario_identity_source_verified_containment_unverified"
+      observed: "The connected route publishes Connected fixture and the failure route publishes Isolation failure fixture in Command Center and Settings through stable scenario identifiers. The unique org.realitygood.KeyBrake.UI034 bundle launched as PID 4155; bounded staging remained silent for about 60 seconds and was stopped with SIGINT, inspect-ui exposed another application, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated."
+      receipt: "No UI-034 PNG was captured; retained UI-004 Settings PNG remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility inspection, direct pointer activation, OS-level live Wi-Fi/VPN isolation, Developer ID, notarization, helper approval, TCC, launchd, respawn, and complete Agent-Cache projection remain unverified."
+    proof:
+      codegraph: "CodeGraph status/query/explore was attempted before the source change; the index was uninitialized and no graph proof is claimed."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse on KeyBrakeCore/NetworkController.swift, KeyBrake/App/KeyBrakeApp.swift, KeyBrake/App/KeyBrakeViewModel.swift, KeyBrake/UI/CommandCenterView.swift, KeyBrake/UI/SettingsView.swift, and KeyBrakeTests/NetworkControllerTests.swift; pass"
+      ui_guard: "non_interrupting_ui_guard.py --json on KeyBrake/UI/CommandCenterView.swift and KeyBrake/UI/SettingsView.swift; pass"
+      focused_test: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI034 --filter NetworkControllerTests/testNetworkSandboxScenarioNamesConnectedAndFailureProfiles; pass"
+      singleflight: "Final workspace single-flight guard passed before the UI-034 Release build with no blocking KeyBrake overlap; an earlier check required tooling review only because an unrelated GalleryPublicationReaderTests process had an unproven package path."
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI034; pass in 13.26s"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI034; 39 tests, 0 failures"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI034 --start-sentinel --json; pass; displayctl doctor HEALTHY; owned-cgvirtualdisplay provider; bounded stage silent ~60s and stopped SIGINT; inspect-ui exposed another application; is-isolated false/windowCount=0; exact PID 4155 terminated; no pointer/visual/runtime/PNG proof"
+      agent_cache_receipt: "agent_cache_chatgpt_start_work for UI-034 returned HTTP 504 before a task id or ledger was returned; no connector projection is claimed."
+      safety: "Only source validation, focused and complete local tests, Release build, and disposable fixture staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, screenshot, or signed-host claim."
+    checksums:
+      - "KeyBrakeCore/NetworkController.swift sha256=05be751875f310a81b1cdeaa31748085d2b31f76c9a8c35acdcb42777a5ab533"
+      - "KeyBrake/App/KeyBrakeApp.swift sha256=c23ba58e1da3b1a307498ab930d7de8f4f89dc33b23a01b15b67a4b24e3f5998"
+      - "KeyBrake/App/KeyBrakeViewModel.swift sha256=5d56b298cfc6d243a09820f3dbbcf3218dd1d81b5983d697b0698ee0fe949eba"
+      - "KeyBrake/UI/CommandCenterView.swift sha256=6f42c511063ea8b8c07165d2c760094fdf148fa20a36ee699707ed135de1cd55"
+      - "KeyBrake/UI/SettingsView.swift sha256=b893d758628e25bbff14ebdecb84731efe3f03aa693dda1984ba9b57de009da2"
+      - "KeyBrakeTests/NetworkControllerTests.swift sha256=b1f11b99f415e5f9802e1db15af0438ba1b6ac600689d834a6c440a885f33a93"
+      - "UI-034 source checkpoint dfc8e7522625576edf7c33cc14e1e893a4c1096e"
+      - "UI-034 documentation checkpoint 6ea44c5db524acad88f1edf5479f542c47d1840c"
+    guards:
+      - "Agent-Cache UI-034 start was attempted once and returned HTTP 504 before a task or ledger existed; no unchanged retry was made."
+      - "CodeGraph status/query/explore was attempted before editing; the index was uninitialized and no graph proof was claimed."
+      - "All six changed Swift files passed bounded frontend parsing; changed UI files passed the cursor-safe UI guard."
+      - "The focused scenario-name test passed before the complete suite."
+      - "The final workspace single-flight guard passed before the Release build with no blocking KeyBrake overlap."
+      - "Agent Display preflight, doctor, and provider checks passed; containment remained unproven."
+      - "Only exact verified disposable PID4155 was terminated."
+      - "No new PNG was captured; retained UI004 Settings artifact was preserved."
+    deferred:
+      - "Exact Agent Display containment/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache projection."
+      - "Release-focused Xcode tests until the existing Release testability architecture configuration is repaired."
+    next_action: "Continue with the next source-backed QoL seam while preserving the private PR and the exact Agent Display and signed-host holds."
+  completed_delivery_ui034:
+    iteration: "UI-034"
+    source_commit: "dfc8e7522625576edf7c33cc14e1e893a4c1096e"
+    source_file_shas:
+      - "KeyBrakeCore/NetworkController.swift=05be751875f310a81b1cdeaa31748085d2b31f76c9a8c35acdcb42777a5ab533"
+      - "KeyBrake/App/KeyBrakeApp.swift=c23ba58e1da3b1a307498ab930d7de8f4f89dc33b23a01b15b67a4b24e3f5998"
+      - "KeyBrake/App/KeyBrakeViewModel.swift=5d56b298cfc6d243a09820f3dbbcf3218dd1d81b5983d697b0698ee0fe949eba"
+      - "KeyBrake/UI/CommandCenterView.swift=6f42c511063ea8b8c07165d2c760094fdf148fa20a36ee699707ed135de1cd55"
+      - "KeyBrake/UI/SettingsView.swift=b893d758628e25bbff14ebdecb84731efe3f03aa693dda1984ba9b57de009da2"
+      - "KeyBrakeTests/NetworkControllerTests.swift=b1f11b99f415e5f9802e1db15af0438ba1b6ac600689d834a6c440a885f33a93"
+    documentation_commit: "6ea44c5db524acad88f1edf5479f542c47d1840c"
+    remote_head_verified: "6ea44c5db524acad88f1edf5479f542c47d1840c"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the exact Agent Display and signed-host holds and the private PR."
+  upcoming_iteration:
+    id: "UI-035"
     name: "Next source-backed QoL seam"
     user_promise: "Improve the next measured app surface without changing the recovery contract or private release boundary."
     status: "planned"
