@@ -182,3 +182,5 @@ UI-065 makes the Settings protection state scannable. The existing title and exp
 UI-066 makes the Emergency Isolation capability boundary scannable. The existing unsupported-sharing explanation now has a stable inspection anchor, while isolation policy, next-operation routing, and sandbox behavior remain unchanged.
 
 UI-067 makes the Application Access TCC boundary scannable. The existing reset explanation now has a stable inspection anchor, while service selection, reset gating, and host privacy behavior remain unchanged.
+
+UI-068 makes the Settings Recovery contract scannable. The existing recovery explanation now has a stable inspection anchor, while recovery routing, incident retention, and sandbox behavior remain unchanged.
