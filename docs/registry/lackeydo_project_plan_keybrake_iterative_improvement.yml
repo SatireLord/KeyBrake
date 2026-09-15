@@ -5184,20 +5184,20 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/RecoveryView.swift=3ac7a6f398e5dc6b6011c9ab11a4d0a40db3b9b07b3d0c982e3b8fa922daab72"
     documentation_commit: "b1c67ac901d33087ff39f3fdaefff3263a6beed6"
-    remote_head_verified: "b1c67ac901d33087ff39f3fdaefff3263a6beed6"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "2d79debfb293ff77a0eac5b9ecabf44eb8b8c4c7"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-049 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   upcoming_iteration:
     id: "UI-049"
     name: "Menu busy-action explanation clarity"
     user_promise: "Explain why state-changing menu actions are unavailable during an active operation, while preserving the emergency controls, recovery contract, sandbox safety boundary, and private release boundary."
-    status: "planned"
+    status: "active"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
         owner: "Menu-bar state-changing action availability explanations"
         intended_change: "Add matching help and accessibility explanations to the existing busy-disabled Stop Skynet Locally, Stop Remote Access, Restart Espanso, and App Access Settings entries without changing their handlers or gates."
-        status: planned
+        status: active
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that busy menu actions explain their temporary unavailability."
@@ -5221,14 +5221,14 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-049 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: planned
+        status: active
     pre_edit:
-      baseline_head: "TO_BE_CAPTURED_AFTER_UI048_REMOTE_DELIVERY"
-      baseline_remote_head: "TO_BE_CAPTURED_AFTER_UI048_REMOTE_DELIVERY"
-      source_file_sha: "KeyBrake/UI/KeyBrakeMenuView.swift sha256=TO_BE_CAPTURED_BEFORE_UI049_EDIT"
-      source_read: "Direct bounded reads must confirm each existing busy-disabled menu action and its handler before UI-049 activation; no source edit is authorized from this planned entry alone."
+      baseline_head: "2d79debfb293ff77a0eac5b9ecabf44eb8b8c4c7"
+      baseline_remote_head: "2d79debfb293ff77a0eac5b9ecabf44eb8b8c4c7"
+      source_file_sha: "KeyBrake/UI/KeyBrakeMenuView.swift sha256=4a09409cae3d35e39131202dd6994c66e6154c014c7688596a5fe22072e4cc4a"
+      source_read: "Direct bounded reads confirmed Stop Skynet Locally, Stop Remote Access, Restart Espanso, and Open App Access Settings use the existing isBusy disabled gate, while only the recovery affordance currently explains that busy state; handlers and gates are the behavior boundary."
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
-      route: "UI-049 requires a fresh Agent-Cache bootstrap or recall and direct KeyBrakeMenuView source read before editing; current source and Git truth remain authoritative."
+      route: "UI-049 Agent-Cache recall selected the UI lane and KeyBrakeMenuView but returned stale advisory head data; current source and Git truth remained authoritative, and no stale cache claim was used as proof."
     acceptance:
       - "Each existing busy-disabled state-changing menu action explains its temporary unavailability through matching help/accessibility text."
       - "The existing action handlers, busy gates, Settings route, emergency behavior, recovery behavior, sandbox route, and host-operation boundary remain unchanged."
