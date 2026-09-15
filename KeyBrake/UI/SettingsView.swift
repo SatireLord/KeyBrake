@@ -16,6 +16,7 @@ import UniformTypeIdentifiers
 // QoL-032: the network sandbox Settings section publishes a stable container anchor while preserving its scenario and host-boundary children.
 // QoL-034: the network sandbox Settings section contains its status, scenario, and host-boundary children for deterministic inspection.
 // QoL-036: the network sandbox Settings section repeats the immutable fixture inventory before disabled controls so both review surfaces expose the same simulated inputs.
+// QoL-038: sandbox status, scenario, fixture inventory, and protection information stay readable while only host-bound settings sections inherit the sandbox disabled gate.
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -181,6 +182,7 @@ struct SettingsView: View {
                 .accessibilityIdentifier("keybrake.settings.network-sandbox-section")
             }
 
+            Group {
             Section("General") {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
                 LabeledContent("Privileged Helper") {
@@ -279,9 +281,10 @@ struct SettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            }
+            .disabled(model.isNetworkSandbox)
         }
         .formStyle(.grouped)
-        .disabled(model.isNetworkSandbox)
         .padding()
         .onAppear {
             if selectedTargetID.isEmpty { selectedTargetID = accessTargets.first?.id ?? "" }

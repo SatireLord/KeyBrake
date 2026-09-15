@@ -4703,6 +4703,61 @@ project_plan:
     id: "UI-044"
     name: "Next source-backed QoL seam after Incident Log outcome review"
     user_promise: "Improve the next measured app surface without changing the recovery contract, sandbox safety boundary, or private release boundary."
-    status: "planned"
+    status: "active"
     scope_preserved: true
-    next_action: "Select the next source-backed QoL seam from current evidence; do not reopen unchanged Agent Display staging."
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "SettingsView sandbox information boundary and production settings sections"
+        intended_change: "Keep sandbox status, scenario, fixture inventory, and current protection information visually readable while applying the existing sandbox disabled gate to only host-bound production settings sections."
+        status: planned
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document that sandbox information remains readable while host-bound settings stay disabled."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the readable sandbox-information boundary as a presentation-only capability."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-044 source, focused proof, evidence limits, and the next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain that sandbox fixture information remains readable while host-bound settings remain disabled."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-044 source parsing, UI guard, focused tests, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-044 ownership, baseline checksum, proof, deferred runtime evidence, and remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "14460cd3598d1c73d103112ca54d91c19c7aadd5"
+      baseline_remote_head: "14460cd3598d1c73d103112ca54d91c19c7aadd5"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=256929a6a92abacc07dabb2dc23a2cf17c55e397ca59c6990318b981cf249720"
+      source_read: "Direct bounded reads confirmed the sandbox section and current protection state are informational, the later General/Local Automation/Remote Access/Application Access/Emergency Isolation/Privacy Reset/Recovery sections contain host-bound settings, and the existing model guards remain the mutation boundary."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+    acceptance:
+      - "Sandbox status, scenario, fixture inventory, and current protection information remain visually readable in sandbox mode."
+      - "General, Local Automation, Remote Access, Application Access, Emergency Isolation, Privacy Reset Profile, and Recovery settings remain disabled in sandbox mode."
+      - "The existing model-level sandbox guards and production handlers remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=256929a6a92abacc07dabb2dc23a2cf17c55e397ca59c6990318b981cf249720"
+      - "UI-044 baseline HEAD 14460cd3598d1c73d103112ca54d91c19c7aadd5"
+      - "Agent-Cache bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the network sandbox fixture-only and the host-operation boundary unchanged."
+      - "Keep production settings disabled in sandbox mode; only informational surfaces may remain readable."
+      - "Do not reopen unchanged Agent Display staging unless a later source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
+    next_action: "Implement the bounded Settings disabled-boundary seam, then run focused source/UI/build/test proof before documentation and remote delivery."
