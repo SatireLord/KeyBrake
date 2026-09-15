@@ -323,6 +323,7 @@ struct SettingsView: View {
                 }
                 .accessibilityIdentifier("keybrake.settings.overview")
             }
+            .accessibilityIdentifier("keybrake.settings.current-protection-state-section")
 
             if model.isNetworkSandbox {
                 Section("Network sandbox") {
