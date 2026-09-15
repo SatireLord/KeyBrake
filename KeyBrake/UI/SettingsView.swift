@@ -498,6 +498,7 @@ struct SettingsView: View {
                 Text("After Stop Remote Access, KeyBrake always presents the recovery panel and keeps incident history until you clear resolved records from the incident log.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("keybrake.settings.recovery.contract-boundary")
             }
             }
             .disabled(model.isNetworkSandbox)
