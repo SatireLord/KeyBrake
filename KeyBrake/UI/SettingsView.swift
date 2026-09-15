@@ -13,6 +13,7 @@ import UniformTypeIdentifiers
 // owner: SettingsView
 // QoL-001: the protection overview uses the shared state tint so the destination communicates status before controls.
 // QoL-005: the recovery summary stays in a checking state until launch recovery hydration is complete.
+// QoL-032: the network sandbox Settings section publishes a stable container anchor while preserving its scenario and host-boundary children.
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -128,6 +129,7 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .accessibilityIdentifier("keybrake.settings.network-sandbox-host-boundary")
                 }
+                .accessibilityIdentifier("keybrake.settings.network-sandbox-section")
             }
 
             Section("General") {
