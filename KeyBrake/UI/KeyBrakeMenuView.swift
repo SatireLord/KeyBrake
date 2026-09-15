@@ -33,6 +33,7 @@ struct KeyBrakeMenuView: View {
         }
             .help("Open the at-a-glance KeyBrake status and action surface")
             .accessibilityHint("Opens the at-a-glance KeyBrake status and action surface")
+            .accessibilityIdentifier("keybrake.menu.open-command-center")
         Divider()
         Button {
             model.stopSkynetLocally()
