@@ -200,6 +200,19 @@ struct SettingsView: View {
         return "\(count) configured \(count == 1 ? "target" : "targets")"
     }
 
+    private var configuredTargetsSummaryDetail: String {
+        let configuredTargetCount = model.configuredTargets.count
+        let localAutomationTargetCount = localAutomationTargets.count
+        let remoteAccessTargetCount = remoteAccessTargets.count
+        if model.isNetworkSandbox {
+            return "Sandbox review: \(configuredTargetCount) configured target\(configuredTargetCount == 1 ? "" : "s") remain local fixtures; target actions and host configuration remain unchanged."
+        }
+        if configuredTargetCount == 0 {
+            return "No targets are configured. Add an application in Local Automation or Remote Access before using a target action."
+        }
+        return "\(configuredTargetCount) configured target\(configuredTargetCount == 1 ? "" : "s"): \(localAutomationTargetCount) local automation and \(remoteAccessTargetCount) remote access. Target actions use exact bundle identifiers and executable paths rather than display names alone."
+    }
+
     private var recoverySummaryTitle: String {
         guard model.isRecoveryStatusKnown else { return "Checking" }
         return model.hasRecovery ? "Decision pending" : "No decision pending"
@@ -291,6 +304,8 @@ struct SettingsView: View {
                     Divider()
 
                     LabeledContent("Configured targets", value: configuredTargetsSummary)
+                        .help(configuredTargetsSummaryDetail)
+                        .accessibilityHint(configuredTargetsSummaryDetail)
                     LabeledContent(
                         "Isolation profile",
                         value: "\(enabledIsolationControlCount) of 5 controls enabled"
