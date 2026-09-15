@@ -15,6 +15,7 @@ import SwiftUI
 // QoL-011: Recent activity reuses the shared operational-state symbol and tint so the latest recorded outcome is scannable before its detail text.
 // QoL-012: Empty recent activity exposes its visible no-record message as one stable accessibility surface.
 // QoL-013: Current protection state combines its visible state, detail, and badge into one stable accessibility surface for fast orientation.
+// QoL-014: Review navigation cards combine each visible destination and count into one stable accessibility surface.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -294,6 +295,7 @@ struct KeyBrakeCommandCenterView: View {
                 }
                 .buttonStyle(.bordered)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("keybrake.command-center.open-incident-log")
                 .accessibilityHint("Opens the recorded incident history")
 
@@ -308,6 +310,7 @@ struct KeyBrakeCommandCenterView: View {
                 }
                 .buttonStyle(.bordered)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("keybrake.command-center.open-settings")
                 .accessibilityHint("Opens approved targets and isolation policy settings")
             }
