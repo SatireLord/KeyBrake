@@ -400,6 +400,7 @@ struct SettingsView: View {
                 Button("Add Application…") { chooseApplication(category: .localAutomation) }
                     .help(targetEnrollmentHint(destination: "Stop Skynet Locally", requiresApproval: false))
                     .accessibilityHint(targetEnrollmentHint(destination: "Stop Skynet Locally", requiresApproval: false))
+                    .accessibilityIdentifier("keybrake.settings.local-automation.add-application")
                 Text("Added applications are matched by their exact bundle identifier and executable path.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
