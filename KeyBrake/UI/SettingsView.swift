@@ -18,6 +18,7 @@ import UniformTypeIdentifiers
 // QoL-036: the network sandbox Settings section repeats the immutable fixture inventory before disabled controls so both review surfaces expose the same simulated inputs.
 // QoL-038: sandbox status, scenario, fixture inventory, and protection information stay readable while only host-bound settings sections inherit the sandbox disabled gate.
 // QoL-039: empty Local Automation and Remote Access target lists explain their state before the existing enrollment controls.
+// QoL-040: configured target rows expose the existing bundle identifier and recorded executable path so the identity boundary is reviewable before actions.
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -245,9 +246,7 @@ struct SettingsView: View {
                         )) {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(target.displayName)
-                                Text(target.bundleIdentifier ?? "Bundle identifier unavailable")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                targetIdentityDetails(for: target)
                             }
                         }
                         .help("Include this exact application in Stop Remote Access")
@@ -325,9 +324,7 @@ struct SettingsView: View {
     private func targetRow(_ target: TargetDefinition) -> some View {
         LabeledContent(target.displayName) {
             VStack(alignment: .trailing, spacing: 2) {
-                Text(target.bundleIdentifier ?? "Bundle identifier unavailable")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                targetIdentityDetails(for: target)
                 if !builtInTargetIDs.contains(target.id) {
                     Button("Remove", role: .destructive) { model.removeTarget(targetID: target.id) }
                 }
@@ -353,6 +350,29 @@ struct SettingsView: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(title). \(detail)")
         .accessibilityIdentifier(identifier)
+    }
+
+    private func targetIdentityDetails(for target: TargetDefinition) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Bundle ID: \(target.bundleIdentifier ?? "unavailable")")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text("Executable: \(target.executableURL?.path ?? "path not recorded")")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(2)
+                .truncationMode(.middle)
+                .textSelection(.enabled)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(targetIdentityAccessibilitySummary(for: target))
+        .accessibilityIdentifier("keybrake.settings.target.\(target.id).identity")
+    }
+
+    private func targetIdentityAccessibilitySummary(for target: TargetDefinition) -> String {
+        let bundleIdentifier = target.bundleIdentifier ?? "unavailable"
+        let executablePath = target.executableURL?.path ?? "path not recorded"
+        return "\(target.displayName), bundle identifier \(bundleIdentifier), executable \(executablePath)"
     }
 
     private func chooseApplication(category: TargetDefinition.Category) {
