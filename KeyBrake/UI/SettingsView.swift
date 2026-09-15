@@ -358,6 +358,7 @@ struct SettingsView: View {
                 LabeledContent("Privileged Helper") {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(model.privilegedHelperStatus)
+                            .accessibilityIdentifier("keybrake.settings.privileged-helper.status")
                         Button("Register Privileged Helper") { model.registerPrivilegedHelper() }
                             .help(privilegedHelperActionHint)
                             .accessibilityHint(privilegedHelperActionHint)
