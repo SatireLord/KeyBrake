@@ -16,6 +16,7 @@ import SwiftUI
 // QoL-012: Empty recent activity exposes its visible no-record message as one stable accessibility surface.
 // QoL-013: Current protection state combines its visible state, detail, and badge into one stable accessibility surface for fast orientation.
 // QoL-014: Review navigation cards combine each visible destination and count into one stable accessibility surface.
+// QoL-015: Command Center section headings combine their visible title and explanation and publish heading semantics.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -378,6 +379,8 @@ struct KeyBrakeCommandCenterView: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 
     private func actionLabel(title: String, description: String, systemImage: String) -> some View {
