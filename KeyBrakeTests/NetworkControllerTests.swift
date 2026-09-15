@@ -89,6 +89,16 @@ final class NetworkControllerTests: XCTestCase {
         XCTAssertTrue(NetworkSandboxScenario.isolationFailure.displayDetail.contains("isolation failures"))
     }
 
+    func testNetworkSandboxPresentationUsesRecordedState() {
+        let wifi = NetworkService(id: "wifi", displayName: "Wi-Fi", device: "en0", kind: .wifi, enabled: true, active: true)
+        let vpn = NetworkService(id: "vpn", displayName: "Work VPN", kind: .vpn, enabled: true, active: true)
+
+        XCTAssertEqual(NetworkSandboxFixture.displayedServiceState(for: wifi, currentEnabled: false), "disabled")
+        XCTAssertEqual(NetworkSandboxFixture.displayedServiceState(for: vpn, currentEnabled: false), "disconnected")
+        XCTAssertEqual(NetworkSandboxFixture.displayedServiceState(for: vpn, currentEnabled: true), "connected")
+        XCTAssertEqual(NetworkSandboxFixture.displayedServiceState(for: wifi, currentEnabled: nil), "unverified")
+    }
+
     func testSystemNetworkIsolationUsesHelperAndVerifiesDisabledState() async {
         let runner = RecordingCommandRunner(results: [.success(commandResult(output: "Network service is disabled.\n"))])
         let helper = RecordingHelper()

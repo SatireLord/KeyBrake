@@ -254,6 +254,7 @@ public final class SystemNetworkController: NetworkControlling, @unchecked Senda
 // states: connected; isolation-failure; isolated; restore-pending
 // consumers: KeyBrakeLaunchConfiguration; NetworkControllerTests; Agent Display
 // owner: NetworkSandboxFixture
+// QoL-110: sandbox inventory rows use recorded post-operation state so simulated Wi-Fi and VPN outcomes remain truthful without changing host operations.
 public enum NetworkSandboxScenario: String, Codable, CaseIterable, Sendable {
     case connected
     case isolationFailure
@@ -312,6 +313,14 @@ public struct NetworkSandboxFixture: Equatable, Sendable {
         case .isolationFailure:
             return .isolationFailure
         }
+    }
+
+    public static func displayedServiceState(for service: NetworkService, currentEnabled: Bool?) -> String {
+        guard let currentEnabled else { return "unverified" }
+        if service.kind == .vpn {
+            return currentEnabled ? "connected" : "disconnected"
+        }
+        return currentEnabled ? "enabled" : "disabled"
     }
 
     public func makeController() -> FixtureNetworkController {

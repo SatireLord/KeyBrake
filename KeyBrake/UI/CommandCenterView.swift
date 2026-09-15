@@ -35,6 +35,7 @@ import SwiftUI
 // QoL-031: Network sandbox host-operation boundary publishes its own inspection anchor in the containing banner.
 // QoL-033: Network sandbox status text publishes an explicit active-state inspection anchor before scenario and boundary details.
 // QoL-035: Network sandbox review lists each immutable fixture service before the host-operation boundary so Wi-Fi and VPN inputs are directly inspectable.
+// QoL-110: Network sandbox inventory rows follow recorded recovery state after simulated operations and say unverified when the fixture outcome is unavailable.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -201,9 +202,18 @@ struct KeyBrakeCommandCenterView: View {
     }
 
     private func networkSandboxServiceState(for service: NetworkService) -> String {
-        let state = service.active ? "active" : (service.enabled ? "enabled" : "disabled")
-        guard let device = service.device else { return state }
-        return "\(state) · \(device)"
+        let initialState = service.active ? "active" : (service.enabled ? "enabled" : "disabled")
+        guard let recordedRecoverySnapshot = model.unresolvedRecovery,
+              let recordedNetworkChange = recordedRecoverySnapshot.networkChanges.first(where: { $0.id == service.id }) else {
+            guard let device = service.device else { return initialState }
+            return "\(initialState) · \(device)"
+        }
+        let recordedState = NetworkSandboxFixture.displayedServiceState(
+            for: service,
+            currentEnabled: recordedNetworkChange.currentEnabled
+        )
+        guard let device = service.device else { return recordedState }
+        return "\(recordedState) · \(device)"
     }
 
     private var emergencyActions: some View {

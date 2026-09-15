@@ -17,6 +17,7 @@ import UniformTypeIdentifiers
 // QoL-034: the network sandbox Settings section contains its status, scenario, and host-boundary children for deterministic inspection.
 // QoL-036: the network sandbox Settings section repeats the immutable fixture inventory before disabled controls so both review surfaces expose the same simulated inputs.
 // QoL-038: sandbox status, scenario, fixture inventory, and protection information stay readable while only host-bound settings sections inherit the sandbox disabled gate.
+// QoL-110: Network sandbox inventory rows follow recorded recovery state after simulated operations and say unverified when the fixture outcome is unavailable.
 // QoL-039: empty Local Automation and Remote Access target lists explain their state before the existing enrollment controls.
 // QoL-040: configured target rows expose the existing bundle identifier and recorded executable path so the identity boundary is reviewable before actions.
 struct SettingsView: View {
@@ -254,9 +255,18 @@ struct SettingsView: View {
     }
 
     private func networkSandboxServiceState(for service: NetworkService) -> String {
-        let state = service.active ? "active" : (service.enabled ? "enabled" : "disabled")
-        guard let device = service.device else { return state }
-        return "\(state) · \(device)"
+        let initialState = service.active ? "active" : (service.enabled ? "enabled" : "disabled")
+        guard let recordedRecoverySnapshot = model.unresolvedRecovery,
+              let recordedNetworkChange = recordedRecoverySnapshot.networkChanges.first(where: { $0.id == service.id }) else {
+            guard let device = service.device else { return initialState }
+            return "\(initialState) · \(device)"
+        }
+        let recordedState = NetworkSandboxFixture.displayedServiceState(
+            for: service,
+            currentEnabled: recordedNetworkChange.currentEnabled
+        )
+        guard let device = service.device else { return recordedState }
+        return "\(recordedState) · \(device)"
     }
 
     private var networkSandboxFixtureInventory: some View {
