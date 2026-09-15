@@ -5475,37 +5475,37 @@ project_plan:
     remote_head_verified: "d76452d49d2a82fe5bb5ba385c6e5998ee010137"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-052 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui052:
     id: "UI-052"
     name: "Recovery action hover-guidance parity"
     user_promise: "Make every Recovery action provide matching visible and spoken explanation, while preserving the existing recovery gates, mouse-operated recovery contract, sandbox safety boundary, and private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/RecoveryView.swift"
         owner: "Recovery action hover and accessibility guidance"
         intended_change: "Add help text that matches the existing Keep Isolation and shared recovery-action accessibility hints, including the current busy-disabled explanation, without changing handlers or gates."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that Recovery actions expose matching visible and spoken guidance."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record Recovery action hover-guidance parity as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-052 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain Recovery action hover guidance during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-052 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-052 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
@@ -5524,12 +5524,109 @@ project_plan:
       - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    visual_evidence:
+      source: "KeyBrake/UI/RecoveryView.swift"
+      provenance: "Source checkpoint b474e39fa529994e1b2292f71b17e2d8d51ba208; direct bounded source reads; Agent-Cache recall; bounded source parsing; cursor-safe UI guard; workspace single-flight guard; focused coordinator tests; SwiftPM Release build; native Xcode Release build."
+      state: "source_verified_runtime_unverified"
+      observed: "Keep Isolation and the shared Recovery actions now expose visible help matching their existing spoken descriptions, including the busy-disabled explanation."
+      receipt: "No UI-052 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/RecoveryView.swift sha256=a142446dffd28ad60099204e744d651822090585d9e15864fb6bb0db356d31d8"
+      source_commit: "b474e39fa529994e1b2292f71b17e2d8d51ba208"
+      documentation_commit: "35827a40d228b2c1397319dc49f74176d4c10888"
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/RecoveryView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/RecoveryView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI052; pass in 12.89s"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI052 --filter EmergencyCoordinatorTests; 8 tests, 0 failures"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI052 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED; emitted universal arm64/x86_64 app with CFBundleExecutable=KeyBrake, org.realitygood.KeyBrake, version 0.1.0, build 1, helper plist, helper executable, and feature-contract resource; ad-hoc local signing is not Developer ID distribution signing"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Agent Display was not reopened because the unchanged staging path remained uncontained; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "UI-052 Agent-Cache recall selected the UI lane and RecoveryView but returned stale advisory head data; the independent single-flight guard passed with no KeyBrake overlap; no complete Agent-Cache execution-ledger proof is claimed"
+      safety: "The UI-052 change is presentation-only: it adds help metadata to existing Recovery controls, preserves every handler, button order, disabled predicate, and recovery transition, and leaves sandbox and host-operation boundaries unchanged."
+    checksums:
+      - "KeyBrake/UI/RecoveryView.swift baseline sha256=3ac7a6f398e5dc6b6011c9ab11a4d0a40db3b9b07b3d0c982e3b8fa922daab72"
+      - "KeyBrake/UI/RecoveryView.swift final sha256=a142446dffd28ad60099204e744d651822090585d9e15864fb6bb0db356d31d8"
+      - "UI-052 source checkpoint b474e39fa529994e1b2292f71b17e2d8d51ba208"
+      - "UI-052 documentation checkpoint 35827a40d228b2c1397319dc49f74176d4c10888"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
+    guards:
+      - "Preserved unrelated dirty, staged, generated, runtime, and concurrent paths; KeyBrake was clean before the source checkpoint."
+      - "Kept private PR #1 open and unmerged; no publicization or merge was performed."
+      - "Kept Recovery handlers, button order, disabled predicates, target mutation, sandbox, process, network, privacy, helper, and launchd behavior unchanged."
+      - "The changed Swift file passed bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and both Release build paths passed; single-flight output recorded no overlap."
+      - "No new PNG was captured; retained UI-004 Settings PNG was preserved."
+    deferred:
+      - "Exact Agent Display containment/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
+    next_action: "Verify private remote parity and PR state at 35827a4, then continue UI-053 with the recorded Application Access selection-guidance seam."
+  completed_delivery_ui052:
+    iteration: "UI-052"
+    source_commit: "b474e39fa529994e1b2292f71b17e2d8d51ba208"
+    source_file_shas:
+      - "KeyBrake/UI/RecoveryView.swift=a142446dffd28ad60099204e744d651822090585d9e15864fb6bb0db356d31d8"
+    documentation_commit: "35827a40d228b2c1397319dc49f74176d4c10888"
+    remote_head_verified: "35827a40d228b2c1397319dc49f74176d4c10888"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-053 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-053"
+    name: "Application Access selection guidance"
+    user_promise: "Explain why the Application Access reset action is unavailable until its required selections exist, while preserving the existing privacy boundary, sandbox safety boundary, and private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Application Access reset action selection guidance"
+        intended_change: "Add state-specific help and accessibility guidance to the existing Revoke Selected Access button while preserving its selection disabled predicate, revokeAppAccess handler, TCC boundary, and network sandbox gate."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document that Application Access reset availability explains its required selections and sandbox boundary."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record Application Access selection guidance as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-053 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain Application Access selection guidance during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-053 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-053 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "35827a40d228b2c1397319dc49f74176d4c10888"
+      baseline_remote_head: "35827a40d228b2c1397319dc49f74176d4c10888"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=22fe5831fa7646600c8bd7b85fd5b33081b9c1872b83b99f068ff35791c0d936"
+      source_read: "Direct bounded reads confirmed Revoke Selected Access invokes revokeAppAccess and is disabled when selectedTargetID or selectedPrivacyServices is empty; the surrounding Settings form is also disabled in the network sandbox, but the button has no state-specific help or accessibility hint."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-053 follows the live SettingsView Application Access symbols; the latest Agent-Cache recall remains advisory and stale at head 69ea68e, so current source and Git truth remain authoritative."
+    acceptance:
+      - "Revoke Selected Access explains the network sandbox boundary before selection guidance when the sandbox disables host settings."
+      - "The existing button explains when an application or privacy service selection is missing and describes the action when enabled."
+      - "revokeAppAccess, its selection disabled predicate, TCC boundary, surrounding Settings form, sandbox gate, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
     guards:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
-      - "Keep the write set limited to RecoveryView and matching documentation/ledger files."
-      - "Do not change recovery handlers, button order, disabled-state predicates, or recovery policy in this metadata-only iteration."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change privacy service selection, revokeAppAccess, TCC behavior, sandbox gating, or host-operation behavior in this metadata-only iteration."
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-052 RecoveryView hover-guidance seam after the registry checkpoint is committed."
+    next_action: "Implement only the recorded UI-053 Application Access selection-guidance seam after the registry checkpoint is committed."
