@@ -51,6 +51,8 @@ UI-054 makes General host-bound settings explicit during safe review. Launch Key
 
 UI-055 makes Emergency Isolation policy effects explicit during safe review. Each existing toggle identifies its Wi-Fi, Ethernet, VPN, Remote Login, or Remote Apple Events effect and current policy state, while the network sandbox explanation states that fixture state remains unchanged and no host request is sent during review.
 
+UI-056 makes target enrollment paths explicit during safe review. The Local Automation and Remote Access Add Application controls describe their destination, exact identity capture, and Remote Access approval requirement, while the network sandbox explanation states that target fixtures and host configuration remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

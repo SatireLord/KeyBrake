@@ -158,3 +158,5 @@ UI-053 explains Application Access reset availability. The existing privacy-rese
 UI-054 makes General host-bound settings self-explanatory. Launch KeyBrake at Login and Register Privileged Helper now explain sandbox unavailability, current state, macOS approval or missing-bundle status, and the latest error through help and accessibility hints; their existing registration handlers and host-bound gates remain unchanged.
 
 UI-055 makes Emergency Isolation policy effects self-explanatory. The five existing settings toggles now state which Wi-Fi, Ethernet, VPN, or sharing capability they control, show whether each policy is enabled, and explain that sandbox review leaves fixture state unchanged; the existing policy binding and next-operation behavior remain unchanged.
+
+UI-056 makes target enrollment paths self-explanatory. The Local Automation and Remote Access Add Application controls now describe their destination, exact bundle-and-executable identity capture, and Remote Access approval requirement; sandbox review remains non-mutating and the existing picker validation is unchanged.
