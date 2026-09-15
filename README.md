@@ -176,3 +176,5 @@ UI-062 makes Remote Access configuration scannable. The existing section now sho
 UI-063 makes the Settings Isolation profile scannable. The existing five-control count now explains zero, enabled, and sandbox-review states and identifies the next Stop Remote Access operation without changing policy behavior.
 
 UI-064 makes the configured-target overview scannable. The existing count now distinguishes local-automation and remote-access scope and repeats exact bundle-and-executable matching and sandbox boundaries without changing target behavior.
+
+UI-065 makes the Settings protection state scannable. The existing title and explanation now form one deterministic accessibility surface with a stable inspection anchor, while recovery-state behavior remains unchanged.
