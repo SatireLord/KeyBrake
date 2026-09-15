@@ -27,6 +27,7 @@ import SwiftUI
 // QoL-023: Recovery inventory contains its stable metric children so each existing summary remains inspectable without changing the parent label or visible layout.
 // QoL-024: Recovery metric children speak their existing live summaries explicitly without changing their visible labels, identifiers, or parent grouping.
 // QoL-025: Recovery metric children remain behind the containing inventory orientation during accessibility traversal without changing their visible labels, identifiers, or layout.
+// QoL-026: The recovery-card container owns its stable accessibility identifier while preserving emergency-action ownership and all child surfaces.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -160,7 +161,6 @@ struct KeyBrakeCommandCenterView: View {
                 .disabled(model.isBusy)
             }
         }
-        .accessibilityIdentifier("keybrake.command-center.recovery-card")
     }
 
     private var recoveryCard: some View {
@@ -207,6 +207,7 @@ struct KeyBrakeCommandCenterView: View {
                 .disabled(model.isBusy)
             }
         }
+        .accessibilityIdentifier("keybrake.command-center.recovery-card")
     }
 
     private func recoveryInventory(_ snapshot: RecoverySnapshot) -> some View {
