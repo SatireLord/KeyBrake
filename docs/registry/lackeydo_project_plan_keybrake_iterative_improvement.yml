@@ -8370,41 +8370,41 @@ project_plan:
     remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-083 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui083:
     id: "UI-083"
     name: "Current protection state section inspection anchor"
     user_promise: "Make the existing Current protection state section deterministically inspectable during safe review while preserving hydration-aware status presentation, configured-target and isolation summaries, recovery summary behavior, sandbox behavior, host-operation boundaries, and the private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "Current protection state section inspection anchor"
         intended_change: "Add a stable accessibility identifier to the existing Current protection state section without changing its hydration-aware status surface, configured-target summary, isolation summary, recovery summary, sandbox behavior, or host operations."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document the Current protection state section inspection anchor."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the Current protection state section inspection anchor as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-083 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain deterministic inspection of the Current protection state section during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-083 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-083 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: active
+        status: committed
     pre_edit:
       baseline_head: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
       baseline_remote_head: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
@@ -8418,12 +8418,104 @@ project_plan:
       - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint ebe9ff58e0775ba2f3962ca50f3bad854b216f08; direct bounded source reads; bounded source parsing; cursor-safe UI guard and preflight; exact committed-HEAD disposable archive; routed Agent-Cache single-flight admission; focused coordinator tests; SwiftPM Release build; native Xcode Release build and artifact inspection."
+      state: "source_verified_runtime_unverified"
+      observed: "The existing Current protection state section now exposes stable identifier keybrake.settings.current-protection-state-section while its hydration-aware status surface, configured-target summary, isolation-profile summary, recovery summary, existing child identifiers, sandbox behavior, and host operations remain unchanged."
+      receipt: "No UI-083 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=b33d52308fc5cbc5a5133e5def4c849d7978381b2490bbc6499af0a42ba1e78c"
+      source_commit: "ebe9ff58e0775ba2f3962ca50f3bad854b216f08"
+      documentation_commit: "b21996d6e492dc5982c3172218996eeef9299638"
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/SettingsView.swift passed; non_interrupting_ui_guard.py exited 0; agent_ui_preflight.py reported status=pass on virtual-16x9, with no app route because no KeyBrake app was running"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI083.fykNwj --filter EmergencyCoordinatorTests, run from exact committed-HEAD archive /tmp/KeyBrakeUI083.IrEFwC; 8 tests, 0 failures; build complete in 16.93s and test command completed in about 17.8s"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI083.HrQz81, run from exact committed-HEAD archive /tmp/KeyBrakeUI083.IrEFwC; exit 0 and Build complete in 11.87s"
+      xcode_release_build: "xcodebuild -project /tmp/KeyBrakeUI083.IrEFwC/KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI083.Pg5eEx CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; routed Agent-Cache admission passed; exit 0 and native log ended with BUILD SUCCEEDED; artifact inspection completed"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; KeyBrakePrivilegedHelper and org.realitygood.KeyBrake.Helper.plist present; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Cursor-safe preflight passed, but no KeyBrake app route was running and Agent Display was not reopened because the unchanged staging path remained uncontained and host-unverified; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "The routed Agent-Cache single-flight admission passed before focused validation, SwiftPM Release, and native Xcode Release validation; unrelated MyOwnCosplay and other external build processes were observed as sample events, no blocked events were reported, and no KeyBrake overlap was found."
+      safety: "Only non-mutating source validation, an exact committed-HEAD disposable archive, local tests, and disposable builds were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=1a29de98b0e2b0c4424ea75a04e46da6c6bae4b77fed0e6af1be4e01c974ee5b"
+      - "KeyBrake/UI/SettingsView.swift final sha256=b33d52308fc5cbc5a5133e5def4c849d7978381b2490bbc6499af0a42ba1e78c"
+      - "UI-083 source checkpoint ebe9ff58e0775ba2f3962ca50f3bad854b216f08"
+      - "UI-083 documentation checkpoint b21996d6e492dc5982c3172218996eeef9299638"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
     guards:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
       - "Keep the write set limited to SettingsView and matching documentation/ledger files."
       - "Do not change the Current protection state title, hydration-aware status presentation, configured-target summary, isolation-profile summary, recovery summary, existing child identifiers, sandbox behavior, or host-operation behavior in this presentation-only iteration."
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+      - "The source parse, cursor-safe checks, routed exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-083 Current protection state section inspection seam after this registry checkpoint is committed."
+    next_action: "Verify private remote parity and PR state at the pushed head, then continue UI-084 with the recorded Configured targets summary inspection seam."
+  completed_delivery_ui083:
+    iteration: "UI-083"
+    source_commit: "ebe9ff58e0775ba2f3962ca50f3bad854b216f08"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=b33d52308fc5cbc5a5133e5def4c849d7978381b2490bbc6499af0a42ba1e78c"
+    documentation_commit: "b21996d6e492dc5982c3172218996eeef9299638"
+    remote_head_verified: "b21996d6e492dc5982c3172218996eeef9299638"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-084 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-084"
+    name: "Configured targets summary inspection anchor"
+    user_promise: "Make the existing Configured targets summary deterministically inspectable during safe review while preserving target identity, configured-target counts, hydration-aware protection state, sandbox behavior, host-operation boundaries, and the private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Configured targets summary inspection anchor"
+        intended_change: "Add a stable accessibility identifier to the existing Configured targets summary without changing target identity, count computation, hydration-aware protection state, sandbox behavior, or host operations."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document the Configured targets summary inspection anchor."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the Configured targets summary inspection anchor as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-084 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain deterministic inspection of the Configured targets summary during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-084 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-084 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "b21996d6e492dc5982c3172218996eeef9299638"
+      baseline_remote_head: "b21996d6e492dc5982c3172218996eeef9299638"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=b33d52308fc5cbc5a5133e5def4c849d7978381b2490bbc6499af0a42ba1e78c"
+      source_read: "Direct bounded reads confirmed the existing Configured targets LabeledContent at SettingsView.swift:306-308 publishes configuredTargetsSummary inside the Current protection state section but has no stable summary inspection identifier, while target identity, count computation, hydration-aware protection state, sandbox behavior, and host-operation behavior remain the behavior boundary."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-084 follows the live SettingsView Configured targets summary and its existing configuredTargetsSummary and configuredTargetsSummaryDetail values inside the Current protection state overview; current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
+    acceptance:
+      - "The existing Configured targets summary exposes stable identifier keybrake.settings.overview.configured-targets."
+      - "The visible label, configuredTargetsSummary value, help text, configured-target identity semantics, hydration-aware protection state, sandbox behavior, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change the Configured targets label, summary value, help text, target identity semantics, hydration-aware protection state, sandbox behavior, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "Implement only the recorded UI-084 Configured targets summary inspection seam after this registry checkpoint is committed."
