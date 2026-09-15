@@ -79,6 +79,7 @@ struct KeyBrakeMenuView: View {
         }
             .help(restartEspansoActionHint)
             .accessibilityHint(restartEspansoActionHint)
+            .accessibilityIdentifier("keybrake.menu.restart-espanso")
             .disabled(model.isBusy)
         Button {
             openWindow(id: "incidents")
