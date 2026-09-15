@@ -105,6 +105,24 @@ struct SettingsView: View {
         return "Removes \(targetName) from KeyBrake's configured target set. Its exact bundle identifier and executable path will no longer be used by KeyBrake."
     }
 
+    private var appAccessTargetSelectionHint: String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; host privacy settings remain unchanged and no reset request is sent during sandbox review."
+        }
+        guard let selectedTarget = accessTargets.first(where: { $0.id == selectedTargetID }) else {
+            return "Choose a configured application before requesting an access reset."
+        }
+        return "\(selectedTarget.displayName) is selected as the access-reset target. Choose at least one privacy service; KeyBrake requests a reset without editing the TCC database or restoring grants automatically."
+    }
+
+    private func privacyServiceSelectionHint(for descriptor: PrivacyServiceDescriptor) -> String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; selecting \(descriptor.displayName) changes only the review selection and leaves host privacy settings unchanged."
+        }
+        let selectionState = selectedPrivacyServices.contains(descriptor.id) ? "selected" : "not selected"
+        return "\(descriptor.displayName) is \(selectionState). Select at least one privacy service before requesting an access reset; KeyBrake requests a reset and never edits the TCC database or restores grants automatically."
+    }
+
     private var builtInTargetIDs: Set<String> {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
@@ -354,6 +372,8 @@ struct SettingsView: View {
                         Text(target.displayName).tag(target.id)
                     }
                 }
+                .help(appAccessTargetSelectionHint)
+                .accessibilityHint(appAccessTargetSelectionHint)
                 Text("This action requests a reset for selected macOS privacy services. It never edits the TCC database and never restores grants automatically.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -395,6 +415,8 @@ struct SettingsView: View {
                             else { selectedPrivacyServices.remove(descriptor.id) }
                         }
                     ))
+                    .help(privacyServiceSelectionHint(for: descriptor))
+                    .accessibilityHint(privacyServiceSelectionHint(for: descriptor))
                 }
             }
 
