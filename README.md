@@ -190,3 +190,5 @@ UI-069 makes the Local Automation exact-identity boundary scannable. The existin
 UI-070 makes the Privileged Helper status scannable. The existing status text now has a stable inspection anchor, while helper registration, approval state, and sandbox behavior remain unchanged.
 
 UI-071 makes the Privileged Helper error state scannable. The existing conditional error text now has a stable inspection anchor, while helper registration, error handling, approval state, and sandbox behavior remain unchanged.
+
+UI-072 makes the Launch-at-Login error state scannable. The existing conditional error text now has a stable inspection anchor, while launch-at-login behavior, error handling, approval state, and sandbox behavior remain unchanged.
