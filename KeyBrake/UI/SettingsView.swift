@@ -123,6 +123,18 @@ struct SettingsView: View {
         return "\(descriptor.displayName) is \(selectionState). Select at least one privacy service before requesting an access reset; KeyBrake requests a reset and never edits the TCC database or restores grants automatically."
     }
 
+    private var privacyResetProfileSummary: String {
+        let selectedServiceCount = selectedPrivacyServices.count
+        let selectedServiceLabel = selectedServiceCount == 1 ? "service" : "services"
+        if model.isNetworkSandbox {
+            return "Sandbox review: \(selectedServiceCount) privacy \(selectedServiceLabel) selected locally; host privacy settings remain unchanged and no reset request is sent."
+        }
+        if selectedServiceCount == 0 {
+            return "No privacy services selected. Choose at least one service before requesting an access reset."
+        }
+        return "\(selectedServiceCount) privacy \(selectedServiceLabel) selected. Revoke Selected Access requests resets without editing the TCC database or restoring grants automatically."
+    }
+
     private var builtInTargetIDs: Set<String> {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
@@ -407,6 +419,11 @@ struct SettingsView: View {
             }
 
             Section("Privacy Reset Profile") {
+                Text(privacyResetProfileSummary)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("keybrake.settings.privacy-reset-profile.summary")
                 ForEach(PrivacyServiceCatalog.descriptors) { descriptor in
                     Toggle(descriptor.displayName, isOn: Binding(
                         get: { selectedPrivacyServices.contains(descriptor.id) },
