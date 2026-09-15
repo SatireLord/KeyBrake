@@ -15,6 +15,7 @@ import UniformTypeIdentifiers
 // QoL-005: the recovery summary stays in a checking state until launch recovery hydration is complete.
 // QoL-032: the network sandbox Settings section publishes a stable container anchor while preserving its scenario and host-boundary children.
 // QoL-034: the network sandbox Settings section contains its status, scenario, and host-boundary children for deterministic inspection.
+// QoL-036: the network sandbox Settings section repeats the immutable fixture inventory before disabled controls so both review surfaces expose the same simulated inputs.
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -72,6 +73,50 @@ struct SettingsView: View {
             : "KeyBrake has no unresolved recovery snapshot."
     }
 
+    private var networkSandboxFixtureServices: [NetworkService] {
+        guard let scenario = model.networkSandboxScenario else { return [] }
+        return NetworkSandboxFixture.fixture(for: scenario).services
+    }
+
+    private func networkSandboxServiceSymbol(for kind: NetworkServiceKind) -> String {
+        switch kind {
+        case .wifi:
+            return "wifi"
+        case .vpn:
+            return "lock.shield"
+        case .loopback:
+            return "arrow.triangle.2.circlepath"
+        case .ethernet, .usbEthernet, .thunderbolt, .bridge, .other:
+            return "network"
+        }
+    }
+
+    private func networkSandboxServiceState(for service: NetworkService) -> String {
+        let state = service.active ? "active" : (service.enabled ? "enabled" : "disabled")
+        guard let device = service.device else { return state }
+        return "\(state) · \(device)"
+    }
+
+    private var networkSandboxFixtureInventory: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Fixture network inventory")
+                .font(.caption.weight(.semibold))
+            ForEach(networkSandboxFixtureServices) { service in
+                HStack(spacing: 8) {
+                    Label(service.displayName, systemImage: networkSandboxServiceSymbol(for: service.kind))
+                    Spacer(minLength: 8)
+                    Text(networkSandboxServiceState(for: service))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("keybrake.settings.network-sandbox-service.\(service.id)")
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("keybrake.settings.network-sandbox-inventory")
+    }
+
     var body: some View {
         Form {
             Section("Current protection state") {
@@ -125,6 +170,7 @@ struct SettingsView: View {
                     }
                     .accessibilityElement(children: .combine)
                         .accessibilityIdentifier("keybrake.settings.network-sandbox-scenario")
+                    networkSandboxFixtureInventory
                     Text("Settings changes, privacy requests, helper registration, and launch-at-login changes are unavailable; sandbox recovery state stays in a UUID-named temporary store.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
