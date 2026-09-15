@@ -154,3 +154,5 @@ UI-051 gives every menu navigation destination explicit guidance. Open Command C
 UI-052 gives Recovery actions matching visible and spoken guidance. Keep Isolation and the shared recovery actions now expose help that follows their existing descriptions and busy-state accessibility hints, while recovery behavior remains unchanged.
 
 UI-053 explains Application Access reset availability. The existing privacy-reset action now states whether the network sandbox, application selection, or privacy-service selection is preventing use, while its existing TCC boundary and disabled gate remain unchanged.
+
+UI-054 makes General host-bound settings self-explanatory. Launch KeyBrake at Login and Register Privileged Helper now explain sandbox unavailability, current state, macOS approval or missing-bundle status, and the latest error through help and accessibility hints; their existing registration handlers and host-bound gates remain unchanged.

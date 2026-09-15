@@ -47,6 +47,8 @@ UI-052 makes Recovery action hover guidance match the spoken descriptions during
 
 UI-053 makes Application Access reset availability explicit during safe review. The existing Revoke Selected Access action explains whether the network sandbox or a missing application or privacy-service selection prevents use, while the action still follows its existing selection gate and privacy boundary.
 
+UI-054 makes General host-bound settings explicit during safe review. Launch KeyBrake at Login and Register Privileged Helper explain when the network sandbox prevents host registration, and they expose current macOS status or the latest error without sending a new host request during review; their existing handlers and disabled gate remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
