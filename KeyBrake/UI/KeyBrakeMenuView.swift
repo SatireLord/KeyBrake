@@ -59,6 +59,7 @@ struct KeyBrakeMenuView: View {
         }
             .help(appAccessSettingsActionHint)
             .accessibilityHint(appAccessSettingsActionHint)
+            .accessibilityIdentifier("keybrake.menu.open-app-access-settings")
             .disabled(model.isBusy)
         Divider()
         Button {
