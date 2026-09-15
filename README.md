@@ -246,3 +246,5 @@ UI-097 makes each configured target removal control scannable. Existing Local Au
 UI-098 makes each Remote Access target approval control scannable. Each existing approval toggle now has a stable identifier derived from its TargetDefinition.id, while labels, target identity details, approval binding semantics, removal semantics, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-099 makes the menu Restore Human Control action scannable. The existing recovery action now has a stable identifier, while its label, recovery-state gate, mouse-driven recovery route, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-100 makes the menu Stop Remote Access action scannable. The existing emergency action now has a stable identifier, while its label, busy-state gate, handler, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
