@@ -516,6 +516,7 @@ struct SettingsView: View {
             Button("OK") { errorMessage = "" }
         } message: {
             Text(errorMessage)
+                .accessibilityIdentifier("keybrake.settings.error-message")
         }
     }
 
