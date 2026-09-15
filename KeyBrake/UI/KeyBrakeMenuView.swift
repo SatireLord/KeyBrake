@@ -66,6 +66,7 @@ struct KeyBrakeMenuView: View {
         }
             .help(recoveryActionDetail)
             .accessibilityHint(recoveryActionDetail)
+            .accessibilityIdentifier("keybrake.menu.restore-human-control")
             .disabled(!model.hasRecovery || model.isBusy)
         Button {
             model.restartEspanso()
