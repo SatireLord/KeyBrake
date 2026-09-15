@@ -471,6 +471,7 @@ struct SettingsView: View {
                 Text("Unsupported sharing capabilities are reported as unsupported and do not block independent network isolation.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.boundary")
             }
 
             Section("Privacy Reset Profile") {
