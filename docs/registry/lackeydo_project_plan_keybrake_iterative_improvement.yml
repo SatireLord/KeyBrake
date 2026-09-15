@@ -4699,40 +4699,40 @@ project_plan:
     remote_head_verified: "6b6b6ac5bc0cea48271f5a9ece4c2a533d58472d"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-044 while preserving the exact Agent Display and signed-host holds and the private PR."
-  upcoming_iteration:
-    id: "UI-044"
-    name: "Next source-backed QoL seam after Incident Log outcome review"
+  completed_iteration_ui044:
+    iteration: "UI-044"
+    name: "Readable sandbox Settings information boundary"
     user_promise: "Improve the next measured app surface without changing the recovery contract, sandbox safety boundary, or private release boundary."
-    status: "active"
+    status: "complete"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "SettingsView sandbox information boundary and production settings sections"
         intended_change: "Keep sandbox status, scenario, fixture inventory, and current protection information visually readable while applying the existing sandbox disabled gate to only host-bound production settings sections."
-        status: planned
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that sandbox information remains readable while host-bound settings stay disabled."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the readable sandbox-information boundary as a presentation-only capability."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-044 source, focused proof, evidence limits, and the next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain that sandbox fixture information remains readable while host-bound settings remain disabled."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-044 source parsing, UI guard, focused tests, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
-        intended_change: "Track UI-044 ownership, baseline checksum, proof, deferred runtime evidence, and remote delivery."
+        intended_change: "Track UI-044 ownership, baseline and final checksums, proof, deferred runtime evidence, and remote delivery."
         status: active
     pre_edit:
       baseline_head: "14460cd3598d1c73d103112ca54d91c19c7aadd5"
@@ -4747,17 +4747,64 @@ project_plan:
       - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    visual_evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint 5ea49916f1c493fad844883c92ab3ef7d83ffa25; direct bounded source reads; Agent-Cache bootstrap; bounded source parsing; cursor-safe UI guard; focused coordinator tests; SwiftPM Release build; native Xcode Release build."
+      state: "source_verified_runtime_unverified"
+      observed: "The Settings form keeps current protection state and Network sandbox status, scenario, and fixture inventory outside the disabled host-bound settings Group while the existing production settings remain disabled in sandbox mode."
+      receipt: "No UI-044 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=746e210345dae047ef0632c2fc8b428c8152efc3e85aa8428afe0a474232aa6b"
+      source_commit: "5ea49916f1c493fad844883c92ab3ef7d83ffa25"
+      documentation_commit: "525a9099dcb294c83c2c20dfa012980336b137f7"
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/SettingsView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/SettingsView.swift; pass"
+      singleflight: "workspace singleflight required environment/tooling manual review because an unrelated MB4Notes Swift test had no package path in its process metadata; direct lsof proved cwd /Users/michaeltran/AntiGravity/MB4Notes-reader-scaling/MB4Notes-Swift, and no KeyBrake build was active; no KeyBrake overlap was found"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI044; pass in 18.72s"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI044 --filter EmergencyCoordinatorTests; 8 tests, 0 failures"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI044 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED; emitted universal arm64/x86_64 app with CFBundleExecutable=KeyBrake, org.realitygood.KeyBrake, version 0.1.0, build 1, helper plist, helper executable, and feature-contract resource; ad-hoc local signing is not Developer ID distribution signing"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Agent Display was not reopened because the unchanged UI-042 staging path remained uncontained; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "bootstrap_context passed with clean repository truth, active keybrake binding, protected_region_count=0, task_relevant_region_count=0, and missing docs/regression-checksums.json warning; no new checksum guard was created"
+      safety: "The UI-044 change is presentation-only: it changes SettingsView grouping only, does not change coordinator or model handlers, preserves fixture-only sandbox behavior, and leaves the host-operation boundary unchanged."
     checksums:
       - "KeyBrake/UI/SettingsView.swift baseline sha256=256929a6a92abacc07dabb2dc23a2cf17c55e397ca59c6990318b981cf249720"
-      - "UI-044 baseline HEAD 14460cd3598d1c73d103112ca54d91c19c7aadd5"
-      - "Agent-Cache bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry."
+      - "KeyBrake/UI/SettingsView.swift final sha256=746e210345dae047ef0632c2fc8b428c8152efc3e85aa8428afe0a474232aa6b"
+      - "UI-044 source checkpoint 5ea49916f1c493fad844883c92ab3ef7d83ffa25"
+      - "UI-044 documentation checkpoint 525a9099dcb294c83c2c20dfa012980336b137f7"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
     guards:
-      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
-      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
-      - "Keep the network sandbox fixture-only and the host-operation boundary unchanged."
-      - "Keep production settings disabled in sandbox mode; only informational surfaces may remain readable."
-      - "Do not reopen unchanged Agent Display staging unless a later source change requires a new exact runtime attempt."
+      - "Preserved unrelated dirty, staged, generated, runtime, and concurrent paths; KeyBrake was clean before the source checkpoint."
+      - "Kept private PR #1 open and unmerged; no publicization or merge was performed."
+      - "Kept recovery, model guards, incident storage, host-operation boundaries, and sandbox behavior unchanged."
+      - "The changed Swift file passed bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and both Release build paths passed; the single-flight limitation was recorded with direct process evidence."
+      - "No new PNG was captured; retained UI-004 Settings PNG was preserved."
     deferred:
-      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "Exact Agent Display containment/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
       - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
-    next_action: "Implement the bounded Settings disabled-boundary seam, then run focused source/UI/build/test proof before documentation and remote delivery."
+    next_action: "Push the documentation checkpoint, verify private remote parity and PR state, then select UI-045 from a fresh bounded source read."
+  completed_delivery_ui044:
+    iteration: "UI-044"
+    source_commit: "5ea49916f1c493fad844883c92ab3ef7d83ffa25"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=746e210345dae047ef0632c2fc8b428c8152efc3e85aa8428afe0a474232aa6b"
+    documentation_commit: "525a9099dcb294c83c2c20dfa012980336b137f7"
+    remote_head_verified: "525a9099dcb294c83c2c20dfa012980336b137f7"
+    status: "documentation_checkpoint_pending_push"
+    next_safe_entry_point: "After remote parity verification, select UI-045 from a fresh bounded source read while preserving the exact Agent Display and signed-host holds and the private PR."
+  upcoming_iteration:
+    id: "UI-045"
+    name: "Next source-backed QoL seam after readable sandbox Settings information"
+    user_promise: "Improve the next measured app surface without changing the recovery contract, sandbox safety boundary, or private release boundary."
+    status: "planned"
+    scope_preserved: true
+    write_set: []
+    selection_gate:
+      - "Read current source truth and current Git/remote state before selecting a write set."
+      - "Select one narrow presentation or interaction seam with a measurable user benefit."
+      - "Do not repeat the Settings sandbox readability change or reopen unchanged Agent Display staging."
+      - "Keep recovery, storage, model guards, fixture-only sandbox behavior, private PR state, and signed-host holds unchanged."
+    next_action: "Perform a fresh bounded source read to identify the next non-duplicate QoL or UX seam."
