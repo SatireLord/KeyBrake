@@ -262,3 +262,5 @@ UI-105 makes the menu Settings action scannable. The existing Settings navigatio
 UI-106 makes the menu Restart Espanso action scannable. The existing local-automation recovery action now has a stable identifier, while its label, busy-state gate, handler, guidance, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-107 makes the menu Quit KeyBrake action scannable. The existing recovery-aware quit action now has a stable identifier, while its label, recovery-aware guidance, handler, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-108 makes the Settings Register Privileged Helper action scannable. The existing helper-registration action now has a stable identifier, while its label, guidance, handler, General section layout, sandbox behavior, and host-operation behavior remain unchanged.
