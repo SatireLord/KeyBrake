@@ -443,6 +443,7 @@ struct SettingsView: View {
                 Button("Add Application…") { chooseApplication(category: .remoteAccess) }
                     .help(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
                     .accessibilityHint(targetEnrollmentHint(destination: "Stop Remote Access", requiresApproval: true))
+                    .accessibilityIdentifier("keybrake.settings.remote-access.add-application")
             }
             .accessibilityIdentifier("keybrake.settings.remote-access-section")
 
