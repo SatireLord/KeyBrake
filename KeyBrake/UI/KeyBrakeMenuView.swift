@@ -105,6 +105,7 @@ struct KeyBrakeMenuView: View {
         }
         .help(quitActionHint)
         .accessibilityHint(quitActionHint)
+        .accessibilityIdentifier("keybrake.menu.quit")
     }
 
     private var quitActionHint: String {
