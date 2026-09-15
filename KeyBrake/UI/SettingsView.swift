@@ -98,6 +98,13 @@ struct SettingsView: View {
         return "Choose an application to add to \(destination); KeyBrake records its exact bundle identifier and executable path."
     }
 
+    private func targetRemovalHint(targetName: String) -> String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; no target removal request is sent during sandbox review."
+        }
+        return "Removes \(targetName) from KeyBrake's configured target set. Its exact bundle identifier and executable path will no longer be used by KeyBrake."
+    }
+
     private var builtInTargetIDs: Set<String> {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
@@ -327,6 +334,8 @@ struct SettingsView: View {
                         .help("Include this exact application in Stop Remote Access")
                         if !builtInTargetIDs.contains(target.id) {
                             Button("Remove \(target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
+                                .help(targetRemovalHint(targetName: target.displayName))
+                                .accessibilityHint(targetRemovalHint(targetName: target.displayName))
                         }
                     }
                 }
@@ -416,6 +425,8 @@ struct SettingsView: View {
                 targetIdentityDetails(for: target)
                 if !builtInTargetIDs.contains(target.id) {
                     Button("Remove", role: .destructive) { model.removeTarget(targetID: target.id) }
+                        .help(targetRemovalHint(targetName: target.displayName))
+                        .accessibilityHint(targetRemovalHint(targetName: target.displayName))
                 }
             }
         }
