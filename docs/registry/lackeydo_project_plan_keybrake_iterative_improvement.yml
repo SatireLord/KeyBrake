@@ -5280,8 +5280,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/KeyBrakeMenuView.swift=0425c0b67afb37b76ec783bbfc1d1cc8cda65fa06a30be818128194a1c4d718e"
     documentation_commit: "e10a275"
-    remote_head_verified: "e10a275"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-050 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui050:
     id: "UI-050"
@@ -6237,8 +6237,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=0bc59f232cfb115451d615236bd26f4f0e6d5e6e2b8cbd60b92914f7b1b997db"
     documentation_commit: "cfbf9fde92ceacb238756b24bf892bf2964ac7a0"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-060 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui060:
     id: "UI-060"
@@ -6333,8 +6333,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=4be90b375c06277712e9e4416ee5ca439ad81448502c6d5cb7245ac82fac67b3"
     documentation_commit: "f0395603a9c2cd06c771478920ab5fa21800c1e2"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-061 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui061:
     id: "UI-061"
@@ -6428,8 +6428,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=badf8dc9f272af977b4d3414001a2a9b76cab558d7baea0b062f93e986a2786b"
     documentation_commit: "5cb98644ffa01d90803dcf0d979d8f022abd6554"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-062 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui062:
     id: "UI-062"
@@ -6524,8 +6524,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=bd3069dbccce62213a27a212c98b5846bdc30674eef873d7caffb2ebe199341e"
     documentation_commit: "4d2d24db15c7555ae24cb5708cc182fa31baf8ef"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-063 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui063:
     id: "UI-063"
@@ -6620,8 +6620,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=40cc095f67551497f456f015810ca8fcf2404ed1698d9205515633d925e4807d"
     documentation_commit: "b3d33bf35d7e63a130a16e07526317f148a8b668"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-064 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui064:
     id: "UI-064"
@@ -6716,8 +6716,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=21b440c61049021038c62a4918cc44da42bc6265ae2e80b8cdeabe1d7ac7f2fe"
     documentation_commit: "7069319ddf0a28cc7a4be3eda5bc4bda3076228c"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-065 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui065:
     id: "UI-065"
@@ -6807,8 +6807,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=8ea0d15aba9ccbfbe843f617280a663e94d5090257da054fdb47f621270afcc0"
     documentation_commit: "380f619f2e60505ee2554301e60070efed05ecb8"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-066 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui066:
     id: "UI-066"
@@ -6898,8 +6898,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=32bd74a57ec2bc7761348e5f37bdc30e1adee48f6ed18d50b0440b18e07cbcaf"
     documentation_commit: "17322b4594f3292788e1cf02d303547c61ad3e12"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-067 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui067:
     id: "UI-067"
@@ -6989,8 +6989,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=b1f08627021533febfba1ebdd9d6d535ac82ce6897230ec59407524d1f7770c6"
     documentation_commit: "cca886a99e6086b66a39dd8486a1c9eb2fbbfceb"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-068 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui068:
     id: "UI-068"
@@ -7080,8 +7080,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=6c40f6a2046f97c2fe18b481e52716da3e7e232cb39d7444b566322dcf2c5aab"
     documentation_commit: "c70196461133e41ee1633fa8e5ee0412ce3bb758"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-069 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui069:
     id: "UI-069"
@@ -7171,8 +7171,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=1baeb5fe9520a48400985eb676de29baddaa515ca1b5f00b34d855563767c816"
     documentation_commit: "20a5f568760a78da0715014eeefc6a389b787e88"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-070 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui070:
     id: "UI-070"
@@ -7263,8 +7263,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=1d61d65c492cd41e5ae5a574637da67bb59631f20e039724259700af331b2a4c"
     documentation_commit: "25f42a33edad1e13ddf16ba645f61859707c79cf"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-071 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui071:
     id: "UI-071"
@@ -7355,8 +7355,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=3fbaf77a8ff385772a810f322edf3f26ef464bc5d66a23b1489924d1675269b7"
     documentation_commit: "6177ac8f42cb37183d752138b2ac8df6a5c54bad"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-072 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui072:
     id: "UI-072"
@@ -7447,8 +7447,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=f8cc3491f08d0efd9a9e0d3cb0cb225f53bfe7e45740a58a42bba58f60cffb76"
     documentation_commit: "87716a93e7916d908d1364d5aea79046f88d89ba"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-073 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui073:
     id: "UI-073"
@@ -7539,8 +7539,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=8430d0e352e5431ad8b3dfbddde674d22d39b7883e82c3ab1b418b09c1774ea3"
     documentation_commit: "e34cf96c3fa2b13cc44a3c52f583a6ff291a878b"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-074 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui074:
     id: "UI-074"
@@ -7631,8 +7631,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=ab04e3c21e4cefd9de6cac2a3367fc77b963bcff21ecf3d9be0a232e2a90a90e"
     documentation_commit: "7a57c5d45b032bd1d42d81e064e169f5f8279d5c"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-075 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui075:
     id: "UI-075"
@@ -7723,8 +7723,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=011e74d98d2cca9eebe9a055c175311778f8e177d6a46c289975ea6361e04fc3"
     documentation_commit: "92d75d745f16f15017d956dc6d94b6d90a7565ce"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-076 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui076:
     id: "UI-076"
@@ -7815,8 +7815,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=5057f940ee92e569998cc19b8c152b60c78cbf5d436d5cee051577016a66c41d"
     documentation_commit: "5e1ed5c"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-077 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui077:
     id: "UI-077"
@@ -7907,8 +7907,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=f4089777f6d1329ff2099da0e2a10edec6d0e973052926a66da061612c3a7d99"
     documentation_commit: "7e0e849"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-078 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui078:
     id: "UI-078"
@@ -7999,8 +7999,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=ae2616e9e3fd659410c214eaa710c7e6a99f0f6a8a6c5b52a2db5bd4e142e4ac"
     documentation_commit: "c02892f"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-079 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui079:
     id: "UI-079"
@@ -8091,8 +8091,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=bb52ade02c442c957e6a2a99cdcac504b26a7db199ae731e4bab2d328e2a8e8c"
     documentation_commit: "e889f25"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-080 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui080:
     id: "UI-080"
@@ -8183,8 +8183,8 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=1981e7aa0fced1ca94351de9445483b001bbd2da2eb085726d39c824e2c8d7f8"
     documentation_commit: "5b8b69b85e32696bc480924d7d89236f7ac5f470"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-081 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_iteration_ui081:
     id: "UI-081"
@@ -8275,44 +8275,44 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=0556786c4ce4c2c447c9e025cf3f18c2a5997540b8d6f03d70e991d8d251e3c0"
     documentation_commit: "98d44d36362bbe1420e3aef0252e1ac847a59b52"
-    remote_head_verified: "pending_push"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-082 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui082:
     id: "UI-082"
     name: "Local Automation section inspection anchor"
     user_promise: "Make the existing Local Automation section deterministically inspectable during safe review while preserving its exact bundle-and-executable identity boundary, target enrollment behavior, empty state, sandbox behavior, host-operation boundaries, and the private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "Local Automation section inspection anchor"
         intended_change: "Add a stable accessibility identifier to the existing Local Automation section without changing exact target identity, target enrollment behavior, empty-state presentation, sandbox behavior, or host operations."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document the Local Automation section inspection anchor."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the Local Automation section inspection anchor as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-082 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain deterministic inspection of the Local Automation section during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-082 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-082 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: active
+        status: committed
     pre_edit:
       baseline_head: "98d44d36362bbe1420e3aef0252e1ac847a59b52"
       baseline_remote_head: "69922e3d0eb6104a06783ae8c5a7c2c58c6050b0"
@@ -8326,12 +8326,104 @@ project_plan:
       - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint d41daf66ea9a0482ac2979587c32a726442e49a9; direct bounded source reads; bounded source parsing; cursor-safe UI guard and preflight; exact committed-HEAD disposable archive; routed Agent-Cache single-flight admission; focused coordinator tests; SwiftPM Release build; native Xcode Release build and artifact inspection."
+      state: "source_verified_runtime_unverified"
+      observed: "The existing Local Automation section now exposes stable identifier keybrake.settings.local-automation-section while its empty state, target rows, Add Application action, exact bundle-and-executable identity boundary, sandbox behavior, and host operations remain unchanged."
+      receipt: "No UI-082 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=1a29de98b0e2b0c4424ea75a04e46da6c6bae4b77fed0e6af1be4e01c974ee5b"
+      source_commit: "d41daf66ea9a0482ac2979587c32a726442e49a9"
+      documentation_commit: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/SettingsView.swift passed; non_interrupting_ui_guard.py exited 0; agent_ui_preflight.py reported status=pass on virtual-16x9, with no app route because no KeyBrake app was running"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI082.XMdzjQ --filter EmergencyCoordinatorTests, run from exact committed-HEAD archive /tmp/KeyBrakeUI082.86ILL8; 8 tests, 0 failures; build complete in 14.27s and test command completed in about 15.4s"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI082.fklmNJ, run from exact committed-HEAD archive /tmp/KeyBrakeUI082.86ILL8; exit 0 and Build complete in 13.51s"
+      xcode_release_build: "xcodebuild -project /tmp/KeyBrakeUI082.86ILL8/KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI082.uDtpWx CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; routed Agent-Cache admission passed; exit 0 and native log ended with BUILD SUCCEEDED; artifact inspection completed"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; KeyBrakePrivilegedHelper and org.realitygood.KeyBrake.Helper.plist present; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Cursor-safe preflight passed, but no KeyBrake app route was running and Agent Display was not reopened because the unchanged staging path remained uncontained and host-unverified; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "The routed Agent-Cache single-flight admission passed before focused validation, SwiftPM Release, and native Xcode Release validation; unrelated MyOwnCosplay processes were observed as external sample events, no blocked events were reported, and no KeyBrake overlap was found."
+      safety: "Only non-mutating source validation, an exact committed-HEAD disposable archive, local tests, and disposable builds were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=0556786c4ce4c2c447c9e025cf3f18c2a5997540b8d6f03d70e991d8d251e3c0"
+      - "KeyBrake/UI/SettingsView.swift final sha256=1a29de98b0e2b0c4424ea75a04e46da6c6bae4b77fed0e6af1be4e01c974ee5b"
+      - "UI-082 source checkpoint d41daf66ea9a0482ac2979587c32a726442e49a9"
+      - "UI-082 documentation checkpoint a7250f89e32c5f48008a5304d53954cf932bc2dc"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
     guards:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
       - "Keep the write set limited to SettingsView and matching documentation/ledger files."
       - "Do not change the Local Automation title, empty state, target rows, Add Application action, exact identity explanation, sandbox behavior, or host-operation behavior in this presentation-only iteration."
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+      - "The source parse, cursor-safe checks, routed exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-082 Local Automation section inspection seam after this registry checkpoint is committed."
+    next_action: "Verify private remote parity and PR state at the pushed head, then continue UI-083 with the recorded Current protection state section inspection seam."
+  completed_delivery_ui082:
+    iteration: "UI-082"
+    source_commit: "d41daf66ea9a0482ac2979587c32a726442e49a9"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=1a29de98b0e2b0c4424ea75a04e46da6c6bae4b77fed0e6af1be4e01c974ee5b"
+    documentation_commit: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    remote_head_verified: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-083 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-083"
+    name: "Current protection state section inspection anchor"
+    user_promise: "Make the existing Current protection state section deterministically inspectable during safe review while preserving hydration-aware status presentation, configured-target and isolation summaries, recovery summary behavior, sandbox behavior, host-operation boundaries, and the private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Current protection state section inspection anchor"
+        intended_change: "Add a stable accessibility identifier to the existing Current protection state section without changing its hydration-aware status surface, configured-target summary, isolation summary, recovery summary, sandbox behavior, or host operations."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document the Current protection state section inspection anchor."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the Current protection state section inspection anchor as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-083 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain deterministic inspection of the Current protection state section during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-083 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-083 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+      baseline_remote_head: "a7250f89e32c5f48008a5304d53954cf932bc2dc"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=1a29de98b0e2b0c4424ea75a04e46da6c6bae4b77fed0e6af1be4e01c974ee5b"
+      source_read: "Direct bounded reads confirmed the existing Current protection state Section at SettingsView.swift:284-323 contains the hydration-aware protection-state surface, configured-target summary, isolation-profile summary, and recovery summary, while its child identifiers keybrake.settings.protection-state and keybrake.settings.overview already exist but the Section has no stable inspection identifier; status computation, summary behavior, sandbox behavior, and host-operation behavior remain the behavior boundary."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-083 follows the live SettingsView Current protection state section and its existing protectionStateTitle, protectionStateDetail, model.isRecoveryStatusKnown, model.operationalState, configuredTargetsSummary, enabledIsolationControlCount, and recoverySummaryTitle surfaces; current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
+    acceptance:
+      - "The existing Current protection state section exposes stable identifier keybrake.settings.current-protection-state-section."
+      - "The section title, hydration-aware protection state, configured-target summary, isolation-profile summary, recovery summary, existing child identifiers, sandbox behavior, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change the Current protection state title, hydration-aware status presentation, configured-target summary, isolation-profile summary, recovery summary, existing child identifiers, sandbox behavior, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "Implement only the recorded UI-083 Current protection state section inspection seam after this registry checkpoint is committed."
