@@ -138,3 +138,5 @@ UI-043 improves Incident Log review by showing each recorded operation's final s
 UI-044 keeps the sandbox status, scenario, fixture inventory, and current protection information readable while the host-bound General, Local Automation, Remote Access, Application Access, Emergency Isolation, Privacy Reset Profile, and Recovery settings remain disabled. The change preserves the existing model guards and fixture-only route, so the sandbox explains what is simulated without making any host-operation claim.
 
 UI-045 makes empty target configuration states explicit in Settings. Local Automation and Remote Access now explain when no target is configured and describe the existing Add Application or approval path, while configured target rows and all target mutation behavior remain unchanged.
+
+UI-046 makes configured target identity reviewable in Settings. Local Automation and Remote Access rows show the existing bundle identifier and recorded executable path, keep the path copyable, and explicitly identify built-in targets whose executable path is not recorded; process matching and target mutation behavior remain unchanged.
