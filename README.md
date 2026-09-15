@@ -238,3 +238,5 @@ UI-093 makes the Disconnect VPNs control scannable. The existing Emergency Isola
 UI-094 makes the Disable Remote Login control scannable. The existing Emergency Isolation toggle now has a stable inspection anchor, while its policy binding, isolation guidance, hydration behavior, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-095 makes the Disable Remote Apple Events control scannable. The existing Emergency Isolation toggle now has a stable inspection anchor, while its policy binding, isolation guidance, hydration behavior, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-096 makes each Privacy Reset Profile service control scannable. Each existing service toggle now has a stable identifier derived from its TCC service value, while descriptor order, display labels, selection binding, TCC reset boundaries, hydration behavior, sandbox behavior, and host-operation behavior remain unchanged.
