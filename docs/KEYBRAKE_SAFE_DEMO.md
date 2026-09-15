@@ -103,6 +103,8 @@ UI-080 makes the Application Access section explicit during safe review. The exi
 
 UI-081 makes the General section explicit during safe review. The existing host-settings section is deterministically inspectable, while its launch-at-login control, privileged-helper status and registration action, conditional errors, sandbox behavior, and host operations remain unchanged.
 
+UI-082 makes the Local Automation section explicit during safe review. The existing local-automation section is deterministically inspectable, while its empty state, target rows, Add Application action, exact bundle-and-executable identity boundary, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
