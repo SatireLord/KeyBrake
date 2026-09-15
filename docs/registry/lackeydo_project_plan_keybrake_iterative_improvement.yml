@@ -1525,17 +1525,25 @@ project_plan:
       status: accepted_deferred
       evidence: "The requested seven-file Agent-Cache source/doc snapshot returned WorkBeginOrder failure because the database was locked; UI-027 source, Release build, test, and Agent Display evidence was appended to the durable event log with an incomplete projection and a lane-repository-truth-mismatch warning."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
+    - item: "UI-028 Agent Display containment remains unavailable for the containing recovery inventory and its metric children."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the corrected unique org.realitygood.KeyBrake.UI028 bundle launched as PID 30195, bounded staging remained silent for about 60 seconds and was stopped with exit 130, inspect-ui showed no KeyBrake metric surface, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, runtime accessibility, or PNG proof was claimed."
+      next_action: "Continue with UI-029 exact containment and signed-host gates; keep the private PR boundary unchanged."
+    - item: "UI-028 Agent-Cache source snapshot and receipt projection remain incomplete."
+      status: accepted_deferred
+      evidence: "The requested UI-028 Agent-Cache source snapshot returned WorkBeginOrder failure because the database was locked; UI-028 source, static, Release build, test, and Agent Display evidence was appended to the durable task event log with an incomplete projection and a lane-repository-truth-mismatch warning."
+      next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
+  head: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-027"
-    source_commit: "ca71a21feb6c30eabf4a682ace3a158e54a84899"
-    documentation_commit: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
-    remote_head_verified: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
+    iteration: "UI-028"
+    source_commit: "7cb9a17405766f57edbe56c6d75b214fb7baab07"
+    documentation_commit: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
+    remote_head_verified: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-028 exact Agent Display containment and signed-host release gates while preserving the private PR."
+    next_safe_entry_point: "Continue with UI-029 exact Agent Display containment and signed-host release gates while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -3316,10 +3324,87 @@ project_plan:
     remote_head_verified: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-028 exact Agent Display containment and signed-host release gates while preserving the private PR."
-  upcoming_iteration:
+  completed_iteration_ui028:
     id: "UI-028"
     name: "Command Center recovery metric grouping semantics"
     user_promise: "The Command Center recovery metric accessibility grouping remains coherent and inspectable while preserving live summaries, visible layout, and recovery operation behavior."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView.recoveryInventory accessibility grouping"
+        intended_change: "Add the QoL-023 marker and change only the recovery inventory parent grouping from accessibility children.combine to children.contain so the existing network, sharing, and unresolved metric children remain separately inspectable without changing their identifiers, summaries, parent label, visible layout, or recovery behavior."
+        status: implemented
+      - path: "README.md"
+        owner: "Release status and portfolio demonstration boundary"
+        intended_change: "Document the UI-028 containing recovery inventory and preserve the distinction between source proof and unverified containment or pointer proof."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record recovery metric grouping orientation as implemented and keep the Agent Display host boundary explicit."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-028 at its source checkpoint, mark the slice complete, and route the next work to UI-029 exact containment and signed-host gates."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain that UI-028 changes only accessibility grouping and does not change safe-demo mutation boundaries."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-028 source, parse, UI guard, single-flight, Release build, complete test, Agent Display, Agent-Cache, staging setup, and checksum evidence."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-028 requirement, slice, checksums, guards, test receipts, tooling holds, source checkpoint, documentation checkpoint, and UI-029 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift"
+      provenance: "Source checkpoint 7cb9a17405766f57edbe56c6d75b214fb7baab07; bounded Swift parse; cursor-safe UI guard; SwiftPM Release build and complete test suite; Agent Display preflight/provider checks; corrected unique disposable bundle launch"
+      state: "recovery_metric_grouping_containment_unverified"
+      observed: "The recovery inventory changes only its parent accessibility grouping from children.combine to children.contain, so the existing network, sharing, and unresolved metric children retain their stable identifiers and live summaries while the parent identifier, label, visible layout, and recovery semantics remain unchanged. The corrected unique org.realitygood.KeyBrake.UI028 disposable bundle launched as PID 30195; bounded staging remained silent for about 60 seconds and was stopped with exit 130, inspect-ui showed no KeyBrake metric surface, and is-isolated returned isolated=false with windowCount=0."
+      receipt: "No UI-028 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane under the one-image SendMePics contract."
+      missing_evidence: "Contained UI-028 visual and runtime accessibility inspection for the recovery inventory and individual metrics, direct pointer activation, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd mutation, and respawn proof remain unverified."
+    proof:
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/CommandCenterView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI028; pass in 10.35s"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI028; 35 tests, 0 failures"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI028 --display agent-stage --start-sentinel --json; pass; displayctl doctor HEALTHY; displayctl capabilities owned-cgvirtualdisplay; corrected unique disposable SwiftPM Release bundle; initial assembly failed because the executable was under the explicit scratch directory rather than .build/release; corrected bundle launched as PID 30195; bounded stage remained silent and was stopped with exit 130; inspect-ui found no KeyBrake metric surface; is-isolated false/windowCount=0; exact PID terminated; no pointer, contained visual, runtime accessibility, or PNG proof"
+      agent_cache_snapshot: "Agent-Cache source snapshot creation failed because the database was locked; direct current-source validation followed the CodeGraph attempt and no missing snapshot proof is claimed"
+      agent_cache_receipt: "agent_cache_chatgpt_record_work_receipt appended source, static, build, test, and Agent Display evidence to the durable task event log with incomplete projections and lane-repository-truth-mismatch warnings; no complete receipt projection is claimed"
+      safety: "Only non-mutating source validation, a SwiftPM Release build, local tests, and disposable app staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=cf35d593bd2226b461dedb464d156a91f1c0fcf628fd1c87ccb80247303e2ba6"
+      - "UI-028 source checkpoint 7cb9a17405766f57edbe56c6d75b214fb7baab07"
+      - "UI-028 documentation checkpoint 5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
+    guards:
+      - "Agent-Cache UI-028 mutation gate passed after live branch and PR #1 continuity were verified."
+      - "CodeGraph status reported not initialized and the exact recoveryMetric query and grouping exploration returned codegraph_unavailable, so no new graph snapshot is claimed."
+      - "CommandCenterView.swift passed bounded frontend parsing and the cursor-safe non-interrupting UI guard."
+      - "Agent-Cache workspace single-flight guard passed before the SwiftPM Release build; no overlap was reported."
+      - "Agent Display preflight, doctor, and provider checks passed, but bounded staging was stopped after the silent timeout and exact isolation remained unproven."
+      - "Agent-Cache source snapshot creation failed because the database was locked, and receipt appends returned incomplete projections with lane-repository-truth-mismatch warnings; neither is represented as complete proof."
+      - "No new PNG was captured under the one-image SendMePics contract; the retained UI-004 Settings receipt was preserved."
+    deferred:
+      - "Exact Agent Display containment and runtime accessibility inspection for the recovery inventory and individual metrics, direct pointer activation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+      - "Release-focused Xcode test execution until the existing Release testability and architecture configuration is repaired."
+    next_action: "Continue with UI-029 exact Agent Display containment and signed-host release gates while preserving the private PR."
+  completed_delivery_ui028:
+    iteration: "UI-028"
+    source_commit: "7cb9a17405766f57edbe56c6d75b214fb7baab07"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=cf35d593bd2226b461dedb464d156a91f1c0fcf628fd1c87ccb80247303e2ba6"
+    documentation_commit: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
+    remote_head_verified: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-029 exact Agent Display containment and signed-host release gates while preserving the private PR."
+  upcoming_iteration:
+    id: "UI-029"
+    name: "Command Center recovery metric runtime containment"
+    user_promise: "The staged Command Center exposes the existing recovery inventory container and metric children within exact Agent Display containment while preserving live summaries, visible layout, recovery behavior, and the private release boundary."
     status: "planned"
     scope_preserved: true
-    next_action: "Run the CodeGraph/source-owner check for the existing recovery metric accessibility grouping before selecting the smallest safe seam."
+    next_action: "Run the CodeGraph/source-owner check for the existing recovery inventory containment route, then use Agent Display to diagnose exact window ownership before any further source change."
