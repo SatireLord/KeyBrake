@@ -95,6 +95,7 @@ struct RecoveryView: View {
                     Button("Keep Isolation") { model.keepIsolation() }
                         .buttonStyle(.bordered)
                         .accessibilityIdentifier("keybrake.recovery.keep-isolation")
+                        .help("Closes this panel while keeping the recovery decision pending")
                         .accessibilityHint("Closes this panel while keeping the recovery decision pending")
 
                     Button("Quit KeyBrake", role: .destructive) { model.requestQuit() }
@@ -227,6 +228,7 @@ struct RecoveryView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityIdentifier(identifier)
+        .help(recoveryActionHint(description: description, disablesWhileBusy: disablesWhileBusy))
         .accessibilityHint(recoveryActionHint(description: description, disablesWhileBusy: disablesWhileBusy))
         .disabled(disablesWhileBusy && model.isBusy)
     }
