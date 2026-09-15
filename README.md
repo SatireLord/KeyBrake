@@ -264,3 +264,5 @@ UI-106 makes the menu Restart Espanso action scannable. The existing local-autom
 UI-107 makes the menu Quit KeyBrake action scannable. The existing recovery-aware quit action now has a stable identifier, while its label, recovery-aware guidance, handler, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-108 makes the Settings Register Privileged Helper action scannable. The existing helper-registration action now has a stable identifier, while its label, guidance, handler, General section layout, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-109 makes the Settings error-alert dismissal action scannable. The existing OK action now has a stable identifier, while its label, error binding, dismissal handler, alert semantics, sandbox behavior, and host-operation behavior remain unchanged.
