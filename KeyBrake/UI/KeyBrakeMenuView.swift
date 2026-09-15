@@ -87,6 +87,7 @@ struct KeyBrakeMenuView: View {
         }
             .help("Open recorded operation outcomes and recovery history")
             .accessibilityHint("Opens the Incident Log to review recorded actions and outcomes")
+            .accessibilityIdentifier("keybrake.menu.open-incident-log")
         Divider()
         Button {
             openWindow(id: "settings")
