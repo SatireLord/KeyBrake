@@ -91,6 +91,8 @@ UI-074 makes the Application Access picker explicit during safe review. The exis
 
 UI-075 makes the Revoke Selected Access action explicit during safe review. The existing TCC-safe reset action is deterministically inspectable, while its selection gate, reset request, sandbox behavior, and host operations remain unchanged.
 
+UI-076 makes the Emergency Isolation section explicit during safe review. The existing policy section is deterministically inspectable, while its five policy bindings, unsupported-sharing boundary, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
