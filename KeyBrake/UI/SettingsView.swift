@@ -98,6 +98,15 @@ struct SettingsView: View {
         return "Choose an application to add to \(destination); KeyBrake records its exact bundle identifier and executable path."
     }
 
+    private func remoteAccessApprovalHint(for target: TargetDefinition) -> String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; this approval selection changes only the review fixture and does not change host configuration."
+        }
+        let inclusionState = target.approvedByUser ? "included" : "not included"
+        let toggleAction = target.approvedByUser ? "Turn it off to exclude" : "Turn it on to include"
+        return "\(target.displayName) is currently \(inclusionState) in Stop Remote Access. \(toggleAction) this exact application; KeyBrake preserves its bundle identifier and executable path as the target identity."
+    }
+
     private func targetRemovalHint(targetName: String) -> String {
         if model.isNetworkSandbox {
             return "Unavailable in the network sandbox; no target removal request is sent during sandbox review."
@@ -361,7 +370,8 @@ struct SettingsView: View {
                                 targetIdentityDetails(for: target)
                             }
                         }
-                        .help("Include this exact application in Stop Remote Access")
+                        .help(remoteAccessApprovalHint(for: target))
+                        .accessibilityHint(remoteAccessApprovalHint(for: target))
                         if !builtInTargetIDs.contains(target.id) {
                             Button("Remove \(target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
                                 .help(targetRemovalHint(targetName: target.displayName))
