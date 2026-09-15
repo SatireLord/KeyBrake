@@ -17,6 +17,8 @@ UI-037 gives the existing host-operation warning stable identifiers in Command C
 
 UI-038 gives the Settings Network sandbox section the stable container identifier `keybrake.settings.network-sandbox-section` while preserving its scenario and host-boundary children. This changes inspection addressability only; the visible demo layout, fixture controller, production route, disabled Settings controls, and non-mutating host-operation boundary remain unchanged.
 
+UI-039 gives the existing “Network sandbox active” and “Host operations disabled” labels stable inspection identifiers in Command Center and Settings. This changes inspection addressability only; the visible demo layout, fixture controller, production route, disabled Settings controls, and non-mutating host-operation boundary remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
