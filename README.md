@@ -244,3 +244,5 @@ UI-096 makes each Privacy Reset Profile service control scannable. Each existing
 UI-097 makes each configured target removal control scannable. Existing Local Automation and Remote Access removal buttons now have stable identifiers derived from each TargetDefinition.id, while labels, built-in-target filtering, target identity details, removal semantics, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-098 makes each Remote Access target approval control scannable. Each existing approval toggle now has a stable identifier derived from its TargetDefinition.id, while labels, target identity details, approval binding semantics, removal semantics, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-099 makes the menu Restore Human Control action scannable. The existing recovery action now has a stable identifier, while its label, recovery-state gate, mouse-driven recovery route, menu ordering, sandbox behavior, and host-operation behavior remain unchanged.

@@ -137,6 +137,8 @@ UI-097 makes each existing non-built-in configured target removal control explic
 
 UI-098 makes each existing Remote Access target approval control explicit during safe review. Each approval toggle is deterministically inspectable through its existing TargetDefinition.id value, while labels, target identity details, approval binding semantics, removal semantics, sandbox behavior, and host operations remain unchanged.
 
+UI-099 makes the existing menu Restore Human Control action explicit during safe review. The recovery action is deterministically inspectable through its stable identifier, while its label, recovery-state gate, mouse-driven recovery route, menu ordering, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
