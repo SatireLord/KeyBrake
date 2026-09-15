@@ -96,6 +96,7 @@ struct KeyBrakeMenuView: View {
         }
             .help("Review approved targets, recovery policy, and sandbox status")
             .accessibilityHint("Opens Settings to review targets, policy, and sandbox status")
+            .accessibilityIdentifier("keybrake.menu.open-settings")
         Button {
             model.requestQuit()
         } label: {
