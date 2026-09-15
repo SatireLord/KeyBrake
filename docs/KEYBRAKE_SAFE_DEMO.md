@@ -93,6 +93,8 @@ UI-075 makes the Revoke Selected Access action explicit during safe review. The 
 
 UI-076 makes the Emergency Isolation section explicit during safe review. The existing policy section is deterministically inspectable, while its five policy bindings, unsupported-sharing boundary, sandbox behavior, and host operations remain unchanged.
 
+UI-077 makes the Privacy Reset Profile section explicit during safe review. The existing privacy-service selection section is deterministically inspectable, while its summary, service-selection bindings, TCC boundary, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
