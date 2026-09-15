@@ -232,3 +232,5 @@ UI-090 makes the Remote Access Add Application action scannable. The existing ap
 UI-091 makes the Disable Wi-Fi control scannable. The existing Emergency Isolation toggle now has a stable inspection anchor, while its policy binding, isolation guidance, hydration behavior, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-092 makes the Disable physical Ethernet control scannable. The existing Emergency Isolation toggle now has a stable inspection anchor, while its policy binding, isolation guidance, hydration behavior, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-093 makes the Disconnect VPNs control scannable. The existing Emergency Isolation toggle now has a stable inspection anchor, while its policy binding, isolation guidance, hydration behavior, sandbox behavior, and host-operation behavior remain unchanged.
