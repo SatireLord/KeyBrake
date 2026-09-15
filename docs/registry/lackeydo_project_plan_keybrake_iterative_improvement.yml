@@ -9190,8 +9190,8 @@ project_plan:
         intended_change: "Track UI-091 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
         status: active
     pre_edit:
-      baseline_head: "3a088aaca2e856423db063376f0569a54dc795bf"
-      baseline_remote_head: "3a088aaca2e856423db063376f0569a54dc795bf"
+      baseline_head: "d48c963355f63bdf2b8b338979f8204ce80d75d9"
+      baseline_remote_head: "d48c963355f63bdf2b8b338979f8204ce80d75d9"
       source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=9088cadd9ec07899cd7be17b459dae9e1a72eab4c07cb1ff761d64f32e0d06a8"
       source_read: 'Direct bounded reads confirmed the existing Disable Wi-Fi Toggle at SettingsView.swift:471-474 uses policyBinding(\\.disableWiFi) and isolationControlHint(effectDescription: "Disables Wi-Fi interfaces") but has no stable control inspection identifier, while policy binding semantics, isolation guidance, sandbox behavior, and host-operation behavior remain the behavior boundary.'
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
