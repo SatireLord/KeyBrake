@@ -1517,17 +1517,25 @@ project_plan:
       status: accepted_deferred
       evidence: "The requested Agent-Cache source snapshot returned WorkBeginOrder failure because the database was locked; UI-026 source, Release build, test, and Agent Display evidence was appended to the durable event log with an incomplete projection and a lane-repository-truth-mismatch warning."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
+    - item: "UI-027 Agent Display containment remains unavailable for individual recovery metrics."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the unique org.realitygood.KeyBrake.UI027 bundle launched as PID 83774, bounded stage timed out with exit 124, inspect-ui showed no KeyBrake metric surface, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, runtime accessibility, or PNG proof was claimed."
+      next_action: "Continue with UI-028 exact containment and signed-host gates; keep the private PR boundary unchanged."
+    - item: "UI-027 Agent-Cache source snapshot and receipt projection remain incomplete."
+      status: accepted_deferred
+      evidence: "The requested seven-file Agent-Cache source/doc snapshot returned WorkBeginOrder failure because the database was locked; UI-027 source, Release build, test, and Agent Display evidence was appended to the durable event log with an incomplete projection and a lane-repository-truth-mismatch warning."
+      next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "24a94f8d8bb1f875d200693ca9de88fe92a4255a"
+  head: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-026"
-    source_commit: "16a13758482bca1192ca3d6f5843686f24c4ba19"
-    documentation_commit: "24a94f8d8bb1f875d200693ca9de88fe92a4255a"
-    remote_head_verified: "24a94f8d8bb1f875d200693ca9de88fe92a4255a"
+    iteration: "UI-027"
+    source_commit: "ca71a21feb6c30eabf4a682ace3a158e54a84899"
+    documentation_commit: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
+    remote_head_verified: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-027 exact Agent Display containment and signed-host release gates while preserving the private PR."
+    next_safe_entry_point: "Continue with UI-028 exact Agent Display containment and signed-host release gates while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -3231,10 +3239,87 @@ project_plan:
     remote_head_verified: "24a94f8d8bb1f875d200693ca9de88fe92a4255a"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-027 exact Agent Display containment and signed-host release gates while preserving the private PR."
-  upcoming_iteration:
+  completed_iteration_ui027:
     id: "UI-027"
     name: "Command Center recovery metric inspection orientation"
     user_promise: "The Command Center recovery metrics expose stable inspection semantics while preserving live counts, visible layout, recovery operation behavior, and existing accessibility surfaces."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView.recoveryInventory recoveryMetric calls and helper"
+        intended_change: "Add the QoL-022 marker and expose stable identifiers for the existing network, sharing, and unresolved metric Labels without changing their summaries, the parent combined recovery-inventory surface, visible layout, or recovery behavior."
+        status: implemented
+      - path: "README.md"
+        owner: "Release status and portfolio demonstration boundary"
+        intended_change: "Document the UI-027 recovery metric inspection orientation and preserve the distinction between source proof and unverified containment or pointer proof."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record recovery metric inspection orientation as implemented and keep the Agent Display host boundary explicit."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-027 at its source checkpoint, mark the slice complete, and route the next work to UI-028 exact containment and signed-host gates."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain that UI-027 is presentation-only and does not change safe-demo mutation boundaries."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-027 source, parse, UI guard, single-flight, Release build, complete test, Agent Display, Agent-Cache, and checksum evidence."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-027 requirement, slice, checksums, guards, test receipts, tooling holds, source checkpoint, documentation checkpoint, and UI-028 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift"
+      provenance: "Source checkpoint ca71a21feb6c30eabf4a682ace3a158e54a84899; bounded Swift parse; cursor-safe UI guard; SwiftPM Release build and complete test suite; Agent Display preflight/provider checks; unique disposable bundle launch"
+      state: "recovery_metric_containment_unverified"
+      observed: "The existing network, sharing, and unresolved metric Labels retain their live summaries and the parent combined recovery-inventory surface while exposing stable identifiers. The unique org.realitygood.KeyBrake.UI027 disposable bundle launched as PID 83774; bounded stage timed out with exit 124, inspect-ui showed no KeyBrake metric surface, and is-isolated returned isolated=false with windowCount=0."
+      receipt: "No UI-027 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane under the one-image SendMePics contract."
+      missing_evidence: "Contained UI-027 visual and runtime accessibility inspection for individual metrics, direct pointer activation, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd mutation, and respawn proof remain unverified."
+    proof:
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/CommandCenterView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; initial unrelated MyOwnCosplay overlap observed, exact PIDs exited, retry pass with no overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI027; pass in 9.93s"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI027; 35 tests, 0 failures"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI027 --display agent-stage --start-sentinel --json; pass; displayctl doctor HEALTHY; displayctl capabilities owned-cgvirtualdisplay; unique disposable SwiftPM Release bundle; bounded stage exit 124; inspect-ui found no KeyBrake metric surface; is-isolated false/windowCount=0; exact PID terminated; no pointer, contained visual, runtime accessibility, or PNG proof"
+      agent_cache_snapshot: "Agent-Cache source snapshot creation failed because the database was locked; direct current-source validation followed the CodeGraph attempt and no missing snapshot proof is claimed"
+      agent_cache_receipt: "agent_cache_chatgpt_record_work_receipt appended source, static, build, test, and Agent Display evidence to the durable task event log with incomplete projections and lane-repository-truth-mismatch warnings; no complete receipt projection is claimed"
+      safety: "Only non-mutating source validation, a SwiftPM Release build, local tests, and disposable app staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=0a14070e831fcd65ea5cfbb2a22984d6263802c3b5bd9c68bea57b344f1acf3b"
+      - "UI-027 source checkpoint ca71a21feb6c30eabf4a682ace3a158e54a84899"
+      - "UI-027 documentation checkpoint 5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
+    guards:
+      - "Agent-Cache UI-027 mutation gate passed after live branch and PR #1 continuity were verified."
+      - "CodeGraph status reported not initialized and the exact recoveryMetric queries returned codegraph_unavailable, so no new graph snapshot is claimed."
+      - "CommandCenterView.swift passed bounded frontend parsing and the cursor-safe non-interrupting UI guard."
+      - "Agent-Cache workspace single-flight guard initially found unrelated MyOwnCosplay overlap; exact PIDs had exited on inspection and the retry passed with no overlap."
+      - "Agent Display preflight, doctor, and provider checks passed, but stage timed out and exact isolation remained unproven."
+      - "Agent-Cache source snapshot creation failed because the database was locked, and receipt appends returned incomplete projections with lane-repository-truth-mismatch warnings; neither is represented as complete proof."
+      - "No new PNG was captured under the one-image SendMePics contract; the retained UI-004 Settings receipt was preserved."
+    deferred:
+      - "Exact Agent Display containment and runtime accessibility inspection for individual recovery metrics, direct pointer activation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+      - "Release-focused Xcode test execution until the existing Release testability and architecture configuration is repaired."
+    next_action: "Continue with UI-028 exact Agent Display containment and signed-host release gates while preserving the private PR."
+  completed_delivery_ui027:
+    iteration: "UI-027"
+    source_commit: "ca71a21feb6c30eabf4a682ace3a158e54a84899"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=0a14070e831fcd65ea5cfbb2a22984d6263802c3b5bd9c68bea57b344f1acf3b"
+    documentation_commit: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
+    remote_head_verified: "5b5eb19b8f38a0a112b5e190869bc0678ee0e804"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-028 exact Agent Display containment and signed-host release gates while preserving the private PR."
+  upcoming_iteration:
+    id: "UI-028"
+    name: "Command Center recovery metric grouping semantics"
+    user_promise: "The Command Center recovery metric accessibility grouping remains coherent and inspectable while preserving live summaries, visible layout, and recovery operation behavior."
     status: "planned"
     scope_preserved: true
-    next_action: "Run the CodeGraph/source-owner check for the existing recoveryMetric owner, then select the smallest source-backed inspection seam before editing."
+    next_action: "Run the CodeGraph/source-owner check for the existing recovery metric accessibility grouping before selecting the smallest safe seam."
