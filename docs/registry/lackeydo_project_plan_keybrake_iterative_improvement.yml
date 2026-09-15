@@ -1445,17 +1445,25 @@ project_plan:
       status: accepted_deferred
       evidence: "The requested Agent-Cache source snapshot could not create WorkBeginOrder because the database was locked; evidence was appended to the durable task event log, but the connector returned an incomplete projection after the source checkout became dirty."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
+    - item: "UI-018 Agent Display containment remains unavailable for the Current protection state card."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the unique org.realitygood.KeyBrake.UI018 bundle launched as PID 30813, bounded stage produced no response and was stopped with exit 130, inspect-ui found Command Center text on agent-stage, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, accessibility, or PNG proof was claimed."
+      next_action: "Continue with UI-019 exact containment and signed-host gates; keep the private PR boundary unchanged."
+    - item: "UI-018 Agent-Cache source snapshot and receipt projection remain incomplete."
+      status: accepted_deferred
+      evidence: "The requested seven-file Agent-Cache source/doc snapshot could not create WorkBeginOrder because the database was locked on two attempts; the source/static receipt reached the durable event-log path with an incomplete projection, and the full release/Agent Display receipt attempt returned HTTP 504."
+      next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "342f2956e097eb1c1b8791b5ce5562b2629f12af"
+  head: "c211278973f3ef4cea944ac0d7aa204e64f77380"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-017"
-    source_commit: "0ebd2295803db5123dbd2c940f50953104c61bbf"
-    documentation_commit: "0406a0157aaa029058a92c05fb3b0d153879cfa8"
-    remote_head_verified: "0406a0157aaa029058a92c05fb3b0d153879cfa8"
-    status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-018 exact Agent Display containment and signed-host release gates while preserving the private PR."
+    iteration: "UI-018"
+    source_commit: "735c59bc5c9c1a96d4d8321b40f20eb5b0e49641"
+    documentation_commit: "c211278973f3ef4cea944ac0d7aa204e64f77380"
+    remote_head_verified: "pending_after_push"
+    status: "documentation_checkpoint_pending_remote"
+    next_safe_entry_point: "Continue with UI-019 exact Agent Display containment and signed-host release gates while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
