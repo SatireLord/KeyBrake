@@ -113,6 +113,7 @@ struct SettingsView: View {
                 Section("Network sandbox") {
                     Label("Host operations disabled", systemImage: "shield.checkered")
                         .foregroundStyle(.blue)
+                        .accessibilityIdentifier("keybrake.settings.network-sandbox-status")
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Scenario: \(model.networkSandboxScenario?.displayTitle ?? "Fixture simulation")")
                             .font(.subheadline.weight(.semibold))

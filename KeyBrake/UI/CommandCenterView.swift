@@ -33,6 +33,7 @@ import SwiftUI
 // QoL-029: Network sandbox scenario title and detail combine into one inspection surface without absorbing the host-operation boundary.
 // QoL-030: Network sandbox banner contains its scenario and host-boundary surfaces so each stable inspection anchor remains independently reachable.
 // QoL-031: Network sandbox host-operation boundary publishes its own inspection anchor in the containing banner.
+// QoL-033: Network sandbox status text publishes an explicit active-state inspection anchor before scenario and boundary details.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -129,6 +130,7 @@ struct KeyBrakeCommandCenterView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Network sandbox active")
                     .font(.headline)
+                    .accessibilityIdentifier("keybrake.command-center.network-sandbox-status")
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Scenario: \(model.networkSandboxScenario?.displayTitle ?? "Fixture simulation")")
                         .font(.subheadline.weight(.semibold))
