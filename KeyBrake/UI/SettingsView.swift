@@ -377,6 +377,7 @@ struct SettingsView: View {
                         .accessibilityIdentifier("keybrake.settings.launch-at-login.error")
                 }
             }
+            .accessibilityIdentifier("keybrake.settings.general-section")
 
             Section("Local Automation") {
                 if localAutomationTargets.isEmpty {
