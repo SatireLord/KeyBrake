@@ -4994,59 +4994,156 @@ project_plan:
     remote_head_verified: "4ae69336cd5ea07b0f505597e0672493e4b05639"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-047 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui047:
     id: "UI-047"
     name: "Menu App Access action-label honesty"
     user_promise: "Make the menu action's destination and effect clear before a user invokes it, while preserving the emergency controls, recovery contract, sandbox safety boundary, and private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
         owner: "Menu-bar App Access navigation action"
         intended_change: "Align the menu label and help text with the existing behavior, which opens Settings for App Access review rather than revoking access immediately; preserve the existing action, busy gate, and settings route."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that the menu's App Access entry opens Settings for review and mutation."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the menu-label honesty improvement as presentation-only navigation clarification."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-047 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain that the App Access menu entry opens the Settings review surface before any target mutation."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-047 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-047 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: active
+        status: committed
     pre_edit:
       baseline_head: "4ae69336cd5ea07b0f505597e0672493e4b05639"
       baseline_remote_head: "4ae69336cd5ea07b0f505597e0672493e4b05639"
       source_file_sha: "KeyBrake/UI/KeyBrakeMenuView.swift sha256=33a49f7a07c3ffb8c91e0c91a67547d09fb25a475fce8de9f5a95aa102b64d47"
-      source_read: "Direct bounded reads confirmed the App Access menu item opens the existing Settings window and does not invoke an immediate revoke handler; the existing busy gate and settings route are the behavior boundary."
+      source_read: "Direct bounded reads confirmed the App Access menu item opened the existing Settings window and did not invoke an immediate revoke handler; the existing busy gate and settings route were the behavior boundary."
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
-      route: "UI-047 requires a fresh Agent-Cache bootstrap and direct source read before editing; stale route output cannot replace current Git/source truth."
+      route: "UI-047 Agent-Cache bootstrap was attempted before editing; the bounded invocation produced no visible packet, so no bootstrap packet claim is made; direct source/Git truth remained authoritative."
     acceptance:
       - "The App Access menu label states that it opens the review/settings surface instead of implying an immediate revoke."
       - "The existing Settings route, busy gate, target controls, emergency controls, recovery behavior, sandbox route, and host-operation boundary remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and both Release build paths pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    visual_evidence:
+      source: "KeyBrake/UI/KeyBrakeMenuView.swift"
+      provenance: "Source checkpoint 8b6c152; direct bounded source reads; Agent-Cache bootstrap attempt; bounded source parsing; cursor-safe UI guard; workspace single-flight guard; focused coordinator tests; SwiftPM Release build; native Xcode Release build."
+      state: "source_verified_runtime_unverified"
+      observed: "The menu App Access entry now identifies its existing Settings destination and supplies matching help and accessibility text; the action still opens Settings and does not revoke access directly."
+      receipt: "No UI-047 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/KeyBrakeMenuView.swift sha256=4a09409cae3d35e39131202dd6994c66e6154c014c7688596a5fe22072e4cc4a"
+      source_commit: "8b6c1526b48b69e01bf97d710d42c21de083623c"
+      documentation_commit: "e782631606dabf3133e0e321bd94f07f615572e4"
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/KeyBrakeMenuView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/KeyBrakeMenuView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlap; unrelated MyOwnCosplay Xcode processes were listed outside the KeyBrake package"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI047; pass in 14.26s"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI047 --filter EmergencyCoordinatorTests; 8 tests, 0 failures"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI047 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED; emitted universal arm64/x86_64 app with CFBundleExecutable=KeyBrake, org.realitygood.KeyBrake, version 0.1.0, build 1, helper plist, helper executable, and feature-contract resource; ad-hoc local signing is not Developer ID distribution signing"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Agent Display was not reopened because the unchanged staging path remained uncontained; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "The UI-047 bootstrap invocation was bounded at 30 seconds and produced no visible packet; the independent single-flight guard passed with no KeyBrake overlap; no complete Agent-Cache execution-ledger proof is claimed"
+      safety: "The UI-047 change is presentation-only: it changes the menu label and explanatory metadata, preserves the existing Settings action and busy gate, and leaves target mutation, recovery, fixture-only sandbox, and host-operation boundaries unchanged."
+    checksums:
+      - "KeyBrake/UI/KeyBrakeMenuView.swift baseline sha256=33a49f7a07c3ffb8c91e0c91a67547d09fb25a475fce8de9f5a95aa102b64d47"
+      - "KeyBrake/UI/KeyBrakeMenuView.swift final sha256=4a09409cae3d35e39131202dd6994c66e6154c014c7688596a5fe22072e4cc4a"
+      - "UI-047 source checkpoint 8b6c1526b48b69e01bf97d710d42c21de083623c"
+      - "UI-047 documentation checkpoint e782631606dabf3133e0e321bd94f07f615572e4"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
+    guards:
+      - "Preserved unrelated dirty, staged, generated, runtime, and concurrent paths; KeyBrake was clean before the source checkpoint."
+      - "Kept private PR #1 open and unmerged; no publicization or merge was performed."
+      - "Kept the menu action, Settings route, busy gate, target mutation, recovery, sandbox, process, network, sharing, privacy, helper, and launchd behavior unchanged."
+      - "The changed Swift file passed bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and both Release build paths passed; single-flight output recorded no KeyBrake overlap."
+      - "No new PNG was captured; retained UI-004 Settings PNG was preserved."
+    deferred:
+      - "Exact Agent Display containment/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
+    next_action: "Push the UI-047 documentation checkpoint, verify private remote parity and PR state, then begin UI-048 with a fresh bounded source read."
+  completed_delivery_ui047:
+    iteration: "UI-047"
+    source_commit: "8b6c1526b48b69e01bf97d710d42c21de083623c"
+    source_file_shas:
+      - "KeyBrake/UI/KeyBrakeMenuView.swift=4a09409cae3d35e39131202dd6994c66e6154c014c7688596a5fe22072e4cc4a"
+    documentation_commit: "e782631606dabf3133e0e321bd94f07f615572e4"
+    remote_head_verified: "e782631606dabf3133e0e321bd94f07f615572e4"
+    status: "documentation_checkpoint_pending_remote_verification"
+    next_safe_entry_point: "UI-048 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-048"
+    name: "Recovery busy-state quit affordance honesty"
+    user_promise: "Make the Recovery panel's available actions match its existing busy-state termination guard, while preserving mouse-operated recovery, the sandbox safety boundary, and the private release boundary."
+    status: "planned"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/RecoveryView.swift"
+        owner: "Recovery panel Keep Isolation and Quit KeyBrake actions"
+        intended_change: "Disable the Quit KeyBrake affordance while a state-changing operation is busy and expose the exact busy explanation, while keeping Keep Isolation available and leaving requestQuit and termination policy logic unchanged."
+        status: planned
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document that Recovery keeps isolation available while Quit KeyBrake follows the busy-state guard."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record busy-state Recovery quit affordance clarity as a presentation-only safety improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-048 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain the busy-state Recovery action availability during a safe demonstration."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-048 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-048 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: planned
+    pre_edit:
+      baseline_head: "TO_BE_CAPTURED_AFTER_UI047_REMOTE_DELIVERY"
+      baseline_remote_head: "TO_BE_CAPTURED_AFTER_UI047_REMOTE_DELIVERY"
+      source_file_sha: "KeyBrake/UI/RecoveryView.swift sha256=TO_BE_CAPTURED_BEFORE_UI048_EDIT"
+      source_read: "Direct bounded reads must confirm the existing RecoveryView button state and KeyBrakeViewModel.requestQuit busy guard before UI-048 activation; no source edit is authorized from this planned entry alone."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-048 requires a fresh Agent-Cache bootstrap and direct RecoveryView/KeyBrakeViewModel source read before editing; current source and Git truth remain authoritative."
+    acceptance:
+      - "Recovery keeps the existing Keep Isolation action available while a state-changing operation is busy."
+      - "Quit KeyBrake is visibly unavailable while busy, and its accessibility/help explanation states why."
+      - "requestQuit, termination policy, recovery transitions, sandbox route, and host-operation behavior remain unchanged."
       - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
     guards:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
-      - "Keep the write set limited to the menu surface and matching documentation/ledger files."
+      - "Keep the write set limited to RecoveryView and matching documentation/ledger files."
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Start UI-047 with a fresh pre-edit source hash and Agent-Cache context, then make the smallest label/help clarification that matches the existing Settings navigation behavior."
+    next_action: "After UI-047 remote verification, activate UI-048 with a fresh RecoveryView hash and source read before editing."
