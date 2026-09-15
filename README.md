@@ -266,3 +266,5 @@ UI-107 makes the menu Quit KeyBrake action scannable. The existing recovery-awar
 UI-108 makes the Settings Register Privileged Helper action scannable. The existing helper-registration action now has a stable identifier, while its label, guidance, handler, General section layout, sandbox behavior, and host-operation behavior remain unchanged.
 
 UI-109 makes the Settings error-alert dismissal action scannable. The existing OK action now has a stable identifier, while its label, error binding, dismissal handler, alert semantics, sandbox behavior, and host-operation behavior remain unchanged.
+
+UI-110 keeps the network sandbox inventory truthful after simulated actions. Command Center and Settings overlay recorded recovery state on the immutable fixture rows, show disabled or enabled Wi-Fi and Ethernet state, show connected or disconnected VPN state, and show unverified when a failed isolation step has no recorded post-state. The route remains fixture-only and does not claim OS-level network isolation or touch host operations.

@@ -159,6 +159,8 @@ UI-108 makes the existing Settings Register Privileged Helper action explicit du
 
 UI-109 makes the existing Settings error-alert dismissal action explicit during safe review. The OK action is deterministically inspectable through its stable identifier, while its label, error binding, dismissal handler, alert semantics, sandbox behavior, and host operations remain unchanged.
 
+UI-110 keeps the existing sandbox inventory aligned with recorded fixture outcomes during safe review. Before an action, rows retain the immutable connected-fixture values; after simulated isolation or restoration, rows use the recovery snapshot, Wi-Fi/Ethernet report enabled or disabled, VPN reports connected or disconnected, and a missing post-state reports unverified. The route remains non-mutating and fixture-only.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
@@ -184,6 +186,8 @@ To open the Settings review surface with the same sandbox, use:
 `/usr/bin/open -n /path/to/KeyBrake.app --args --keybrake-settings --keybrake-network-sandbox`
 
 The connected route opens Command Center in normal state and labels itself `Connected fixture`; choose `Stop Remote Access` to exercise fixture isolation, then use `Restore Network` in the mouse-operated recovery panel. Wi-Fi restores to its recorded enabled state, while VPN remains disconnected per the recovery contract.
+
+After each simulated operation, the Command Center and Settings inventories follow the recorded recovery snapshot; a failed isolation step is shown as unverified rather than as the original fixture state.
 
 Use `--keybrake-network-sandbox-failure` instead to exercise deterministic Wi-Fi/VPN failure outcomes; that route labels itself `Isolation failure fixture`. Both routes are local fixture simulations and never alter host Wi-Fi, VPN, sharing, process, privacy, launchd, or user settings. Do not combine these flags with a live-host isolation test.
 
