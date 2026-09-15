@@ -540,6 +540,7 @@ struct SettingsView: View {
         }
         .alert("KeyBrake", isPresented: Binding(get: { !errorMessage.isEmpty }, set: { if !$0 { errorMessage = "" } })) {
             Button("OK") { errorMessage = "" }
+                .accessibilityIdentifier("keybrake.settings.error.dismiss")
         } message: {
             Text(errorMessage)
                 .accessibilityIdentifier("keybrake.settings.error-message")
