@@ -11,6 +11,8 @@ UI-034 identifies the selected fixture in both review surfaces. The connected ro
 
 UI-035 keeps each scenario identifier attached to one combined title-and-detail accessibility surface, while the separate host-operation warning remains its own boundary message. The visible demo layout and fixture behavior are unchanged.
 
+UI-036 keeps the outer Command Center sandbox banner as a containing accessibility surface, so the scenario identifier and host-operation boundary remain independently inspectable beneath the banner identifier. This changes inspection grouping only; the visible demo layout, fixture controller, production route, and host-operation boundary remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

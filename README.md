@@ -118,3 +118,5 @@ UI-033 adds a safe network-simulation route. Launch the temporary app with `--ke
 UI-034 makes the selected fixture explicit in both review surfaces: the connected route shows `Connected fixture`, while the failure route shows `Isolation failure fixture`. Command Center and Settings expose those labels through `keybrake.command-center.network-sandbox-scenario` and `keybrake.settings.network-sandbox-scenario`, so a failure run cannot be mistaken for a connected simulation; route behavior and the host-operation boundary remain unchanged.
 
 UI-035 combines each sandbox scenario title with its explanatory detail as one accessibility surface while keeping the host-operation warning separate. The existing scenario identifiers remain stable, and this change affects only inspection semantics in the two review surfaces.
+
+UI-036 keeps the outer Command Center sandbox banner as a containing accessibility surface, so the scenario identity and host-operation boundary remain independently inspectable beneath the banner identifier. The visible sandbox layout and all fixture and production behavior remain unchanged.
