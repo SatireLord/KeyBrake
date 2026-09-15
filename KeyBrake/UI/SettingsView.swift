@@ -444,6 +444,7 @@ struct SettingsView: View {
                 Text("This action requests a reset for selected macOS privacy services. It never edits the TCC database and never restores grants automatically.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("keybrake.settings.application-access.tcc-boundary")
                 Button("Revoke Selected Access") {
                     model.revokeAppAccess(targetID: selectedTargetID, services: selectedPrivacyServices)
                 }
