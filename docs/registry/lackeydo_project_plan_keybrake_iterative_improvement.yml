@@ -4614,6 +4614,60 @@ project_plan:
     id: "UI-043"
     name: "Next source-backed QoL seam after Settings fixture inventory"
     user_promise: "Improve the next measured app surface without changing the recovery contract, fixture safety boundary, or private release boundary."
-    status: "planned"
+    status: "active"
     scope_preserved: true
-    next_action: "Select the next source-backed QoL seam from current evidence; do not reopen unchanged Agent Display staging."
+    write_set:
+      - path: "KeyBrake/UI/IncidentLogView.swift"
+        owner: "IncidentLogView recorded incident rows and operation-step details"
+        intended_change: "Make each recorded incident easier to scan and inspect by showing status, update timing, step outcomes, and stable incident/step accessibility identifiers without changing incident storage or recovery behavior."
+        status: planned
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document that the Incident Log presents timestamped, status-coded recorded operations and remains an observation surface."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the Incident Log scan and inspection improvement as a presentation-only capability."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-043 source, focused proof, evidence limits, and the next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain how recorded incident status and step outcomes can be reviewed without invoking a host operation."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-043 source parsing, UI guard, focused coordinator tests, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-043 ownership, baseline checksum, proof, deferred runtime evidence, and remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "1081a2a29c3b4cd3ab946da29ab19bc7f67ebac6"
+      baseline_remote_head: "1081a2a29c3b4cd3ab946da29ab19bc7f67ebac6"
+      source_file_sha: "KeyBrake/UI/IncidentLogView.swift sha256=343a9d24d6a2d268a21c0bba7d283968d6130d97ac3359898841a9209765fd37"
+      source_read: "Direct bounded reads confirmed IncidentLogView owns the list, IncidentRecord and OperationStepResult provide stable UUID identities, IncidentStore orders records newest first, and KeyBrakeViewModel owns storage/recovery mutations."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+    acceptance:
+      - "Incident rows visibly expose the initiating action, final state, resolution, update timing, and recorded step count."
+      - "Each incident row and each operation step has a stable identifier derived from its persisted UUID."
+      - "Operation steps visibly distinguish outcomes without exposing unsanitized host details or changing storage."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
+      - "Focused EmergencyCoordinatorTests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    checksums:
+      - "KeyBrake/UI/IncidentLogView.swift baseline sha256=343a9d24d6a2d268a21c0bba7d283968d6130d97ac3359898841a9209765fd37"
+      - "UI-043 baseline HEAD 1081a2a29c3b4cd3ab946da29ab19bc7f67ebac6"
+      - "Agent-Cache bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep incident storage, recovery transitions, host-operation boundaries, and sandbox behavior unchanged."
+      - "Do not reopen unchanged Agent Display staging unless a later source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
+    next_action: "Implement the bounded Incident Log presentation seam, then run focused source/UI/build/test proof before documentation and remote delivery."
