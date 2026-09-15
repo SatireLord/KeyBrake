@@ -208,3 +208,5 @@ UI-078 makes the Recovery section scannable. The existing recovery contract sect
 UI-079 makes the Remote Access section scannable. The existing approval section now has a stable inspection anchor, while its summary, empty state, target rows, enrollment action, and sandbox behavior remain unchanged.
 
 UI-080 makes the Application Access section scannable. The existing privacy-access section now has a stable inspection anchor, while its target picker, TCC-safe boundary, revoke action, and sandbox behavior remain unchanged.
+
+UI-081 makes the General section scannable. The existing host-settings section now has a stable inspection anchor, while launch-at-login, helper registration, error presentation, sandbox behavior, and host operations remain unchanged.
