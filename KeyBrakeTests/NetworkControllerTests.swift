@@ -40,6 +40,48 @@ final class NetworkControllerTests: XCTestCase {
         XCTAssertTrue(restoration.contains { $0.targetID == "vpn" && $0.operationDescription.contains("VPN remains disconnected") && $0.outcome == .skipped })
     }
 
+    func testNetworkSandboxConnectedFixtureModelsWiFiVPNAndLoopbackBoundary() async {
+        let fixture = NetworkSandboxFixture.fixture(for: .connected)
+        let controller = fixture.makeController()
+        let services = await controller.inventory()
+
+        XCTAssertEqual(fixture.scenario, .connected)
+        XCTAssertFalse(fixture.failIsolation)
+        XCTAssertEqual(services.map(\.displayName), ["Wi-Fi", "USB Ethernet", "Work VPN", "Loopback"])
+        XCTAssertEqual(services.first(where: { $0.kind == .wifi })?.device, "en0")
+        XCTAssertEqual(services.first(where: { $0.kind == .vpn })?.active, true)
+        XCTAssertEqual(services.first(where: { $0.isLoopback })?.device, "lo0")
+        let snapshot = await controller.captureSnapshot()
+        XCTAssertEqual(snapshot.count, 3)
+    }
+
+    func testNetworkSandboxConnectedFixtureIsolatesAndRestoresExplicitly() async {
+        let controller = NetworkSandboxFixture.connected.makeController()
+        let snapshot = await controller.captureSnapshot()
+
+        let isolation = await controller.isolate(snapshot)
+        XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-wi-fi" })?.outcome, .succeeded)
+        XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-usb-ethernet" })?.outcome, .alreadyInDesiredState)
+        XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-work-vpn" })?.outcome, .succeeded)
+
+        let restoration = await controller.restore(snapshot)
+        XCTAssertEqual(restoration.first(where: { $0.targetID == "network-service-wi-fi" })?.outcome, .succeeded)
+        XCTAssertEqual(restoration.first(where: { $0.targetID == "network-service-work-vpn" })?.outcome, .skipped)
+        XCTAssertTrue(restoration.first(where: { $0.targetID == "network-service-work-vpn" })?.operationDescription.contains("VPN remains disconnected") == true)
+    }
+
+    func testNetworkSandboxFailureFixtureReportsDeterministicWiFiAndVPNFailures() async {
+        let fixture = NetworkSandboxFixture.fixture(for: .isolationFailure)
+        let controller = fixture.makeController()
+        let snapshot = await controller.captureSnapshot()
+
+        let isolation = await controller.isolate(snapshot)
+        XCTAssertTrue(fixture.failIsolation)
+        XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-wi-fi" })?.outcome, .failed)
+        XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-work-vpn" })?.outcome, .failed)
+        XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-usb-ethernet" })?.outcome, .alreadyInDesiredState)
+    }
+
     func testSystemNetworkIsolationUsesHelperAndVerifiesDisabledState() async {
         let runner = RecordingCommandRunner(results: [.success(commandResult(output: "Network service is disabled.\n"))])
         let helper = RecordingHelper()

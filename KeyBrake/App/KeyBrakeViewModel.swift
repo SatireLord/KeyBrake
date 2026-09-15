@@ -25,18 +25,25 @@ final class KeyBrakeViewModel: ObservableObject {
     let coordinator: EmergencyCoordinator
     let incidentStore: IncidentStore
     let featureContract: FeatureContract
+    let isNetworkSandbox: Bool
 
     private static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
     private static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
 
-    init(coordinator: EmergencyCoordinator = .live(), incidentStore: IncidentStore = IncidentStore()) {
+    init(
+        coordinator: EmergencyCoordinator = .live(),
+        incidentStore: IncidentStore = IncidentStore(),
+        initialIsolationPolicy: EmergencyIsolationPolicy? = nil,
+        isNetworkSandbox: Bool = false
+    ) {
         self.coordinator = coordinator
         self.incidentStore = incidentStore
         self.featureContract = FeatureContract.current()
-        self.configuredTargets = Self.loadConfiguredTargets()
-        self.isolationPolicy = Self.loadIsolationPolicy()
-        self.launchAtLoginEnabled = Self.readLaunchAtLoginStatus()
-        self.privilegedHelperStatus = Self.readPrivilegedHelperStatus()
+        self.isNetworkSandbox = isNetworkSandbox
+        self.configuredTargets = isNetworkSandbox ? TargetRegistry.builtInRemoteAccess : Self.loadConfiguredTargets()
+        self.isolationPolicy = initialIsolationPolicy ?? Self.loadIsolationPolicy()
+        self.launchAtLoginEnabled = isNetworkSandbox ? false : Self.readLaunchAtLoginStatus()
+        self.privilegedHelperStatus = isNetworkSandbox ? "Disabled in network sandbox" : Self.readPrivilegedHelperStatus()
         Task {
             await coordinator.replaceTargetDefinitions(self.configuredTargets)
             await refresh()
@@ -195,6 +202,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func setTargetApproval(targetID: String, approved: Bool) {
+        guard !isNetworkSandbox else { return }
         guard let index = configuredTargets.firstIndex(where: { $0.id == targetID }) else { return }
         configuredTargets[index].approvedByUser = approved
         configuredTargets[index].updatedAt = Date()
@@ -203,12 +211,14 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func updateIsolationPolicy(_ policy: EmergencyIsolationPolicy) {
+        guard !isNetworkSandbox else { return }
         isolationPolicy = policy
         guard let data = try? JSONEncoder().encode(policy) else { return }
         UserDefaults.standard.set(data, forKey: Self.isolationPolicyDefaultsKey)
     }
 
     func enrollTarget(_ target: TargetDefinition) {
+        guard !isNetworkSandbox else { return }
         guard TargetRegistry.canEnroll(target, applicationBundleIdentifier: target.bundleIdentifier, executableURL: target.executableURL), !configuredTargets.contains(where: { $0.id == target.id }) else { return }
         configuredTargets.append(target)
         saveConfiguredTargets()
@@ -216,6 +226,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func removeTarget(targetID: String) {
+        guard !isNetworkSandbox else { return }
         let builtInIDs = Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
         guard !builtInIDs.contains(targetID) else { return }
         configuredTargets.removeAll { $0.id == targetID }
@@ -224,6 +235,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func revokeAppAccess(targetID: String, services: Set<TCCService>) {
+        guard !isNetworkSandbox else { return }
         guard let target = configuredTargets.first(where: { $0.id == targetID }), let bundleIdentifier = target.bundleIdentifier else { return }
         Task {
             let incident = await coordinator.revokeAppAccess(targetID: targetID, services: services, bundleIdentifier: bundleIdentifier, displayName: target.displayName)
@@ -232,6 +244,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func registerPrivilegedHelper() {
+        guard !isNetworkSandbox else { return }
         guard #available(macOS 13.0, *) else {
             privilegedHelperError = "Privileged helper registration requires macOS 13 or later."
             return
@@ -251,6 +264,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func setLaunchAtLogin(_ enabled: Bool) {
+        guard !isNetworkSandbox else { return }
         guard #available(macOS 13.0, *) else {
             launchAtLoginError = "Launch at Login requires macOS 13 or later."
             return
@@ -270,6 +284,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func openPrivacySettings() {
+        guard !isNetworkSandbox else { return }
         guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy") else { return }
         NSWorkspace.shared.open(url)
     }

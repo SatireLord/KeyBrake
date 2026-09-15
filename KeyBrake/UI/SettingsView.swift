@@ -108,6 +108,17 @@ struct SettingsView: View {
                 .accessibilityIdentifier("keybrake.settings.overview")
             }
 
+            if model.isNetworkSandbox {
+                Section("Network sandbox") {
+                    Label("Host operations disabled", systemImage: "shield.checkered")
+                        .foregroundStyle(.blue)
+                    Text("This run uses local Wi-Fi and VPN fixtures. Settings changes, privacy requests, helper registration, and launch-at-login changes are unavailable; sandbox recovery state stays in a UUID-named temporary store.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
             Section("General") {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
                 LabeledContent("Privileged Helper") {
@@ -208,6 +219,7 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
+        .disabled(model.isNetworkSandbox)
         .padding()
         .onAppear {
             if selectedTargetID.isEmpty { selectedTargetID = accessTargets.first?.id ?? "" }

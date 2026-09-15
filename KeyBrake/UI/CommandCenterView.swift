@@ -28,6 +28,7 @@ import SwiftUI
 // QoL-024: Recovery metric children speak their existing live summaries explicitly without changing their visible labels, identifiers, or parent grouping.
 // QoL-025: Recovery metric children remain behind the containing inventory orientation during accessibility traversal without changing their visible labels, identifiers, or layout.
 // QoL-026: The recovery-card container owns its stable accessibility identifier while preserving emergency-action ownership and all child surfaces.
+// QoL-027: Network sandbox mode publishes its non-mutating boundary before controls so staged Wi-Fi and VPN exercise cannot be mistaken for host operations.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -36,6 +37,9 @@ struct KeyBrakeCommandCenterView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 header
+                if model.isNetworkSandbox {
+                    networkSandboxBanner
+                }
                 statusCard
                 emergencyActions
                 if model.isRecoveryStatusKnown && model.hasRecovery {
@@ -109,6 +113,34 @@ struct KeyBrakeCommandCenterView: View {
         } label: {
             Text("Current protection state")
         }
+    }
+
+    private var networkSandboxBanner: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "network")
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(.blue)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Network sandbox active")
+                    .font(.headline)
+                Text("Wi-Fi and VPN are simulated with local fixtures. Host network, process, privacy, sharing, and user-settings persistence operations are disabled; sandbox recovery state stays in a UUID-named temporary store.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(14)
+        .background(Color.blue.opacity(0.10), in: RoundedRectangle(cornerRadius: 12))
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.blue.opacity(0.30), lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("keybrake.command-center.network-sandbox-banner")
     }
 
     private var emergencyActions: some View {

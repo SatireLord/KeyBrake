@@ -58,7 +58,11 @@ struct KeyBrakeApp: App {
 @MainActor
 private enum KeyBrakeLaunchConfiguration {
     static func makeViewModel() -> KeyBrakeViewModel {
-        guard ProcessInfo.processInfo.arguments.contains(KeyBrakeLaunchArgument.recoveryDemo) else {
+        let launchArguments = ProcessInfo.processInfo.arguments
+        if let networkSandboxScenario = networkSandboxScenario(from: launchArguments) {
+            return makeNetworkSandboxViewModel(for: networkSandboxScenario)
+        }
+        guard launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo) else {
             return KeyBrakeViewModel()
         }
 
@@ -114,14 +118,67 @@ private enum KeyBrakeLaunchConfiguration {
         )
         return KeyBrakeViewModel(coordinator: coordinator, incidentStore: incidentStore)
     }
+
+    private static func networkSandboxScenario(from launchArguments: [String]) -> NetworkSandboxScenario? {
+        if launchArguments.contains(KeyBrakeLaunchArgument.networkSandboxFailure) {
+            return .isolationFailure
+        }
+        if launchArguments.contains(KeyBrakeLaunchArgument.networkSandbox) {
+            return .connected
+        }
+        return nil
+    }
+
+    private static func makeNetworkSandboxViewModel(for scenario: NetworkSandboxScenario) -> KeyBrakeViewModel {
+        let rootDirectory = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "KeyBrake-Network-Sandbox-\(scenario.rawValue)-\(UUID().uuidString)",
+            isDirectory: true
+        )
+        let recoveryStore = RecoveryStore(rootDirectory: rootDirectory)
+        let incidentStore = IncidentStore(rootDirectory: rootDirectory)
+        let recordingRunner = RecordingCommandRunner()
+        let fixture = NetworkSandboxFixture.fixture(for: scenario)
+        let coordinator = EmergencyCoordinator(
+            recoveryStore: recoveryStore,
+            incidentStore: incidentStore,
+            processController: KeyBrakeNetworkSandboxProcessController(),
+            espanso: EspansoAdapter(commandRunner: recordingRunner, executableCandidates: []),
+            networkController: fixture.makeController(),
+            privacyController: PrivacyController(commandRunner: recordingRunner),
+            helper: UnavailableHelper(),
+            initialState: .normal
+        )
+        return KeyBrakeViewModel(
+            coordinator: coordinator,
+            incidentStore: incidentStore,
+            initialIsolationPolicy: .standard,
+            isNetworkSandbox: true
+        )
+    }
+}
+
+private struct KeyBrakeNetworkSandboxProcessController: ProcessControlling {
+    func matchingProcesses(for target: TargetDefinition) -> [ProcessIdentity] {
+        []
+    }
+
+    func stop(_ identity: ProcessIdentity, allowForcedTermination: Bool) async -> ProcessTargetResult {
+        ProcessTargetResult(
+            targetID: identity.bundleIdentifier ?? "network-sandbox-process",
+            displayName: identity.bundleIdentifier ?? "Network sandbox process",
+            identity: identity,
+            outcome: .unsupported,
+            detail: "Network sandbox does not inspect or terminate host processes"
+        )
+    }
 }
 
 // Greppable:
 // canonical: keybrake-destination-demo-routes
 // aliases: incident-log staging; settings staging; destination launch argument
-// forms: keybrake-incident-log; keybrake-settings; --keybrake-incident-log; --keybrake-settings
+// forms: keybrake-incident-log; keybrake-settings; keybrake-network-sandbox; keybrake-network-sandbox-failure; --keybrake-incident-log; --keybrake-settings
 // descriptors: deterministic destination staging; Agent Display route
-// states: incident-log; settings; command-center; recovery-demo
+// states: incident-log; settings; command-center; recovery-demo; network-sandbox
 // consumers: WindowLaunchBridge; Agent Display
 // owner: KeyBrakeLaunchArgument
 // QoL-006: the menu-bar extra label uses the same hydration-aware status symbol as the compact status row.
@@ -170,7 +227,10 @@ private struct WindowLaunchBridge: View {
         let launchArguments = ProcessInfo.processInfo.arguments
         let shouldOpenIncidentLog = launchArguments.contains(KeyBrakeLaunchArgument.incidentLog)
         let shouldOpenSettings = launchArguments.contains(KeyBrakeLaunchArgument.settings)
-        let shouldOpenCommandCenter = (launchArguments.contains(KeyBrakeLaunchArgument.commandCenter) || launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo))
+        let shouldOpenCommandCenter = (launchArguments.contains(KeyBrakeLaunchArgument.commandCenter)
+            || launchArguments.contains(KeyBrakeLaunchArgument.recoveryDemo)
+            || launchArguments.contains(KeyBrakeLaunchArgument.networkSandbox)
+            || launchArguments.contains(KeyBrakeLaunchArgument.networkSandboxFailure))
             && !shouldOpenIncidentLog
             && !shouldOpenSettings
         guard !didOpenLaunchRequestedCommandCenter, shouldOpenCommandCenter || shouldOpenIncidentLog || shouldOpenSettings else { return }
@@ -195,6 +255,8 @@ private struct WindowLaunchBridge: View {
 private enum KeyBrakeLaunchArgument {
     static let commandCenter = "--keybrake-command-center"
     static let recoveryDemo = "--keybrake-recovery-demo"
+    static let networkSandbox = "--keybrake-network-sandbox"
+    static let networkSandboxFailure = "--keybrake-network-sandbox-failure"
     static let incidentLog = "--keybrake-incident-log"
     static let settings = "--keybrake-settings"
 }

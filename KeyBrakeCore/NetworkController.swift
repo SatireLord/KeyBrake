@@ -246,6 +246,70 @@ public final class SystemNetworkController: NetworkControlling, @unchecked Senda
     }
 }
 
+// Greppable:
+// canonical: keybrake-network-sandbox-fixture
+// aliases: fixture Wi-Fi VPN; non-mutating network sandbox; simulated network state
+// forms: --keybrake-network-sandbox; --keybrake-network-sandbox-failure
+// descriptors: deterministic Wi-Fi and VPN observations; fixture isolation; explicit restore boundary
+// states: connected; isolation-failure; isolated; restore-pending
+// consumers: KeyBrakeLaunchConfiguration; NetworkControllerTests; Agent Display
+// owner: NetworkSandboxFixture
+public enum NetworkSandboxScenario: String, Codable, CaseIterable, Sendable {
+    case connected
+    case isolationFailure
+
+    public var displayTitle: String {
+        switch self {
+        case .connected:
+            return "Connected Wi-Fi and VPN"
+        case .isolationFailure:
+            return "Isolation failure"
+        }
+    }
+}
+
+public struct NetworkSandboxFixture: Equatable, Sendable {
+    public let scenario: NetworkSandboxScenario
+    public let services: [NetworkService]
+    public let failIsolation: Bool
+
+    public init(scenario: NetworkSandboxScenario, services: [NetworkService], failIsolation: Bool) {
+        self.scenario = scenario
+        self.services = services
+        self.failIsolation = failIsolation
+    }
+
+    public static let connected = NetworkSandboxFixture(
+        scenario: .connected,
+        services: [
+            NetworkService(id: "network-service-wi-fi", displayName: "Wi-Fi", device: "en0", kind: .wifi, enabled: true, active: true),
+            NetworkService(id: "network-service-usb-ethernet", displayName: "USB Ethernet", device: "en5", kind: .usbEthernet, enabled: false, active: false),
+            NetworkService(id: "network-service-work-vpn", displayName: "Work VPN", kind: .vpn, enabled: true, active: true),
+            NetworkService(id: "network-service-loopback", displayName: "Loopback", device: "lo0", kind: .loopback, enabled: true, active: true, isLoopback: true)
+        ],
+        failIsolation: false
+    )
+
+    public static let isolationFailure = NetworkSandboxFixture(
+        scenario: .isolationFailure,
+        services: connected.services,
+        failIsolation: true
+    )
+
+    public static func fixture(for scenario: NetworkSandboxScenario) -> NetworkSandboxFixture {
+        switch scenario {
+        case .connected:
+            return .connected
+        case .isolationFailure:
+            return .isolationFailure
+        }
+    }
+
+    public func makeController() -> FixtureNetworkController {
+        FixtureNetworkController(services: services, failIsolation: failIsolation)
+    }
+}
+
 public struct FixtureNetworkController: NetworkControlling, Sendable {
     public var services: [NetworkService]
     public var failIsolation: Bool
