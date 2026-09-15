@@ -393,6 +393,7 @@ struct SettingsView: View {
                 Text("Added applications are matched by their exact bundle identifier and executable path.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("keybrake.settings.local-automation.identity-boundary")
             }
 
             Section("Remote Access") {
