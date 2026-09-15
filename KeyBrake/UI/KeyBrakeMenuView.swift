@@ -90,6 +90,20 @@ struct KeyBrakeMenuView: View {
         } label: {
             Label("Quit KeyBrake", systemImage: "power")
         }
+        .help(quitActionHint)
+        .accessibilityHint(quitActionHint)
+    }
+
+    private var quitActionHint: String {
+        guard model.isRecoveryStatusKnown else {
+            return "Unavailable until KeyBrake confirms whether unresolved recovery exists."
+        }
+        if model.isBusy {
+            return "Unavailable until the current state-changing operation finishes."
+        }
+        return model.hasRecovery
+            ? "Opens the recovery decision before quitting so recorded changes can be restored or kept isolated."
+            : "Quits KeyBrake because no unresolved recovery snapshot is pending."
     }
 
     private var statusText: String {
