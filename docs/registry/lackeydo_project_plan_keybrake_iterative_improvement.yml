@@ -1533,17 +1533,21 @@ project_plan:
       status: accepted_deferred
       evidence: "The requested UI-028 Agent-Cache source snapshot returned WorkBeginOrder failure because the database was locked; UI-028 source, static, Release build, test, and Agent Display evidence was appended to the durable task event log with an incomplete projection and a lane-repository-truth-mismatch warning."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
+    - item: "UI-029 exact Agent Display containment remains unavailable for the current Command Center route."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the unique org.realitygood.KeyBrake.UI029 bundle launched as PID 56866, bounded staging remained silent for about 60 seconds and was stopped with exit 130, inspect-ui showed no KeyBrake window or recovery-metric surface, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, runtime accessibility, or PNG proof was claimed."
+      next_action: "Repair the exact Agent Display routing and ownership path or continue with a source-backed QoL seam; keep the private PR boundary unchanged and do not repeat unchanged staging calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
+  head: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-028"
+    iteration: "UI-029"
     source_commit: "7cb9a17405766f57edbe56c6d75b214fb7baab07"
-    documentation_commit: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
-    remote_head_verified: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
+    documentation_commit: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
+    remote_head_verified: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-029 exact Agent Display containment and signed-host release gates while preserving the private PR."
+    next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with a source-backed QoL seam while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -3401,10 +3405,80 @@ project_plan:
     remote_head_verified: "5b5891046f4ad1c5e96e0581f8bb2e23ab37effb"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-029 exact Agent Display containment and signed-host release gates while preserving the private PR."
-  upcoming_iteration:
+  completed_iteration_ui029:
     id: "UI-029"
-    name: "Command Center recovery metric runtime containment"
+    name: "Command Center recovery metric Agent Display containment diagnosis"
     user_promise: "The staged Command Center exposes the existing recovery inventory container and metric children within exact Agent Display containment while preserving live summaries, visible layout, recovery behavior, and the private release boundary."
+    status: "diagnosed_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView.recoveryInventory"
+        intended_change: "No source change; validate the current UI-028 containing recovery inventory and its stable metric children through the exact Agent Display route."
+        status: unchanged
+      - path: "README.md"
+        owner: "Release status and portfolio demonstration boundary"
+        intended_change: "Document the UI-029 read-only containment diagnosis and preserve the distinction between source proof and unverified host proof."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record exact Agent Display containment diagnosis as host-unverified without claiming runtime or visual proof."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-029 as a host-dependent diagnostic checkpoint and keep future source-backed QoL work separate from the containment hold."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Document that UI-029 is host-routing evidence only and does not change the safe-demo mutation boundary."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-029 Agent Display preflight, staging timeout, inspection, cleanup, and no-claim boundaries."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-029 diagnosis, exact host hold, current source checkpoint, documentation checkpoint, and UI-030 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift"
+      provenance: "Current UI-028 source checkpoint 7cb9a17405766f57edbe56c6d75b214fb7baab07; read-only CodeGraph status/query attempt; Agent Display preflight/provider checks; unique disposable bundle launch"
+      state: "recovery_metric_containment_unverified"
+      observed: "The current containing recovery inventory and stable metric identifiers were not exposed by the staged display. The unique org.realitygood.KeyBrake.UI029 disposable bundle launched as PID 56866; bounded staging remained silent for about 60 seconds and was stopped with exit 130, inspect-ui found no KeyBrake window or recovery-metric surface, and is-isolated returned isolated=false with windowCount=0."
+      receipt: "No UI-029 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane under the one-image SendMePics contract."
+      missing_evidence: "Exact contained UI-029 visual and runtime accessibility inspection, direct pointer activation, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd mutation, and respawn proof remain unverified."
+    proof:
+      codegraph: "CodeGraph status reported not initialized and the exact recoveryInventory query and containment exploration returned codegraph_unavailable; no graph proof is claimed"
+      source_change: "No source change; current UI-028 source checkpoint 7cb9a17405766f57edbe56c6d75b214fb7baab07 remains the source/build/test checkpoint"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI029 --display agent-stage --start-sentinel --json; pass; displayctl doctor HEALTHY; displayctl capabilities owned-cgvirtualdisplay; unique disposable Release bundle; bounded stage remained silent and was stopped with exit 130; inspect-ui found no KeyBrake window or recovery-metric surface; is-isolated false/windowCount=0; exact PID terminated; no pointer, contained visual, runtime accessibility, or PNG proof"
+      safety: "Only read-only source and CodeGraph inspection plus disposable app staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, signing action, or helper action was used."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=cf35d593bd2226b461dedb464d156a91f1c0fcf628fd1c87ccb80247303e2ba6"
+      - "UI-029 source checkpoint 7cb9a17405766f57edbe56c6d75b214fb7baab07"
+      - "UI-029 documentation checkpoint 0c4a49e0bb79da207ac48688286c92ddbe1bd835"
+    guards:
+      - "Agent-Cache UI-029 continuity gate passed with the private PR #1 branch and remote head aligned."
+      - "CodeGraph status/query/explore were attempted before display work; the index was not initialized and no graph proof is claimed."
+      - "Agent Display preflight, doctor, and provider checks passed, but staging remained silent and exact isolation remained unproven."
+      - "Only the exact verified disposable PID 56866 was terminated after inspection."
+      - "No new PNG was captured under the one-image SendMePics contract; the retained UI-004 Settings receipt was preserved."
+    deferred:
+      - "Exact Agent Display containment and runtime accessibility inspection for the containing recovery inventory and individual metrics, direct pointer activation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+      - "The next source-backed QoL seam must remain separate from the host-containment hold."
+    next_action: "Repair the exact Agent Display routing and ownership path or continue with UI-030 source-backed recovery metric spoken-summary inspection while preserving the private PR."
+  completed_delivery_ui029:
+    iteration: "UI-029"
+    source_commit: "7cb9a17405766f57edbe56c6d75b214fb7baab07"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=cf35d593bd2226b461dedb464d156a91f1c0fcf628fd1c87ccb80247303e2ba6"
+    documentation_commit: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
+    remote_head_verified: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with UI-030 source-backed recovery metric spoken-summary inspection while preserving the private PR."
+  upcoming_iteration:
+    id: "UI-030"
+    name: "Command Center recovery metric spoken-summary orientation"
+    user_promise: "Each contained recovery metric communicates its existing live summary clearly while preserving metric values, identifiers, parent grouping, visible layout, recovery behavior, and the private release boundary."
     status: "planned"
     scope_preserved: true
-    next_action: "Run the CodeGraph/source-owner check for the existing recovery inventory containment route, then use Agent Display to diagnose exact window ownership before any further source change."
+    next_action: "Run the CodeGraph/source-owner check for the existing recoveryMetric helper and inspect current child accessibility labels before selecting the smallest safe source seam."
