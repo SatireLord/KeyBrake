@@ -196,3 +196,5 @@ UI-072 makes the Launch-at-Login error state scannable. The existing conditional
 UI-073 makes the Settings error alert scannable. The existing alert message now has a stable inspection anchor, while alert routing, error handling, and sandbox behavior remain unchanged.
 
 UI-074 makes the Application Access picker scannable. The existing target-selection control now has a stable inspection anchor, while target selection, reset gating, and sandbox behavior remain unchanged.
+
+UI-075 makes the Revoke Selected Access action scannable. The existing TCC-safe reset action now has a stable inspection anchor, while its selection gate, reset path, and sandbox behavior remain unchanged.
