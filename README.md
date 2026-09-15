@@ -216,3 +216,5 @@ UI-082 makes the Local Automation section scannable. The existing local-automati
 UI-083 makes the Current protection state section scannable. The existing hydration-aware protection overview now has a stable inspection anchor, while its status surface, configured-target summary, isolation-profile summary, recovery summary, and sandbox behavior remain unchanged.
 
 UI-084 makes the Configured targets summary scannable. The existing protection overview row now has a stable inspection anchor, while its target count, identity semantics, help text, hydration behavior, and sandbox behavior remain unchanged.
+
+UI-085 makes the Isolation profile summary scannable. The existing protection overview row now has a stable inspection anchor, while its enabled-control count, policy semantics, help text, hydration behavior, and sandbox behavior remain unchanged.

@@ -109,6 +109,8 @@ UI-083 makes the Current protection state section explicit during safe review. T
 
 UI-084 makes the Configured targets summary explicit during safe review. The existing protection overview row is deterministically inspectable, while its target count, identity semantics, help text, hydration behavior, sandbox behavior, and host operations remain unchanged.
 
+UI-085 makes the Isolation profile summary explicit during safe review. The existing protection overview row is deterministically inspectable, while its enabled-control count, policy semantics, help text, hydration behavior, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
