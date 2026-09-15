@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "069605570bc128a4edd31da6e0f2f47d0424066b"
+    head: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "069605570bc128a4edd31da6e0f2f47d0424066b"
+    remote_head_verified: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -1453,17 +1453,25 @@ project_plan:
       status: accepted_deferred
       evidence: "The requested seven-file Agent-Cache source/doc snapshot could not create WorkBeginOrder because the database was locked on two attempts; the source/static receipt reached the durable event-log path with an incomplete projection, and the full release/Agent Display receipt attempt returned HTTP 504."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
+    - item: "UI-019 Agent Display containment remains unavailable for the review navigation cards."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the unique org.realitygood.KeyBrake.UI019 bundle launched as PID 72755, bounded stage timed out with exit 124, the staging display was inspected without exact UI-019 binding, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, accessibility, or PNG proof was claimed."
+      next_action: "Continue with UI-020 exact containment and signed-host gates; keep the private PR boundary unchanged."
+    - item: "UI-019 Agent-Cache source snapshot and receipt projection remain incomplete."
+      status: accepted_deferred
+      evidence: "The requested seven-file Agent-Cache source/doc snapshot could not create WorkBeginOrder because the database was locked; the evidence append reached the durable task event log with an incomplete projection."
+      next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "069605570bc128a4edd31da6e0f2f47d0424066b"
+  head: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-018"
-    source_commit: "735c59bc5c9c1a96d4d8321b40f20eb5b0e49641"
-    documentation_commit: "c211278973f3ef4cea944ac0d7aa204e64f77380"
-    remote_head_verified: "069605570bc128a4edd31da6e0f2f47d0424066b"
+    iteration: "UI-019"
+    source_commit: "598f89cf1796a748a01822bd4088d5c9bf3b25a2"
+    documentation_commit: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
+    remote_head_verified: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Continue with UI-019 exact Agent Display containment and signed-host release gates while preserving the private PR."
+    next_safe_entry_point: "Continue with UI-020 exact Agent Display containment and signed-host release gates while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -2544,10 +2552,88 @@ project_plan:
     remote_head_verified: "069605570bc128a4edd31da6e0f2f47d0424066b"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-019 exact Agent Display containment and signed-host release gates while preserving the private PR."
-  upcoming_iteration:
+  completed_iteration_ui019:
     id: "UI-019"
     name: "Command Center navigation card accessibility orientation"
+    source_checkpoint: "598f89cf1796a748a01822bd4088d5c9bf3b25a2"
     user_promise: "The Command Center Incident Log and Settings navigation cards expose each visible destination name and count as one stable accessibility surface, while their existing window routes, counts, hints, and review-only semantics remain unchanged."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView.secondaryActions"
+        intended_change: "Add the QoL-014 marker and combine each existing Incident Log and Settings Button label into one accessibility surface without changing destination routes, counts, identifiers, hints, or action handlers."
+        status: implemented
+      - path: "README.md"
+        owner: "Release status and portfolio demonstration boundary"
+        intended_change: "Document the UI-019 navigation-card accessibility orientation and preserve the distinction between source proof and unverified containment or pointer proof."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record review navigation card accessibility orientation as implemented and keep the Agent Display host boundary explicit."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-019 at its source checkpoint and route the next work to UI-020 exact containment and signed-host gates."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain that UI-019 is presentation-only and does not change the safe demo mutation boundaries."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-019 source, parse, UI guard, single-flight, Release build, complete test, Agent Display, Agent-Cache, and checksum evidence."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-019 requirement, slice, checksums, guards, test receipts, tooling holds, source checkpoint, documentation checkpoint, and UI-020 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift"
+      provenance: "source checkpoint 598f89cf1796a748a01822bd4088d5c9bf3b25a2; bounded Swift parse; cursor-safe UI guard; SwiftPM Release build and complete test suite; Agent Display preflight/provider checks; unique disposable bundle launch"
+      state: "navigation_cards_containment_unverified"
+      observed: "The Incident Log and Settings cards retain their visible destination names, live counts, existing identifiers, and hints, while each Button combines its label content into one accessibility surface. The unique org.realitygood.KeyBrake.UI019 disposable bundle launched as PID 72755; bounded stage timed out with exit 124, the staging display was inspected without exact UI-019 binding, and is-isolated returned isolated=false with windowCount=0."
+      receipt: "No UI-019 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane under the one-image SendMePics contract."
+      missing_evidence: "Contained UI-019 visual and runtime accessibility inspection, direct pointer activation, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd mutation, and respawn proof remain unverified."
+    proof:
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/CommandCenterView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI019; pass"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI019; 35 tests, 0 failures"
+      staging: "agent_ui_preflight.py original and unique identifiers; displayctl doctor/capabilities; unique disposable SwiftPM Release bundle; bounded stage exit 124; staging display inspection without exact UI-019 binding; is-isolated false/windowCount=0; exact PID terminated; no pointer, contained visual, runtime accessibility, or PNG proof"
+      agent_cache_snapshot: "agent_cache_repo_snapshot_files returned WorkBeginOrder failed because the Agent-Cache database was locked; direct current-source validation followed the CodeGraph attempt and no missing snapshot proof is claimed"
+      agent_cache_receipt: "agent_cache_chatgpt_record_work_receipt appended evidence to the durable task event log with an incomplete projection; no complete receipt projection is claimed"
+      safety: "Only non-mutating source validation, a SwiftPM Release build, local tests, and disposable app staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=8db2f32be4583e844ecab852bef7261a030da73a28eec1865f83570325d28f12"
+      - "UI-019 source checkpoint 598f89cf1796a748a01822bd4088d5c9bf3b25a2"
+      - "UI-019 documentation checkpoint will be bound to the private remote commit after diff validation."
+    guards:
+      - "Agent-Cache UI-019 mutation gate passed after live branch and PR #1 continuity were verified."
+      - "CodeGraph status and topology query were attempted before the source edit; CodeGraph reported not initialized and topology returned an HTTP 504, so no new graph snapshot is claimed."
+      - "CommandCenterView.swift passed bounded frontend parsing and the cursor-safe non-interrupting UI guard."
+      - "Agent-Cache workspace single-flight guard passed before the SwiftPM Release build and test; no overlap was reported."
+      - "Agent Display preflight and provider checks passed, but stage timed out and exact isolation remained unproven."
+      - "Agent-Cache source snapshot creation returned a database-lock hold, and the receipt append returned an incomplete projection; neither is represented as complete proof."
+      - "No new PNG was captured under the one-image SendMePics contract; the retained UI-004 Settings receipt was preserved."
+    deferred:
+      - "Exact Agent Display containment and runtime accessibility inspection for the Incident Log and Settings navigation cards, direct pointer activation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+      - "Release-focused Xcode test execution until the existing Release testability and architecture configuration is repaired."
+    next_action: "Continue with UI-020 exact Agent Display containment and signed-host release gates while preserving the private PR."
+  completed_delivery_ui019:
+    iteration: "UI-019"
+    source_commit: "598f89cf1796a748a01822bd4088d5c9bf3b25a2"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=8db2f32be4583e844ecab852bef7261a030da73a28eec1865f83570325d28f12"
+    documentation_commit: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
+    remote_head_verified: "a63f64236c241a45d579f76b61dc003dd24c9ac0"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Continue with UI-020 exact Agent Display containment and signed-host release gates while preserving the private PR."
+  upcoming_iteration:
+    id: "UI-020"
+    name: "Command Center section-heading accessibility orientation"
+    user_promise: "The Command Center Emergency actions and Review and configure headings expose each visible heading and explanatory subtitle as one non-actionable accessibility surface, while existing action hierarchy and recovery semantics remain unchanged."
     status: "planned"
     scope_preserved: true
-    next_action: "Run the CodeGraph/source-owner check, then bind the smallest safe navigation-card accessibility seam before editing."
+    next_action: "Run the CodeGraph/source-owner check, then bind the smallest safe section-heading accessibility seam before editing."
