@@ -1537,17 +1537,25 @@ project_plan:
       status: accepted_deferred
       evidence: "Cursor-safe preflight and provider checks passed, the unique org.realitygood.KeyBrake.UI029 bundle launched as PID 56866, bounded staging remained silent for about 60 seconds and was stopped with exit 130, inspect-ui showed no KeyBrake window or recovery-metric surface, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, runtime accessibility, or PNG proof was claimed."
       next_action: "Repair the exact Agent Display routing and ownership path or continue with a source-backed QoL seam; keep the private PR boundary unchanged and do not repeat unchanged staging calls."
+    - item: "UI-030 exact Agent Display containment remains unavailable for the spoken-summary recovery metrics."
+      status: accepted_deferred
+      evidence: "Cursor-safe preflight and provider checks passed, the unique org.realitygood.KeyBrake.UI030 bundle launched as PID 98388, bounded staging remained silent for about 60 seconds and was stopped with exit 130, inspect-ui showed another application's Recovery surface, is-isolated returned isolated=false with windowCount=0, and the exact process was terminated; no pointer, contained visual, runtime accessibility, or PNG proof was claimed."
+      next_action: "Repair the exact Agent Display routing and ownership path; keep the private PR boundary unchanged and do not repeat unchanged staging calls."
+    - item: "UI-030 Agent-Cache receipt projection did not advance."
+      status: accepted_deferred
+      evidence: "The UI-030 source, static, Release build, test, and Agent Display evidence was appended to the durable task event log, but agent_cache_chatgpt_record_work_receipt returned evidence_recorded_projection_skipped with projection_not_advanced_without_revision; no complete connector projection is claimed."
+      next_action: "Use the durable event log and direct source/build/test/display evidence; do not treat the skipped projection as complete proof."
   branch: "codex/keybrake-complete-implementation"
-  head: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
+  head: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
-    iteration: "UI-029"
-    source_commit: "7cb9a17405766f57edbe56c6d75b214fb7baab07"
-    documentation_commit: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
-    remote_head_verified: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
+    iteration: "UI-030"
+    source_commit: "577f48eed3f0e2f75f86ad70c7eb14a44a2ee3aa"
+    documentation_commit: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
+    remote_head_verified: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
     status: "documentation_checkpoint_remote_verified"
-    next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with a source-backed QoL seam while preserving the private PR."
+    next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with UI-031 recovery inventory reading-order inspection while preserving the private PR."
   following_delivery:
     iteration: "UI-013"
     source_commit: "70dedada1ac73121fde73c19416418d6947b8b63"
@@ -3475,10 +3483,86 @@ project_plan:
     remote_head_verified: "0c4a49e0bb79da207ac48688286c92ddbe1bd835"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with UI-030 source-backed recovery metric spoken-summary inspection while preserving the private PR."
-  upcoming_iteration:
+  completed_iteration_ui030:
     id: "UI-030"
     name: "Command Center recovery metric spoken-summary orientation"
     user_promise: "Each contained recovery metric communicates its existing live summary clearly while preserving metric values, identifiers, parent grouping, visible layout, recovery behavior, and the private release boundary."
+    status: "complete_at_documentation_checkpoint"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/CommandCenterView.swift"
+        owner: "KeyBrakeCommandCenterView.recoveryInventory recoveryMetric helper"
+        intended_change: "Add the QoL-024 marker and give each existing metric Label an explicit accessibility label equal to its existing live summary without changing visible text, icons, identifiers, parent grouping, layout, or recovery behavior."
+        status: implemented
+      - path: "README.md"
+        owner: "Release status and portfolio demonstration boundary"
+        intended_change: "Document the UI-030 explicit spoken summaries and preserve the distinction between source proof and unverified Agent Display containment."
+        status: implemented
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record recovery metric spoken-summary orientation as implemented and keep the Agent Display host boundary explicit."
+        status: implemented
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-030 at its source checkpoint, mark the slice complete, and keep the UI-029 host-containment hold separate from the next reading-order inspection."
+        status: implemented
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain that UI-030 changes only spoken accessibility labeling and does not change safe-demo mutation boundaries."
+        status: implemented
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-030 source, parse, UI guard, single-flight, Release build, complete test, Agent Display, Agent-Cache, and checksum evidence."
+        status: implemented
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Record UI-030 requirement, slice, checksums, guards, test receipts, projection hold, source checkpoint, documentation checkpoint, and UI-031 entry point."
+        status: committed
+    visual_evidence:
+      source: "KeyBrake/UI/CommandCenterView.swift"
+      provenance: "Source checkpoint 577f48eed3f0e2f75f86ad70c7eb14a44a2ee3aa; bounded Swift parse; cursor-safe UI guard; SwiftPM Release build and complete test suite; Agent Display preflight/provider checks; unique disposable bundle launch"
+      state: "recovery_metric_spoken_summary_containment_unverified"
+      observed: "Each existing network, sharing, and unresolved metric Label now carries an explicit accessibility label equal to its live summary while retaining its stable identifier, visible text, icon, containing parent, and recovery semantics. The unique org.realitygood.KeyBrake.UI030 disposable bundle launched as PID 98388; bounded staging remained silent for about 60 seconds and was stopped with exit 130, inspect-ui showed another application's Recovery surface, and is-isolated returned isolated=false with windowCount=0."
+      receipt: "No UI-030 PNG was captured; the retained UI-004 Settings PNG remains the single visual artifact for this lane under the one-image SendMePics contract."
+      missing_evidence: "Contained UI-030 visual and runtime accessibility inspection, direct pointer activation, Developer ID signing, notarization, signed helper approval, TCC, network isolation, launchd mutation, and respawn proof remain unverified."
+    proof:
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/CommandCenterView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/CommandCenterView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI030; pass in 10.29s"
+      tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI030; 35 tests, 0 failures"
+      staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI030 --display agent-stage --start-sentinel --json; pass; displayctl doctor HEALTHY; displayctl capabilities owned-cgvirtualdisplay; unique disposable SwiftPM Release bundle; bounded stage remained silent and was stopped with exit 130; inspect-ui showed another application's Recovery surface; is-isolated false/windowCount=0; exact PID terminated; no pointer, contained visual, runtime accessibility, or PNG proof"
+      agent_cache_receipt: "agent_cache_chatgpt_record_work_receipt appended source, static, build, test, and Agent Display evidence to the durable task event log, but returned evidence_recorded_projection_skipped with projection_not_advanced_without_revision; no complete receipt projection is claimed"
+      safety: "Only non-mutating source validation, a SwiftPM Release build, local tests, and disposable app staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/CommandCenterView.swift sha256=15a6ce88f007c7f3a05ede9313376a860afef02c75435126fbb9055acf6aaa10"
+      - "UI-030 source checkpoint 577f48eed3f0e2f75f86ad70c7eb14a44a2ee3aa"
+      - "UI-030 documentation checkpoint bb84031bdeec5f4bcaf6976a76a521e955ef5581"
+    guards:
+      - "Agent-Cache UI-030 mutation gate passed after live branch and PR #1 continuity were verified."
+      - "CodeGraph status reported not initialized and the exact recoveryMetric query and spoken-label exploration returned codegraph_unavailable, so no new graph snapshot is claimed."
+      - "CommandCenterView.swift passed bounded frontend parsing and the cursor-safe non-interrupting UI guard."
+      - "Agent-Cache workspace single-flight guard passed before the SwiftPM Release build; no overlap was reported."
+      - "Agent Display preflight, doctor, and provider checks passed, but bounded staging was stopped after the silent timeout and exact isolation remained unproven."
+      - "Agent-Cache receipt recording returned projection_not_advanced_without_revision; the durable event was retained and no complete projection is represented as proof."
+      - "No new PNG was captured under the one-image SendMePics contract; the retained UI-004 Settings receipt was preserved."
+    deferred:
+      - "Exact Agent Display containment and runtime accessibility inspection for the containing recovery inventory and individual spoken-summary metrics, direct pointer activation, Developer ID signing, notarization, signed helper approval, live TCC, live network mutation, launchd mutation, and respawn proof."
+      - "Release-focused Xcode test execution until the existing Release testability and architecture configuration is repaired."
+    next_action: "Repair the exact Agent Display routing and ownership path or continue with UI-031 recovery inventory reading-order inspection while preserving the private PR."
+  completed_delivery_ui030:
+    iteration: "UI-030"
+    source_commit: "577f48eed3f0e2f75f86ad70c7eb14a44a2ee3aa"
+    source_file_shas:
+      - "KeyBrake/UI/CommandCenterView.swift=15a6ce88f007c7f3a05ede9313376a860afef02c75435126fbb9055acf6aaa10"
+    documentation_commit: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
+    remote_head_verified: "bb84031bdeec5f4bcaf6976a76a521e955ef5581"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "Repair the exact Agent Display routing and ownership path or continue with UI-031 recovery inventory reading-order inspection while preserving the private PR."
+  upcoming_iteration:
+    id: "UI-031"
+    name: "Command Center recovery inventory reading order"
+    user_promise: "The containing recovery inventory presents its parent orientation before the existing child metric summaries while preserving metric values, identifiers, spoken labels, visible layout, recovery behavior, and the private release boundary."
     status: "planned"
     scope_preserved: true
-    next_action: "Run the CodeGraph/source-owner check for the existing recoveryMetric helper and inspect current child accessibility labels before selecting the smallest safe source seam."
+    next_action: "Run the CodeGraph/source-owner check for recoveryInventory accessibility modifiers and inspect current traversal semantics before selecting the smallest safe source seam."
