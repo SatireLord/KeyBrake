@@ -37,6 +37,8 @@ UI-047 makes the App Access menu destination explicit during safe review. The me
 
 UI-048 makes the Recovery panel's busy-state actions explicit during safe review. While a state-changing operation is running, `Quit KeyBrake` is unavailable with an explanation that matches the existing termination guard, while `Keep Isolation` remains available to close the panel without resolving recovery.
 
+UI-049 makes the busy state explicit in the menu during safe review. The existing busy-disabled Stop Skynet Locally, Stop Remote Access, Open App Access Settings…, and Restart Espanso entries explain that KeyBrake is completing the current operation, while Stop Skynet Locally explains when local automation is already stopped; selecting them still follows the existing handlers and gates.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

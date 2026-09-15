@@ -144,3 +144,5 @@ UI-046 makes configured target identity reviewable in Settings. Local Automation
 UI-047 makes the menu's App Access destination explicit. The menu entry now says `Open App Access Settings…` because its existing action opens the Settings review surface; the settings route, busy gate, target controls, and access-mutation behavior remain unchanged.
 
 UI-048 makes the Recovery panel's quit affordance match the existing busy-state safety guard. `Quit KeyBrake` is unavailable while a state-changing operation is running and explains why, while `Keep Isolation` remains available and recovery behavior is unchanged.
+
+UI-049 makes busy menu actions explain their availability. Stop Skynet Locally, Stop Remote Access, Open App Access Settings…, and Restart Espanso now expose matching help and accessibility text, including the already-stopped local automation state; their handlers and busy gates remain unchanged.
