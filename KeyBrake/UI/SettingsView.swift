@@ -508,6 +508,7 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
                     .accessibilityIdentifier("keybrake.settings.recovery.contract-boundary")
             }
+            .accessibilityIdentifier("keybrake.settings.recovery-section")
             }
             .disabled(model.isNetworkSandbox)
         }
