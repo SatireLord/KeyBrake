@@ -6144,44 +6144,44 @@ project_plan:
     remote_head_verified: "95d3d5e4e00949e49008a2f0620e8feea09747a9"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-059 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui059:
     id: "UI-059"
     name: "Privacy Reset Profile summary"
     user_promise: "Show a compact count and actionable zero-selection state for the Privacy Reset Profile, while preserving every service-selection binding, TCC-safe reset boundary, network-sandbox gate, and private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "Privacy Reset Profile summary"
         intended_change: "Add a read-only summary above the existing Privacy Reset Profile toggles that reports the selected-service count and reset boundary without changing selection bindings or reset behavior."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that Privacy Reset Profile exposes a compact selection summary."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record Privacy Reset Profile summary as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-059 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain Privacy Reset Profile summary during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-059 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-059 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
         status: active
     pre_edit:
       baseline_head: "95d3d5e4e00949e49008a2f0620e8feea09747a9"
-      baseline_remote_head: "95d3d5e4e00949e49008a2f0620e8feea09747a9"
+      baseline_remote_head: "69922e3d0eb6104a06783ae8c5a7c2c58c6050b0"
       source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=cb8fd53b82dfb59c4811b605d55d6ef494ab31b51c9ead914dfd5536fc55f0db"
       source_read: "Direct bounded reads confirmed the Privacy Reset Profile section renders every catalog descriptor as an individual selection toggle but has no compact selected-service count or zero-selection summary; the existing service bindings and Revoke Selected Access gate remain the behavior boundary."
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
@@ -6194,12 +6194,108 @@ project_plan:
       - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    visual_evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "source checkpoint 9ffbd11112a4b8322503d2806d58473466b947a2; direct bounded source reads; Agent-Cache recall; bounded source parsing; cursor-safe UI guard; workspace single-flight review; focused coordinator tests; SwiftPM Release build; native Xcode Release artifact inspection."
+      state: "source_verified_runtime_unverified"
+      observed: "The existing Privacy Reset Profile now shows the selected-service count, explicit zero-selection direction, and network-sandbox boundary."
+      receipt: "No UI-059 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=0bc59f232cfb115451d615236bd26f4f0e6d5e6e2b8cbd60b92914f7b1b997db"
+      source_commit: "9ffbd11112a4b8322503d2806d58473466b947a2"
+      documentation_commit: "cfbf9fde92ceacb238756b24bf892bf2964ac7a0"
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/SettingsView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/SettingsView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; no KeyBrake overlap; unrelated MyOwnCosplay and MB4Notes processes were verified outside KeyBrake by direct lsof working-directory review"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI059; pass in 22.12s"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI059 --filter EmergencyCoordinatorTests; 8 tests, 0 failures"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI059 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; isolated Release artifact produced and inspected; local ad-hoc signing is not Developer ID distribution signing"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; codesign reported Identifier=KeyBrake and TeamIdentifier=not set; embedded KeyBrakePrivilegedHelper resource present"
+      staging: "Agent Display was not reopened because the unchanged staging path remained uncontained; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "UI-059 Agent-Cache recall selected the UI lane and SettingsView but returned stale advisory head data; the final single-flight review found no KeyBrake overlap and direct lsof resolved unrelated MyOwnCosplay and MB4Notes processes; no complete Agent-Cache execution-ledger proof is claimed"
+      safety: "The UI-059 change is presentation-only: it adds a selected-service summary, preserves service-selection bindings, revokeAppAccess, the selection gate, TCC behavior, and sandbox behavior, and leaves host operations unchanged."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=cb8fd53b82dfb59c4811b605d55d6ef494ab31b51c9ead914dfd5536fc55f0db"
+      - "KeyBrake/UI/SettingsView.swift final sha256=0bc59f232cfb115451d615236bd26f4f0e6d5e6e2b8cbd60b92914f7b1b997db"
+      - "UI-059 source checkpoint 9ffbd11112a4b8322503d2806d58473466b947a2"
+      - "UI-059 documentation checkpoint cfbf9fde92ceacb238756b24bf892bf2964ac7a0"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
     guards:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
       - "Keep the write set limited to SettingsView and matching documentation/ledger files."
-      - "Do not change privacy-service selection, revokeAppAccess, TCC behavior, sandbox gating, or host-operation behavior in this metadata-only iteration."
+      - "Do not change privacy-service selection, revokeAppAccess, TCC behavior, sandbox gating, or host-operation behavior in this presentation-only iteration."
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-059 Privacy Reset Profile summary seam after this registry checkpoint is committed."
+    next_action: "Verify private remote parity and PR state after the pending push, then continue UI-060 with the recorded Remote Access approval guidance seam."
+  completed_delivery_ui059:
+    iteration: "UI-059"
+    source_commit: "9ffbd11112a4b8322503d2806d58473466b947a2"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=0bc59f232cfb115451d615236bd26f4f0e6d5e6e2b8cbd60b92914f7b1b997db"
+    documentation_commit: "cfbf9fde92ceacb238756b24bf892bf2964ac7a0"
+    remote_head_verified: "pending_push"
+    status: "documentation_checkpoint_pending_remote_verification"
+    next_safe_entry_point: "UI-060 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-060"
+    name: "Remote Access approval guidance"
+    user_promise: "Make each existing Remote Access approval toggle explain its current inclusion state, exact-application scope, and network-sandbox boundary while preserving the approval binding, target identity, disabled gate, and private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Remote Access approval guidance"
+        intended_change: "Add state-specific help and accessibility guidance to the existing Remote Access approval toggles without changing their bindings, target identity, or host-operation behavior."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document that Remote Access approval toggles expose current inclusion guidance."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record Remote Access approval guidance as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-060 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain Remote Access approval guidance during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-060 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-060 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "cfbf9fde92ceacb238756b24bf892bf2964ac7a0"
+      baseline_remote_head: "69922e3d0eb6104a06783ae8c5a7c2c58c6050b0"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=0bc59f232cfb115451d615236bd26f4f0e6d5e6e2b8cbd60b92914f7b1b997db"
+      source_read: "Direct bounded reads confirmed the Remote Access section renders each configured target as an approval Toggle bound to approvedByUser and setTargetApproval, but the toggle has only generic hover help and no accessibility hint; target identity details, enrollment, removal, and the existing sandbox gate remain the behavior boundary."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-060 follows the live SettingsView Remote Access approval Toggle, TargetDefinition.approvedByUser, and KeyBrakeViewModel.setTargetApproval; current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
+    acceptance:
+      - "Each Remote Access approval toggle explains whether the exact application is currently included in Stop Remote Access."
+      - "Each Remote Access approval toggle explains the next inclusion or exclusion action and the recorded bundle-and-executable identity boundary."
+      - "Remote Access approval guidance explains that network-sandbox review changes neither fixture state nor host configuration."
+      - "The existing approvedByUser binding, setTargetApproval, target identity details, disabled predicate, sandbox gating, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change Remote Access approval, setTargetApproval, target identity, sandbox gating, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "Implement only the recorded UI-060 Remote Access approval guidance seam after this registry checkpoint is committed."
