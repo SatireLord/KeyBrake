@@ -41,6 +41,7 @@ struct KeyBrakeMenuView: View {
         }
             .help(stopSkynetLocallyActionHint)
             .accessibilityHint(stopSkynetLocallyActionHint)
+            .accessibilityIdentifier("keybrake.menu.stop-local-automation")
             .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
         Button {
             model.stopRemoteAccess()
