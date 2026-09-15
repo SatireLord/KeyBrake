@@ -142,3 +142,5 @@ UI-045 makes empty target configuration states explicit in Settings. Local Autom
 UI-046 makes configured target identity reviewable in Settings. Local Automation and Remote Access rows show the existing bundle identifier and recorded executable path, keep the path copyable, and explicitly identify built-in targets whose executable path is not recorded; process matching and target mutation behavior remain unchanged.
 
 UI-047 makes the menu's App Access destination explicit. The menu entry now says `Open App Access Settings…` because its existing action opens the Settings review surface; the settings route, busy gate, target controls, and access-mutation behavior remain unchanged.
+
+UI-048 makes the Recovery panel's quit affordance match the existing busy-state safety guard. `Quit KeyBrake` is unavailable while a state-changing operation is running and explains why, while `Keep Isolation` remains available and recovery behavior is unchanged.

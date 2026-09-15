@@ -35,6 +35,8 @@ UI-046 makes configured target identity reviewable during Settings review. Each 
 
 UI-047 makes the App Access menu destination explicit during safe review. The menu entry says `Open App Access Settings…` because it opens the existing Settings surface for review and mutation; selecting it does not revoke access immediately and does not change the sandbox or host-operation boundary.
 
+UI-048 makes the Recovery panel's busy-state actions explicit during safe review. While a state-changing operation is running, `Quit KeyBrake` is unavailable with an explanation that matches the existing termination guard, while `Keep Isolation` remains available to close the panel without resolving recovery.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
@@ -47,7 +49,7 @@ The Command Center review path keeps emergency actions separate from navigation:
 6. Demonstrate remote-target sequencing with the harmless fixture definitions in the tests. Do not enroll a real support tool unless the machine has an independent recovery path.
 7. Demonstrate privacy reset command formation with a disposable fixture bundle identifier and a fake runner. Never reset Terminal, Codex, Cursor, Espanso, KeyBrake, or another daily-use app merely to create a receipt.
 8. Use read-only network inventory for the normal demo. Show the recovery contract and explain that a full live isolation test requires a separately staged session because it intentionally disconnects the active network.
-9. For a deterministic recovery walkthrough, use the `--keybrake-command-center --keybrake-recovery-demo` route, relaunch the temporary app, show `Recovery Required` in the Command Center, open the recovery panel, and demonstrate the mouse-only quit warning. Seed the real `CurrentRecovery.json` only from a separately staged, human-controlled session with a known recovery path.
+9. For a deterministic recovery walkthrough, use the `--keybrake-command-center --keybrake-recovery-demo` route, relaunch the temporary app, show `Recovery Required` in the Command Center, open the recovery panel, and demonstrate the mouse-only quit warning. During a busy fixture operation, confirm that `Quit KeyBrake` is unavailable while `Keep Isolation` remains available. Seed the real `CurrentRecovery.json` only from a separately staged, human-controlled session with a known recovery path.
 
 ## Network sandbox route
 
