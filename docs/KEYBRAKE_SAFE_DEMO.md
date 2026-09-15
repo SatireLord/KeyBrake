@@ -53,6 +53,8 @@ UI-055 makes Emergency Isolation policy effects explicit during safe review. Eac
 
 UI-056 makes target enrollment paths explicit during safe review. The Local Automation and Remote Access Add Application controls describe their destination, exact identity capture, and Remote Access approval requirement, while the network sandbox explanation states that target fixtures and host configuration remain unchanged.
 
+UI-057 makes custom-target removal explicit during safe review. Each existing custom-target Remove action explains which configured identity is removed, while the network sandbox explanation states that no removal request is sent during sandbox review and built-in targets remain protected.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

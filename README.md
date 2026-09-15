@@ -160,3 +160,5 @@ UI-054 makes General host-bound settings self-explanatory. Launch KeyBrake at Lo
 UI-055 makes Emergency Isolation policy effects self-explanatory. The five existing settings toggles now state which Wi-Fi, Ethernet, VPN, or sharing capability they control, show whether each policy is enabled, and explain that sandbox review leaves fixture state unchanged; the existing policy binding and next-operation behavior remain unchanged.
 
 UI-056 makes target enrollment paths self-explanatory. The Local Automation and Remote Access Add Application controls now describe their destination, exact bundle-and-executable identity capture, and Remote Access approval requirement; sandbox review remains non-mutating and the existing picker validation is unchanged.
+
+UI-057 makes custom-target removal self-explanatory. Each existing custom-target Remove action now states that the configured target identity, including its exact bundle identifier and executable path, will no longer be used; sandbox review remains non-mutating and built-in targets stay protected.
