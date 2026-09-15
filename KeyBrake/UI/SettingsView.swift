@@ -500,6 +500,7 @@ struct SettingsView: View {
                     .accessibilityHint(privacyServiceSelectionHint(for: descriptor))
                 }
             }
+            .accessibilityIdentifier("keybrake.settings.privacy-reset-profile-section")
 
             Section("Recovery") {
                 Text("After Stop Remote Access, KeyBrake always presents the recovery panel and keeps incident history until you clear resolved records from the incident log.")
