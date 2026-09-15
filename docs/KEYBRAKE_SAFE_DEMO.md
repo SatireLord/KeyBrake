@@ -59,6 +59,8 @@ UI-058 makes Application Access inputs explicit during safe review. The applicat
 
 UI-059 makes Privacy Reset Profile scannable during safe review. The profile shows zero or selected-service count and repeats the sandbox/TCC boundary without sending a reset request.
 
+UI-060 makes Remote Access approval state explicit during safe review. Each approval toggle explains whether its exact application is included, what changing the toggle does, and that the network sandbox changes neither fixture state nor host configuration.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

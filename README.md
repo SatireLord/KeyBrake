@@ -166,3 +166,5 @@ UI-057 makes custom-target removal self-explanatory. Each existing custom-target
 UI-058 makes Application Access inputs self-explanatory. The application picker and Privacy Reset Profile toggles now state the current selection, required inputs, reset scope, and sandbox boundary; the existing TCC-safe reset action remains unchanged.
 
 UI-059 makes Privacy Reset Profile scannable. The existing profile now shows the selected service count, explicit zero-selection direction, and sandbox-only boundary while the existing TCC-safe reset behavior remains unchanged.
+
+UI-060 makes Remote Access approval state scannable. Each existing approval toggle now explains whether the exact application is included, what the next toggle action does, and that sandbox review does not change host configuration; approval behavior remains unchanged.
