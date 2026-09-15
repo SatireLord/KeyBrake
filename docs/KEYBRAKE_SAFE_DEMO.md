@@ -153,6 +153,8 @@ UI-105 makes the existing menu Settings action explicit during safe review. The 
 
 UI-106 makes the existing menu Restart Espanso action explicit during safe review. The local-automation recovery action is deterministically inspectable through its stable identifier, while its label, busy-state gate, handler, guidance, menu ordering, sandbox behavior, and host operations remain unchanged.
 
+UI-107 makes the existing menu Quit KeyBrake action explicit during safe review. The recovery-aware quit action is deterministically inspectable through its stable identifier, while its label, recovery-aware guidance, handler, menu ordering, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
