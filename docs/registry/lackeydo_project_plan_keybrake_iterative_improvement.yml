@@ -4991,20 +4991,20 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=22fe5831fa7646600c8bd7b85fd5b33081b9c1872b83b99f068ff35791c0d936"
     documentation_commit: "1768ea62dce435b300d0fc900137a5409be4e9ff"
-    remote_head_verified: "1768ea62dce435b300d0fc900137a5409be4e9ff"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "4ae69336cd5ea07b0f505597e0672493e4b05639"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-047 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   upcoming_iteration:
     id: "UI-047"
     name: "Menu App Access action-label honesty"
     user_promise: "Make the menu action's destination and effect clear before a user invokes it, while preserving the emergency controls, recovery contract, sandbox safety boundary, and private release boundary."
-    status: "planned"
+    status: "active"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/KeyBrakeMenuView.swift"
         owner: "Menu-bar App Access navigation action"
         intended_change: "Align the menu label and help text with the existing behavior, which opens Settings for App Access review rather than revoking access immediately; preserve the existing action, busy gate, and settings route."
-        status: planned
+        status: active
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that the menu's App Access entry opens Settings for review and mutation."
@@ -5028,11 +5028,11 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-047 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: planned
+        status: active
     pre_edit:
-      baseline_head: "5915854430c0632f8225f2ed5f27fb4e829f04e1"
-      baseline_remote_head: "5915854430c0632f8225f2ed5f27fb4e829f04e1"
-      source_file_sha: "KeyBrake/UI/KeyBrakeMenuView.swift sha256=TO_BE_CAPTURED_BEFORE_UI047_EDIT"
+      baseline_head: "4ae69336cd5ea07b0f505597e0672493e4b05639"
+      baseline_remote_head: "4ae69336cd5ea07b0f505597e0672493e4b05639"
+      source_file_sha: "KeyBrake/UI/KeyBrakeMenuView.swift sha256=33a49f7a07c3ffb8c91e0c91a67547d09fb25a475fce8de9f5a95aa102b64d47"
       source_read: "Direct bounded reads confirmed the App Access menu item opens the existing Settings window and does not invoke an immediate revoke handler; the existing busy gate and settings route are the behavior boundary."
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
       route: "UI-047 requires a fresh Agent-Cache bootstrap and direct source read before editing; stale route output cannot replace current Git/source truth."
