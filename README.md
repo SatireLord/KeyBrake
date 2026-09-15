@@ -212,3 +212,5 @@ UI-080 makes the Application Access section scannable. The existing privacy-acce
 UI-081 makes the General section scannable. The existing host-settings section now has a stable inspection anchor, while launch-at-login, helper registration, error presentation, sandbox behavior, and host operations remain unchanged.
 
 UI-082 makes the Local Automation section scannable. The existing local-automation section now has a stable inspection anchor, while its empty state, target rows, Add Application action, exact bundle-and-executable identity boundary, sandbox behavior, and host operations remain unchanged.
+
+UI-083 makes the Current protection state section scannable. The existing hydration-aware protection overview now has a stable inspection anchor, while its status surface, configured-target summary, isolation-profile summary, recovery summary, and sandbox behavior remain unchanged.
