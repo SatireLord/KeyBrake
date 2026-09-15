@@ -26,6 +26,7 @@ import SwiftUI
 // QoL-022: Recovery metrics expose stable inspection anchors without changing their live summaries or the combined recovery-inventory surface.
 // QoL-023: Recovery inventory contains its stable metric children so each existing summary remains inspectable without changing the parent label or visible layout.
 // QoL-024: Recovery metric children speak their existing live summaries explicitly without changing their visible labels, identifiers, or parent grouping.
+// QoL-025: Recovery metric children remain behind the containing inventory orientation during accessibility traversal without changing their visible labels, identifiers, or layout.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -254,6 +255,7 @@ struct KeyBrakeCommandCenterView: View {
                 .foregroundStyle(.orange)
         }
         .accessibilityLabel(summary)
+        .accessibilitySortPriority(-1)
         .accessibilityIdentifier(accessibilityIdentifier)
     }
 
