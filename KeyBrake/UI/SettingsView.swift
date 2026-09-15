@@ -491,6 +491,7 @@ struct SettingsView: View {
                 Toggle("Disable Remote Apple Events", isOn: policyBinding(\.disableRemoteAppleEvents))
                     .help(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-remote-apple-events")
                 Text("Unsupported sharing capabilities are reported as unsupported and do not block independent network isolation.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
