@@ -483,6 +483,7 @@ struct SettingsView: View {
                 Toggle("Disconnect VPNs", isOn: policyBinding(\.disconnectVPN))
                     .help(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disconnect-vpn")
                 Toggle("Disable Remote Login", isOn: policyBinding(\.disableRemoteLogin))
                     .help(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
