@@ -14,6 +14,7 @@ import SwiftUI
 // QoL-007: the menu header uses the same hydration-aware symbol as the adjacent status row.
 // QoL-008: the recovery affordance explains its hydration, busy, and no-snapshot disabled states without changing its gate.
 // QoL-041: the App Access menu entry names its Settings destination because its existing action opens Settings rather than revoking access immediately.
+// QoL-043: busy-disabled menu actions explain their temporary unavailability while preserving each existing handler and gate.
 struct KeyBrakeMenuView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -37,20 +38,24 @@ struct KeyBrakeMenuView: View {
         } label: {
             Label("Stop Skynet Locally", systemImage: "keyboard.badge.ellipsis")
         }
+            .help(stopSkynetLocallyActionHint)
+            .accessibilityHint(stopSkynetLocallyActionHint)
             .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
         Button {
             model.stopRemoteAccess()
         } label: {
             Label("Stop Remote Access", systemImage: "lock.shield")
         }
+            .help(stopRemoteAccessActionHint)
+            .accessibilityHint(stopRemoteAccessActionHint)
             .disabled(model.isBusy)
         Button {
             openWindow(id: "settings")
         } label: {
             Label("Open App Access Settings…", systemImage: "hand.raised.slash")
         }
-            .help("Open Settings to review or change application access")
-            .accessibilityHint("Opens Settings so you can review or change application access")
+            .help(appAccessSettingsActionHint)
+            .accessibilityHint(appAccessSettingsActionHint)
             .disabled(model.isBusy)
         Divider()
         Button {
@@ -66,6 +71,8 @@ struct KeyBrakeMenuView: View {
         } label: {
             Label("Restart Espanso", systemImage: "arrow.clockwise.circle")
         }
+            .help(restartEspansoActionHint)
+            .accessibilityHint(restartEspansoActionHint)
             .disabled(model.isBusy)
         Button {
             openWindow(id: "incidents")
@@ -97,6 +104,38 @@ struct KeyBrakeMenuView: View {
         model.isRecoveryStatusKnown
             ? KeyBrakeStatusPresentation.detail(for: model.operationalState)
             : "KeyBrake is confirming whether an unresolved recovery snapshot exists."
+    }
+
+    private var stopSkynetLocallyActionHint: String {
+        if model.isBusy {
+            return busyMenuActionHint
+        }
+        if model.operationalState == .localAutomationStopped {
+            return "Local input automation is already stopped."
+        }
+        return "Stops approved local input automation without changing network or privacy settings."
+    }
+
+    private var stopRemoteAccessActionHint: String {
+        model.isBusy
+            ? busyMenuActionHint
+            : "Saves recovery state before applying the selected isolation profile."
+    }
+
+    private var restartEspansoActionHint: String {
+        model.isBusy
+            ? busyMenuActionHint
+            : "Restarts local input automation without changing network or privacy settings."
+    }
+
+    private var appAccessSettingsActionHint: String {
+        model.isBusy
+            ? busyMenuActionHint
+            : "Opens Settings so you can review or change application access."
+    }
+
+    private var busyMenuActionHint: String {
+        "Unavailable while KeyBrake completes the current operation."
     }
 
     private var recoveryActionDetail: String {
