@@ -170,3 +170,5 @@ UI-059 makes Privacy Reset Profile scannable. The existing profile now shows the
 UI-060 makes Remote Access approval state scannable. Each existing approval toggle now explains whether the exact application is included, what the next toggle action does, and that sandbox review does not change host configuration; approval behavior remains unchanged.
 
 UI-061 makes the Settings Recovery overview accessibility-parity complete. The existing hydration-aware recovery explanation is now available to accessibility inspection alongside its visible recovery value, while recovery state and actions remain unchanged.
+
+UI-062 makes Remote Access configuration scannable. The existing section now shows approved versus configured target counts and preserves the exact-identity and sandbox boundaries while target behavior remains unchanged.
