@@ -29,6 +29,22 @@ struct SettingsView: View {
         model.configuredTargets.filter { $0.bundleIdentifier != nil }
     }
 
+    private var appAccessResetActionHint: String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; host privacy settings remain unchanged."
+        }
+        if selectedTargetID.isEmpty && selectedPrivacyServices.isEmpty {
+            return "Choose an application and at least one privacy service before requesting an access reset."
+        }
+        if selectedTargetID.isEmpty {
+            return "Choose an application before requesting an access reset."
+        }
+        if selectedPrivacyServices.isEmpty {
+            return "Choose at least one privacy service before requesting an access reset."
+        }
+        return "Requests a reset for the selected macOS privacy services. KeyBrake does not edit the TCC database or restore grants automatically."
+    }
+
     private var builtInTargetIDs: Set<String> {
         Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
     }
@@ -274,6 +290,8 @@ struct SettingsView: View {
                 Button("Revoke Selected Access") {
                     model.revokeAppAccess(targetID: selectedTargetID, services: selectedPrivacyServices)
                 }
+                .help(appAccessResetActionHint)
+                .accessibilityHint(appAccessResetActionHint)
                 .disabled(selectedTargetID.isEmpty || selectedPrivacyServices.isEmpty)
             }
 
