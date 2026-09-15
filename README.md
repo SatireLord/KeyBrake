@@ -178,3 +178,5 @@ UI-063 makes the Settings Isolation profile scannable. The existing five-control
 UI-064 makes the configured-target overview scannable. The existing count now distinguishes local-automation and remote-access scope and repeats exact bundle-and-executable matching and sandbox boundaries without changing target behavior.
 
 UI-065 makes the Settings protection state scannable. The existing title and explanation now form one deterministic accessibility surface with a stable inspection anchor, while recovery-state behavior remains unchanged.
+
+UI-066 makes the Emergency Isolation capability boundary scannable. The existing unsupported-sharing explanation now has a stable inspection anchor, while isolation policy, next-operation routing, and sandbox behavior remain unchanged.

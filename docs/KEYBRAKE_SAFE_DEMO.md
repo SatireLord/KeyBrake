@@ -71,6 +71,8 @@ UI-064 makes configured-target scope explicit during safe review. The overview d
 
 UI-065 makes the Settings protection state explicit during safe review. The existing title and explanation remain hydration-aware and non-actionable, while accessibility inspection receives one stable protection-state surface.
 
+UI-066 makes the Emergency Isolation capability boundary explicit during safe review. The existing unsupported-sharing explanation is deterministically inspectable, while policy bindings, next-operation routing, and sandbox behavior remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
