@@ -32,6 +32,7 @@ struct KeyBrakeMenuView: View {
             Label("Open Command Center", systemImage: "rectangle.3.group")
         }
             .help("Open the at-a-glance KeyBrake status and action surface")
+            .accessibilityHint("Opens the at-a-glance KeyBrake status and action surface")
         Divider()
         Button {
             model.stopSkynetLocally()
@@ -79,12 +80,16 @@ struct KeyBrakeMenuView: View {
         } label: {
             Label("Open Incident Log", systemImage: "list.bullet.clipboard")
         }
+            .help("Open recorded operation outcomes and recovery history")
+            .accessibilityHint("Opens the Incident Log to review recorded actions and outcomes")
         Divider()
         Button {
             openWindow(id: "settings")
         } label: {
             Label("Settings…", systemImage: "gearshape")
         }
+            .help("Review approved targets, recovery policy, and sandbox status")
+            .accessibilityHint("Opens Settings to review targets, policy, and sandbox status")
         Button {
             model.requestQuit()
         } label: {
