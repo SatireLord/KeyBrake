@@ -4793,39 +4793,39 @@ project_plan:
       - "KeyBrake/UI/SettingsView.swift=746e210345dae047ef0632c2fc8b428c8152efc3e85aa8428afe0a474232aa6b"
     documentation_commit: "525a9099dcb294c83c2c20dfa012980336b137f7"
     remote_head_verified: "525a9099dcb294c83c2c20dfa012980336b137f7"
-    status: "documentation_checkpoint_pending_push"
-    next_safe_entry_point: "After remote parity verification, select UI-045 from a fresh bounded source read while preserving the exact Agent Display and signed-host holds and the private PR."
-  upcoming_iteration:
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-045 is the active continuation; preserve the exact Agent Display and signed-host holds and the private PR."
+  completed_iteration_ui045:
     id: "UI-045"
     name: "Settings target-list empty-state guidance"
     user_promise: "Improve the next measured app surface without changing the recovery contract, sandbox safety boundary, or private release boundary."
-    status: "active"
+    status: "complete"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "SettingsView Local Automation and Remote Access target-list sections"
         intended_change: "Show explicit read-only empty-state guidance when either target list has no configured entries, while preserving existing enrollment, approval, removal, sandbox, and model behavior."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that target settings explain empty Local Automation and Remote Access lists."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record target-list empty-state guidance as a presentation-only Settings improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-045 source, focused proof, evidence limits, and the next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain the visible empty target-list guidance in the Settings review route."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-045 source parsing, UI guard, focused tests, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-045 ownership, baseline and final checksums, proof, deferred runtime evidence, and remote delivery."
@@ -4858,4 +4858,54 @@ project_plan:
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
       - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
-    next_action: "Add the two bounded Settings target-list empty states, then run focused source/UI/build/test proof before documentation and remote delivery."
+    visual_evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint 107e0a6f1e4457c7250a4c65b2c191138885af3; direct bounded source reads; Agent-Cache bootstrap and recall; bounded source parsing; cursor-safe UI guard; focused coordinator tests; SwiftPM Release build; native Xcode Release build."
+      state: "source_verified_runtime_unverified"
+      observed: "The Settings Local Automation and Remote Access sections now render explicit empty-list guidance before the existing Add Application controls; configured target rows and model-owned target operations remain unchanged."
+      receipt: "No UI-045 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=7912659635398832b8670a8590a97f345ef7b03f301bdf284c7b8cb3b96fa459"
+      source_commit: "107e0a6f1e4457c7250a4c65b2c191138885af3d"
+      documentation_commit: "02f1c1cf20e656d6c4cf8199f24dacba249a16c1"
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      source_parse: "/usr/bin/xcrun swiftc -frontend -parse KeyBrake/UI/SettingsView.swift; pass"
+      ui_guard: "python3 /Users/michaeltran/.agents/cursor-steal-prevention/scripts/non_interrupting_ui_guard.py --json KeyBrake/UI/SettingsView.swift; pass"
+      singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlap"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI045; pass in 12.85s"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI045 --filter EmergencyCoordinatorTests; 8 tests, 0 failures"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI045 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED; emitted universal arm64/x86_64 app with CFBundleExecutable=KeyBrake, org.realitygood.KeyBrake, version 0.1.0, build 1, helper plist, helper executable, and feature-contract resource; ad-hoc local signing is not Developer ID distribution signing"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Agent Display was not reopened because the unchanged UI-042 staging path remained uncontained; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "UI-045 bootstrap reported fresh clean repository truth at cef16d9, the UI lane, protected_region_count=0, task_relevant_region_count=0, and the existing missing docs/regression-checksums.json warning; route output was tooling-limited and no new checksum guard was created"
+      safety: "The UI-045 change is presentation-only: it adds empty-list text and stable inspection identifiers in SettingsView, does not change coordinator or model handlers, preserves target mutation behavior, and leaves fixture-only sandbox and host-operation boundaries unchanged."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=746e210345dae047ef0632c2fc8b428c8152efc3e85aa8428afe0a474232aa6b"
+      - "KeyBrake/UI/SettingsView.swift final sha256=7912659635398832b8670a8590a97f345ef7b03f301bdf284c7b8cb3b96fa459"
+      - "UI-045 source checkpoint 107e0a6f1e4457c7250a4c65b2c191138885af3d"
+      - "UI-045 documentation checkpoint 02f1c1cf20e656d6c4cf8199f24dacba249a16c1"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
+    next_action: "Push the documentation checkpoint, verify private remote parity and PR state, then select UI-046 from a fresh bounded source read."
+  completed_delivery_ui045:
+    iteration: "UI-045"
+    source_commit: "107e0a6f1e4457c7250a4c65b2c191138885af3d"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=7912659635398832b8670a8590a97f345ef7b03f301bdf284c7b8cb3b96fa459"
+    documentation_commit: "02f1c1cf20e656d6c4cf8199f24dacba249a16c1"
+    remote_head_verified: "02f1c1cf20e656d6c4cf8199f24dacba249a16c1"
+    status: "documentation_checkpoint_pending_push"
+    next_safe_entry_point: "After remote parity verification, select UI-046 from a fresh bounded source read while preserving the exact Agent Display and signed-host holds and the private PR."
+  upcoming_iteration:
+    id: "UI-046"
+    name: "Next source-backed QoL seam after Settings target-list empty states"
+    user_promise: "Improve the next measured app surface without changing the recovery contract, sandbox safety boundary, or private release boundary."
+    status: "planned"
+    scope_preserved: true
+    write_set: []
+    selection_gate:
+      - "Read current source truth and current Git/remote state before selecting a write set."
+      - "Select one narrow presentation or interaction seam with a measurable user benefit."
+      - "Do not repeat the Settings target-list empty-state change or reopen unchanged Agent Display staging."
+      - "Keep recovery, storage, model guards, fixture-only sandbox behavior, private PR state, and signed-host holds unchanged."
+    next_action: "Perform a fresh bounded source read to identify the next non-duplicate QoL or UX seam."
