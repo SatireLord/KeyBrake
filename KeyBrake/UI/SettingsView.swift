@@ -479,6 +479,7 @@ struct SettingsView: View {
                 Toggle("Disable physical Ethernet", isOn: policyBinding(\.disableEthernet))
                     .help(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-ethernet")
                 Toggle("Disconnect VPNs", isOn: policyBinding(\.disconnectVPN))
                     .help(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
