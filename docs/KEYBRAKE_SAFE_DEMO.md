@@ -115,6 +115,8 @@ UI-086 makes the Recovery summary explicit during safe review. The existing prot
 
 UI-087 makes the Launch-at-Login control explicit during safe review. The existing General-section toggle is deterministically inspectable, while its binding, host-settings semantics, helper boundaries, help text, hydration behavior, sandbox behavior, and host operations remain unchanged.
 
+UI-088 makes the Privileged Helper summary explicit during safe review. The existing General-section summary is deterministically inspectable, while its status, registration action, error surfaces, helper semantics, host-settings boundaries, help text, hydration behavior, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
