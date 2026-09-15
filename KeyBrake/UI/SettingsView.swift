@@ -459,6 +459,7 @@ struct SettingsView: View {
                 .accessibilityIdentifier("keybrake.settings.application-access.revoke")
                 .disabled(selectedTargetID.isEmpty || selectedPrivacyServices.isEmpty)
             }
+            .accessibilityIdentifier("keybrake.settings.application-access-section")
 
             Section("Emergency Isolation") {
                 Toggle("Disable Wi-Fi", isOn: policyBinding(\.disableWiFi))
