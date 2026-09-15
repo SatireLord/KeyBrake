@@ -368,6 +368,7 @@ struct SettingsView: View {
                     Text(privilegedHelperError)
                         .font(.caption)
                         .foregroundStyle(.red)
+                        .accessibilityIdentifier("keybrake.settings.privileged-helper.error")
                 }
                 if let launchAtLoginError = model.launchAtLoginError {
                     Text(launchAtLoginError)
