@@ -277,6 +277,7 @@ struct SettingsView: View {
                         value: recoverySummaryTitle
                     )
                     .help(recoverySummaryDetail)
+                    .accessibilityHint(recoverySummaryDetail)
                 }
                 .accessibilityIdentifier("keybrake.settings.overview")
             }
