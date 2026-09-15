@@ -480,6 +480,7 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
                     .accessibilityIdentifier("keybrake.settings.emergency-isolation.boundary")
             }
+            .accessibilityIdentifier("keybrake.settings.emergency-isolation-section")
 
             Section("Privacy Reset Profile") {
                 Text(privacyResetProfileSummary)
