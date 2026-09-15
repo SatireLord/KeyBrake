@@ -32,6 +32,7 @@ import SwiftUI
 // QoL-028: Network sandbox mode identifies its connected or deterministic-failure fixture before its disabled host-operation boundary.
 // QoL-029: Network sandbox scenario title and detail combine into one inspection surface without absorbing the host-operation boundary.
 // QoL-030: Network sandbox banner contains its scenario and host-boundary surfaces so each stable inspection anchor remains independently reachable.
+// QoL-031: Network sandbox host-operation boundary publishes its own inspection anchor in the containing banner.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -142,6 +143,7 @@ struct KeyBrakeCommandCenterView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("keybrake.command-center.network-sandbox-host-boundary")
             }
 
             Spacer(minLength: 0)
