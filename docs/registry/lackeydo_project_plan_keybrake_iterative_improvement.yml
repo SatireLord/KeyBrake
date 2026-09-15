@@ -1494,14 +1494,14 @@ project_plan:
       evidence: "The requested seven-file Agent-Cache source/doc snapshot could not create WorkBeginOrder because the database was locked before the source patch; the UI-023 evidence append reached the durable task event log with an incomplete projection and a lane-repository-truth-mismatch warning."
       next_action: "Use the direct Git source, compiler, build, test, and Agent Display evidence already recorded; do not repeat unchanged Agent-Cache calls."
   branch: "codex/keybrake-complete-implementation"
-  head: "882cdc7ea2a3b135ccf4f5e7f623e9bd5bcd1c15"
+  head: "882cdc76c4cd22880849e5534196dee771cac8ce"
   last_verified_at: "20260912 05:52:26"
   completion: complete_at_remote_checkpoint
   active_delivery:
     iteration: "UI-023"
     source_commit: "0efdcb9f68ea95db7ecbe883b0a5c725198546ae"
-    documentation_commit: "882cdc7ea2a3b135ccf4f5e7f623e9bd5bcd1c15"
-    remote_head_verified: "882cdc7ea2a3b135ccf4f5e7f623e9bd5bcd1c15"
+    documentation_commit: "882cdc76c4cd22880849e5534196dee771cac8ce"
+    remote_head_verified: "882cdc76c4cd22880849e5534196dee771cac8ce"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-024 exact Agent Display containment and signed-host release gates while preserving the private PR."
   following_delivery:
@@ -2952,7 +2952,7 @@ project_plan:
     checksums:
       - "KeyBrake/UI/CommandCenterView.swift sha256=deec5d94d0aa0b3169637fa7a01b5a0238e93c02c50bd3cf9a70e0de94f2b883"
       - "UI-023 source checkpoint 0efdcb9f68ea95db7ecbe883b0a5c725198546ae"
-      - "UI-023 documentation checkpoint 882cdc7ea2a3b135ccf4f5e7f623e9bd5bcd1c15"
+      - "UI-023 documentation checkpoint 882cdc76c4cd22880849e5534196dee771cac8ce"
     guards:
       - "Agent-Cache UI-023 mutation gate passed after live branch and PR #1 continuity were verified."
       - "CodeGraph status reported not initialized and the exact recovery-card query returned codegraph_unavailable, so no new graph snapshot is claimed."
@@ -2970,8 +2970,8 @@ project_plan:
     source_commit: "0efdcb9f68ea95db7ecbe883b0a5c725198546ae"
     source_file_shas:
       - "KeyBrake/UI/CommandCenterView.swift=deec5d94d0aa0b3169637fa7a01b5a0238e93c02c50bd3cf9a70e0de94f2b883"
-    documentation_commit: "882cdc7ea2a3b135ccf4f5e7f623e9bd5bcd1c15"
-    remote_head_verified: "882cdc7ea2a3b135ccf4f5e7f623e9bd5bcd1c15"
+    documentation_commit: "882cdc76c4cd22880849e5534196dee771cac8ce"
+    remote_head_verified: "882cdc76c4cd22880849e5534196dee771cac8ce"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with UI-024 exact Agent Display containment and signed-host release gates while preserving the private PR."
   upcoming_iteration:
