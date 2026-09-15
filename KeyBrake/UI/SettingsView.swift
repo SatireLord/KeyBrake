@@ -184,6 +184,17 @@ struct SettingsView: View {
         ].filter(\.self).count
     }
 
+    private var isolationProfileSummaryDetail: String {
+        let isolationControlCount = enabledIsolationControlCount
+        if model.isNetworkSandbox {
+            return "Sandbox review: \(isolationControlCount) of 5 Emergency Isolation controls are enabled locally; fixture network state and host sharing remain unchanged."
+        }
+        if isolationControlCount == 0 {
+            return "No Emergency Isolation controls are enabled. The next Stop Remote Access operation will not apply a policy from this profile."
+        }
+        return "\(isolationControlCount) of 5 Emergency Isolation controls are enabled. The next Stop Remote Access operation applies these selected network and sharing policies."
+    }
+
     private var configuredTargetsSummary: String {
         let count = model.configuredTargets.count
         return "\(count) configured \(count == 1 ? "target" : "targets")"
@@ -284,6 +295,8 @@ struct SettingsView: View {
                         "Isolation profile",
                         value: "\(enabledIsolationControlCount) of 5 controls enabled"
                     )
+                    .help(isolationProfileSummaryDetail)
+                    .accessibilityHint(isolationProfileSummaryDetail)
                     LabeledContent(
                         "Recovery",
                         value: recoverySummaryTitle
