@@ -204,3 +204,5 @@ UI-076 makes the Emergency Isolation section scannable. The existing policy sect
 UI-077 makes the Privacy Reset Profile section scannable. The existing privacy-service selection section now has a stable inspection anchor, while its summary, service bindings, TCC boundary, and sandbox behavior remain unchanged.
 
 UI-078 makes the Recovery section scannable. The existing recovery contract section now has a stable inspection anchor, while recovery state, action routing, and sandbox behavior remain unchanged.
+
+UI-079 makes the Remote Access section scannable. The existing approval section now has a stable inspection anchor, while its summary, empty state, target rows, enrollment action, and sandbox behavior remain unchanged.
