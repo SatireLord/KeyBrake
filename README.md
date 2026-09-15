@@ -156,3 +156,5 @@ UI-052 gives Recovery actions matching visible and spoken guidance. Keep Isolati
 UI-053 explains Application Access reset availability. The existing privacy-reset action now states whether the network sandbox, application selection, or privacy-service selection is preventing use, while its existing TCC boundary and disabled gate remain unchanged.
 
 UI-054 makes General host-bound settings self-explanatory. Launch KeyBrake at Login and Register Privileged Helper now explain sandbox unavailability, current state, macOS approval or missing-bundle status, and the latest error through help and accessibility hints; their existing registration handlers and host-bound gates remain unchanged.
+
+UI-055 makes Emergency Isolation policy effects self-explanatory. The five existing settings toggles now state which Wi-Fi, Ethernet, VPN, or sharing capability they control, show whether each policy is enabled, and explain that sandbox review leaves fixture state unchanged; the existing policy binding and next-operation behavior remain unchanged.
