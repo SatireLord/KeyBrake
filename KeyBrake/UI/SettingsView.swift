@@ -487,6 +487,7 @@ struct SettingsView: View {
                 Toggle("Disable Remote Login", isOn: policyBinding(\.disableRemoteLogin))
                     .help(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-remote-login")
                 Toggle("Disable Remote Apple Events", isOn: policyBinding(\.disableRemoteAppleEvents))
                     .help(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
