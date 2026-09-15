@@ -20,6 +20,7 @@ import SwiftUI
 // QoL-016: Command Center emergency actions combine their visible title and explanation into one stable actionable accessibility surface.
 // QoL-017: Busy-state emergency-action guidance exposes one stable accessibility inspection anchor without changing its visible explanation or gate.
 // QoL-018: Recovery decision orientation combines its visible title and explanation and hides only the decorative warning symbol.
+// QoL-019: Recovery-card busy-state guidance exposes one stable accessibility inspection anchor without changing its visible explanation or gate.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -185,6 +186,7 @@ struct KeyBrakeCommandCenterView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("keybrake.command-center.recovery-card.busy-guidance")
                 }
 
                 Button("Open Recovery Panel") {
