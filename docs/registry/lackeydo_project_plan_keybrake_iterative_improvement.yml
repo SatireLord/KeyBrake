@@ -6,9 +6,9 @@ project_plan:
     name: "KeyBrake"
     root: "/Users/michaeltran/AntiGravity/KeyBrake"
     branch: "codex/keybrake-complete-implementation"
-    head: "933df138061a0696dedc676079a8b730a3d885e2"
+    head: "1359d6db5fa20ae508a81cc2f486c056db7389fc"
     upstream: "origin/codex/keybrake-complete-implementation"
-    remote_head_verified: "933df138061a0696dedc676079a8b730a3d885e2"
+    remote_head_verified: "1359d6db5fa20ae508a81cc2f486c056db7389fc"
     status: "documentation_checkpoint_remote_verified"
     verified_at: "20260912 05:52:26"
   iteration:
@@ -4503,13 +4503,14 @@ project_plan:
       singleflight: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/agent_cache.py workspace singleflight --kind swiftpm --cwd /Users/michaeltran/AntiGravity/KeyBrake --json; pass with no overlapping proven SwiftPM/Xcode build or test command"
       release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI041; pass in 15.87s"
       tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI041; 39 tests, 0 failures"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI041 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED; emitted universal arm64/x86_64 app with CFBundleExecutable=KeyBrake, helper plist, helper executable, and feature-contract resource; ad-hoc local signing is not Developer ID distribution signing"
       staging: "agent_ui_preflight.py --app org.realitygood.KeyBrake.UI041 --start-sentinel --json; pass with virtual display present; disposable app launched as PID 93877 with --keybrake-network-sandbox; bounded stage silent ~30s and stopped SIGINT; inspect-ui exposed Eoco Nota Agent-Alpha; is-isolated false/windowCount=0; exact PID 93877 terminated; no pointer/visual/runtime/PNG proof"
       agent_cache_context: "The UI-041 Agent-Cache bootstrap confirmed clean repository truth, zero protected regions, and no execution ledger; its missing docs/regression-checksums.json registry warning remains documented, and no new guard was created."
       safety: "Only source validation, Release build, local tests, and disposable fixture staging were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, screenshot, or signed-host claim."
     checksums:
       - "KeyBrake/UI/CommandCenterView.swift sha256=513d08d384f9d4c831a65f800cd3ca407395d1810e15641722ecf00c5669bc2b"
       - "UI-041 source checkpoint 3f8ad05caf5f9adad248b7adadb26d5f88cca58d"
-      - "UI-041 documentation checkpoint 933df138061a0696dedc676079a8b730a3d885e2"
+      - "UI-041 documentation checkpoint 1359d6db5fa20ae508a81cc2f486c056db7389fc"
     guards:
       - "CodeGraph status was checked before editing; the index was uninitialized and no graph proof was claimed."
       - "The changed Swift file passed bounded frontend parsing and the cursor-safe UI guard."
@@ -4527,8 +4528,8 @@ project_plan:
     source_commit: "3f8ad05caf5f9adad248b7adadb26d5f88cca58d"
     source_file_shas:
       - "KeyBrake/UI/CommandCenterView.swift=513d08d384f9d4c831a65f800cd3ca407395d1810e15641722ecf00c5669bc2b"
-    documentation_commit: "933df138061a0696dedc676079a8b730a3d885e2"
-    remote_head_verified: "933df138061a0696dedc676079a8b730a3d885e2"
+    documentation_commit: "1359d6db5fa20ae508a81cc2f486c056db7389fc"
+    remote_head_verified: "1359d6db5fa20ae508a81cc2f486c056db7389fc"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "Continue with the next source-backed QoL seam while preserving the exact Agent Display and signed-host holds and the private PR."
   upcoming_iteration:
