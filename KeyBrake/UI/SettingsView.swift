@@ -308,6 +308,7 @@ struct SettingsView: View {
                     LabeledContent("Configured targets", value: configuredTargetsSummary)
                         .help(configuredTargetsSummaryDetail)
                         .accessibilityHint(configuredTargetsSummaryDetail)
+                        .accessibilityIdentifier("keybrake.settings.overview.configured-targets")
                     LabeledContent(
                         "Isolation profile",
                         value: "\(enabledIsolationControlCount) of 5 controls enabled"
