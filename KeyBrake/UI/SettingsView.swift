@@ -17,6 +17,7 @@ import UniformTypeIdentifiers
 // QoL-034: the network sandbox Settings section contains its status, scenario, and host-boundary children for deterministic inspection.
 // QoL-036: the network sandbox Settings section repeats the immutable fixture inventory before disabled controls so both review surfaces expose the same simulated inputs.
 // QoL-038: sandbox status, scenario, fixture inventory, and protection information stay readable while only host-bound settings sections inherit the sandbox disabled gate.
+// QoL-039: empty Local Automation and Remote Access target lists explain their state before the existing enrollment controls.
 struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
@@ -72,6 +73,14 @@ struct SettingsView: View {
         return model.hasRecovery
             ? "Use the recovery panel to choose the next action."
             : "KeyBrake has no unresolved recovery snapshot."
+    }
+
+    private var localAutomationTargets: [TargetDefinition] {
+        model.configuredTargets.filter { $0.category == .localAutomation }
+    }
+
+    private var remoteAccessTargets: [TargetDefinition] {
+        model.configuredTargets.filter { $0.category == .remoteAccess }
     }
 
     private var networkSandboxFixtureServices: [NetworkService] {
@@ -204,8 +213,16 @@ struct SettingsView: View {
             }
 
             Section("Local Automation") {
-                ForEach(model.configuredTargets.filter { $0.category == .localAutomation }) { target in
-                    targetRow(target)
+                if localAutomationTargets.isEmpty {
+                    targetListEmptyState(
+                        title: "No local automation targets configured",
+                        detail: "Add an application to include it in Stop Skynet Locally.",
+                        identifier: "keybrake.settings.local-automation.empty"
+                    )
+                } else {
+                    ForEach(localAutomationTargets) { target in
+                        targetRow(target)
+                    }
                 }
                 Button("Add Application…") { chooseApplication(category: .localAutomation) }
                 Text("Added applications are matched by their exact bundle identifier and executable path.")
@@ -214,21 +231,29 @@ struct SettingsView: View {
             }
 
             Section("Remote Access") {
-                ForEach(model.configuredTargets.filter { $0.category == .remoteAccess }) { target in
-                    Toggle(isOn: Binding(
-                        get: { model.configuredTargets.first(where: { $0.id == target.id })?.approvedByUser ?? false },
-                        set: { model.setTargetApproval(targetID: target.id, approved: $0) }
-                    )) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(target.displayName)
-                            Text(target.bundleIdentifier ?? "Bundle identifier unavailable")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                if remoteAccessTargets.isEmpty {
+                    targetListEmptyState(
+                        title: "No remote access targets configured",
+                        detail: "Add an application, then approve it before Stop Remote Access can include it.",
+                        identifier: "keybrake.settings.remote-access.empty"
+                    )
+                } else {
+                    ForEach(remoteAccessTargets) { target in
+                        Toggle(isOn: Binding(
+                            get: { model.configuredTargets.first(where: { $0.id == target.id })?.approvedByUser ?? false },
+                            set: { model.setTargetApproval(targetID: target.id, approved: $0) }
+                        )) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(target.displayName)
+                                Text(target.bundleIdentifier ?? "Bundle identifier unavailable")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
-                    }
-                    .help("Include this exact application in Stop Remote Access")
-                    if !builtInTargetIDs.contains(target.id) {
-                        Button("Remove \(target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
+                        .help("Include this exact application in Stop Remote Access")
+                        if !builtInTargetIDs.contains(target.id) {
+                            Button("Remove \(target.displayName)", role: .destructive) { model.removeTarget(targetID: target.id) }
+                        }
                     }
                 }
                 Button("Add Application…") { chooseApplication(category: .remoteAccess) }
@@ -308,6 +333,26 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    private func targetListEmptyState(title: String, detail: String, identifier: String) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "tray")
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                Text(detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(.vertical, 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title). \(detail)")
+        .accessibilityIdentifier(identifier)
     }
 
     private func chooseApplication(category: TargetDefinition.Category) {

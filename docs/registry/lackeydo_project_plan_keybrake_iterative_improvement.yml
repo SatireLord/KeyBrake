@@ -4797,14 +4797,65 @@ project_plan:
     next_safe_entry_point: "After remote parity verification, select UI-045 from a fresh bounded source read while preserving the exact Agent Display and signed-host holds and the private PR."
   upcoming_iteration:
     id: "UI-045"
-    name: "Next source-backed QoL seam after readable sandbox Settings information"
+    name: "Settings target-list empty-state guidance"
     user_promise: "Improve the next measured app surface without changing the recovery contract, sandbox safety boundary, or private release boundary."
-    status: "planned"
+    status: "active"
     scope_preserved: true
-    write_set: []
-    selection_gate:
-      - "Read current source truth and current Git/remote state before selecting a write set."
-      - "Select one narrow presentation or interaction seam with a measurable user benefit."
-      - "Do not repeat the Settings sandbox readability change or reopen unchanged Agent Display staging."
-      - "Keep recovery, storage, model guards, fixture-only sandbox behavior, private PR state, and signed-host holds unchanged."
-    next_action: "Perform a fresh bounded source read to identify the next non-duplicate QoL or UX seam."
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "SettingsView Local Automation and Remote Access target-list sections"
+        intended_change: "Show explicit read-only empty-state guidance when either target list has no configured entries, while preserving existing enrollment, approval, removal, sandbox, and model behavior."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document that target settings explain empty Local Automation and Remote Access lists."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record target-list empty-state guidance as a presentation-only Settings improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-045 source, focused proof, evidence limits, and the next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain the visible empty target-list guidance in the Settings review route."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-045 source parsing, UI guard, focused tests, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-045 ownership, baseline and final checksums, proof, deferred runtime evidence, and remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "cef16d901fd858ae059824b5986398b7d4dbeb5f"
+      baseline_remote_head: "cef16d901fd858ae059824b5986398b7d4dbeb5f"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=746e210345dae047ef0632c2fc8b428c8152efc3e85aa8428afe0a474232aa6b"
+      source_read: "Direct bounded reads confirmed SettingsView owns the Local Automation and Remote Access ForEach sections, empty arrays currently render no explanatory state, and enrollment, approval, removal, sandbox, and host-operation behavior remains owned by existing model handlers. TargetRegistry and KeyBrakeViewModel call sites were inspected; no model change is required."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "Agent-Cache recall selected the UI lane and SettingsView as the highest-signal file; route output was tooling-limited and returned no packet, so live source and Git truth remain authoritative."
+    acceptance:
+      - "Local Automation shows explicit guidance when no local automation target is configured."
+      - "Remote Access shows explicit guidance when no remote-access target is configured."
+      - "Configured target rows and existing Add Application controls remain unchanged."
+      - "The existing model handlers, target enrollment/approval/removal boundaries, recovery behavior, and fixture-only sandbox route remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI guard."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=746e210345dae047ef0632c2fc8b428c8152efc3e85aa8428afe0a474232aa6b"
+      - "UI-045 baseline HEAD cef16d901fd858ae059824b5986398b7d4dbeb5f"
+      - "Agent-Cache bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep target mutation, recovery, sandbox, process, network, sharing, privacy, helper, and launchd behavior unchanged."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not reopen unchanged Agent Display staging unless a later source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+      - "Any new checksum registry control; the live bootstrap reports no protected KeyBrake region and the task does not authorize adding one."
+    next_action: "Add the two bounded Settings target-list empty states, then run focused source/UI/build/test proof before documentation and remote delivery."
