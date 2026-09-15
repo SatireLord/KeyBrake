@@ -475,6 +475,7 @@ struct SettingsView: View {
                 Toggle("Disable Wi-Fi", isOn: policyBinding(\.disableWiFi))
                     .help(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-wifi")
                 Toggle("Disable physical Ethernet", isOn: policyBinding(\.disableEthernet))
                     .help(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
                     .accessibilityHint(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
