@@ -224,3 +224,5 @@ UI-086 makes the Recovery summary scannable. The existing protection overview ro
 UI-087 makes the Launch-at-Login control scannable. The existing General-section toggle now has a stable inspection anchor, while its binding, host-settings semantics, helper boundaries, help text, hydration behavior, and sandbox behavior remain unchanged.
 
 UI-088 makes the Privileged Helper summary scannable. The existing General-section summary now has a stable inspection anchor, while its status, registration action, error surfaces, helper semantics, host-settings boundaries, hydration behavior, and sandbox behavior remain unchanged.
+
+UI-089 makes the Local Automation Add Application action scannable. The existing enrollment action now has a stable inspection anchor, while its handler, exact target identity semantics, enrollment guidance, hydration behavior, and sandbox behavior remain unchanged.
