@@ -29,7 +29,7 @@ The menu keeps the physical mouse as a recovery path. The following behaviors ex
 - **Revoke App Access…** opens Settings, where one selected application can be stopped and selected TCC-managed privacy decisions reset. KeyBrake never edits the TCC database file and never performs a global reset without a bundle identifier.
 - **Restore Human Control** exposes independent mouse-driven actions for restoring network state, explicitly restoring sharing services, restarting Espanso, opening Privacy & Security settings, and reviewing the incident record.
 - **Restart Espanso** is separate from network recovery and never changes Espanso configuration, packages, matches, service registration, or privacy permissions.
-- **Open Incident Log** displays the local JSON-backed operation history, its current record and recovery summary, and a clear empty state when no records exist.
+- **Open Incident Log** displays the local JSON-backed operation history with status-coded, timestamped records, expandable step outcomes, recovery summary, and a clear empty state when no records exist.
 - **Open Command Center** opens the at-a-glance status and action surface without changing the underlying recovery semantics. It keeps full-width emergency actions prominent, surfaces recorded recovery inventory and unresolved recovery, and links to the Incident Log and Settings windows, which orient the user before their existing controls.
 - **Clear resolved history** communicates its availability from recorded outcomes and remains unavailable when the Incident Log has no completed record to remove.
 
@@ -132,3 +132,5 @@ UI-040 makes the Settings Network sandbox section a containing accessibility sur
 UI-041 lists the connected or isolation-failure fixture's Wi-Fi, USB Ethernet, Work VPN, and loopback rows in the Command Center sandbox banner, including each simulated state and device when available. The inventory is derived from the same immutable local fixture used by the controller, so the review surface makes the test inputs explicit without adding host network access or changing the production route.
 
 UI-042 mirrors that immutable fixture inventory in the Settings Network sandbox section before the disabled settings form. The stable anchors `keybrake.settings.network-sandbox-inventory` and `keybrake.settings.network-sandbox-service.<service-id>` expose the same simulated state and device details in both review surfaces, while the route remains presentation-only and makes no live network or host-operation claim.
+
+UI-043 improves Incident Log review by showing each recorded operation's final state, update date/time, resolution, and step count at a glance. Expanding an entry shows each target, outcome, operation description, and recorded observed state when available, with UUID-derived inspection anchors; this remains a presentation-only view over local JSON history and does not change storage or recovery behavior.
