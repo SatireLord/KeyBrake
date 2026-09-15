@@ -77,6 +77,8 @@ UI-067 makes the Application Access TCC boundary explicit during safe review. Th
 
 UI-068 makes the Settings Recovery contract boundary explicit during safe review. The existing recovery explanation is deterministically inspectable, while recovery routing, incident retention, sandbox behavior, and host operations remain unchanged.
 
+UI-069 makes the Local Automation exact-identity boundary explicit during safe review. The existing bundle-and-executable matching explanation is deterministically inspectable, while target storage, process matching, sandbox behavior, and host operations remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

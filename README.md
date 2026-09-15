@@ -184,3 +184,5 @@ UI-066 makes the Emergency Isolation capability boundary scannable. The existing
 UI-067 makes the Application Access TCC boundary scannable. The existing reset explanation now has a stable inspection anchor, while service selection, reset gating, and host privacy behavior remain unchanged.
 
 UI-068 makes the Settings Recovery contract scannable. The existing recovery explanation now has a stable inspection anchor, while recovery routing, incident retention, and sandbox behavior remain unchanged.
+
+UI-069 makes the Local Automation exact-identity boundary scannable. The existing bundle-and-executable matching explanation now has a stable inspection anchor, while target storage, process matching, and sandbox behavior remain unchanged.
