@@ -21,6 +21,7 @@ import SwiftUI
 // QoL-017: Busy-state emergency-action guidance exposes one stable accessibility inspection anchor without changing its visible explanation or gate.
 // QoL-018: Recovery decision orientation combines its visible title and explanation and hides only the decorative warning symbol.
 // QoL-019: Recovery-card busy-state guidance exposes one stable accessibility inspection anchor without changing its visible explanation or gate.
+// QoL-020: Recovery inventory exposes one stable accessibility inspection anchor without changing its live counts or combined label.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -215,6 +216,7 @@ struct KeyBrakeCommandCenterView: View {
         .padding(.vertical, 2)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Recovery inventory: \(networkSummary), \(sharingSummary), \(unresolvedSummary)")
+        .accessibilityIdentifier("keybrake.command-center.recovery-inventory")
     }
 
     private func recoveryMetricDescription(_ value: Int, singular: String, plural: String) -> String {
