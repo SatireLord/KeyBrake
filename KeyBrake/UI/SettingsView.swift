@@ -455,6 +455,7 @@ struct SettingsView: View {
                 }
                 .help(appAccessResetActionHint)
                 .accessibilityHint(appAccessResetActionHint)
+                .accessibilityIdentifier("keybrake.settings.application-access.revoke")
                 .disabled(selectedTargetID.isEmpty || selectedPrivacyServices.isEmpty)
             }
 
