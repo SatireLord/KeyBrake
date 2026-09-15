@@ -19,6 +19,7 @@ import SwiftUI
 // QoL-015: Command Center section headings combine their visible title and explanation and publish heading semantics.
 // QoL-016: Command Center emergency actions combine their visible title and explanation into one stable actionable accessibility surface.
 // QoL-017: Busy-state emergency-action guidance exposes one stable accessibility inspection anchor without changing its visible explanation or gate.
+// QoL-018: Recovery decision orientation combines its visible title and explanation and hides only the decorative warning symbol.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -162,6 +163,7 @@ struct KeyBrakeCommandCenterView: View {
                         .font(.title2)
                         .foregroundStyle(.orange)
                         .frame(width: 32)
+                        .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Recovery decision required")
@@ -171,6 +173,8 @@ struct KeyBrakeCommandCenterView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("keybrake.command-center.recovery-decision-required")
 
                 if let snapshot = model.unresolvedRecovery {
                     recoveryInventory(snapshot)
