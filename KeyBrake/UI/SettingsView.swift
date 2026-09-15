@@ -369,6 +369,7 @@ struct SettingsView: View {
                             .accessibilityHint(privilegedHelperActionHint)
                     }
                 }
+                .accessibilityIdentifier("keybrake.settings.general.privileged-helper")
                 if let privilegedHelperError = model.privilegedHelperError {
                     Text(privilegedHelperError)
                         .font(.caption)
