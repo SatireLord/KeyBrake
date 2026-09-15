@@ -359,6 +359,7 @@ struct SettingsView: View {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
                     .help(launchAtLoginActionHint)
                     .accessibilityHint(launchAtLoginActionHint)
+                    .accessibilityIdentifier("keybrake.settings.general.launch-at-login")
                 LabeledContent("Privileged Helper") {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(model.privilegedHelperStatus)
