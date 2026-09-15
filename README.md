@@ -120,3 +120,5 @@ UI-034 makes the selected fixture explicit in both review surfaces: the connecte
 UI-035 combines each sandbox scenario title with its explanatory detail as one accessibility surface while keeping the host-operation warning separate. The existing scenario identifiers remain stable, and this change affects only inspection semantics in the two review surfaces.
 
 UI-036 keeps the outer Command Center sandbox banner as a containing accessibility surface, so the scenario identity and host-operation boundary remain independently inspectable beneath the banner identifier. The visible sandbox layout and all fixture and production behavior remain unchanged.
+
+UI-037 gives the existing host-operation warning its own stable accessibility identifier in both review surfaces: `keybrake.command-center.network-sandbox-host-boundary` and `keybrake.settings.network-sandbox-host-boundary`. The safety boundary is therefore directly addressable during inspection without changing visible copy, fixture behavior, disabled controls, or host-operation semantics.

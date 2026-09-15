@@ -13,6 +13,8 @@ UI-035 keeps each scenario identifier attached to one combined title-and-detail 
 
 UI-036 keeps the outer Command Center sandbox banner as a containing accessibility surface, so the scenario identifier and host-operation boundary remain independently inspectable beneath the banner identifier. This changes inspection grouping only; the visible demo layout, fixture controller, production route, and host-operation boundary remain unchanged.
 
+UI-037 gives the existing host-operation warning stable identifiers in Command Center and Settings: `keybrake.command-center.network-sandbox-host-boundary` and `keybrake.settings.network-sandbox-host-boundary`. This changes inspection addressability only; the visible warning, fixture controller, production route, disabled Settings controls, and non-mutating host-operation boundary remain unchanged.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
