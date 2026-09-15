@@ -515,6 +515,7 @@ struct SettingsView: View {
                     ))
                     .help(privacyServiceSelectionHint(for: descriptor))
                     .accessibilityHint(privacyServiceSelectionHint(for: descriptor))
+                    .accessibilityIdentifier("keybrake.settings.privacy-reset-profile.service.\(descriptor.id.rawValue)")
                 }
             }
             .accessibilityIdentifier("keybrake.settings.privacy-reset-profile-section")
