@@ -9420,16 +9420,16 @@ project_plan:
       - "The source parse, cursor-safe checks, routed exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Verify private remote parity and PR state at the UI-093 documentation checkpoint, then continue UI-094 with the recorded Disable Remote Login policy control inspection seam."
+    next_action: "UI-094 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   completed_delivery_ui093:
     iteration: "UI-093"
     source_commit: "beda6a1d15e24c0de8f0720009f7c0d2886d6339"
     source_file_shas:
       - "KeyBrake/UI/SettingsView.swift=241c1475e84558d3ca19952bebb877ed2bb724675f6ddc6acf80cbf5285dda08"
     documentation_commit: "19bdc3471579d8f1c373d1fe9ceff07d43c102db"
-    remote_head_verified: "60b6f0e057c054903288d9e443dce89671de3e4c"
-    status: "documentation_checkpoint_pending_push"
-    next_safe_entry_point: "Push and verify the UI-093 source/documentation checkpoint before editing UI-094; preserve the exact Agent Display, unsigned-host, and private PR holds."
+    remote_head_verified: "4fd2e56d7595e1f65e8b0371d72bf7502b10144f"
+    status: "documentation_checkpoint_remote_verified"
+    next_safe_entry_point: "UI-094 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   upcoming_iteration:
     id: "UI-094"
     name: "Disable Remote Login policy control inspection anchor"
@@ -9466,8 +9466,8 @@ project_plan:
         intended_change: "Track UI-094 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
         status: active
     pre_edit:
-      baseline_head: "19bdc3471579d8f1c373d1fe9ceff07d43c102db"
-      baseline_remote_head: "60b6f0e057c054903288d9e443dce89671de3e4c"
+      baseline_head: "4fd2e56d7595e1f65e8b0371d72bf7502b10144f"
+      baseline_remote_head: "4fd2e56d7595e1f65e8b0371d72bf7502b10144f"
       source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=241c1475e84558d3ca19952bebb877ed2bb724675f6ddc6acf80cbf5285dda08"
       source_read: 'Direct bounded reads confirmed the existing Disable Remote Login Toggle at SettingsView.swift:487-489 uses policyBinding(\.disableRemoteLogin) and isolationControlHint(effectDescription: "Disables Remote Login sharing") but has no stable control inspection identifier, while policy binding semantics, isolation guidance, sandbox behavior, and host-operation behavior remain the behavior boundary.'
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
