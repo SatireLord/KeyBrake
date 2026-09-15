@@ -7083,37 +7083,37 @@ project_plan:
     remote_head_verified: "pending_push"
     status: "documentation_checkpoint_pending_remote_verification"
     next_safe_entry_point: "UI-069 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui069:
     id: "UI-069"
     name: "Local Automation exact-identity boundary inspection anchor"
     user_promise: "Make the existing Local Automation exact bundle-and-executable matching explanation deterministically inspectable during safe review while preserving target storage, process matching, sandbox gating, and the private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "Local Automation exact-identity boundary inspection anchor"
         intended_change: "Add a stable accessibility identifier to the existing Local Automation exact-identity explanation without changing target storage, process matching, or host operations."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document the Local Automation exact-identity boundary inspection anchor."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the Local Automation exact-identity boundary inspection anchor as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-069 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain deterministic inspection of the Local Automation exact-identity boundary during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-069 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-069 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
@@ -7131,6 +7131,31 @@ project_plan:
       - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
       - "Focused tests and the Release build pass."
       - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint 56c3268bdb63ca364f466139f2b45da92b28541d; direct bounded source reads; Agent-Cache recall; bounded source parsing; cursor-safe UI preflight; workspace single-flight review; focused coordinator tests; SwiftPM Release build; native Xcode Release build and artifact inspection."
+      state: "source_verified_runtime_unverified"
+      observed: "The existing Local Automation exact bundle-and-executable matching explanation now exposes stable identifier keybrake.settings.local-automation.identity-boundary."
+      receipt: "No UI-069 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=1baeb5fe9520a48400985eb676de29baddaa515ca1b5f00b34d855563767c816"
+      source_commit: "56c3268bdb63ca364f466139f2b45da92b28541d"
+      documentation_commit: "20a5f568760a78da0715014eeefc6a389b787e88"
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/SettingsView.swift passed; cursor-safe agent_ui_preflight.py status=pass on virtual-16x9, with no app route because no KeyBrake app was running"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI069 --filter EmergencyCoordinatorTests; 8 tests, 0 failures; build complete in 24.86s"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI069; pass in 23.84s"
+      xcode_release_build: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI069 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; BUILD SUCCEEDED; emitted universal arm64/x86_64 app with expected KeyBrake metadata and helper resources; ad-hoc local signing is not Developer ID distribution signing"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; helper resource present; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Cursor-safe preflight passed, but no KeyBrake app route was running and Agent Display was not reopened because the unchanged staging path remained uncontained and host-unverified; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "The pre-build and post-build single-flight reviews passed with no KeyBrake overlap; no complete Agent-Cache execution-ledger proof is claimed"
+      safety: "The UI-069 change is presentation-only: it adds a stable identifier to the existing exact-identity explanation while preserving its copy, target storage, process matching, sandbox gating, and host operations."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=6c40f6a2046f97c2fe18b481e52716da3e7e232cb39d7444b566322dcf2c5aab"
+      - "KeyBrake/UI/SettingsView.swift final sha256=1baeb5fe9520a48400985eb676de29baddaa515ca1b5f00b34d855563767c816"
+      - "UI-069 source checkpoint 56c3268bdb63ca364f466139f2b45da92b28541d"
+      - "UI-069 documentation checkpoint 20a5f568760a78da0715014eeefc6a389b787e88"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
     guards:
       - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
       - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
@@ -7139,4 +7164,70 @@ project_plan:
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-069 Local Automation exact-identity boundary inspection seam after this registry checkpoint is committed."
+    next_action: "Verify private remote parity and PR state after the pending push, then continue UI-070 with the recorded Privileged Helper status inspection seam."
+  completed_delivery_ui069:
+    iteration: "UI-069"
+    source_commit: "56c3268bdb63ca364f466139f2b45da92b28541d"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=1baeb5fe9520a48400985eb676de29baddaa515ca1b5f00b34d855563767c816"
+    documentation_commit: "20a5f568760a78da0715014eeefc6a389b787e88"
+    remote_head_verified: "pending_push"
+    status: "documentation_checkpoint_pending_remote_verification"
+    next_safe_entry_point: "UI-070 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-070"
+    name: "Privileged Helper status inspection anchor"
+    user_promise: "Make the existing Privileged Helper status deterministically inspectable during safe review while preserving helper registration behavior, approval gating, sandbox gating, and the private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Privileged Helper status inspection anchor"
+        intended_change: "Add a stable accessibility identifier to the existing Privileged Helper status text without changing helper registration, approval state, or host operations."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document the Privileged Helper status inspection anchor."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the Privileged Helper status inspection anchor as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-070 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain deterministic inspection of the Privileged Helper status during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-070 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-070 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "20a5f568760a78da0715014eeefc6a389b787e88"
+      baseline_remote_head: "69922e3d0eb6104a06783ae8c5a7c2c58c6050b0"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=1baeb5fe9520a48400985eb676de29baddaa515ca1b5f00b34d855563767c816"
+      source_read: "Direct bounded reads confirmed the General section contains the existing Privileged Helper status Text at SettingsView.swift:360 but has no stable inspection identifier; helper registration, approval state, sandbox gating, and host-operation behavior remain the behavior boundary."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-070 follows the live SettingsView General section and its existing model.privilegedHelperStatus text; current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
+    acceptance:
+      - "The existing Privileged Helper status text exposes stable identifier keybrake.settings.privileged-helper.status."
+      - "The visible status, helper registration handler, approval state, sandbox gating, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change the Privileged Helper status copy, registerPrivilegedHelper, approval state, sandbox gating, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "Implement only the recorded UI-070 Privileged Helper status inspection seam after this registry checkpoint is committed."
