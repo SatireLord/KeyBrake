@@ -8854,41 +8854,41 @@ project_plan:
     remote_head_verified: "17a49aa28bd049b63ddeec029e776ade8ae11462"
     status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-088 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
-  upcoming_iteration:
+  completed_iteration_ui088:
     id: "UI-088"
     name: "Privileged Helper summary inspection anchor"
     user_promise: "Make the existing Privileged Helper summary container deterministically inspectable during safe review while preserving helper registration semantics, status and error surfaces, host-settings boundaries, sandbox behavior, and the private release boundary."
-    status: "active"
+    status: "complete_at_documentation_checkpoint"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/SettingsView.swift"
         owner: "Privileged Helper summary inspection anchor"
         intended_change: "Add a stable accessibility identifier to the existing Privileged Helper summary container without changing helper registration semantics, status and error surfaces, host-settings boundaries, sandbox behavior, or host operations."
-        status: active
+        status: committed
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document the Privileged Helper summary inspection anchor."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
         owner: "Capability inventory"
         intended_change: "Record the Privileged Helper summary inspection anchor as a presentation-only QoL improvement."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_MASTER_PLAN.md"
         owner: "Iterative improvement lane and release handoff"
         intended_change: "Record UI-088 source, focused proof, evidence limits, and next safe entry point."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_SAFE_DEMO.md"
         owner: "Safe demonstration and non-mutating staging boundary"
         intended_change: "Explain deterministic inspection of the Privileged Helper summary during safe review."
-        status: planned
+        status: committed
       - path: "docs/KEYBRAKE_VERIFICATION.md"
         owner: "Proof ledger, evidence boundaries, and SHA anchors"
         intended_change: "Record UI-088 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
-        status: planned
+        status: committed
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-088 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: active
+        status: committed
     pre_edit:
       baseline_head: "17a49aa28bd049b63ddeec029e776ade8ae11462"
       baseline_remote_head: "17a49aa28bd049b63ddeec029e776ade8ae11462"
@@ -8910,4 +8910,104 @@ project_plan:
       - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
     deferred:
       - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
-    next_action: "Implement only the recorded UI-088 Privileged Helper summary inspection seam after the UI-087 remote checkpoint is verified."
+    evidence:
+      source: "KeyBrake/UI/SettingsView.swift"
+      provenance: "Source checkpoint f4828fdfdb6d79a4efaf7f3e02df8b2a1b734e83; direct bounded source reads; bounded source parsing; cursor-safe UI guard and preflight; exact committed-HEAD disposable archive; routed Agent-Cache single-flight admission; focused coordinator tests; SwiftPM Release build; native Xcode Release build and artifact inspection."
+      state: "source_verified_runtime_unverified"
+      observed: "The existing Privileged Helper summary now exposes stable identifier keybrake.settings.general.privileged-helper while its status, registration action, error surfaces, helper semantics, host-settings boundaries, help text, hydration-aware protection state, sandbox behavior, and host operations remain unchanged."
+      receipt: "No UI-088 PNG was captured; the retained UI-004 Settings artifact remains the single visual artifact under the one-image SendMePics contract."
+      missing_evidence: "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof remain unverified."
+    proof:
+      source_sha: "KeyBrake/UI/SettingsView.swift sha256=251c2b379de13552522cc330cc99515d09b9d03aca25bf38af33df36c64ad653"
+      source_commit: "f4828fdfdb6d79a4efaf7f3e02df8b2a1b734e83"
+      documentation_commit: "388462fbc7ea4b39acf695ff8d0e03a10a171774"
+      source_parse: "swiftc -frontend -parse KeyBrake/UI/SettingsView.swift passed; non_interrupting_ui_guard.py exited 0; agent_ui_preflight.py reported status=pass on virtual-16x9 with isolated=false, windowCount=0, and no running KeyBrake app route"
+      focused_tests: "/Users/michaeltran/bin/swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI088.aGHxji --filter EmergencyCoordinatorTests, run from exact committed-HEAD archive /tmp/KeyBrakeUI088.hDsFfn; 8 tests, 0 failures; build complete in 16.29s and test command completed in 17.34s"
+      release_build: "/Users/michaeltran/bin/swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMReleaseUI088.KicuwE, run from exact committed-HEAD archive /tmp/KeyBrakeUI088.hDsFfn; exit 0, build complete in 12.52s, and command completed in 12.96s"
+      xcode_release_build: "xcodebuild -project /tmp/KeyBrakeUI088.hDsFfn/KeyBrake.xcodeproj -scheme KeyBrake -configuration Release -sdk macosx -derivedDataPath /tmp/KeyBrakeXcodeReleaseUI088.rc559F CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build; supported routed Agent-Cache admission passed; exit 0 and native log ended with BUILD SUCCEEDED"
+      artifact_inventory: "plutil verified CFBundleExecutable=KeyBrake, CFBundleIdentifier=org.realitygood.KeyBrake, CFBundleShortVersionString=0.1.0, CFBundleVersion=1, LSMinimumSystemVersion=14.0; file verified universal arm64/x86_64; KeyBrakePrivilegedHelper and org.realitygood.KeyBrake.Helper.plist present; codesign reported Identifier=KeyBrake and TeamIdentifier=not set"
+      staging: "Cursor-safe preflight passed, but no KeyBrake app route was running and Agent Display was not reopened because the unchanged staging path remained uncontained and host-unverified; no new pointer, contained visual, runtime accessibility, or PNG claim"
+      agent_cache_context: "The routed supported Agent-Cache single-flight admission passed before focused validation, after focused validation, and before both Release builds; no blocked or manual-review events were reported. The separate xcodebuild kind is unsupported by the guard and was not represented as a pass."
+      safety: "Only non-mutating source validation, an exact committed-HEAD disposable archive, local tests, and disposable builds were used; no host emergency action, persistence action, TCC action, network action, launchd action, pointer input, or signed-host claim was made."
+    checksums:
+      - "KeyBrake/UI/SettingsView.swift baseline sha256=92025d68a24a0317e5e3b3ae1c250bbbc6ffdefb175d575d90614cdb931f2cfd"
+      - "KeyBrake/UI/SettingsView.swift final sha256=251c2b379de13552522cc330cc99515d09b9d03aca25bf38af33df36c64ad653"
+      - "UI-088 source checkpoint f4828fdfdb6d79a4efaf7f3e02df8b2a1b734e83"
+      - "UI-088 documentation checkpoint 388462fbc7ea4b39acf695ff8d0e03a10a171774"
+      - "Agent-Cache checksum bootstrap: protected_region_count=0 and task_relevant_region_count=0; docs/regression-checksums.json warning remains missing_registry in the live packet."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change the Privileged Helper label, status, registration action, error surfaces, helper registration semantics, host-settings boundaries, hydration-aware protection state, sandbox behavior, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+      - "The source parse, cursor-safe checks, routed exact-HEAD Agent-Cache guard, focused tests, SwiftPM Release build, native Xcode Release build, and artifact inspection are recorded without upgrading source proof into live runtime proof."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "Verify private remote parity and PR state at the UI-088 documentation checkpoint, then continue UI-089 with the recorded Local Automation Add Application action inspection seam."
+  completed_delivery_ui088:
+    iteration: "UI-088"
+    source_commit: "f4828fdfdb6d79a4efaf7f3e02df8b2a1b734e83"
+    source_file_shas:
+      - "KeyBrake/UI/SettingsView.swift=251c2b379de13552522cc330cc99515d09b9d03aca25bf38af33df36c64ad653"
+    documentation_commit: "388462fbc7ea4b39acf695ff8d0e03a10a171774"
+    remote_head_verified: "25581cac5392293e32f5602bbb9de8d5a3654d05"
+    status: "documentation_checkpoint_pending_push"
+    next_safe_entry_point: "Push and verify the UI-088 source/documentation checkpoint before editing UI-089; preserve the exact Agent Display, unsigned-host, and private PR holds."
+  upcoming_iteration:
+    id: "UI-089"
+    name: "Local Automation Add Application action inspection anchor"
+    user_promise: "Make the existing Local Automation Add Application action deterministically inspectable during safe review while preserving exact target identity semantics, enrollment guidance, sandbox behavior, host-operation boundaries, and the private release boundary."
+    status: "active"
+    scope_preserved: true
+    write_set:
+      - path: "KeyBrake/UI/SettingsView.swift"
+        owner: "Local Automation Add Application action inspection anchor"
+        intended_change: "Add a stable accessibility identifier to the existing Local Automation Add Application action without changing exact target identity semantics, enrollment guidance, sandbox behavior, or host operations."
+        status: active
+      - path: "README.md"
+        owner: "Portfolio and product behavior documentation"
+        intended_change: "Document the Local Automation Add Application action inspection anchor."
+        status: planned
+      - path: "docs/KEYBRAKE_CAPABILITY_MATRIX.md"
+        owner: "Capability inventory"
+        intended_change: "Record the Local Automation Add Application action inspection anchor as a presentation-only QoL improvement."
+        status: planned
+      - path: "docs/KEYBRAKE_MASTER_PLAN.md"
+        owner: "Iterative improvement lane and release handoff"
+        intended_change: "Record UI-089 source, focused proof, evidence limits, and next safe entry point."
+        status: planned
+      - path: "docs/KEYBRAKE_SAFE_DEMO.md"
+        owner: "Safe demonstration and non-mutating staging boundary"
+        intended_change: "Explain deterministic inspection of the Local Automation Add Application action during safe review."
+        status: planned
+      - path: "docs/KEYBRAKE_VERIFICATION.md"
+        owner: "Proof ledger, evidence boundaries, and SHA anchors"
+        intended_change: "Record UI-089 source parsing, focused proof, Release build, Agent Display limits, and exact source hash."
+        status: planned
+      - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+        owner: "Current iterative ledger"
+        intended_change: "Track UI-089 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
+        status: active
+    pre_edit:
+      baseline_head: "388462fbc7ea4b39acf695ff8d0e03a10a171774"
+      baseline_remote_head: "25581cac5392293e32f5602bbb9de8d5a3654d05"
+      source_file_sha: "KeyBrake/UI/SettingsView.swift sha256=251c2b379de13552522cc330cc99515d09b9d03aca25bf38af33df36c64ad653"
+      source_read: "Direct bounded reads confirmed the existing Local Automation Add Application button at SettingsView.swift:398-401 calls chooseApplication(category: .localAutomation) and publishes targetEnrollmentHint guidance but has no stable action inspection identifier, while exact bundle-and-executable identity semantics, enrollment guidance, sandbox behavior, and host-operation behavior remain the behavior boundary."
+      codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
+      route: "UI-089 follows the live SettingsView Local Automation Add Application action and its existing chooseApplication(category: .localAutomation) handler and targetEnrollmentHint values inside the Local Automation section; current source and Git truth remain authoritative over stale Agent-Cache advisory head data."
+    acceptance:
+      - "The existing Local Automation Add Application action exposes stable identifier keybrake.settings.local-automation.add-application."
+      - "The visible label, action handler, exact bundle-and-executable identity semantics, enrollment guidance, hydration-aware protection state, sandbox behavior, and host-operation behavior remain unchanged."
+      - "The changed Swift source passes bounded parsing and the cursor-safe UI preflight."
+      - "Focused tests and the Release build pass."
+      - "No live runtime, pointer, contained Agent Display, signing, helper approval, TCC, launchd, or host network claim is made without a receipt."
+    guards:
+      - "Preserve all unrelated dirty, staged, generated, runtime, and concurrent paths."
+      - "Keep the existing private PR #1 open and unmerged; do not publicize or merge."
+      - "Keep the write set limited to SettingsView and matching documentation/ledger files."
+      - "Do not change the Local Automation Add Application label, action handler, exact bundle-and-executable identity semantics, enrollment guidance, hydration-aware protection state, sandbox behavior, or host-operation behavior in this presentation-only iteration."
+      - "Do not reopen unchanged Agent Display staging unless the source change requires a new exact runtime attempt."
+    deferred:
+      - "Contained visual/runtime accessibility, direct pointer activation, Developer ID, notarization, helper approval, live TCC/network/launchd/respawn, and complete Agent-Cache execution-ledger proof."
+    next_action: "Implement only the recorded UI-089 Local Automation Add Application action inspection seam after the UI-088 remote checkpoint is verified."
