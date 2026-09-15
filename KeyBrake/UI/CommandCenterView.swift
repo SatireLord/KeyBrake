@@ -18,6 +18,7 @@ import SwiftUI
 // QoL-014: Review navigation cards combine each visible destination and count into one stable accessibility surface.
 // QoL-015: Command Center section headings combine their visible title and explanation and publish heading semantics.
 // QoL-016: Command Center emergency actions combine their visible title and explanation into one stable actionable accessibility surface.
+// QoL-017: Busy-state emergency-action guidance exposes one stable accessibility inspection anchor without changing its visible explanation or gate.
 struct KeyBrakeCommandCenterView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @Environment(\.openWindow) private var openWindow
@@ -113,6 +114,7 @@ struct KeyBrakeCommandCenterView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("keybrake.command-center.emergency-actions.busy-guidance")
             }
 
             VStack(alignment: .leading, spacing: 10) {
