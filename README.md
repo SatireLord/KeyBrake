@@ -140,3 +140,5 @@ UI-044 keeps the sandbox status, scenario, fixture inventory, and current protec
 UI-045 makes empty target configuration states explicit in Settings. Local Automation and Remote Access now explain when no target is configured and describe the existing Add Application or approval path, while configured target rows and all target mutation behavior remain unchanged.
 
 UI-046 makes configured target identity reviewable in Settings. Local Automation and Remote Access rows show the existing bundle identifier and recorded executable path, keep the path copyable, and explicitly identify built-in targets whose executable path is not recorded; process matching and target mutation behavior remain unchanged.
+
+UI-047 makes the menu's App Access destination explicit. The menu entry now says `Open App Access Settings…` because its existing action opens the Settings review surface; the settings route, busy gate, target controls, and access-mutation behavior remain unchanged.
