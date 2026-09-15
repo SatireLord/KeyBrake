@@ -21,6 +21,8 @@ UI-039 gives the existing “Network sandbox active” and “Host operations di
 
 UI-040 makes the Settings Network sandbox section a containing accessibility surface through `keybrake.settings.network-sandbox-section`, while its status, scenario, and host-boundary children remain independently inspectable. This changes inspection structure only; the visible demo layout, fixture controller, production route, disabled Settings controls, and non-mutating host-operation boundary remain unchanged.
 
+UI-041 adds a visible fixture network inventory to the Command Center sandbox banner. The inventory lists Wi-Fi, USB Ethernet, Work VPN, and loopback from the same immutable fixture used by the controller, and each row reports its simulated state and device when available. This makes the inputs inspectable before an isolation or recovery action without adding host network access or changing the production route.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
