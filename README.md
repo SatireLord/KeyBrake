@@ -220,3 +220,5 @@ UI-084 makes the Configured targets summary scannable. The existing protection o
 UI-085 makes the Isolation profile summary scannable. The existing protection overview row now has a stable inspection anchor, while its enabled-control count, policy semantics, help text, hydration behavior, and sandbox behavior remain unchanged.
 
 UI-086 makes the Recovery summary scannable. The existing protection overview row now has a stable inspection anchor, while its recovery summary, contract semantics, help text, hydration behavior, and sandbox behavior remain unchanged.
+
+UI-087 makes the Launch-at-Login control scannable. The existing General-section toggle now has a stable inspection anchor, while its binding, host-settings semantics, helper boundaries, help text, hydration behavior, and sandbox behavior remain unchanged.
