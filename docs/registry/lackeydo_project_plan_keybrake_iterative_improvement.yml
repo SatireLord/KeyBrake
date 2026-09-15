@@ -5087,20 +5087,20 @@ project_plan:
     source_file_shas:
       - "KeyBrake/UI/KeyBrakeMenuView.swift=4a09409cae3d35e39131202dd6994c66e6154c014c7688596a5fe22072e4cc4a"
     documentation_commit: "e782631606dabf3133e0e321bd94f07f615572e4"
-    remote_head_verified: "e782631606dabf3133e0e321bd94f07f615572e4"
-    status: "documentation_checkpoint_pending_remote_verification"
+    remote_head_verified: "ce826b0dce1417f3f5bada5862120226823b6a94"
+    status: "documentation_checkpoint_remote_verified"
     next_safe_entry_point: "UI-048 is the next source-backed continuation; preserve the exact Agent Display, unsigned-host, and private PR holds."
   upcoming_iteration:
     id: "UI-048"
     name: "Recovery busy-state quit affordance honesty"
     user_promise: "Make the Recovery panel's available actions match its existing busy-state termination guard, while preserving mouse-operated recovery, the sandbox safety boundary, and the private release boundary."
-    status: "planned"
+    status: "active"
     scope_preserved: true
     write_set:
       - path: "KeyBrake/UI/RecoveryView.swift"
         owner: "Recovery panel Keep Isolation and Quit KeyBrake actions"
         intended_change: "Disable the Quit KeyBrake affordance while a state-changing operation is busy and expose the exact busy explanation, while keeping Keep Isolation available and leaving requestQuit and termination policy logic unchanged."
-        status: planned
+        status: active
       - path: "README.md"
         owner: "Portfolio and product behavior documentation"
         intended_change: "Document that Recovery keeps isolation available while Quit KeyBrake follows the busy-state guard."
@@ -5124,14 +5124,14 @@ project_plan:
       - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
         owner: "Current iterative ledger"
         intended_change: "Track UI-048 ownership, baseline and final checksums, proof, deferred runtime evidence, and private remote delivery."
-        status: planned
+        status: active
     pre_edit:
-      baseline_head: "TO_BE_CAPTURED_AFTER_UI047_REMOTE_DELIVERY"
-      baseline_remote_head: "TO_BE_CAPTURED_AFTER_UI047_REMOTE_DELIVERY"
-      source_file_sha: "KeyBrake/UI/RecoveryView.swift sha256=TO_BE_CAPTURED_BEFORE_UI048_EDIT"
-      source_read: "Direct bounded reads must confirm the existing RecoveryView button state and KeyBrakeViewModel.requestQuit busy guard before UI-048 activation; no source edit is authorized from this planned entry alone."
+      baseline_head: "ce826b0dce1417f3f5bada5862120226823b6a94"
+      baseline_remote_head: "ce826b0dce1417f3f5bada5862120226823b6a94"
+      source_file_sha: "KeyBrake/UI/RecoveryView.swift sha256=c34a9f264eedafe8f53e347507ec62e13aa616c326390010e9e7cb1ebf8fbe03"
+      source_read: "Direct bounded reads confirmed RecoveryView leaves Quit KeyBrake enabled while busy even though KeyBrakeViewModel.requestQuit presents a busy-blocked alert; Keep Isolation remains available and requestQuit is the existing lifecycle guard."
       codegraph: "codegraph status .; project is not initialized, so no graph proof is claimed."
-      route: "UI-048 requires a fresh Agent-Cache bootstrap and direct RecoveryView/KeyBrakeViewModel source read before editing; current source and Git truth remain authoritative."
+      route: "UI-048 Agent-Cache recall selected the UI lane and RecoveryView as the highest-signal file but returned stale advisory head data; current source and Git truth remained authoritative, and no stale cache claim was used as proof."
     acceptance:
       - "Recovery keeps the existing Keep Isolation action available while a state-changing operation is busy."
       - "Quit KeyBrake is visibly unavailable while busy, and its accessibility/help explanation states why."
