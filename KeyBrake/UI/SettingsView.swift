@@ -300,6 +300,8 @@ struct SettingsView: View {
                                     : Color.secondary
                             )
                     }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("keybrake.settings.protection-state")
 
                     Divider()
 
