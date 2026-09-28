@@ -24,10 +24,46 @@ struct SettingsView: View {
     @ObservedObject var model: KeyBrakeViewModel
     @State private var selectedPrivacyServices: Set<TCCService> = []
     @State private var selectedTargetID = ""
+    @State private var selectedKeyboardTargetID = ""
     @State private var errorMessage = ""
 
     private var accessTargets: [TargetDefinition] {
         model.configuredTargets.filter { $0.bundleIdentifier != nil }
+    }
+
+    private var keyboardAccessTargets: [TargetDefinition] {
+        accessTargets.filter { target in
+            guard let bundleIdentifier = target.bundleIdentifier else { return false }
+            return TargetRegistry.canEnroll(
+                target,
+                applicationBundleIdentifier: bundleIdentifier,
+                executableURL: target.executableURL
+            )
+        }
+    }
+
+    private var selectedKeyboardTarget: TargetDefinition? {
+        keyboardAccessTargets.first { $0.id == selectedKeyboardTargetID }
+    }
+
+    private var keyboardTargetSelectionHint: String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; host keyboard-access permissions remain unchanged."
+        }
+        guard let target = selectedKeyboardTarget else {
+            return "Choose a configured application before requesting a keyboard-access reset."
+        }
+        return "\(target.displayName) is selected for the keyboard-access reset. KeyBrake will ask macOS to reset only that application's keyboard-input permissions."
+    }
+
+    private var keyboardResetActionHint: String {
+        if model.isNetworkSandbox {
+            return "Unavailable in the network sandbox; host privacy decisions remain unchanged."
+        }
+        guard let target = selectedKeyboardTarget else {
+            return "Choose a configured application before requesting a keyboard-access reset."
+        }
+        return "Requests macOS to reset \(target.displayName)'s Input Monitoring and Send Keystrokes / Input privacy decisions. KeyBrake does not edit the TCC database, restore grants, or change global keyboard accessibility settings."
     }
 
     private var appAccessResetActionHint: String {
@@ -337,6 +373,39 @@ struct SettingsView: View {
                 .accessibilityIdentifier("keybrake.settings.overview")
             }
             .accessibilityIdentifier("keybrake.settings.current-protection-state-section")
+
+            // Greppable: canonical=keybrake-reset-keyboard; aliases=Reset Keyboard; reset keyboard access; forms=reset-keyboard;reset_keyboard; descriptors=macOS Input Monitoring and Send Keystrokes / Input TCC reset; states=no-target,selected,disabled,reset-requested; consumers=KeyBrakeViewModel.revokeAppAccess; owner=SettingsView.body
+            Section("Keyboard") {
+                Picker("Application", selection: $selectedKeyboardTargetID) {
+                    Text("Choose an application").tag("")
+                    ForEach(keyboardAccessTargets) { target in
+                        Text(target.displayName).tag(target.id)
+                    }
+                }
+                .help(keyboardTargetSelectionHint)
+                .accessibilityHint(keyboardTargetSelectionHint)
+                .accessibilityIdentifier("keybrake.settings.keyboard.application-picker")
+
+                Text("Resetting requests macOS to reset the selected application's Input Monitoring and Send Keystrokes / Input permissions. macOS may ask that application to request access again. Full Keyboard Access, Sticky Keys, Slow Keys, and Accessibility Keyboard settings are unchanged.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("keybrake.settings.keyboard.access-boundary")
+
+                Button("Reset Keyboard", role: .destructive) {
+                    guard selectedKeyboardTarget != nil else { return }
+                    model.revokeAppAccess(
+                        targetID: selectedKeyboardTargetID,
+                        services: [.inputMonitoring, .postEvent]
+                    )
+                }
+                .help(keyboardResetActionHint)
+                .accessibilityHint(keyboardResetActionHint)
+                .accessibilityIdentifier("keybrake.settings.keyboard.reset")
+                .disabled(model.isNetworkSandbox || selectedKeyboardTarget == nil)
+            }
+            .accessibilityIdentifier("keybrake.settings.keyboard-section")
+            .disabled(model.isNetworkSandbox)
 
             if model.isNetworkSandbox {
                 Section("Network sandbox") {
