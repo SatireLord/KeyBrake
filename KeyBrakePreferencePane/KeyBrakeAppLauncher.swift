@@ -16,10 +16,7 @@ final class KeyBrakeAppLauncher {
     ) {
         let hostBundleIdentifier = bundle.object(forInfoDictionaryKey: Self.hostBundleIdentifierInfoKey) as? String
         let resolveRegisteredApplications = registeredApplicationResolver ?? { identifier in
-            Self.preferredInstallationURLs(
-                workspace.urlsForApplications(withBundleIdentifier: identifier),
-                homeDirectory: FileManager.default.homeDirectoryForCurrentUser
-            )
+            workspace.urlsForApplications(withBundleIdentifier: identifier)
         }
         let resolveRunningApplications = runningApplicationResolver ?? { identifier in
             workspace.runningApplications.compactMap { application in
@@ -61,22 +58,6 @@ final class KeyBrakeAppLauncher {
             keyboardRouteSupportChecker: supportsKeyboardRoute,
             routeOpener: openRoute
         )
-    }
-
-    private static func preferredInstallationURLs(_ applications: [URL], homeDirectory: URL) -> [URL] {
-        let applicationDirectories = [
-            URL(fileURLWithPath: "/Applications", isDirectory: true),
-            homeDirectory.appendingPathComponent("Applications", isDirectory: true)
-        ]
-        let preferredDirectoryPaths = Set(applicationDirectories.map {
-            $0.standardizedFileURL.resolvingSymlinksInPath().standardizedFileURL.path
-        })
-        let installedApplications = applications.filter { application in
-            let containingDirectory = application.deletingLastPathComponent()
-                .standardizedFileURL.resolvingSymlinksInPath().standardizedFileURL.path
-            return preferredDirectoryPaths.contains(containingDirectory)
-        }
-        return installedApplications.isEmpty ? applications : installedApplications
     }
 
     func openKeyboardSettings(completion: @escaping @MainActor (KeyBrakeSystemSettingsHandoff.Outcome) -> Void) {

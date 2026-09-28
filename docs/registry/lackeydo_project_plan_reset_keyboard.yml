@@ -2,13 +2,44 @@ project_plan:
   active_handoff:
     task_id: "01a0e65b-adc4-7b23-ae91-dc737da705df"
     source: "/Users/michaeltran/.codex/attachments/51d28704-900c-4fc0-abb6-bbeb9fb6affc/pasted-text-1.txt"
-    status: "source-handoff-implemented; native-System-Settings-discovery-remains-unverified"
-    recorded_at_utc: "2026-09-28T21:12:34Z"
+    status: "pane-embedding-installer-and-fixture-edge-fixes-implemented; exact-path-delivery-pending; native-proof-unverified"
+    recorded_at_utc: "2026-09-28T23:53:25Z"
+    latest_continuation:
+      repository_head: "6fc35d0d2b98c05a27b67f66665ca4fda61b31e3"
+      upstream_head_after_fetch: "6fc35d0d2b98c05a27b67f66665ca4fda61b31e3"
+      source_audit:
+        recovery_progress: "Verified present at EmergencyCoordinator.recordProgress -> RecoveryStore.updateProgress; prior report of an unwired progress API was stale for this checkout. EmergencyCoordinatorTests covers per-resource persistence and independent restoration."
+        privacy_reset_failure: "Fixed: ViewModel and coordinator now keep both privacy-reset actions unavailable until RecoveryStore.load succeeds; unreadable snapshots stay preserved and do not reach PrivacyController. Empty-store and known-pending hydration remain accepted, and the full suite covers the state boundaries."
+        route_ambiguity: "Fixed: KeyBrakeAppLauncher passes every registered bundle URL to the existing ambiguity resolver, and the route test rejects an /Applications copy plus an external-volume copy. Settings no longer auto-selects the first generic privacy target on appear."
+        demo_cleanup: "Fixed: network-sandbox models retain their UUID temporary root and the existing cleanup removes only roots matching the exact system-temp parent and scenario prefix. Read-only audit found no host or standard-config side effects in either demo route."
+        pane_bundle_metadata: "Confirmed and fixed: Xcode omitted custom KeyBrakeHostBundleIdentifier from generated Info.plist despite INFOPLIST_KEY_*; the pane target now uses SupportingFiles/KeyBrakePreferencePane-Info.plist, and fresh Debug/Release payloads both contain org.realitygood.KeyBrake."
+        current_tests: "Focused demo-composition and unreadable-recovery tests passed 3 tests with zero failures. The complete SwiftPM suite passed all 73 discovered test methods with zero failures in one run after current source repairs."
+        current_builds: "After xcodegen generate and the pane module-name collision fix, unsigned app Debug/Release and standalone pane Debug/Release builds pass. App builds embed their matching pane product under Contents/Library/PreferencePanes/KeyBrake.prefPane; same-build copies compare byte-for-byte. App and pane Info.plists lint and contain verified route/host metadata."
+        native_preflight: "Fresh preflight receipt at 2026-09-28T23:50:34Z: status=degraded, computer_use_standing=false, route_exit=3, isolated_exit=3; Agent Display denied route/isolation because Settings contains User-Alpha. The sentinel was already running as PID 32475. No System Settings process launched; no live proof followed."
+        physical_project_comparison: "B4 snapshot captured immediately before the pane plist project update and xcodegen generate; physical_code_compare_guard.py record returned pass/no destructive changes. Historical pre-pane hashes remain recorded under physical_comparison.snapshots."
+        recovery_progress: "Verified present at EmergencyCoordinator.recordProgress -> RecoveryStore.updateProgress; per-resource persistence and independent restoration tests exist."
+      agent_cache_task_status: "One task-status call stalled and returned MCP internal error; no retry is planned, and this LackeyDo task ledger is the durable fallback."
+      approved_write_sets:
+        primary: "KeyBrake/App/KeyBrakeApp.swift; KeyBrake/App/KeyBrakeLaunchConfiguration.swift; KeyBrake/App/KeyBrakeViewModel.swift; KeyBrake/UI/SettingsView.swift; KeyBrakeCore/EmergencyCoordinator.swift; KeyBrakeCore/RecoveryStore.swift; KeyBrakePreferencePane/KeyBrakeAppLauncher.swift; KeyBrakeTests/EmergencyCoordinatorTests.swift; KeyBrakeTests/KeyBrakeDemoCompositionTests.swift; KeyBrakeTests/KeyBrakeSystemSettingsRouteTests.swift; project.yml; Package.swift; SupportingFiles/KeyBrakePreferencePane-Info.plist; scripts/embed_keybrake_preference_pane.sh; scripts/install_keybrake_preference_pane.sh; scripts/test_keybrake_preference_pane_install.sh; README.md; CONTRIBUTING.md; docs/KEYBRAKE_CAPABILITY_MATRIX.md; docs/KEYBRAKE_VERIFICATION.md; this task-specific LackeyDo ledger; generated KeyBrake.xcodeproj/project.pbxproj after B4 comparison. Parent owns the only GUI/preflight lane and shared Git index."
+        pane_route: "KeyBrakePreferencePane/KeyBrakeAppLauncher.swift; KeyBrakeTests/KeyBrakeSystemSettingsRouteTests.swift. Pass every deduplicated registered app copy to the existing ambiguity resolver and cover a preferred plus nonpreferred duplicate."
+        reset_recovery: "KeyBrakeCore/EmergencyCoordinator.swift; KeyBrakeTests/EmergencyCoordinatorTests.swift. Track successful recovery-store hydration; reject privacy resets before hydration and after load failure; preserve successful-empty and known-pending semantics; add focused no-command regression coverage."
+        proof_audit: "KeyBrake/App/KeyBrakeApp.swift only. Pass the network-sandbox temporary root through to cleanup without changing demo fixtures or host behavior."
+        shared_git: "Primary only; agents do not stage, commit, push, or touch paths outside their listed ownership."
+      preserved_foreign_work:
+        - path: "KeyBrake/UI/RecoveryView.swift"
+          index_blob: "b66603cee05a4e1db184add81a3a2501de75ceed"
+          worktree_blob: "c70dbc0e7ecb996344dd324a2db320b30d10ea03"
+          sha256: "c636d627dff71539da64f5dff518fd8861296fb3c7c28a476802f5f77f889481"
+        - path: "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
+          index_blob: "04d9a815eb680ad864b2fbb654b0c2c1d1371160"
+          worktree_blob: "05eb4da7ce0c4924aa1f5e8a9f0ab6667dc81263"
+          sha256: "492e8d586e194de58a35541a9486183e9af3bbf4e76551f6e0a09fd0119e931b"
+      acceptance_gate: "S006/S007/S008 remain separate native System Settings discovery, interaction, and visual-proof gates. Fresh 2026-09-28T23:50:34Z preflight denied route/isolation; only temporary-home installer fixtures ran. No real pane install, System Settings launch, screenshot, dimension measurement, or Drive claim is made."
     repository:
       root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "1524f2c26212802845f2a86aae28bbac2aa15c7f"
-      upstream_head: "1524f2c26212802845f2a86aae28bbac2aa15c7f"
+      head: "6fc35d0d2b98c05a27b67f66665ca4fda61b31e3"
+      upstream_head: "6fc35d0d2b98c05a27b67f66665ca4fda61b31e3"
       pull_request: "https://github.com/SatireLord/KeyBrake/pull/1"
       pull_request_state: "open; unmerged; head matches current branch"
     attachment_inventory:
@@ -24,12 +55,13 @@ project_plan:
       requested: "2–4 GPT-6 Luna workers at the highest runtime-supported reasoning effort"
       runtime_model: "gpt-6-luna"
       reasoning_effort: "max"
-      worker_count: 3
-      spawning_status: "spawned; three workers active as of 2026-09-28 18:43:46 UTC"
-      active_workers:
+      worker_count: 4
+      spawning_status: "completed; three implementation workers and one read-only reviewer contributed; optional repository-contract review was interrupted before source work"
+      workers_in_handoff:
         - "pane_route: gpt-6-luna, max reasoning; route and pane-owned files"
         - "reset_recovery: gpt-6-luna, max reasoning; reset validation and recovery model/store"
         - "proof_audit: gpt-6-luna, max reasoning; read-only evidence and sole GUI lane"
+        - "handoff_review: gpt-6-luna, max reasoning; read-only implementation and evidence review"
       recursive_spawning: "forbidden"
       git_and_shared_file_owner: "Parent owns shared integration; code workers own only exact-path commits and pushes after parent sequences Git-index mutations."
     accepted_requirements:
@@ -175,7 +207,7 @@ project_plan:
           intended_change: "Record exact focused/full test counts, source fingerprints, app/pane Debug and Release outcomes, and distinct S006/S007/S008 states."
           reason: "The current ledger must separate compilation and fixtures from live pane discovery and screenshot proof."
           proof: "Commands, exact source identities, output paths, and claim limits recorded."
-          status: "implemented; current route, build, focused-test, install, and runtime limits recorded"
+          status: "updated; route, app embedding, installer fixture, 73-test suite, Debug/Release builds, and native-proof limits recorded"
         - path: "docs/proofs/keybrake-system-settings-pane.raw.png"
           owner: "Parent; SendMePics/Agent Display"
           intended_change: "Capture the untouched pane view only after fresh contained S006 admission."
@@ -218,9 +250,9 @@ project_plan:
       foreign_path_rule: "No checksum, copy, stage, or mutation of either foreign dirty path."
     codegraph:
       implementation: "CodeGraph 1.1.6 explicit-root CLI index at /Users/michaeltran/AntiGravity/KeyBrake"
-      current_baseline: "39 files, 860 nodes, 1,891 edges; prior context reports source sync over five changed files"
+      current_baseline: "46 files, 1,153 nodes, 2,343 edges after quiet sync; status reports one pending addition and no reindex recommendation. Keep the ignored index uncommitted."
       local_ignored_index: ".codegraph remains local and ignored; never stage or commit it"
-    next_safe_action: "Commit and push the exact owned implementation paths on the current branch after rechecking the dirty-path manifest; keep S006 native System Settings proof explicitly open."
+    next_safe_action: "Validate the final docs/YAML and exact owned-path diff, recheck foreign dirty-file hashes and remote branch head, then commit and push only the owned feature paths to PR #1. Keep S006/S007/S008 open because the current host preflight denied System Settings."
   objective: "Add a separate KeyBrake Preference Pane entry that opens the existing Keyboard settings without selecting an app or resetting permissions; prove live System Settings discovery and interaction on an admitted host before claiming the pane experience."
   scope_preserved: true
   continuation_checkpoint:
@@ -567,8 +599,8 @@ project_plan:
         manifest: "KeyBrake checksum manifest search and Agent-Cache consumer-path contract"
         protected_path: "project.yml; KeyBrakePreferencePane/KeyBrakePreferencePane.swift"
         span: "No registered boundary or marker found."
-        current_identity: "Not yet edited; exact baseline will be captured before generated Xcode project replacement."
-        planned_touch: "Add a separate bundle target and new source; regenerate only the project artifact after B4 physical comparison."
+        current_identity: "No applicable checksum boundary; current project.yml SHA-256 is e606ff06305aed69bb81d6c9c10e3704a511fd3c0a8116550e23ebbbc96672de and generated project SHA-256 is a56af9287a07629a97016af4828530dcf4beb56012770769cbcc07f691efad35."
+        planned_touch: "The pane target now uses an explicit SupportingFiles/KeyBrakePreferencePane-Info.plist source so the custom host identifier survives Info.plist emission; XcodeGen output was compared after the latest B4 snapshot."
         route: "validate"
         why_exists_here: "No KeyBrake checksum registry or protected span applies; do not create a registry row or refresh historical verification anchors without authorization."
         evidence: "Agent-Cache bootstrap checksum status and exact KeyBrake manifest inventory."
@@ -577,12 +609,21 @@ project_plan:
     physical_comparison:
       route: "Agent-Cache B4 snapshot via physical_code_compare_guard.py"
       receipt: "/Users/michaeltran/.codex/physical-code-compare/830957ef69114dfa1aa948f3.snapshots.json"
-      status: "captured before project.yml edit and before xcodegen generate"
+      status: "Latest snapshot captured at 2026-09-28T22:16Z before the explicit pane Info.plist project change and xcodegen generate; record returned pass/no destructive changes. Prior pre-pane hashes were verified against e1d919515ef0650940a001267e7c10a11bd3cb89^ and remain preserved below."
       snapshots:
         - path: "project.yml"
           sha256: "5946b9e83ec6161d0f8a3647b1b17019e81ca79955dddf488753a82b49f18682"
         - path: "KeyBrake.xcodeproj/project.pbxproj"
           sha256: "b983ca1fa58ec834d671075bd72d1d3215ac236b996d2314478672ab873a7228"
+      latest_snapshot_before_metadata_repair:
+        - path: "project.yml"
+          sha256: "a61399a7178f065c449d5650c0031942bec511ce15567d67fbe2d4ba2afe65b1"
+        - path: "KeyBrake.xcodeproj/project.pbxproj"
+          sha256: "8feae4839b014bb3da9c9d9889c99356d4eba065fe21d6c93636ccb5b8b5c1d2"
+      generated_result:
+        project_yml_sha256: "e606ff06305aed69bb81d6c9c10e3704a511fd3c0a8116550e23ebbbc96672de"
+        pbxproj_sha256: "a56af9287a07629a97016af4828530dcf4beb56012770769cbcc07f691efad35"
+        record: "pass; no destructive changes"
   seedrepo:
     mode: "seed-ready"
     foundation_status: "seed-ready; no root AGENTS.md mutation was authorized or required for this feature."
@@ -814,7 +855,7 @@ project_plan:
       name: "Build the minimum standalone KeyBrake preference pane"
       files: ["project.yml", "KeyBrake.xcodeproj/project.pbxproj", "KeyBrakePreferencePane/KeyBrakePreferencePane.swift"]
       dependencies: ["B4 physical comparison snapshot", "existing macOS 27 PreferencePanes SDK headers", "XcodeGen target support"]
-      status: "route-enabled app and pane build successfully in Debug and Release; the current installed user pane remains the earlier scaffold"
+      status: "final app and pane Debug/Release builds pass; explicit pane plist now emits the host bundle identifier required by the launcher"
     - id: "S006"
       name: "Install, discover, open, and visually prove the pane in System Settings"
       files: ["~/Library/PreferencePanes/KeyBrake.prefPane", "docs/proofs/keybrake-system-settings-pane.raw.png", "docs/proofs/keybrake-system-settings-pane.png"]
@@ -829,7 +870,7 @@ project_plan:
       name: "Update capability and verification records, then deliver on the current PR"
       files: ["docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_reset_keyboard.yml", "PR #1"]
       dependencies: ["S005-S007 proof", "exact-path staging", "fresh remote SHA check"]
-      status: "source, focused-test, Debug/Release build, and proof-boundary records are carried in this delivery commit; live pane screenshot and Drive receipt remain unverified"
+      status: "source, fixture tests, app embedding, Debug/Release builds, install edge-case tests, and proof limits are recorded; exact-path commit/push remain pending, and live pane screenshot/Drive receipt remain unverified"
   guards: []
   tests:
     full_suite_attempts:
@@ -842,19 +883,27 @@ project_plan:
     focused_passes:
       status: "three bounded SwiftPM runs passed 11 distinct tests with zero failures: six repaired fixture cases, three route/migration cases, and two duplicate-registered-copy cases"
       cases: "Canonical-only URL parsing; unknown recovery state; recovery migration; duplicate registered/running app resolution; stale route handler; retry after failure; concurrent-only duplicate suppression; exact ListenEvent/PostEvent scope; and recovery retention cases."
+    latest_continuation:
+      route_filter: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMHandoffRoute --filter KeyBrakeSystemSettingsRouteTests; 11 tests passed, 0 failures."
+      full_suite: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMHandoffFull; all 73 discovered test methods passed with 0 failures. One full-suite run after the current source repairs."
+      focused_edge_cases: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMHandoffDemo --filter KeyBrakeDemoCompositionTests|EmergencyCoordinatorTests/testPrivacyResetsAreRejectedWhenRecoverySnapshotIsUnreadable; 3 tests passed, 0 failures."
+      installer_fixtures: "scripts/test_keybrake_preference_pane_install.sh against the Debug app; temporary HOME fixtures passed matching upgrade/backup, unrelated-pane refusal, destination and parent symlink refusal, empty HOME rejection, and strict URL-scheme validation without writing to the real user Library."
     builds:
-      app: "KeyBrake Debug and Release unsigned builds passed with Xcode 27.0 and macOS 27.0 SDK; app builds were run after app/Core source changes."
-      pane: "KeyBrakePreferencePane Debug and Release unsigned builds passed; both were rerun after the concurrent-request retry message correction."
+      app: "Final KeyBrake Debug and Release unsigned builds passed with Xcode 27.0 and macOS 27.0 SDK."
+      pane: "KeyBrakePreferencePane Debug and Release unsigned builds passed; app Debug and Release build phases embed their matching pane product and same-build payload comparisons passed."
+      app_outputs:
+        - "/tmp/KeyBrakeHandoffDebugFix/Build/Products/Debug/KeyBrake.app"
+        - "/tmp/KeyBrakeHandoffRelease/Build/Products/Release/KeyBrake.app"
       pane_outputs:
-        - "/tmp/KeyBrake-SystemSettings-Pane-Debug/Build/Products/Debug/KeyBrake.prefPane"
-        - "/tmp/KeyBrake-SystemSettings-Pane-Release/Build/Products/Release/KeyBrake.prefPane"
-    metadata: "Built app and pane Info.plists pass plutil lint; app registers the keybrake URL scheme, and pane bundle ID, package type, principal class, and minimum OS are verified."
-    project_generation: "xcodegen generate passed after B4 snapshots; the checked-in Xcode project is generated from project.yml."
-    source_and_yaml_checks: "git diff --check passed; Ruby Psych parsed docs/registry/lackeydo_project_plan_reset_keyboard.yml."
+        - "/tmp/KeyBrakeHandoffPaneStandaloneDebug/Build/Products/Debug/KeyBrake.prefPane"
+        - "/tmp/KeyBrakeHandoffPaneStandaloneRelease/Build/Products/Release/KeyBrake.prefPane"
+    metadata: "All app/pane Debug and Release Info.plists pass plutil lint; apps register keybrake; panes carry the host ID, expected bundle ID, BNDL package type, principal class, and minimum OS. App-embedded pane copies match their same-build pane products byte-for-byte."
+    project_generation: "xcodegen generate passed after the B4 snapshot; generated project reflects the pane target and Info.plist, unique pane module name, app dependency, and post-build embed phase."
+    source_and_yaml_checks: "Ruby YAML parse, shell syntax checks, git diff --check, and foreign dirty-file SHA checks passed after the latest edits. Exact-path staging and post-push remote parity remain pending."
   deferred_items:
-    - "Route-enabled pane installation, System Settings discovery/opening, live app handoff, accessibility review, measured pane LxW, raw/annotated screenshot identity, and Google Drive filing remain unproven. The per-user pane is the earlier scaffold, and no KeyBrake app bundle is installed in /Applications or ~/Applications."
+    - "Real per-user pane installation, System Settings discovery/opening, live app handoff, accessibility review, measured pane LxW, raw/annotated screenshot identity, and Google Drive filing remain unproven. The installer ran only against temporary HOME fixtures; real per-user pane and Settings state were untouched."
   blockers:
-    - "S006 native UI proof is blocked on this host. The latest recorded com.apple.systempreferences preflight at 2026-09-28T18:51:42Z returned degraded with computer_use_standing=false and route_exit=3/isolated_exit=3 because Agent Display rejects Settings apps containing User-Alpha. No System Settings process was launched; a fresh admitted task-owned macOS host is required for discovery, opening, and screenshots."
+    - "S006/S007 native UI proof is not established. The fresh 2026-09-28T23:50:34Z com.apple.systempreferences preflight returned degraded with computer_use_standing=false and route_exit=3/isolated_exit=3 because Agent Display denied route and isolation for this Settings target. No process was launched. Obtain fresh admission on a task-owned macOS host before real installation, discovery, opening, interaction, or screenshots."
   next_roi:
     source_handoff:
       thread_id: "01a0e26a-16f9-7ff3-8bc8-02cf501bb424"
@@ -877,7 +926,7 @@ project_plan:
         basis: "No task-owned System Settings window opened; Apple's current framework documentation describes System Preferences."
       - claim_class: "OBSERVATION"
         claim: "The latest recorded preflight denies both isolation and route admission for com.apple.systempreferences."
-        basis: "Direct agent_ui_preflight.py output recorded at 2026-09-28T18:51:42Z; no UI process was launched."
+        basis: "Fresh agent_ui_preflight.py output and matching receipt at 2026-09-28T23:50:34Z; route/isolation denied and no UI process was launched."
     score_method:
       type: "ordinal estimate"
       formula: "return_score = 2*outcome_leverage + trust_or_reliability_gain + recurring_friction_reduction + learning_or_reuse_gain; friction_score = effort + integration_risk + uncertainty + dependency_wait; relative_priority = return_score / friction_score"
@@ -967,16 +1016,17 @@ project_plan:
     - [x] Complete the SeedRepo root inventory, instruction synthesis, tool matrix, source route, and non-mutating seed-ready decision. status: complete
     - [x] Deliver the initial app-owned selected-app keyboard-input reset on PR #1; preserve it as historical work. status: commit 3acbfe465fad3d583006a407ca782d0870bcb36e is an ancestor of the current branch; current user correction supersedes its placement as the completion target.
     - [x] Resolve current location: a separate KeyBrake preference pane in macOS System Settings, not an insertion into Apple's built-in Keyboard or General page. status: selected from the latest direct user request.
-    - [x] Build and validate the route-enabled KeyBrake.prefPane and KeyBrake app in Debug and Release after the B4 project snapshots. status: all four unsigned builds and built Info.plist checks passed.
+    - [x] Build and validate the route-enabled KeyBrake.prefPane and KeyBrake app in Debug and Release after the B4 project snapshots. status: final four unsigned builds pass; all four built Info.plists lint; both panes include the resolved host bundle ID and both apps register the route scheme.
     - [x] Implement the pane-to-app handoff without app selection or permission reset. status: strict keybrake://settings/keyboard source route and focused tests pass; live pane interaction remains unverified.
-    - [ ] Install the route-enabled pane beside a matching installed KeyBrake app. status: current per-user pane is the earlier scaffold, and no app bundle exists in /Applications or ~/Applications.
-    - [ ] Prove System Settings discovers and opens the pane. status: blocked on this host; current preflight rejects com.apple.systempreferences before launch because the Settings app contains User-Alpha, and the existing Settings process remains untouched.
-    - [ ] Capture one isolated raw/annotated System Settings screenshot and record exact LxW plus proof hashes. status: blocked until a task-owned pane window passes is-isolated=true.
+    - [x] Validate installer upgrade and failure edges in temporary HOME fixtures. status: matching pane upgrade retained a backup; unrelated panes, destination/parent symlinks, empty HOME, and URLName-only fake schemes were rejected without touching the real user Library.
+    - [ ] Install the route-enabled pane beside a matching installed KeyBrake app. status: no real install was performed because the latest recorded native preflight denied System Settings and no fresh admission was established.
+    - [ ] Prove System Settings discovers and opens the pane. status: unverified; fresh 2026-09-28T23:50:34Z preflight denied admission, and no process was launched.
+    - [ ] Capture one isolated raw/annotated System Settings screenshot and record exact LxW plus proof hashes. status: blocked until a task-owned pane window passes is-isolated=true; source declares 560×360 points but no host measurement exists.
     - [x] Connect the pane source to the existing Keyboard settings while preserving selected-app reset semantics. status: source implementation and focused route tests pass; S006/S007 live runtime proof remains open.
     - [x] Refresh Agent Display capabilities and the same-PR head at 2026-09-28T12:47:15Z; the safe route remains absent and only shared display 26 is listed. status: S006 still blocked; no UI launch was repeated.
     - [x] Record the evidence-labeled NextROI decision, relative ordinal comparison, S006 blocker class, unknown host compatibility, and source-thread deep link in this ledger.
     - [x] Record the current System Settings target denial and verify the exact My Drive proof folder at 2026-09-28T16:30:54Z; no process launched and no screenshot uploaded.
-    - [ ] Resume S006/S007 only on a task-owned macOS host where fresh preflight admits System Settings; capture exact pane bounds and complete approved screenshot/Drive proof after live interaction succeeds.
+    - [ ] Resume S006/S007 only on a task-owned macOS host where fresh preflight admits System Settings; install/discover/open once, exercise the route, record exact pane bounds, create raw and annotated proof, verify hashes and dimensions, file approved proof in the exact Drive folder, then update PR #1.
   delivery:
     branch: "codex/keybrake-complete-implementation"
     feature_commit_sha: "this commit; resolve from the verified PR #1 branch head"

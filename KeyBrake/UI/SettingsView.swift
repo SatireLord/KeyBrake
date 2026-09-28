@@ -58,8 +58,14 @@ struct SettingsView: View {
     }
 
     private var keyboardResetActionHint: String {
-        if model.isNetworkSandbox {
-            return "Unavailable in the network sandbox; host privacy decisions remain unchanged."
+        if model.isReadOnlyDemo {
+            return "Unavailable in this read-only demonstration; host privacy decisions remain unchanged."
+        }
+        if !model.isRecoveryStatusKnown {
+            return "Unavailable while KeyBrake checks its recovery state."
+        }
+        if !model.hasVerifiedRecoveryStoreHydration {
+            return "Unavailable because KeyBrake could not verify its recovery store."
         }
         guard let target = selectedKeyboardTarget else {
             return "Choose a configured application before requesting a keyboard-access reset."
@@ -68,8 +74,14 @@ struct SettingsView: View {
     }
 
     private var appAccessResetActionHint: String {
-        if model.isNetworkSandbox {
-            return "Unavailable in the network sandbox; host privacy settings remain unchanged."
+        if model.isReadOnlyDemo {
+            return "Unavailable in this read-only demonstration; host privacy settings remain unchanged."
+        }
+        if !model.isRecoveryStatusKnown {
+            return "Unavailable while KeyBrake checks its recovery state."
+        }
+        if !model.hasVerifiedRecoveryStoreHydration {
+            return "Unavailable because KeyBrake could not verify its recovery store."
         }
         if selectedTargetID.isEmpty && selectedPrivacyServices.isEmpty {
             return "Choose an application and at least one privacy service before requesting an access reset."
@@ -401,7 +413,7 @@ struct SettingsView: View {
                 .help(keyboardResetActionHint)
                 .accessibilityHint(keyboardResetActionHint)
                 .accessibilityIdentifier("keybrake.settings.keyboard.reset")
-                .disabled(model.isReadOnlyDemo || !model.isRecoveryStatusKnown || model.isBusy || selectedKeyboardTarget == nil)
+                .disabled(!model.canRequestPrivacyReset || selectedKeyboardTarget == nil)
             }
             .accessibilityIdentifier("keybrake.settings.keyboard-section")
             .id("keybrake.settings.keyboard-section")
@@ -559,7 +571,7 @@ struct SettingsView: View {
                 .help(appAccessResetActionHint)
                 .accessibilityHint(appAccessResetActionHint)
                 .accessibilityIdentifier("keybrake.settings.application-access.revoke")
-                .disabled(model.isReadOnlyDemo || !model.isRecoveryStatusKnown || model.isBusy || selectedTargetID.isEmpty || selectedPrivacyServices.isEmpty)
+                .disabled(!model.canRequestPrivacyReset || selectedTargetID.isEmpty || selectedPrivacyServices.isEmpty)
             }
             .accessibilityIdentifier("keybrake.settings.application-access-section")
 
@@ -625,7 +637,6 @@ struct SettingsView: View {
         .formStyle(.grouped)
         .padding()
         .onAppear {
-            if selectedTargetID.isEmpty { selectedTargetID = accessTargets.first?.id ?? "" }
             if let request = model.keyboardSettingsNavigationRequest,
                request != lastKeyboardNavigationRequestID {
                 lastKeyboardNavigationRequestID = request

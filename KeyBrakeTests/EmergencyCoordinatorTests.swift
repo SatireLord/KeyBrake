@@ -6,6 +6,24 @@ private struct FixtureProcessController: ProcessControlling {
     func stop(_ identity: ProcessIdentity, allowForcedTermination: Bool) async -> ProcessTargetResult { ProcessTargetResult(targetID: "fixture", displayName: "Fixture", identity: identity, outcome: .succeeded, detail: "fixture") }
 }
 
+private final class UnreadableRecoveryFileManager: FileManager, @unchecked Sendable {
+    private let unreadablePath: String
+
+    init(unreadablePath: String) {
+        self.unreadablePath = unreadablePath
+        super.init()
+    }
+
+    override func fileExists(atPath path: String) -> Bool {
+        path == unreadablePath ? false : super.fileExists(atPath: path)
+    }
+
+    override func attributesOfItem(atPath path: String) throws -> [FileAttributeKey: Any] {
+        guard path == unreadablePath else { return try super.attributesOfItem(atPath: path) }
+        throw NSError(domain: NSCocoaErrorDomain, code: NSFileReadNoPermissionError)
+    }
+}
+
 private actor FixtureSharingAdapter: SharingServiceAdapter {
     nonisolated let identifier: String
     nonisolated let displayName: String
@@ -59,6 +77,129 @@ final class EmergencyCoordinatorTests: XCTestCase {
         XCTAssertFalse(KeyBrakeTerminationGate.blocksTermination(state: .normal, launchRecoveryCheckCompleted: true, recoveryRequired: false, immediateQuitApproved: false))
         XCTAssertFalse(KeyBrakeTerminationGate.blocksTermination(state: .isolated, launchRecoveryCheckCompleted: true, recoveryRequired: true, immediateQuitApproved: true))
         XCTAssertTrue(KeyBrakeTerminationGate.blocksTermination(state: .isolated, launchRecoveryCheckCompleted: true, recoveryRequired: true, immediateQuitApproved: false))
+    }
+
+    func testPrivacyResetsAreRejectedBeforeRecoveryStoreHydration() async {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let runner = RecordingCommandRunner()
+        let coordinator = makePrivacyTestCoordinator(rootDirectory: root, runner: runner)
+
+        let verifiedBeforeHydration = await coordinator.hasVerifiedRecoveryStoreHydration()
+        let appAccessIncident = await coordinator.revokeAppAccess(
+            targetID: "fixture-app",
+            services: [.inputMonitoring],
+            bundleIdentifier: "com.example.fixture",
+            displayName: "Fixture App"
+        )
+        let keyboardIncident = await coordinator.resetKeyboardAccess(target: privacyTestTarget())
+
+        XCTAssertFalse(verifiedBeforeHydration)
+        XCTAssertEqual(appAccessIncident.steps.first?.outcome, .conflict)
+        XCTAssertEqual(keyboardIncident.steps.first?.outcome, .conflict)
+        XCTAssertTrue(runner.calls.isEmpty)
+    }
+
+    func testPrivacyResetsAreRejectedWhenRecoverySnapshotDecodeFails() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let store = RecoveryStore(rootDirectory: root)
+        let corruptSnapshot = Data("not a recovery snapshot".utf8)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try corruptSnapshot.write(to: store.recoveryURL)
+        let runner = RecordingCommandRunner()
+        let coordinator = makePrivacyTestCoordinator(rootDirectory: root, runner: runner)
+
+        let hydratedSnapshot = await coordinator.recoverUnresolvedStateAtLaunch()
+        let verifiedAfterFailure = await coordinator.hasVerifiedRecoveryStoreHydration()
+        let stateAfterFailure = await coordinator.state()
+        let appAccessIncident = await coordinator.revokeAppAccess(
+            targetID: "fixture-app",
+            services: [.inputMonitoring],
+            bundleIdentifier: "com.example.fixture",
+            displayName: "Fixture App"
+        )
+        let keyboardIncident = await coordinator.resetKeyboardAccess(target: privacyTestTarget())
+
+        XCTAssertNil(hydratedSnapshot)
+        XCTAssertFalse(verifiedAfterFailure)
+        XCTAssertEqual(stateAfterFailure, .recoveryRequired)
+        XCTAssertEqual(appAccessIncident.steps.first?.outcome, .conflict)
+        XCTAssertEqual(keyboardIncident.steps.first?.outcome, .conflict)
+        XCTAssertTrue(runner.calls.isEmpty)
+        XCTAssertEqual(try Data(contentsOf: store.recoveryURL), corruptSnapshot)
+    }
+
+    func testPrivacyResetsAreRejectedWhenRecoverySnapshotIsUnreadable() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let readableStore = RecoveryStore(rootDirectory: root)
+        let pendingSnapshot = RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .normal,
+            networkChanges: [
+                NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: "wifi")
+            ]
+        )
+        try readableStore.save(pendingSnapshot)
+        let unreadableFileManager = UnreadableRecoveryFileManager(unreadablePath: readableStore.recoveryURL.path)
+        let runner = RecordingCommandRunner()
+        let coordinator = makePrivacyTestCoordinator(
+            rootDirectory: root,
+            runner: runner,
+            recoveryFileManager: unreadableFileManager
+        )
+
+        let hydratedSnapshot = await coordinator.recoverUnresolvedStateAtLaunch()
+        let hydrationVerified = await coordinator.hasVerifiedRecoveryStoreHydration()
+        let reset = await coordinator.resetKeyboardAccess(target: privacyTestTarget())
+
+        XCTAssertFalse(unreadableFileManager.fileExists(atPath: readableStore.recoveryURL.path))
+        XCTAssertNil(hydratedSnapshot)
+        XCTAssertFalse(hydrationVerified)
+        XCTAssertEqual(reset.steps.first?.outcome, .conflict)
+        XCTAssertTrue(runner.calls.isEmpty)
+        XCTAssertEqual(try RecoveryStore(rootDirectory: root).load(), pendingSnapshot)
+    }
+
+    func testSuccessfulEmptyAndPendingRecoveryHydrationPermitPrivacyResets() async throws {
+        let emptyRoot = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let emptyCoordinator = makePrivacyTestCoordinator(rootDirectory: emptyRoot, runner: RecordingCommandRunner())
+
+        let emptySnapshot = await emptyCoordinator.recoverUnresolvedStateAtLaunch()
+        let emptyStoreVerified = await emptyCoordinator.hasVerifiedRecoveryStoreHydration()
+
+        XCTAssertNil(emptySnapshot)
+        XCTAssertTrue(emptyStoreVerified)
+
+        let pendingRoot = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let pendingStore = RecoveryStore(rootDirectory: pendingRoot)
+        try pendingStore.save(RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .normal,
+            networkChanges: [
+                NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: "wifi")
+            ]
+        ))
+        let runner = RecordingCommandRunner()
+        let pendingCoordinator = makePrivacyTestCoordinator(rootDirectory: pendingRoot, runner: runner)
+
+        let pendingSnapshot = await pendingCoordinator.recoverUnresolvedStateAtLaunch()
+        let pendingStoreVerified = await pendingCoordinator.hasVerifiedRecoveryStoreHydration()
+        let pendingState = await pendingCoordinator.state()
+        _ = await pendingCoordinator.revokeAppAccess(
+            targetID: "fixture-app",
+            services: [.inputMonitoring],
+            bundleIdentifier: "com.example.fixture",
+            displayName: "Fixture App"
+        )
+        _ = await pendingCoordinator.resetKeyboardAccess(target: privacyTestTarget())
+
+        XCTAssertNotNil(pendingSnapshot)
+        XCTAssertTrue(pendingStoreVerified)
+        XCTAssertEqual(pendingState, .recoveryRequired)
+        XCTAssertEqual(Set(runner.calls.map { $0.request.arguments }), Set([
+            ["reset", "ListenEvent", "com.example.fixture"],
+            ["reset", "PostEvent", "com.example.fixture"]
+        ]))
+        XCTAssertEqual(runner.calls.count, 3)
     }
 
     func testProcessIdentityRequiresExactBundleExecutableAndLaunchDate() {
@@ -326,4 +467,29 @@ final class EmergencyCoordinatorTests: XCTestCase {
         ])
         XCTAssertTrue(incident.steps.contains { $0.subsystem == "launchd" && $0.targetID == "custom-agent:gui/com.example.agent" && $0.outcome == .succeeded })
     }
+}
+
+private func makePrivacyTestCoordinator(
+    rootDirectory: URL,
+    runner: RecordingCommandRunner,
+    recoveryFileManager: FileManager = .default
+) -> EmergencyCoordinator {
+    EmergencyCoordinator(
+        recoveryStore: RecoveryStore(rootDirectory: rootDirectory, fileManager: recoveryFileManager),
+        incidentStore: IncidentStore(rootDirectory: rootDirectory),
+        processController: FixtureProcessController(),
+        espanso: EspansoAdapter(commandRunner: runner, executableCandidates: []),
+        networkController: FixtureNetworkController(),
+        privacyController: PrivacyController(commandRunner: runner),
+        targetDefinitions: [privacyTestTarget()]
+    )
+}
+
+private func privacyTestTarget() -> TargetDefinition {
+    TargetDefinition(
+        id: "fixture-app",
+        displayName: "Fixture App",
+        category: .remoteAccess,
+        bundleIdentifier: "com.example.fixture"
+    )
 }

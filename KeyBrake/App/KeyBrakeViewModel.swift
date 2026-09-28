@@ -16,6 +16,7 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published private(set) var privilegedHelperStatus = "Not registered"
     @Published private(set) var privilegedHelperError: String?
     @Published private(set) var operationInFlight = false
+    @Published private(set) var recoveryStoreHydrationSucceeded = false
     @Published var isolationPolicy: EmergencyIsolationPolicy
     @Published var isShowingRecoveryPanel = false
     @Published var isShowingIncidentLog = false
@@ -27,13 +28,14 @@ final class KeyBrakeViewModel: ObservableObject {
     let coordinator: EmergencyCoordinator
     let incidentStore: IncidentStore
     let featureContract: FeatureContract
+    private let settingsDefaults: UserDefaults
     let isNetworkSandbox: Bool
     let isRecoveryDemo: Bool
     let networkSandboxScenario: NetworkSandboxScenario?
     private let demoStoreRootDirectory: URL?
 
-    private static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
-    private static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
+    static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
+    static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
 
     init(
         coordinator: EmergencyCoordinator = .live(),
@@ -43,18 +45,20 @@ final class KeyBrakeViewModel: ObservableObject {
         isNetworkSandbox: Bool = false,
         isRecoveryDemo: Bool = false,
         configuredTargetsOverride: [TargetDefinition]? = nil,
-        demoStoreRootDirectory: URL? = nil
+        demoStoreRootDirectory: URL? = nil,
+        settingsDefaults: UserDefaults = .standard
     ) {
         self.coordinator = coordinator
         self.incidentStore = incidentStore
         self.featureContract = FeatureContract.current()
+        self.settingsDefaults = settingsDefaults
         self.isNetworkSandbox = isNetworkSandbox
         self.isRecoveryDemo = isRecoveryDemo
-        self.demoStoreRootDirectory = isRecoveryDemo ? demoStoreRootDirectory : nil
+        self.demoStoreRootDirectory = (isNetworkSandbox || isRecoveryDemo) ? demoStoreRootDirectory : nil
         self.networkSandboxScenario = isNetworkSandbox ? networkSandboxScenario : nil
         let isReadOnlyDemo = isNetworkSandbox || isRecoveryDemo
-        self.configuredTargets = configuredTargetsOverride ?? (isReadOnlyDemo ? TargetRegistry.builtInRemoteAccess : Self.loadConfiguredTargets())
-        self.isolationPolicy = initialIsolationPolicy ?? (isReadOnlyDemo ? .standard : Self.loadIsolationPolicy())
+        self.configuredTargets = configuredTargetsOverride ?? (isReadOnlyDemo ? TargetRegistry.builtInRemoteAccess : Self.loadConfiguredTargets(from: settingsDefaults))
+        self.isolationPolicy = initialIsolationPolicy ?? (isReadOnlyDemo ? .standard : Self.loadIsolationPolicy(from: settingsDefaults))
         self.launchAtLoginEnabled = isReadOnlyDemo ? false : Self.readLaunchAtLoginStatus()
         self.privilegedHelperStatus = isReadOnlyDemo ? "Disabled in demo mode" : Self.readPrivilegedHelperStatus()
         Task {
@@ -75,6 +79,14 @@ final class KeyBrakeViewModel: ObservableObject {
         launchRecoveryCheckCompleted
     }
 
+    var hasVerifiedRecoveryStoreHydration: Bool {
+        recoveryStoreHydrationSucceeded
+    }
+
+    var canRequestPrivacyReset: Bool {
+        !isReadOnlyDemo && launchRecoveryCheckCompleted && recoveryStoreHydrationSucceeded && !isBusy
+    }
+
     var hasRecovery: Bool {
         unresolvedRecovery != nil || operationalState.requiresRecoveryDecision
     }
@@ -89,12 +101,16 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func refresh() async {
+        launchRecoveryCheckCompleted = false
+        recoveryStoreHydrationSucceeded = false
         let recovery = await coordinator.recoverUnresolvedStateAtLaunch()
+        let hydrationSucceeded = await coordinator.hasVerifiedRecoveryStoreHydration()
         let state = await coordinator.state()
         let storedIncidents = (try? incidentStore.list()) ?? []
         let incident = await coordinator.latest() ?? storedIncidents.first
         unresolvedRecovery = recovery
         operationalState = state
+        recoveryStoreHydrationSucceeded = hydrationSucceeded
         latestIncident = incident
         incidents = storedIncidents
         launchRecoveryCheckCompleted = true
@@ -279,7 +295,7 @@ final class KeyBrakeViewModel: ObservableObject {
         guard !isReadOnlyDemo else { return }
         isolationPolicy = policy
         guard let data = try? JSONEncoder().encode(policy) else { return }
-        UserDefaults.standard.set(data, forKey: Self.isolationPolicyDefaultsKey)
+        settingsDefaults.set(data, forKey: Self.isolationPolicyDefaultsKey)
     }
 
     func enrollTarget(_ target: TargetDefinition) {
@@ -300,7 +316,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func revokeAppAccess(targetID: String, services: Set<TCCService>) {
-        guard !isReadOnlyDemo, launchRecoveryCheckCompleted, !isBusy else { return }
+        guard canRequestPrivacyReset else { return }
         guard let target = configuredTargets.first(where: { $0.id == targetID }), let bundleIdentifier = target.bundleIdentifier else { return }
         operationInFlight = true
         Task {
@@ -312,9 +328,9 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func resetKeyboardAccess(targetID: String) {
-        guard !isReadOnlyDemo, launchRecoveryCheckCompleted, !isBusy else { return }
+        guard canRequestPrivacyReset else { return }
         guard let selectedTarget = configuredTargets.first(where: { $0.id == targetID }) else { return }
-        let currentTargets = Self.loadConfiguredTargets()
+        let currentTargets = Self.loadConfiguredTargets(from: settingsDefaults)
         guard let target = currentTargets.first(where: { $0.id == targetID }),
               target.bundleIdentifier == selectedTarget.bundleIdentifier,
               target.applicationURL == selectedTarget.applicationURL,
@@ -348,6 +364,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func refreshPrivilegedHelperStatus() {
+        guard !isReadOnlyDemo else { return }
         privilegedHelperStatus = Self.readPrivilegedHelperStatus()
     }
 
@@ -386,8 +403,12 @@ final class KeyBrakeViewModel: ObservableObject {
         guard let root = demoStoreRootDirectory else { return }
         let temporaryRoot = FileManager.default.temporaryDirectory.standardizedFileURL
         let normalizedRoot = root.standardizedFileURL
+        let directoryName = normalizedRoot.lastPathComponent
+        let belongsToRecoveryDemo = isRecoveryDemo && directoryName.hasPrefix("KeyBrake-Recovery-Demo-")
+        let belongsToNetworkSandbox = isNetworkSandbox
+            && networkSandboxScenario.map { directoryName.hasPrefix("KeyBrake-Network-Sandbox-\($0.rawValue)-") } == true
         guard normalizedRoot.deletingLastPathComponent() == temporaryRoot,
-              normalizedRoot.lastPathComponent.hasPrefix("KeyBrake-Recovery-Demo-") else { return }
+              belongsToRecoveryDemo || belongsToNetworkSandbox else { return }
         try? FileManager.default.removeItem(at: normalizedRoot)
     }
 
@@ -403,12 +424,12 @@ final class KeyBrakeViewModel: ObservableObject {
 
     private func saveConfiguredTargets() {
         guard let data = try? JSONEncoder().encode(configuredTargets) else { return }
-        UserDefaults.standard.set(data, forKey: Self.configuredTargetsDefaultsKey)
+        settingsDefaults.set(data, forKey: Self.configuredTargetsDefaultsKey)
     }
 
-    private static func loadConfiguredTargets() -> [TargetDefinition] {
+    private static func loadConfiguredTargets(from defaults: UserDefaults) -> [TargetDefinition] {
         let builtIns = TargetRegistry.builtInLocalAutomation + TargetRegistry.builtInRemoteAccess
-        guard let data = UserDefaults.standard.data(forKey: configuredTargetsDefaultsKey), let stored = try? JSONDecoder().decode([TargetDefinition].self, from: data) else {
+        guard let data = defaults.data(forKey: configuredTargetsDefaultsKey), let stored = try? JSONDecoder().decode([TargetDefinition].self, from: data) else {
             return builtIns
         }
         let storedByID = Dictionary(uniqueKeysWithValues: stored.map { ($0.id, $0) })
@@ -426,8 +447,8 @@ final class KeyBrakeViewModel: ObservableObject {
         return merged
     }
 
-    private static func loadIsolationPolicy() -> EmergencyIsolationPolicy {
-        guard let data = UserDefaults.standard.data(forKey: isolationPolicyDefaultsKey),
+    private static func loadIsolationPolicy(from defaults: UserDefaults) -> EmergencyIsolationPolicy {
+        guard let data = defaults.data(forKey: isolationPolicyDefaultsKey),
               let policy = try? JSONDecoder().decode(EmergencyIsolationPolicy.self, from: data) else {
             return .standard
         }

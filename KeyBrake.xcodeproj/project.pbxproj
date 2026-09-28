@@ -12,6 +12,7 @@
 		07BA868DFEDB71963D9A6744 /* org.realitygood.KeyBrake.Helper.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D88911992656A86343E1538 /* org.realitygood.KeyBrake.Helper.plist */; };
 		08741CF20ADC8618E1E8838B /* PrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA497ECA0AF489F04D53D75 /* PrivacyController.swift */; };
 		10F3899735E6E273A2E13FEF /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16E2C5513DAE3CA73508E656 /* PreferencePanes.framework */; };
+		1D3015EF54D2EDF1FBF9F639 /* KeyBrakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434513CA4A72FC424153790B /* KeyBrakeViewModel.swift */; };
 		2037DC0BD07C73C62844440A /* CommandRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C2D2AB115F941A7E37DAD /* CommandRunnerTests.swift */; };
 		29A5A51D92D328A6DCBEE2F2 /* RecoveryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A036935837FA9A107EC95CD8 /* RecoveryStore.swift */; };
 		36D80398668637F45F8A965A /* KeyBrakeOperationalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CF2AEC81E87E7390468A23 /* KeyBrakeOperationalState.swift */; };
@@ -25,6 +26,7 @@
 		4D0346D4D2E4BA2FFD6C5059 /* HelperAuthorizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36400172923336CBC281BF06 /* HelperAuthorizationTests.swift */; };
 		4E1FD847F37B3FFA29B54AAD /* SharingServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC0AEF9D153C7D4C56549A5 /* SharingServiceController.swift */; };
 		505E409442A9E6331F7F3C00 /* KeyBrakeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFCB27E771A443CA34A411B /* KeyBrakeCore.framework */; };
+		5256AC4F8D97AE5BC449E7A6 /* KeyBrakeLaunchConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FA7D39961E921F346B1C62 /* KeyBrakeLaunchConfiguration.swift */; };
 		52B8A13046F0077CF193B370 /* TargetRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91212A17B2940ABBF305C4B0 /* TargetRegistry.swift */; };
 		579A48A8AE71C8EB01437FBA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540EF044F5208B5202B5F701 /* main.swift */; };
 		60C930EF564859B35AC04A44 /* KeyBrakeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFCB27E771A443CA34A411B /* KeyBrakeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -46,6 +48,7 @@
 		ABC64A4D17011FA4A49530E2 /* KeyBrakeAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930B91BC9F360F193DD777B /* KeyBrakeAppDelegate.swift */; };
 		B87727D9530E031F1177BBD2 /* IncidentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5D606595997D124D3D87CF /* IncidentStore.swift */; };
 		C359718A67D32966E987683C /* HelperAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ED4C1189C48F1DF948F4 /* HelperAuthorization.swift */; };
+		C42480F2F2C04770D699CF78 /* KeyBrakeLaunchConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FA7D39961E921F346B1C62 /* KeyBrakeLaunchConfiguration.swift */; };
 		CC94F75964B62A05248D26E3 /* KeyBrakePrivilegedHelper in Resources */ = {isa = PBXBuildFile; fileRef = DC61E757405AF15D46376C14 /* KeyBrakePrivilegedHelper */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CCECF744E1977E5C7F4D14AE /* KeyBrakePreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926D9FB57CAE831EAA73C1C /* KeyBrakePreferencePane.swift */; };
 		CDBE0C49349E902FEC6B23CA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBDB92F87181C7DCBAB29EF /* SwiftUI.framework */; };
@@ -53,6 +56,7 @@
 		D5CF39E1B8029B56B404B573 /* NetworkControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC82847B12FD0A398CC206FC /* NetworkControllerTests.swift */; };
 		E5F1C62BD3A57382B1A0151B /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E4521D838E6DFF65A18F1A /* CommandRunner.swift */; };
 		EACC769B6E5D9FE0478F1ADD /* KeyBrakeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFCB27E771A443CA34A411B /* KeyBrakeCore.framework */; };
+		EDFB4760F8E5973FEDFBCE6A /* KeyBrakeDemoCompositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56254A76E3E41AC0D5A3A224 /* KeyBrakeDemoCompositionTests.swift */; };
 		EE3A98465B59FD1B28469F5D /* KeyBrakeFeatureContract.json in Resources */ = {isa = PBXBuildFile; fileRef = 36530BE08CE19D8F2A67378C /* KeyBrakeFeatureContract.json */; };
 		F18A7B7E19DC0C714511C6CF /* KeyBrakeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFCB27E771A443CA34A411B /* KeyBrakeCore.framework */; };
 		F58166AB4D1A2061E282FB05 /* IncidentLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A082B66DA1B54383798096 /* IncidentLogView.swift */; };
@@ -73,6 +77,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6F53CF0AF04C6BF582DCE62F;
 			remoteInfo = KeyBrakeCore;
+		};
+		BC87B9F027B68E5C4D23E0D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21784444C6BD25177A2693F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB5533B470BB23ABAC71EFD3;
+			remoteInfo = KeyBrakePreferencePane;
 		};
 		C6F075B7ADC1F05C732D3FBA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -147,6 +158,8 @@
 		49E5CFA312C1D10392B8FE48 /* ProcessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessController.swift; sourceTree = "<group>"; };
 		533CCA620FADCD9F4436EE09 /* FeatureContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureContract.swift; sourceTree = "<group>"; };
 		540EF044F5208B5202B5F701 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		56254A76E3E41AC0D5A3A224 /* KeyBrakeDemoCompositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBrakeDemoCompositionTests.swift; sourceTree = "<group>"; };
+		67FA7D39961E921F346B1C62 /* KeyBrakeLaunchConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBrakeLaunchConfiguration.swift; sourceTree = "<group>"; };
 		6CA88146C834675167736A3D /* EmergencyCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyCoordinatorTests.swift; sourceTree = "<group>"; };
 		71FA2C05C5B877C3A6B09FD7 /* KeyBrakePreferencePane.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyBrakePreferencePane.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		880A385883EF32958B01485A /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
@@ -255,6 +268,7 @@
 				6CA88146C834675167736A3D /* EmergencyCoordinatorTests.swift */,
 				E0D645A0CA823E29FCF5107F /* FeatureContractTests.swift */,
 				36400172923336CBC281BF06 /* HelperAuthorizationTests.swift */,
+				56254A76E3E41AC0D5A3A224 /* KeyBrakeDemoCompositionTests.swift */,
 				138723098B85DB37BFFD8F71 /* KeyBrakeSystemSettingsRouteTests.swift */,
 				BC82847B12FD0A398CC206FC /* NetworkControllerTests.swift */,
 				CBE62FF4A736418DB5CC25B3 /* PrivacyControllerTests.swift */,
@@ -312,6 +326,7 @@
 			children = (
 				0DFC34FB5A021A184749CB6A /* KeyBrakeApp.swift */,
 				A930B91BC9F360F193DD777B /* KeyBrakeAppDelegate.swift */,
+				67FA7D39961E921F346B1C62 /* KeyBrakeLaunchConfiguration.swift */,
 				434513CA4A72FC424153790B /* KeyBrakeViewModel.swift */,
 			);
 			path = App;
@@ -378,11 +393,13 @@
 				19092FFC999D8D5CB16102F5 /* CopyFiles */,
 				0CAB489C55D3C2AC53E23CC8 /* Frameworks */,
 				6608565ED1EED477FC629D8A /* Embed Frameworks */,
+				EC288B50924CA3E264130562 /* Embed KeyBrake Preference Pane */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				63B38BC287300BA1287A1453 /* PBXTargetDependency */,
+				0C57C33F5AFAD5B7E8DFABD0 /* PBXTargetDependency */,
 				099DB0E329316A583706F5E0 /* PBXTargetDependency */,
 			);
 			name = KeyBrake;
@@ -513,6 +530,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		EC288B50924CA3E264130562 /* Embed KeyBrake Preference Pane */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/KeyBrake.prefPane/Contents/Info.plist",
+			);
+			name = "Embed KeyBrake Preference Pane";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(FULL_PRODUCT_NAME)/Contents/Library/PreferencePanes/KeyBrake.prefPane/Contents/Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\nset -eu\n\n: \"${BUILT_PRODUCTS_DIR:?Xcode did not provide BUILT_PRODUCTS_DIR}\"\n: \"${TARGET_BUILD_DIR:?Xcode did not provide TARGET_BUILD_DIR}\"\n: \"${FULL_PRODUCT_NAME:?Xcode did not provide FULL_PRODUCT_NAME}\"\n\napp_bundle=\"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}\"\npane_source=\"${BUILT_PRODUCTS_DIR}/KeyBrake.prefPane\"\napp_info=\"${app_bundle}/Contents/Info.plist\"\npane_info=\"${pane_source}/Contents/Info.plist\"\n\ncase \"$app_bundle\" in\n    *.app) ;;\n    *) echo \"Refusing to embed the pane outside an app bundle: $app_bundle\" >&2; exit 1 ;;\nesac\n\nif [ ! -d \"$pane_source\" ] || [ ! -f \"$pane_info\" ] || [ ! -f \"$app_info\" ]; then\n    echo \"The app or route-enabled preference pane build product is missing.\" >&2\n    exit 1\nfi\n\napp_identifier=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' \"$app_info\")\npane_host_identifier=$(/usr/libexec/PlistBuddy -c 'Print :KeyBrakeHostBundleIdentifier' \"$pane_info\")\nif [ \"$app_identifier\" != \"$pane_host_identifier\" ]; then\n    echo \"The preference pane host identifier does not match the app bundle.\" >&2\n    exit 1\nfi\n\npreference_panes=\"${app_bundle}/Contents/Library/PreferencePanes\"\ndestination=\"${preference_panes}/KeyBrake.prefPane\"\nstaging=\"${preference_panes}/.KeyBrake.prefPane.stage.$$\"\n/bin/mkdir -p \"$preference_panes\"\nif [ -e \"$staging\" ] || [ -L \"$staging\" ]; then\n    echo \"A stale pane staging path already exists: $staging\" >&2\n    exit 1\nfi\n\ncleanup() {\n    if [ -e \"$staging\" ] || [ -L \"$staging\" ]; then\n        /bin/rm -R \"$staging\"\n    fi\n}\ntrap cleanup EXIT HUP INT TERM\n\n/usr/bin/ditto \"$pane_source\" \"$staging\"\nstaged_host_identifier=$(/usr/libexec/PlistBuddy -c 'Print :KeyBrakeHostBundleIdentifier' \"$staging/Contents/Info.plist\")\nif [ \"$staged_host_identifier\" != \"$app_identifier\" ]; then\n    echo \"The staged preference pane does not match the app bundle.\" >&2\n    exit 1\nfi\n\nif [ -e \"$destination\" ] || [ -L \"$destination\" ]; then\n    /bin/rm -R \"$destination\"\nfi\n/bin/mv \"$staging\" \"$destination\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6B3E72193AF930F0303E5F1D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -533,7 +573,10 @@
 				8F96F562A693A4079266EFE6 /* EmergencyCoordinatorTests.swift in Sources */,
 				8583B9AB641360AB412F8D77 /* FeatureContractTests.swift in Sources */,
 				4D0346D4D2E4BA2FFD6C5059 /* HelperAuthorizationTests.swift in Sources */,
+				EDFB4760F8E5973FEDFBCE6A /* KeyBrakeDemoCompositionTests.swift in Sources */,
+				C42480F2F2C04770D699CF78 /* KeyBrakeLaunchConfiguration.swift in Sources */,
 				3B228B92FCD7D5EDA92CAD3D /* KeyBrakeSystemSettingsRouteTests.swift in Sources */,
+				1D3015EF54D2EDF1FBF9F639 /* KeyBrakeViewModel.swift in Sources */,
 				D5CF39E1B8029B56B404B573 /* NetworkControllerTests.swift in Sources */,
 				75AB3ACA34AA6C204365EEE7 /* PrivacyControllerTests.swift in Sources */,
 				49768FB94FC5CC3FEE054F01 /* RecoveryStoreTests.swift in Sources */,
@@ -558,6 +601,7 @@
 				F58166AB4D1A2061E282FB05 /* IncidentLogView.swift in Sources */,
 				D277755403CD6475E7C590BC /* KeyBrakeApp.swift in Sources */,
 				ABC64A4D17011FA4A49530E2 /* KeyBrakeAppDelegate.swift in Sources */,
+				5256AC4F8D97AE5BC449E7A6 /* KeyBrakeLaunchConfiguration.swift in Sources */,
 				72BC0918D3D0756BB4E143F4 /* KeyBrakeMenuView.swift in Sources */,
 				F7CCD94931BF54FA03415178 /* KeyBrakeViewModel.swift in Sources */,
 				43CE4BD7A733ADC8276F4D1E /* RecoveryPanelController.swift in Sources */,
@@ -596,6 +640,11 @@
 			isa = PBXTargetDependency;
 			target = 10B22632D7F3FE90D00B0226 /* KeyBrakePrivilegedHelper */;
 			targetProxy = C6F075B7ADC1F05C732D3FBA /* PBXContainerItemProxy */;
+		};
+		0C57C33F5AFAD5B7E8DFABD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB5533B470BB23ABAC71EFD3 /* KeyBrakePreferencePane */;
+			targetProxy = BC87B9F027B68E5C4D23E0D6 /* PBXContainerItemProxy */;
 		};
 		63B38BC287300BA1287A1453 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -734,18 +783,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = KeyBrake;
-				INFOPLIST_KEY_CFBundleName = KeyBrake;
-				INFOPLIST_KEY_KeyBrakeHostBundleIdentifier = "$(KEYBRAKE_APP_BUNDLE_IDENTIFIER)";
-				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
-				INFOPLIST_KEY_NSPrincipalClass = KeyBrakeSettingsPane;
+				INFOPLIST_FILE = "SupportingFiles/KeyBrakePreferencePane-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.realitygood.KeyBrake.PreferencePane;
 				PRODUCT_BUNDLE_PACKAGE_TYPE = BNDL;
+				PRODUCT_MODULE_NAME = KeyBrakePreferencePane;
 				PRODUCT_NAME = KeyBrake;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = prefPane;
@@ -756,18 +801,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = KeyBrake;
-				INFOPLIST_KEY_CFBundleName = KeyBrake;
-				INFOPLIST_KEY_KeyBrakeHostBundleIdentifier = "$(KEYBRAKE_APP_BUNDLE_IDENTIFIER)";
-				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
-				INFOPLIST_KEY_NSPrincipalClass = KeyBrakeSettingsPane;
+				INFOPLIST_FILE = "SupportingFiles/KeyBrakePreferencePane-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.realitygood.KeyBrake.PreferencePane;
 				PRODUCT_BUNDLE_PACKAGE_TYPE = BNDL;
+				PRODUCT_MODULE_NAME = KeyBrakePreferencePane;
 				PRODUCT_NAME = KeyBrake;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = prefPane;

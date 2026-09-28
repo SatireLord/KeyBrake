@@ -13,6 +13,7 @@ public actor EmergencyCoordinator {
     private let sharingController: SharingServiceController?
     private var latestIncident: IncidentRecord?
     private var activeMutationID: UUID?
+    private var recoveryStoreHydrationVerified = false
 
     public init(
         recoveryStore: RecoveryStore,
@@ -63,6 +64,7 @@ public actor EmergencyCoordinator {
     public func latest() -> IncidentRecord? { latestIncident }
     public func configuredTargets() -> [TargetDefinition] { targetDefinitions }
     public func recoverySnapshot() -> RecoverySnapshot? { try? recoveryStore.load() }
+    public func hasVerifiedRecoveryStoreHydration() -> Bool { recoveryStoreHydrationVerified }
 
     public func replaceTargetDefinitions(_ definitions: [TargetDefinition]) {
         targetDefinitions = definitions.filter { definition in
@@ -77,8 +79,10 @@ public actor EmergencyCoordinator {
     }
 
     public func recoverUnresolvedStateAtLaunch() -> RecoverySnapshot? {
+        recoveryStoreHydrationVerified = false
         do {
             let snapshot = try recoveryStore.load()
+            recoveryStoreHydrationVerified = true
             if snapshot != nil { operationalState = .recoveryRequired }
             return snapshot
         } catch {
@@ -379,6 +383,9 @@ public actor EmergencyCoordinator {
             return await conflictIncident(action: "Revoke App Access…", detail: "Another KeyBrake state-changing operation is still in flight")
         }
         defer { endMutation(mutationID) }
+        guard recoveryStoreHydrationVerified else {
+            return await conflictIncident(action: "Revoke App Access…", detail: "Privacy reset is blocked until recovery-store hydration succeeds")
+        }
         guard let configuredTarget = targetDefinitions.first(where: { $0.id == targetID }),
               configuredTarget.bundleIdentifier == bundleIdentifier,
               TargetRegistry.canEnroll(configuredTarget, applicationBundleIdentifier: bundleIdentifier, executableURL: configuredTarget.executableURL) else {
@@ -399,6 +406,9 @@ public actor EmergencyCoordinator {
             return await conflictIncident(action: "Reset Keyboard Access", detail: "Another KeyBrake state-changing operation is still in flight")
         }
         defer { endMutation(mutationID) }
+        guard recoveryStoreHydrationVerified else {
+            return await conflictIncident(action: "Reset Keyboard Access", detail: "Privacy reset is blocked until recovery-store hydration succeeds")
+        }
         guard let configuredTarget = targetDefinitions.first(where: { $0.id == target.id }),
               configuredTarget.bundleIdentifier == target.bundleIdentifier,
               configuredTarget.applicationURL == target.applicationURL,

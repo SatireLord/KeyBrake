@@ -1,3 +1,4 @@
+import Darwin
 import Foundation
 
 public enum KeyBrakeStorageError: Error, LocalizedError, Sendable {
@@ -70,11 +71,27 @@ public final class RecoveryStore: @unchecked Sendable {
     }
 
     public func load() throws -> RecoverySnapshot? {
-        guard fileManager.fileExists(atPath: recoveryURL.path) else { return nil }
+        do {
+            _ = try fileManager.attributesOfItem(atPath: recoveryURL.path)
+        } catch {
+            guard Self.isMissingRecoveryFile(error) else { throw error }
+            return nil
+        }
         let data = try Data(contentsOf: recoveryURL)
         let snapshot = try decoder.decode(RecoverySnapshot.self, from: data)
         guard snapshot.schemaVersion == 1 else { throw KeyBrakeStorageError.invalidSchema }
         return snapshot
+    }
+
+    private static func isMissingRecoveryFile(_ error: Error) -> Bool {
+        let nsError = error as NSError
+        if nsError.domain == NSCocoaErrorDomain {
+            return nsError.code == NSFileReadNoSuchFileError
+        }
+        if nsError.domain == NSPOSIXErrorDomain {
+            return nsError.code == ENOENT
+        }
+        return false
     }
 
     public func clear() throws {

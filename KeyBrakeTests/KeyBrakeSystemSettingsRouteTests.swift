@@ -99,13 +99,13 @@ final class KeyBrakeSystemSettingsRouteTests: XCTestCase {
         XCTAssertEqual(outcome, .failed(.keyboardRouteNotRegistered))
     }
 
-    func testHandoffRejectsMultipleRegisteredCopiesWithoutOpeningEither() {
+    func testHandoffRejectsPreferredAndNonpreferredRegisteredCopiesWithoutOpeningEither() {
         var openerCalled = false
         var outcome: KeyBrakeSystemSettingsHandoff.Outcome?
         let handoff = makeHandoff(
             registeredApplications: [
                 URL(fileURLWithPath: "/Applications/KeyBrake.app"),
-                URL(fileURLWithPath: "/Users/test/Applications/KeyBrake.app")
+                URL(fileURLWithPath: "/Volumes/External/KeyBrake.app")
             ],
             openRoute: { _, _, _ in openerCalled = true }
         )

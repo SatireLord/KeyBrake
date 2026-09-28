@@ -66,6 +66,20 @@ xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=m
 
 All verification remains local. No GitHub Actions, telemetry, remote logging, analytics, or network dependency is part of the runtime.
 
+After building the app, run `scripts/test_keybrake_preference_pane_install.sh /path/to/KeyBrake.app` to verify the per-user pane installer in isolated temporary homes. The test never installs into the current user's Library or opens System Settings.
+
+## Separate System Settings preference pane
+
+The app target builds and embeds a separate `KeyBrake.prefPane`; this pane is its own System Settings entry and does not add a control inside Apple's Keyboard or General page. Install `KeyBrake.app` separately, then install its embedded pane for the current user:
+
+```bash
+scripts/install_keybrake_preference_pane.sh /Applications/KeyBrake.app
+```
+
+The installer copies the pane to `~/Library/PreferencePanes/KeyBrake.prefPane`, checks the app and pane bundle identifiers plus the exact `keybrake` URL scheme, and preserves a previous matching pane in a hidden timestamped backup. It refuses an unrelated pane or a symlink at the destination, and it does not install the app bundle.
+
+The pane's Open Keyboard Settings button opens KeyBrake's existing Settings > Keyboard section without selecting an app or requesting a reset. KeyBrake's separate Reset Keyboard action remains limited to the selected app's `ListenEvent` and `PostEvent` permissions; it does not reset the physical keyboard or macOS Keyboard Accessibility settings. System Settings discovery and interaction on macOS 27 remain unverified on the current host; see [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md).
+
 ## License and security
 
 MIT License. See [`LICENSE`](LICENSE), [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).

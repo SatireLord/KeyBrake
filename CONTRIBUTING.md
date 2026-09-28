@@ -21,6 +21,8 @@ xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=m
 
 SwiftPM covers `KeyBrakeCore` and tests. The unsigned `.app` with the embedded helper is an Xcode product.
 
+The `KeyBrake` Xcode scheme also builds `KeyBrakePreferencePane` and embeds the `.prefPane` product. After an app build, run `scripts/test_keybrake_preference_pane_install.sh /path/to/KeyBrake.app`; this test exercises replacement, refusal, and URL-scheme checks under temporary homes without launching System Settings.
+
 ## Change rules
 
 - Keep emergency mutations behind the serialized `EmergencyCoordinator` actor.
