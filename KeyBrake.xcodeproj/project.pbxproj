@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		03D9219DA594417F1DAD4D4B /* HelperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138BDB543AFA816808891CA9 /* HelperService.swift */; };
 		0465DC3F0DA41A9BAE9CBF40 /* ProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E5CFA312C1D10392B8FE48 /* ProcessController.swift */; };
-		2D5A6E374CB8B032AF61F280 /* org.realitygood.KeyBrake.Helper.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D88911992656A86343E1538 /* org.realitygood.KeyBrake.Helper.plist */; };
+		07BA868DFEDB71963D9A6744 /* org.realitygood.KeyBrake.Helper.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D88911992656A86343E1538 /* org.realitygood.KeyBrake.Helper.plist */; };
 		08741CF20ADC8618E1E8838B /* PrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA497ECA0AF489F04D53D75 /* PrivacyController.swift */; };
+		10F3899735E6E273A2E13FEF /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16E2C5513DAE3CA73508E656 /* PreferencePanes.framework */; };
 		2037DC0BD07C73C62844440A /* CommandRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C2D2AB115F941A7E37DAD /* CommandRunnerTests.swift */; };
 		29A5A51D92D328A6DCBEE2F2 /* RecoveryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A036935837FA9A107EC95CD8 /* RecoveryStore.swift */; };
 		36D80398668637F45F8A965A /* KeyBrakeOperationalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CF2AEC81E87E7390468A23 /* KeyBrakeOperationalState.swift */; };
@@ -40,6 +41,8 @@
 		B87727D9530E031F1177BBD2 /* IncidentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5D606595997D124D3D87CF /* IncidentStore.swift */; };
 		C359718A67D32966E987683C /* HelperAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ED4C1189C48F1DF948F4 /* HelperAuthorization.swift */; };
 		CC94F75964B62A05248D26E3 /* KeyBrakePrivilegedHelper in Resources */ = {isa = PBXBuildFile; fileRef = DC61E757405AF15D46376C14 /* KeyBrakePrivilegedHelper */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CCECF744E1977E5C7F4D14AE /* KeyBrakePreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E926D9FB57CAE831EAA73C1C /* KeyBrakePreferencePane.swift */; };
+		CDBE0C49349E902FEC6B23CA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBDB92F87181C7DCBAB29EF /* SwiftUI.framework */; };
 		D277755403CD6475E7C590BC /* KeyBrakeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC34FB5A021A184749CB6A /* KeyBrakeApp.swift */; };
 		D5CF39E1B8029B56B404B573 /* NetworkControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC82847B12FD0A398CC206FC /* NetworkControllerTests.swift */; };
 		E5F1C62BD3A57382B1A0151B /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E4521D838E6DFF65A18F1A /* CommandRunner.swift */; };
@@ -88,7 +91,7 @@
 			dstPath = Contents/Library/LaunchDaemons;
 			dstSubfolderSpec = 1;
 			files = (
-				2D5A6E374CB8B032AF61F280 /* org.realitygood.KeyBrake.Helper.plist in CopyFiles */,
+				07BA868DFEDB71963D9A6744 /* org.realitygood.KeyBrake.Helper.plist in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +124,7 @@
 		09FFF9387FFC2E479278482A /* EmergencyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyCoordinator.swift; sourceTree = "<group>"; };
 		0DFC34FB5A021A184749CB6A /* KeyBrakeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBrakeApp.swift; sourceTree = "<group>"; };
 		138BDB543AFA816808891CA9 /* HelperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperService.swift; sourceTree = "<group>"; };
+		16E2C5513DAE3CA73508E656 /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
 		1AFCB27E771A443CA34A411B /* KeyBrakeCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeyBrakeCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A082B66DA1B54383798096 /* IncidentLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncidentLogView.swift; sourceTree = "<group>"; };
 		36400172923336CBC281BF06 /* HelperAuthorizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperAuthorizationTests.swift; sourceTree = "<group>"; };
@@ -136,7 +140,9 @@
 		533CCA620FADCD9F4436EE09 /* FeatureContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureContract.swift; sourceTree = "<group>"; };
 		540EF044F5208B5202B5F701 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		6CA88146C834675167736A3D /* EmergencyCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyCoordinatorTests.swift; sourceTree = "<group>"; };
+		71FA2C05C5B877C3A6B09FD7 /* KeyBrakePreferencePane.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyBrakePreferencePane.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		880A385883EF32958B01485A /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		8CBDB92F87181C7DCBAB29EF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		8D88911992656A86343E1538 /* org.realitygood.KeyBrake.Helper.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = org.realitygood.KeyBrake.Helper.plist; sourceTree = "<group>"; };
 		91212A17B2940ABBF305C4B0 /* TargetRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetRegistry.swift; sourceTree = "<group>"; };
 		950F8F71A6C0B0EFA394D6D9 /* KeyBrakeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyBrakeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +163,7 @@
 		DD5D606595997D124D3D87CF /* IncidentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncidentStore.swift; sourceTree = "<group>"; };
 		E0D645A0CA823E29FCF5107F /* FeatureContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureContractTests.swift; sourceTree = "<group>"; };
 		E65B29591CAED502C951F8B5 /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
+		E926D9FB57CAE831EAA73C1C /* KeyBrakePreferencePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBrakePreferencePane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,9 +191,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		797DD03B0D5542762F033028 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10F3899735E6E273A2E13FEF /* PreferencePanes.framework in Frameworks */,
+				CDBE0C49349E902FEC6B23CA /* SwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03CFE9D50E81742C97BD5514 /* KeyBrakePreferencePane */ = {
+			isa = PBXGroup;
+			children = (
+				E926D9FB57CAE831EAA73C1C /* KeyBrakePreferencePane.swift */,
+			);
+			path = KeyBrakePreferencePane;
+			sourceTree = "<group>";
+		};
 		128FCA71F88C420BBB32902A /* KeyBrakePrivilegedHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,9 +228,11 @@
 			children = (
 				D74ED0B8D067C906D76C7E7E /* KeyBrake */,
 				7849487B4DCFF332DE4A166F /* KeyBrakeCore */,
+				03CFE9D50E81742C97BD5514 /* KeyBrakePreferencePane */,
 				128FCA71F88C420BBB32902A /* KeyBrakePrivilegedHelper */,
 				4E74F3B84216D60A8DD37207 /* KeyBrakeTests */,
 				77D04833F23F1E12F9AE96E7 /* Resources */,
+				A7F73BC98A4BB25B268E2A6A /* Frameworks */,
 				B67A50DAD29A4639F026002A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -277,11 +303,21 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		A7F73BC98A4BB25B268E2A6A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				16E2C5513DAE3CA73508E656 /* PreferencePanes.framework */,
+				8CBDB92F87181C7DCBAB29EF /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B67A50DAD29A4639F026002A /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				3CEC3DFEBEF14DE4CED0C45B /* KeyBrake.app */,
 				1AFCB27E771A443CA34A411B /* KeyBrakeCore.framework */,
+				71FA2C05C5B877C3A6B09FD7 /* KeyBrakePreferencePane.bundle */,
 				DC61E757405AF15D46376C14 /* KeyBrakePrivilegedHelper */,
 				950F8F71A6C0B0EFA394D6D9 /* KeyBrakeTests.xctest */,
 			);
@@ -379,6 +415,24 @@
 			productReference = 950F8F71A6C0B0EFA394D6D9 /* KeyBrakeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		CB5533B470BB23ABAC71EFD3 /* KeyBrakePreferencePane */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE33C31F661F14B5B0A4C8EB /* Build configuration list for PBXNativeTarget "KeyBrakePreferencePane" */;
+			buildPhases = (
+				6B3E72193AF930F0303E5F1D /* Sources */,
+				797DD03B0D5542762F033028 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KeyBrakePreferencePane;
+			packageProductDependencies = (
+			);
+			productName = KeyBrakePreferencePane;
+			productReference = 71FA2C05C5B877C3A6B09FD7 /* KeyBrakePreferencePane.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -404,6 +458,10 @@
 						DevelopmentTeam = "";
 						ProvisioningStyle = Manual;
 					};
+					CB5533B470BB23ABAC71EFD3 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
 				};
 			};
 			buildConfigurationList = 647755D8630FF5F9F8BE9133 /* Build configuration list for PBXProject "KeyBrake" */;
@@ -422,6 +480,7 @@
 			targets = (
 				1CEDC4F53ABD9EEF028A921E /* KeyBrake */,
 				6F53CF0AF04C6BF582DCE62F /* KeyBrakeCore */,
+				CB5533B470BB23ABAC71EFD3 /* KeyBrakePreferencePane */,
 				10B22632D7F3FE90D00B0226 /* KeyBrakePrivilegedHelper */,
 				C2C652941DA3D8D402C74938 /* KeyBrakeTests */,
 			);
@@ -441,6 +500,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6B3E72193AF930F0303E5F1D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCECF744E1977E5C7F4D14AE /* KeyBrakePreferencePane.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B5CA1EB9A77836DF1C3075A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -642,6 +709,48 @@
 			};
 			name = Debug;
 		};
+		8190864D821C65CEA06EAF0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KeyBrake;
+				INFOPLIST_KEY_CFBundleName = KeyBrake;
+				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
+				INFOPLIST_KEY_NSPrincipalClass = KeyBrakeSettingsPane;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.realitygood.KeyBrake.PreferencePane;
+				PRODUCT_BUNDLE_PACKAGE_TYPE = BNDL;
+				PRODUCT_NAME = KeyBrake;
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Debug;
+		};
+		8E724E740A05C0DDAE636EA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KeyBrake;
+				INFOPLIST_KEY_CFBundleName = KeyBrake;
+				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
+				INFOPLIST_KEY_NSPrincipalClass = KeyBrakeSettingsPane;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.realitygood.KeyBrake.PreferencePane;
+				PRODUCT_BUNDLE_PACKAGE_TYPE = BNDL;
+				PRODUCT_NAME = KeyBrake;
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Release;
+		};
 		A97754DAB442614570298D94 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -839,6 +948,15 @@
 			buildConfigurations = (
 				5278A5462DB1F093E1C1F441 /* Debug */,
 				A97754DAB442614570298D94 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CE33C31F661F14B5B0A4C8EB /* Build configuration list for PBXNativeTarget "KeyBrakePreferencePane" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8190864D821C65CEA06EAF0C /* Debug */,
+				8E724E740A05C0DDAE636EA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -48,6 +48,24 @@ targets:
       INFOPLIST_FILE: SupportingFiles/Info.plist
       CODE_ENTITLEMENTS: SupportingFiles/KeyBrake.entitlements
       LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
+  KeyBrakePreferencePane:
+    type: bundle
+    platform: macOS
+    sources:
+      - path: KeyBrakePreferencePane
+    dependencies:
+      - sdk: PreferencePanes.framework
+      - sdk: SwiftUI.framework
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake.PreferencePane
+      PRODUCT_NAME: KeyBrake
+      WRAPPER_EXTENSION: prefPane
+      PRODUCT_BUNDLE_PACKAGE_TYPE: BNDL
+      GENERATE_INFOPLIST_FILE: YES
+      INFOPLIST_KEY_CFBundleDisplayName: KeyBrake
+      INFOPLIST_KEY_CFBundleName: KeyBrake
+      INFOPLIST_KEY_NSPrincipalClass: KeyBrakeSettingsPane
+      INFOPLIST_KEY_LSMinimumSystemVersion: "14.0"
   KeyBrakePrivilegedHelper:
     type: tool
     platform: macOS

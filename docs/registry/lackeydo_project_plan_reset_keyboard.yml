@@ -1,10 +1,10 @@
 project_plan:
-  objective: "Add a Reset Keyboard action to KeyBrake Settings that asks macOS to reset the selected configured application's keyboard-input privacy decisions."
+  objective: "Add a separate KeyBrake Preference Pane entry to macOS System Settings; first prove that the pane installs, appears, and opens, then connect it to KeyBrake's existing selected-app keyboard-access reset."
   scope_preserved: true
   receipt:
     schema: "agent-cache.lackeydo.receipt.v1"
     receipt_id: "keybrake-reset-keyboard-20260927"
-    status: "implementation-and-docs-pushed; visual-proof-blocked"
+    status: "prior in-app reset delivered; standalone pane built and installed; System Settings discovery unverified; app handoff gated"
     submitted_by: "Codex"
     submitted_at: "2026-09-27T22:34:10-07:00"
     task_identity:
@@ -14,10 +14,10 @@ project_plan:
     repository_identity:
       repo_root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "3acbfe465fad3d583006a407ca782d0870bcb36e"
-      tree: "3bfe159c3cdaf2fad7e00f8cd0ffd4578322ac89"
+      head: "5fb20d752511b674603778e1e07277b029e419a1"
+      tree: "d05e96931e49c625f183690e93d55faede5c4333"
       dirty_state: "dirty-preserved"
-      last_updated_at: "2026-09-28T02:46:00-07:00"
+      last_updated_at: "2026-09-28T05:23:00-07:00"
     claims:
       - claim_id: "R001"
         claim_class: "REQUIREMENT"
@@ -127,6 +127,60 @@ project_plan:
             source_coordinate: "CodeGraph status and query against the explicit KeyBrake path"
             placement: "not_applicable"
             captured_at: "not_applicable"
+      - claim_id: "R006"
+        claim_class: "REQUIREMENT"
+        claim: "Add a distinct KeyBrake preference pane that appears and opens in macOS System Settings; do not claim insertion into Apple's built-in Keyboard or General pane."
+        evidence_type: "runtime"
+        acceptance_condition: "A built .prefPane bundle installs in the current user's PreferencePanes directory, System Settings discovers it, and its pane opens on a supported macOS version."
+        decision: "selected by the latest user correction; the separate-pane route is the requested System Settings presence."
+        proves: "A distinct KeyBrake pane is discoverable and openable in System Settings."
+        does_not_prove: "Insertion into an Apple-owned settings pane, or compatibility with untested macOS versions."
+        visual_receipt:
+          required: "true"
+          status: "blocked-safe-system-settings-launch"
+          path: "not-created"
+          capture_receipt: "not-created"
+          sha256: "not_applicable"
+          raw_capture_path: "not-created"
+          raw_capture_sha256: "not_applicable"
+          annotated_review_path: "not-created"
+          annotated_review_sha256: "not_applicable"
+          annotation:
+            required: "true"
+            visible_on_image: "unverified"
+            claim_id: "R006"
+            proves: "KeyBrake has a separate visible pane in macOS System Settings."
+            does_not_prove: "Insertion into Apple's Keyboard or General pane, or the reset action's behavior."
+            source_coordinate: "KeyBrakePreferencePane/KeyBrakePreferencePane.swift"
+            placement: "not_applicable"
+            captured_at: "not_applicable"
+      - claim_id: "R007"
+        claim_class: "REQUIREMENT"
+        claim: "After R006 runtime proof, connect the pane to KeyBrake's existing Keyboard settings and selected-app TCC reset flow."
+        evidence_type: "source-and-interaction"
+        acceptance_condition: "The pane opens KeyBrake's Keyboard settings through an app URL route; KeyBrake continues to reset only ListenEvent and PostEvent for the explicitly selected configured app, and the UI labels that scope accurately."
+        decision: "selected as the second milestone; no duplicate TCC implementation is permitted."
+        proves: "The pane launches the existing in-app settings and preserves the selected-app reset behavior."
+        does_not_prove: "Changing global macOS Keyboard Accessibility settings."
+        visual_receipt:
+          required: "false"
+          status: "pending-interaction-proof"
+          path: "not_applicable"
+          capture_receipt: "not_applicable"
+          sha256: "not_applicable"
+          raw_capture_path: "not_applicable"
+          raw_capture_sha256: "not_applicable"
+          annotated_review_path: "not_applicable"
+          annotated_review_sha256: "not_applicable"
+          annotation:
+            required: "false"
+            visible_on_image: "false"
+            claim_id: "R007"
+            proves: "The pane-to-app settings route and source-backed TCC service scope."
+            does_not_prove: "Global Keyboard Accessibility changes."
+            source_coordinate: "KeyBrake/App/KeyBrakeApp.swift; KeyBrakeCore/KeyBrakeSystemSettingsRoute.swift"
+            placement: "not_applicable"
+            captured_at: "not_applicable"
   write_set:
     rows:
       - path: "docs/registry/lackeydo_project_plan_reset_keyboard.yml"
@@ -169,8 +223,8 @@ project_plan:
         owner: "Verification ledger"
         intended_change: "Append the feature's source, focused proof, runtime, visual, and screenshot identity without rewriting prior receipts."
         reason: "The repository stores historical verification and SHA anchors in this document."
-        proof: "UI-112 section matches source and build/test receipts and records the runtime/visual boundary."
-        status: "implemented"
+        proof: "UI-112 and UI-113 sections record the app reset scope, separate pane package/build/install receipts, runtime blocker, and explicit boundary on modern System Settings support."
+        status: "updated; pane discovery and opening remain unverified"
       - path: "docs/proofs/keybrake-reset-keyboard.png"
         owner: "SendMePics visual proof"
         intended_change: "Create one annotated proof image for the implemented Reset Keyboard settings state after runtime capture."
@@ -183,6 +237,42 @@ project_plan:
         reason: "SendMePics requires one raw source capture and one visibly annotated review PNG for each visual claim."
         proof: "Raw SHA-256, dimensions, capture receipt, app/process, display, and timestamp if safe staging becomes available."
         status: "blocked; no raw image exists"
+      - path: "project.yml"
+        owner: "XcodeGen project definition"
+        intended_change: "Add a standalone macOS KeyBrakePreferencePane bundle target with the prefPane wrapper and principal-class metadata."
+        reason: "System Settings loads separate NSPreferencePane bundles; the current project has only the KeyBrake app target."
+        proof: "XcodeGen target inspection, generated project comparison, and pane target build."
+        status: "implemented; parsed XcodeGen target and generated project"
+      - path: "KeyBrake.xcodeproj/project.pbxproj"
+        owner: "Generated Xcode project"
+        intended_change: "Add the KeyBrakePreferencePane build target from project.yml."
+        reason: "XcodeGen must materialize the standalone prefPane bundle target."
+        proof: "B4 snapshot SHA, scoped generated-project diff, and successful pane target build."
+        status: "implemented; generated-project diff inspected"
+      - path: "KeyBrakePreferencePane/KeyBrakePreferencePane.swift"
+        owner: "KeyBrake standalone preference pane"
+        intended_change: "Implement the minimum NSPreferencePane subclass and a compact SwiftUI pane view; keep reset action wiring out until R006 is proven."
+        reason: "The pane must first be independently discoverable and openable in System Settings."
+        proof: "Swift compilation and built bundle principal-class validation passed; System Settings runtime discovery remains unverified."
+        status: "implemented; bundle built and installed"
+      - path: "KeyBrake/App/KeyBrakeApp.swift"
+        owner: "KeyBrake app settings URL route"
+        intended_change: "After R006 passes, handle the pane's keybrake://settings/keyboard URL by opening the existing settings window and Keyboard section."
+        reason: "The pane should reuse KeyBrake's existing settings and reset implementation."
+        proof: "Focused URL route test and interaction evidence that the route opens the app's Keyboard settings."
+        status: "planned; gated on R006"
+      - path: "KeyBrakeCore/KeyBrakeSystemSettingsRoute.swift"
+        owner: "KeyBrake app and pane route contract"
+        intended_change: "After R006 passes, define the one shared URL scheme and Keyboard settings route for the app and pane."
+        reason: "A shared route avoids duplicated URL strings across the app and pane."
+        proof: "Focused route parsing test and both targets compile against the shared symbol."
+        status: "planned; gated on R006"
+      - path: "SupportingFiles/Info.plist"
+        owner: "KeyBrake application URL registration"
+        intended_change: "After R006 passes, register the app URL scheme needed for the preference pane's handoff."
+        reason: "macOS must resolve the pane's route to the installed KeyBrake app."
+        proof: "Built app Info.plist contains the scheme and `open keybrake://settings/keyboard` resolves to KeyBrake."
+        status: "planned; gated on R006"
   checksum_map:
     manifests_consulted:
       - path: "docs/regression-checksums.json"
@@ -211,14 +301,35 @@ project_plan:
         evidence: "Agent-Cache bootstrap checksum status; target manifest inventory; exact SettingsView marker search."
         authorization: "No checksum mutation authorized or required."
         status: "confirmed-no-applicable-checksum"
+      - checksum_id: "no-applicable-preference-pane-boundary"
+        manifest: "KeyBrake checksum manifest search and Agent-Cache consumer-path contract"
+        protected_path: "project.yml; KeyBrakePreferencePane/KeyBrakePreferencePane.swift"
+        span: "No registered boundary or marker found."
+        current_identity: "Not yet edited; exact baseline will be captured before generated Xcode project replacement."
+        planned_touch: "Add a separate bundle target and new source; regenerate only the project artifact after B4 physical comparison."
+        route: "validate"
+        why_exists_here: "No KeyBrake checksum registry or protected span applies; do not create a registry row or refresh historical verification anchors without authorization."
+        evidence: "Agent-Cache bootstrap checksum status and exact KeyBrake manifest inventory."
+        authorization: "No checksum mutation authorized or required."
+        status: "confirmed-no-applicable-checksum"
+    physical_comparison:
+      route: "Agent-Cache B4 snapshot via physical_code_compare_guard.py"
+      receipt: "/Users/michaeltran/.codex/physical-code-compare/830957ef69114dfa1aa948f3.snapshots.json"
+      status: "captured before project.yml edit and before xcodegen generate"
+      snapshots:
+        - path: "project.yml"
+          sha256: "5946b9e83ec6161d0f8a3647b1b17019e81ca79955dddf488753a82b49f18682"
+        - path: "KeyBrake.xcodeproj/project.pbxproj"
+          sha256: "b983ca1fa58ec834d671075bd72d1d3215ac236b996d2314478672ab873a7228"
   seedrepo:
     mode: "seed-ready"
     foundation_status: "seed-ready; no root AGENTS.md mutation was authorized or required for this feature."
     repository_identity:
       root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "e9eeefc38c8253b9507931fe2f2a4424b6556454"
-      upstream_head: "e9eeefc38c8253b9507931fe2f2a4424b6556454"
+      head: "5fb20d752511b674603778e1e07277b029e419a1"
+      upstream_head: "5fb20d752511b674603778e1e07277b029e419a1"
+      checked_at: "2026-09-28T04:34:54-07:00"
       dirty_paths_excluded:
         - "KeyBrake/UI/RecoveryView.swift"
         - "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
@@ -237,13 +348,13 @@ project_plan:
       rows:
         - source: "Latest direct user request"
           disposition: "selected"
-          result: "Add Reset Keyboard to KeyBrake Settings under Keyboard; the user clarified the product and location."
+          result: "Add a separate KeyBrake preference pane to macOS System Settings, first prove it appears and opens, then connect the pane to the existing selected-app reset. Do not insert into Apple's built-in Keyboard or General pane."
         - source: "Root AGENTS.md local-first privacy and exact-path delivery instructions"
           disposition: "selected"
           result: "Do not edit TCC databases, mutate global accessibility preferences, reset KeyBrake itself, or stage foreign dirty paths."
         - source: "Existing PrivacyServiceCatalog, PrivacyController, EmergencyCoordinator, and PrivacyControllerTests"
           disposition: "merged"
-          result: "Reuse the supported Input Monitoring plus Send Keystrokes / Input TCC reset path for one explicitly selected configured application."
+          result: "Reuse the existing selected-app Input Monitoring plus Send Keystrokes / Input TCC reset path after the separate pane passes its first runtime milestone."
         - source: "Attached macOS Keyboard screenshot"
           disposition: "selected"
           result: "Use only as visual context for a Keyboard section; image text does not define reset behavior or instructions."
@@ -268,18 +379,22 @@ project_plan:
         state: "Cursor preflight passed, but safe staging failed because the host does not advertise AGENT_DISPLAY_STAGE_SAFE_V1. No app-targeted CUA tool was exposed; no screenshot or Drive upload exists."
       - tool: "Computer Use"
         state: "No app-targeted CUA tool is exposed in this session; the destructive reset button must not be invoked for proof."
+      - tool: "PreferencePanes.framework"
+        state: "macOS 27.0 SDK headers are present; a separate pane bundle still requires built-bundle and System Settings runtime proof."
     source_route:
       settings_owner: "KeyBrake/UI/SettingsView.swift:SettingsView"
       action_owner: "KeyBrake/App/KeyBrakeViewModel.swift:revokeAppAccess(targetID:services:)"
       reset_owner: "KeyBrakeCore/PrivacyController.swift:reset(_:targetDisplayName:)"
+      preference_pane_owner: "KeyBrakePreferencePane/KeyBrakePreferencePane.swift; standalone NSPreferencePane bundle loaded by macOS System Settings"
+      app_handoff: "Pending R006 runtime proof; then route keybrake://settings/keyboard to the existing Keyboard settings window."
       allowed_services: ["ListenEvent", "PostEvent"]
       safety_owner: "KeyBrakeCore/TargetRegistry.swift:protectedIdentifiers; KeyBrakeCore/PrivacyController.swift self-target refusal"
-      runtime_route: "--keybrake-settings opens the Settings window; safe Agent Display staging was refused, so no runtime or accessibility capture is claimed."
+      runtime_route: "First build and install the separate pane, then prove System Settings discovery before adding the app handoff. Apple's built-in Keyboard and General panes remain out of scope."
     deferred_foundation: "Keep target AGENTS.md unchanged because this request authorizes product code and proof, not a new repo policy layer."
   agent_display:
     task_id: "01a0e65b-adc4-7b23-ae91-dc737da705df"
-    selected_logical_id: "keybrake-reset-keyboard-20260928"
-    use: "task display created, preflight passed, safe staging refused, app stopped, task display released"
+    selected_logical_id: "keybrake-system-settings-pane-20260928"
+    use: "task-owned pane display created, preflight passed, and this task participant released; no System Settings process launched"
     existing_display_inspection:
       logical_id: "virtual-16x9"
       provider_id: "owned-cgvirtualdisplay"
@@ -292,7 +407,7 @@ project_plan:
     idle_display_search:
       command: "displayctl orphan-reaper displays list"
       result: "displayCandidates is empty; previously observed iso-DCDB9FAB was released before it could be reused."
-    new_display:
+    previous_app_capture_display:
       logical_id: "keybrake-reset-keyboard-20260928"
       display_name: "KeyBrake Reset Keyboard"
       resolution: "1920x1080"
@@ -308,6 +423,47 @@ project_plan:
       preflight: "passed for task display ID 18"
       stage_result: "displayctl stage --app 4618 --position above --preset 16:9 --no-activate --reveal-notification KeyBrake was refused because AGENT_DISPLAY_STAGE_SAFE_V1 is not advertised. displayctl isolate launched PID 4618, but inspect-windows showed window 4849 at 620x592 points on the physical display and is-isolated=false. route-window was refused; isolate exited 4 with sandbox_extension_issue_file_to_process: Operation not permitted. PID 4618 was terminated, and task display ID 18 was released."
       shared_display_follow_up: "After release/ensure, display inventory showed system display ID 26 under virtual-16x9; the earlier Lyren Drag Dry Trace window was absent. Cause is unknown. Do not issue further shared-display changes in this task."
+    system_settings_pane_display:
+      use: "created"
+      logical_id: "keybrake-system-settings-pane-20260928"
+      created_display_id: "27"
+      display_id: "27"
+      display_name: "KeyBrake System Settings Pane"
+      provider_id: "owned-cgvirtualdisplay"
+      lease_owner_id: "codex-01a0e65b-adc4-7b23-ae91-dc737da705df"
+      lease_id: "lease-v1.YW50aWdyYXZpdHktZGlzcGxheWN0bA==.Y29kZXgtMDFhMGU2NWItYWRjNC03YjIzLWFlOTEtZGM3MzdkYTcwNWRm.a2V5YnJha2Utc3lzdGVtLXNldHRpbmdzLXBhbmUtMjAyNjA5Mjg="
+      created_by_task_id: "01a0e65b-adc4-7b23-ae91-dc737da705df"
+      current_task_id: "01a0e65b-adc4-7b23-ae91-dc737da705df"
+      participants:
+        - task_id: "01a0e65b-adc4-7b23-ae91-dc737da705df"
+          status: "complete"
+      shared_group_record: "not_shared"
+      display_created_at_utc: "unknown; ensure response did not include a creation timestamp"
+      creation_command: "CODEX_THREAD_ID=01a0e65b-adc4-7b23-ae91-dc737da705df displayctl ensure --logical-id keybrake-system-settings-pane-20260928 --name \"KeyBrake System Settings Pane\" --width 1920 --height 1080 --owner codex-01a0e65b-adc4-7b23-ae91-dc737da705df --refresh 60 --ttl 900"
+      current_task_started_at_utc: "unknown; ensure response did not include a participant timestamp"
+      last_verified_at_utc: "2026-09-28T12:08:10Z"
+      ttl_seconds: 900
+      lease_expires_at_utc: "unknown; ensure response did not include expiry"
+      start_command: "CODEX_THREAD_ID=01a0e65b-adc4-7b23-ae91-dc737da705df displayctl ensure --logical-id keybrake-system-settings-pane-20260928 --name \"KeyBrake System Settings Pane\" --width 1920 --height 1080 --owner codex-01a0e65b-adc4-7b23-ae91-dc737da705df --refresh 60 --ttl 900"
+      inspection_command: "displayctl capabilities; displayctl orphan-reaper displays list; displayctl orphan-reaper windows list; displayctl inspect-windows; displayctl inspect --logical-id virtual-16x9; displayctl inspect --logical-id keybrake-reset-keyboard-20260928"
+      preflight: "pass; com.apple.systempreferences; keybrake-system-settings-pane-20260928; --skip-route; --require-existing-display; sentinel PID 43735"
+      release_command: "CODEX_THREAD_ID=01a0e65b-adc4-7b23-ae91-dc737da705df displayctl release --logical-id keybrake-system-settings-pane-20260928 --owner codex-01a0e65b-adc4-7b23-ae91-dc737da705df"
+      release_response: "status=succeeded; response initially included display ID 27, then displayctl inspect returned display_not_found; task-owned display was removed after this task's only participant completed"
+      released_at_utc: "unknown; release response did not include a timestamp"
+      launch_attempts:
+        - command: "open -n -g -a \"/System/Applications/System Settings.app\" \"$HOME/Library/PreferencePanes/KeyBrake.prefPane\""
+          result: "refused by /Users/michaeltran/bin/open because Launch Services could create an uncontained physical-Space window"
+        - command: "open -n -g -a \"/System/Applications/System Settings.app\""
+          result: "refused by /Users/michaeltran/bin/open because no app-supported AGENT_DISPLAY_REVEAL_NOTIFICATION was configured"
+      task_owned_system_settings_process: "not launched; the only observed System Settings process remains existing PID 39923 and was not touched"
+      task_window_containment: "not_applicable; no task-owned System Settings window exists"
+      computer_use_status: "no app-targeted CUA tool is exposed; preflight reports computer_use_standing=false"
+      capture_status: "not captured; the task display was empty and no System Settings pane opened"
+    next_safe_route:
+      status: "blocked after exact safe launch attempts"
+      method: "Resume only when System Settings can be launched into the task display through an app-supported reveal route or AGENT_DISPLAY_STAGE_SAFE_V1 becomes available; then route the exact task-owned PID with displayctl route-window --no-activate."
+      constraints: "Do not touch the existing System Settings process PID 39923, do not reuse virtual-16x9 with the BetterDisplay overlay, and do not capture unless inspection proves is-isolated=true."
+      fallback: "If a separate task-owned process or isolated window cannot be proven, stop visual capture and record the runtime claim unverified; continue source and build proof."
     computer_use:
       capability: "No app-targeted CUA tool is exposed; capture and accessibility inspection use Agent Display, and the reset action will not be invoked."
       interaction_status: "unverified; no app-targeted CUA tool was available, the app could not be safely staged, and the destructive reset action was not invoked."
@@ -344,6 +500,18 @@ project_plan:
       status: "blocked; implementation and source proof are delivered, but visual and Drive evidence are unavailable"
       proof: "The Agent Display host rejected safe staging because AGENT_DISPLAY_STAGE_SAFE_V1 is absent. No raw/annotated PNG, dimensions, feature LxW measurement, screenshot SHA, or Drive upload can be truthfully recorded."
       residual_risk: "Live visibility, measured feature bounds, interaction, screenshot identity, and Drive filing remain unverified; a shared virtual display changed to system ID 26 and the former Lyren window is absent from current inventory, with cause unknown."
+    - id: "R006"
+      requirement: "Install and prove a separate KeyBrake preference pane in macOS System Settings."
+      owner: "KeyBrakePreferencePane bundle target and per-user PreferencePanes installation"
+      status: "built_and_installed; discovery_and_opening_unverified"
+      proof: "The universal KeyBrake.prefPane target built on macOS 27.0, its Info.plist passed plutil with NSPrincipalClass=KeyBrakeSettingsPane and CFBundlePackageType=BNDL, mdls classified the install as com.apple.systempreference.prefpane, and the per-user installed copy matched the build. Safe System Settings launch was refused before a task-owned window existed."
+      residual_risk: "System Settings discovery and visible pane behavior remain unverified; Apple's current Preference Panes documentation describes System Preferences and does not establish macOS 27 System Settings support for this app-specific shortcut pane; no built-in Keyboard or General pane insertion is claimed."
+    - id: "R007"
+      requirement: "Connect the proven preference pane to the existing KeyBrake Keyboard settings and accurately scoped selected-app reset action."
+      owner: "KeyBrake app URL handler, shared route, and Keyboard settings label"
+      status: "gated on R006"
+      proof: "Compile both targets, test the shared URL route, verify the app opens its Keyboard settings, and retain the existing ListenEvent/PostEvent target scoping."
+      residual_risk: "The route must not be implemented before R006 runtime proof, and the pane must not duplicate or broaden the TCC reset."
   implementation_slices:
     - id: "S001"
       name: "SeedRepo inventory and CodeGraph route"
@@ -365,6 +533,26 @@ project_plan:
       files: ["exact S002/S003 owned paths", "Google Drive proof folder"]
       dependencies: ["S003", "final dirty-path audit", "live remote SHA check"]
       status: "implementation/docs pushed to open PR #1; screenshot/Drive filing blocked"
+    - id: "S005"
+      name: "Build the minimum standalone KeyBrake preference pane"
+      files: ["project.yml", "KeyBrake.xcodeproj/project.pbxproj", "KeyBrakePreferencePane/KeyBrakePreferencePane.swift"]
+      dependencies: ["B4 physical comparison snapshot", "existing macOS 27 PreferencePanes SDK headers", "XcodeGen target support"]
+      status: "built; no app handoff or reset controls added"
+    - id: "S006"
+      name: "Install, discover, open, and visually prove the pane in System Settings"
+      files: ["~/Library/PreferencePanes/KeyBrake.prefPane", "docs/proofs/keybrake-system-settings-pane.raw.png", "docs/proofs/keybrake-system-settings-pane.png"]
+      dependencies: ["S005", "task-owned Agent Display participant", "isolated task-launched System Settings process"]
+      status: "blocked; safe System Settings launch was refused before pane discovery could be checked; modern-host support is also not established by current Apple documentation"
+    - id: "S007"
+      name: "Route the pane to existing Keyboard settings after S006 passes"
+      files: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrakeCore/KeyBrakeSystemSettingsRoute.swift", "SupportingFiles/Info.plist", "KeyBrake/UI/SettingsView.swift"]
+      dependencies: ["S006 runtime proof"]
+      status: "gated on S006"
+    - id: "S008"
+      name: "Update capability and verification records, then deliver on the current PR"
+      files: ["docs/KEYBRAKE_CAPABILITY_MATRIX.md", "docs/KEYBRAKE_VERIFICATION.md", "docs/registry/lackeydo_project_plan_reset_keyboard.yml", "PR #1"]
+      dependencies: ["S005-S007 proof", "exact-path staging", "fresh remote SHA check"]
+      status: "partial; UI-113 records packaging and launch-gate evidence; live pane proof, app handoff, screenshot, and Drive receipt remain pending"
   guards: []
   tests:
     - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM --filter PrivacyControllerTests/testPrivacyResetUsesServiceAndBundleIdentifier"
@@ -375,11 +563,19 @@ project_plan:
       status: "passed on macOS 27.0 build 26A428 with Xcode 27.0; the KeyBrake target compiled and linked"
     - command: "xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' test CODE_SIGNING_ALLOWED=NO"
       status: "not run; the focused privacy reset test and unsigned macOS app build passed, so the wider Xcode test action was not needed for this bounded UI change"
+    - command: "xcodegen generate"
+      status: "passed after B4 snapshots of project.yml and KeyBrake.xcodeproj/project.pbxproj"
+    - command: "xcodebuild -project KeyBrake.xcodeproj -target KeyBrakePreferencePane build CODE_SIGNING_ALLOWED=NO"
+      status: "passed; universal macOS 27.0 bundle emitted at build/Debug/KeyBrake.prefPane; an earlier command with -derivedDataPath failed Xcode's -scheme usage requirement and was replaced with this target build"
+    - command: "plutil -lint build/Debug/KeyBrake.prefPane/Contents/Info.plist"
+      status: "passed; principal class is KeyBrakeSettingsPane and package type is BNDL"
+    - command: "diff -qr build/Debug/KeyBrake.prefPane ~/Library/PreferencePanes/KeyBrake.prefPane"
+      status: "passed; installed per-user pane is identical to the task-built bundle"
   deferred_items:
-    - "Live UI, accessibility, measured Keyboard-section LxW, raw and annotated screenshot identity, and Google Drive filing remain unproven because safe Agent Display staging is unavailable on this host."
+    - "Pane discovery/opening, app handoff, live accessibility, measured pane LxW, raw and annotated screenshot identity, and Google Drive filing remain unproven; the task pane bundle is built and installed, but the safe System Settings launch route is blocked."
   blockers:
-    - "Agent Display host does not advertise AGENT_DISPLAY_STAGE_SAFE_V1; displayctl stage refuses safe staging, and the Settings window remained on the physical display with is-isolated=false. Do not capture or interact until the host offers a safe staging route."
-    - "The attempted shared virtual-16x9 release/ensure sequence changed the current system display to ID 26, and the previously observed Lyren Drag Dry Trace window is absent from inventory; cause is unknown. Do not make further shared-display changes in this task."
+    - "System Settings runtime proof is blocked because /Users/michaeltran/bin/open refused the pane-document launch as an uncontained physical-Space window, then refused a background no-document launch without an app-supported AGENT_DISPLAY_REVEAL_NOTIFICATION. The host still lacks AGENT_DISPLAY_STAGE_SAFE_V1, and preflight reports computer_use_standing=false. Existing System Settings PID 39923 was left untouched."
+    - "The shared virtual-16x9 route remains excluded because its current display has a BetterDisplay overlay and old lease history; task display 27 is clean but empty because no supported System Settings launch path is available."
   resolved_blockers:
     - "The originally requested KeyBrake_OpenSource working directory is absent; the user's clarification identifies KeyBrake as the product, and /Users/michaeltran/AntiGravity/KeyBrake is the verified Git root used for this implementation."
     - "The app has no separate keyboard shortcut preference model; the new control uses the existing supported per-app keyboard-input TCC reset path and states that global Keyboard Accessibility settings stay unchanged."
@@ -390,11 +586,14 @@ project_plan:
     - [x] Confirm the only valid KeyBrake Git root, branch, HEAD, upstream, remote head, and two excluded dirty paths. status: complete
     - [x] Read the scoped root AGENTS.md, shared agent contract, SeedRepo, LackeyDo, Checksummation contract, and Preflight Harmony rule. status: complete
     - [x] Complete the SeedRepo root inventory, instruction synthesis, tool matrix, source route, and non-mutating seed-ready decision. status: complete
-    - [x] Resolve the settings location from the user's KeyBrake clarification and select the existing keyboard-input TCC reset path. status: resolved; the UI names the exact effects and unchanged global settings.
-    - [x] Implement Reset Keyboard in KeyBrake Settings > Keyboard, preserve global Keyboard Accessibility settings, and pass the focused TCC reset test plus macOS app build. status: complete
-    - [ ] Stage on the isolated display, measure the feature LxW, and capture labeled PNG proof. status: blocked; AGENT_DISPLAY_STAGE_SAFE_V1 is unavailable, and no screenshot or Drive file exists
-    - [x] Commit and push only task-owned implementation/docs to existing PR #1 on codex/keybrake-complete-implementation. status: commit 3acbfe465fad3d583006a407ca782d0870bcb36e is on origin and PR head matched at 2026-09-28T02:46:00-07:00
-    - [ ] File screenshot and GitHub metadata in the specified Drive folder. status: blocked; safe runtime capture is unavailable, and no screenshot or Drive file exists
+    - [x] Deliver the initial app-owned selected-app keyboard-input reset on PR #1; preserve it as historical work. status: commit 3acbfe465fad3d583006a407ca782d0870bcb36e is an ancestor of the current branch; current user correction supersedes its placement as the completion target.
+    - [x] Resolve current location: a separate KeyBrake preference pane in macOS System Settings, not an insertion into Apple's built-in Keyboard or General page. status: selected from the latest direct user request.
+    - [x] Build and validate the minimum KeyBrake.prefPane bundle after the B4 project snapshots. status: target build and Info.plist validation passed.
+    - [x] Install the exact task-built pane for the current user. status: installed copy matches the build; System Settings discovery/opening remains unverified.
+    - [ ] Prove System Settings discovers and opens the pane. status: blocked; the safe launch guard refused both launch forms, the stage-safe capability is absent, and the existing Settings process was preserved.
+    - [ ] Capture one isolated raw/annotated System Settings screenshot and record exact LxW plus proof hashes. status: blocked until a task-owned pane window passes is-isolated=true.
+    - [ ] Connect the pane to the existing Keyboard settings and selected-app reset after the pane discovery proof. status: gated on S006.
+    - [ ] Update docs, exact-path commit/push, verify current remote SHA, and file screenshot plus metadata in the specified Drive folder. status: pending; check Drive connector availability before claiming filing.
   delivery:
     branch: "codex/keybrake-complete-implementation"
     feature_commit_sha: "3acbfe465fad3d583006a407ca782d0870bcb36e"
@@ -402,8 +601,8 @@ project_plan:
     remote_branch_sha_at_verification: "3acbfe465fad3d583006a407ca782d0870bcb36e"
     remote_verified_at: "2026-09-28T02:46:00-07:00"
     pull_request: "https://github.com/SatireLord/KeyBrake/pull/1"
-    result: "Feature, capability row, verification notes, and task ledger were pushed; screenshot/Drive evidence remains blocked. A later closeout commit may update this ledger on the same branch."
+    result: "The earlier in-app selected-app reset and its documentation were delivered; the corrected System Settings pane milestone is active on the same PR."
   branch: "codex/keybrake-complete-implementation"
-  head: "3acbfe465fad3d583006a407ca782d0870bcb36e"
-  last_verified_at: "2026-09-28T02:46:00-07:00"
-  completion: "implementation-and-docs-pushed; visual-proof-and-Drive-blocked"
+  head: "5fb20d752511b674603778e1e07277b029e419a1"
+  last_verified_at: "2026-09-28T05:23:00-07:00"
+  completion: "pane-built-and-installed; System-Settings-runtime-proof-blocked; app-handoff-gated"
