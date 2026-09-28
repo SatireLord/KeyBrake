@@ -34,6 +34,41 @@ public final class RecoveryStore: @unchecked Sendable {
         try atomicWrite(snapshot, to: recoveryURL)
     }
 
+    @discardableResult
+    public func updateProgress(
+        in snapshot: inout RecoverySnapshot,
+        subsystem: RecoveryResourceSubsystem,
+        resourceID: String,
+        expectedDisplayName: String,
+        appliedEnabled: Bool? = nil,
+        observedEnabled: Bool?,
+        disposition: RecoveryResourceDisposition,
+        identityMatches: Bool? = nil,
+        observedIdentity: String? = nil
+    ) throws -> RecoveryResourceProgressUpdateResult {
+        var updatedSnapshot = snapshot
+        let result = updatedSnapshot.updateProgress(
+            subsystem: subsystem,
+            resourceID: resourceID,
+            expectedDisplayName: expectedDisplayName,
+            appliedEnabled: appliedEnabled,
+            observedEnabled: observedEnabled,
+            disposition: disposition,
+            identityMatches: identityMatches,
+            observedIdentity: observedIdentity
+        )
+
+        switch result {
+        case .notFound, .ambiguous:
+            return result
+        default:
+            updatedSnapshot.updatedAt = Date()
+            try save(updatedSnapshot)
+            snapshot = updatedSnapshot
+            return result
+        }
+    }
+
     public func load() throws -> RecoverySnapshot? {
         guard fileManager.fileExists(atPath: recoveryURL.path) else { return nil }
         let data = try Data(contentsOf: recoveryURL)

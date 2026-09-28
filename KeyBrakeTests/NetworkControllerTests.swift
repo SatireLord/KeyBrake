@@ -36,8 +36,18 @@ final class NetworkControllerTests: XCTestCase {
         let isolation = await controller.isolate(snapshot)
         XCTAssertTrue(isolation.contains { $0.targetID == "wifi" && $0.outcome == .succeeded })
         XCTAssertTrue(isolation.contains { $0.targetID == "ethernet" && $0.outcome == .alreadyInDesiredState })
-        let restoration = await controller.restore(snapshot)
-        XCTAssertTrue(restoration.contains { $0.targetID == "vpn" && $0.operationDescription.contains("VPN remains disconnected") && $0.outcome == .skipped })
+        let appliedSnapshot = snapshot.map { change -> NetworkChange in
+            var applied = change
+            if isolation.contains(where: { $0.targetID == change.id && ($0.outcome == .succeeded || $0.outcome == .alreadyInDesiredState) }) {
+                applied.appliedEnabled = false
+                applied.currentEnabled = false
+            }
+            return applied
+        }
+        let restoration = await controller.restore(appliedSnapshot)
+        XCTAssertTrue(restoration.contains { $0.targetID == "vpn" && $0.operationDescription.contains("VPN remains unchanged") && $0.outcome == .skipped })
+        let restoredVPN = await controller.inventory().first { $0.id == "vpn" }
+        XCTAssertEqual(restoredVPN?.enabled, false)
     }
 
     func testNetworkSandboxConnectedFixtureModelsWiFiVPNAndLoopbackBoundary() async {
@@ -64,10 +74,21 @@ final class NetworkControllerTests: XCTestCase {
         XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-usb-ethernet" })?.outcome, .alreadyInDesiredState)
         XCTAssertEqual(isolation.first(where: { $0.targetID == "network-service-work-vpn" })?.outcome, .succeeded)
 
-        let restoration = await controller.restore(snapshot)
+        let appliedChanges = snapshot.map { change -> NetworkChange in
+            var updated = change
+            let isolationResult = isolation.first { $0.subsystem == "network" && $0.targetID == change.id }
+            if isolationResult?.outcome == .succeeded || isolationResult?.outcome == .alreadyInDesiredState {
+                updated.appliedEnabled = false
+                updated.currentEnabled = false
+            }
+            return updated
+        }
+        let restoration = await controller.restore(appliedChanges)
         XCTAssertEqual(restoration.first(where: { $0.targetID == "network-service-wi-fi" })?.outcome, .succeeded)
         XCTAssertEqual(restoration.first(where: { $0.targetID == "network-service-work-vpn" })?.outcome, .skipped)
-        XCTAssertTrue(restoration.first(where: { $0.targetID == "network-service-work-vpn" })?.operationDescription.contains("VPN remains disconnected") == true)
+        XCTAssertTrue(restoration.first(where: { $0.targetID == "network-service-work-vpn" })?.operationDescription.contains("VPN remains unchanged") == true)
+        let restoredVPN = await controller.inventory().first { $0.id == "network-service-work-vpn" }
+        XCTAssertEqual(restoredVPN?.enabled, false)
     }
 
     func testNetworkSandboxFailureFixtureReportsDeterministicWiFiAndVPNFailures() async {
@@ -100,7 +121,10 @@ final class NetworkControllerTests: XCTestCase {
     }
 
     func testSystemNetworkIsolationUsesHelperAndVerifiesDisabledState() async {
-        let runner = RecordingCommandRunner(results: [.success(commandResult(output: "Network service is disabled.\n"))])
+        let runner = RecordingCommandRunner(results: [
+            .success(commandResult(output: "Yes\n")),
+            .success(commandResult(output: "No\n"))
+        ])
         let helper = RecordingHelper()
         let controller = SystemNetworkController(commandRunner: runner, helper: helper)
         let changes = [NetworkChange(id: "network-service-wi-fi", displayName: "Wi-Fi", device: "en0", originalEnabled: true, kind: NetworkServiceKind.wifi.rawValue)]

@@ -61,7 +61,7 @@ public struct SystemSharingServiceAdapter: SharingServiceAdapter {
         }
         let text = String(decoding: result.standardOutput, as: UTF8.self)
         let state = Self.parseEnabledState(text)
-        return SharingServiceCapability(id: identifier, displayName: displayName, supported: result.terminationStatus == 0 && state != nil, enabled: state ?? false)
+        return SharingServiceCapability(id: identifier, displayName: displayName, supported: result.terminationStatus == 0 && !result.timedOut && state != nil, enabled: state ?? false)
     }
 
     static func parseEnabledState(_ output: String) -> Bool? {
@@ -77,6 +77,13 @@ public struct SystemSharingServiceAdapter: SharingServiceAdapter {
 
     public func disable(expectedState: SharingServiceState) async -> OperationStepResult {
         guard expectedState.supported else { return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", operationDescription: "Capability unsupported on this macOS version", outcome: .unsupported) }
+        let current = await detect()
+        guard current.supported else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", operationDescription: "Sharing capability became unavailable before isolation", outcome: .unsupported)
+        }
+        guard current.enabled == expectedState.enabled else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", observedPreState: current.enabled ? "enabled" : "disabled", observedPostState: current.enabled ? "enabled" : "disabled", operationDescription: "Sharing state changed before isolation; no mutation was issued", outcome: .conflict)
+        }
         let start = Date()
         guard let command = helperCommand(enabled: false) else {
             return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", operationDescription: "No helper command mapping for sharing service", outcome: .unsupported, startedAt: start, finishedAt: Date())
@@ -91,6 +98,9 @@ public struct SystemSharingServiceAdapter: SharingServiceAdapter {
         guard originalState.supported && appliedState.supported else { return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "restore", operationDescription: "Capability unsupported", outcome: .unsupported) }
         guard originalState.enabled else { return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "remain disabled", operationDescription: "Sharing service was disabled before isolation", outcome: .alreadyInDesiredState) }
         let current = await detect()
+        guard current.supported else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "enabled", operationDescription: "Sharing capability became unavailable before restoration", outcome: .unsupported)
+        }
         if current.enabled != appliedState.enabled {
             return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "enabled", observedPreState: current.enabled ? "enabled" : "disabled", observedPostState: current.enabled ? "enabled" : "disabled", operationDescription: "Sharing service changed after KeyBrake applied isolation; restore skipped", outcome: .conflict)
         }

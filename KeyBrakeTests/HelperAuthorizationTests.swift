@@ -40,15 +40,21 @@ final class HelperAuthorizationTests: XCTestCase {
 
     func testNetworkControllerRoutesIsolationThroughHelper() async {
         let helper = RecordingHelper()
-        let controller = SystemNetworkController(commandRunner: RecordingCommandRunner(), helper: helper)
-        let changes = [NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, kind: NetworkServiceKind.wifi.rawValue)]
+        let runner = RecordingCommandRunner(results: [
+            .success(commandResult(output: "Yes\n")),
+            .success(commandResult(output: "No\n"))
+        ])
+        let controller = SystemNetworkController(commandRunner: runner, helper: helper)
+        let changes = [NetworkChange(id: "network-service-wi-fi", displayName: "Wi-Fi", originalEnabled: true, kind: NetworkServiceKind.wifi.rawValue)]
         _ = await controller.isolate(changes)
         XCTAssertEqual(helper.commands.count, 1)
-        XCTAssertEqual(helper.commands.first, .setNetworkServiceEnabled(serviceID: "wifi", serviceName: "Wi-Fi", expectedDevice: nil, enabled: false))
+        XCTAssertEqual(helper.commands.first, .setNetworkServiceEnabled(serviceID: "network-service-wi-fi", serviceName: "Wi-Fi", expectedDevice: nil, enabled: false))
+        XCTAssertEqual(runner.calls.count, 2)
     }
 
     func testSharingAdapterRoutesDisableAndRestoreThroughHelperAndVerifiesBothStates() async {
         let runner = RecordingCommandRunner(results: [
+            .success(commandResult(output: "Remote Login: On\n")),
             .success(commandResult(output: "Remote Login: Off\n")),
             .success(commandResult(output: "Remote Login: Off\n")),
             .success(commandResult(output: "Remote Login: On\n"))
@@ -73,7 +79,7 @@ final class HelperAuthorizationTests: XCTestCase {
         XCTAssertEqual(disabled.outcome, .succeeded)
         XCTAssertEqual(restored.outcome, .succeeded)
         XCTAssertEqual(helper.commands, [.setRemoteLoginEnabled(false), .setRemoteLoginEnabled(true)])
-        XCTAssertEqual(runner.calls.count, 3)
+        XCTAssertEqual(runner.calls.count, 4)
         XCTAssertTrue(runner.calls.allSatisfy { $0.request.arguments == ["-getremotelogin"] })
     }
 

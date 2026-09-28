@@ -16,6 +16,17 @@
 	<string>0.1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>$(KEYBRAKE_APP_BUNDLE_IDENTIFIER).settings</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>keybrake</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2026 Michael Tran</string>
 	<key>LSMinimumSystemVersion</key>

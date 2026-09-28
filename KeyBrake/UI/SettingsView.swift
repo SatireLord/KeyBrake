@@ -25,6 +25,7 @@ struct SettingsView: View {
     @State private var selectedPrivacyServices: Set<TCCService> = []
     @State private var selectedTargetID = ""
     @State private var selectedKeyboardTargetID = ""
+    @State private var lastKeyboardNavigationRequestID: UUID?
     @State private var errorMessage = ""
 
     private var accessTargets: [TargetDefinition] {
@@ -326,6 +327,7 @@ struct SettingsView: View {
     }
 
     var body: some View {
+        ScrollViewReader { proxy in
         Form {
             Section("Current protection state") {
                 VStack(alignment: .leading, spacing: 10) {
@@ -374,7 +376,7 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("keybrake.settings.current-protection-state-section")
 
-            // Greppable: canonical=keybrake-reset-keyboard; aliases=Reset Keyboard; reset keyboard access; forms=reset-keyboard;reset_keyboard; descriptors=macOS Input Monitoring and Send Keystrokes / Input TCC reset; states=no-target,selected,disabled,reset-requested; consumers=KeyBrakeViewModel.revokeAppAccess; owner=SettingsView.body
+            // Greppable: canonical=keybrake-reset-keyboard; aliases=Reset Keyboard; reset keyboard access; forms=reset-keyboard;reset_keyboard; descriptors=macOS Input Monitoring and Send Keystrokes / Input TCC reset; states=no-target,selected,disabled,reset-requested; consumers=KeyBrakeViewModel.resetKeyboardAccess; owner=SettingsView.body
             Section("Keyboard") {
                 Picker("Application", selection: $selectedKeyboardTargetID) {
                     Text("Choose an application").tag("")
@@ -394,18 +396,26 @@ struct SettingsView: View {
 
                 Button("Reset Keyboard", role: .destructive) {
                     guard selectedKeyboardTarget != nil else { return }
-                    model.revokeAppAccess(
-                        targetID: selectedKeyboardTargetID,
-                        services: [.inputMonitoring, .postEvent]
-                    )
+                    model.resetKeyboardAccess(targetID: selectedKeyboardTargetID)
                 }
                 .help(keyboardResetActionHint)
                 .accessibilityHint(keyboardResetActionHint)
                 .accessibilityIdentifier("keybrake.settings.keyboard.reset")
-                .disabled(model.isNetworkSandbox || selectedKeyboardTarget == nil)
+                .disabled(model.isReadOnlyDemo || !model.isRecoveryStatusKnown || model.isBusy || selectedKeyboardTarget == nil)
             }
             .accessibilityIdentifier("keybrake.settings.keyboard-section")
+            .id("keybrake.settings.keyboard-section")
             .disabled(model.isNetworkSandbox)
+
+            if model.isRecoveryDemo {
+                Section("Recovery demonstration") {
+                    Text("This view uses temporary recovery data and fixture adapters. Host settings, application permissions, target configuration, and global keyboard behavior are unchanged.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("keybrake.settings.recovery-demo-boundary")
+                }
+            }
 
             if model.isNetworkSandbox {
                 Section("Network sandbox") {
@@ -549,7 +559,7 @@ struct SettingsView: View {
                 .help(appAccessResetActionHint)
                 .accessibilityHint(appAccessResetActionHint)
                 .accessibilityIdentifier("keybrake.settings.application-access.revoke")
-                .disabled(selectedTargetID.isEmpty || selectedPrivacyServices.isEmpty)
+                .disabled(model.isReadOnlyDemo || !model.isRecoveryStatusKnown || model.isBusy || selectedTargetID.isEmpty || selectedPrivacyServices.isEmpty)
             }
             .accessibilityIdentifier("keybrake.settings.application-access-section")
 
@@ -616,6 +626,16 @@ struct SettingsView: View {
         .padding()
         .onAppear {
             if selectedTargetID.isEmpty { selectedTargetID = accessTargets.first?.id ?? "" }
+            if let request = model.keyboardSettingsNavigationRequest,
+               request != lastKeyboardNavigationRequestID {
+                lastKeyboardNavigationRequestID = request
+                withAnimation { proxy.scrollTo("keybrake.settings.keyboard-section", anchor: .top) }
+            }
+        }
+        .onChange(of: model.keyboardSettingsNavigationRequest) { _, request in
+            guard let request, request != lastKeyboardNavigationRequestID else { return }
+            lastKeyboardNavigationRequestID = request
+            withAnimation { proxy.scrollTo("keybrake.settings.keyboard-section", anchor: .top) }
         }
         .alert("KeyBrake", isPresented: Binding(get: { !errorMessage.isEmpty }, set: { if !$0 { errorMessage = "" } })) {
             Button("OK") { errorMessage = "" }
@@ -623,6 +643,8 @@ struct SettingsView: View {
         } message: {
             Text(errorMessage)
                 .accessibilityIdentifier("keybrake.settings.error-message")
+        }
+        .disabled(model.isRecoveryDemo)
         }
     }
 

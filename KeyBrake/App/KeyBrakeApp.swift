@@ -106,17 +106,39 @@ private enum KeyBrakeLaunchConfiguration {
         try? incidentStore.save(incident)
 
         let safeRunner = RecordingCommandRunner()
+        let demoTargets = [
+            TargetDefinition(
+                id: "demo-remote-access",
+                displayName: "Demo Remote Access App",
+                category: .remoteAccess,
+                bundleIdentifier: "com.example.keybrake-demo.remote-access",
+                approvedByUser: true,
+                allowForcedTermination: false
+            )
+        ]
         let coordinator = EmergencyCoordinator(
             recoveryStore: recoveryStore,
             incidentStore: incidentStore,
-            processController: SystemProcessController(),
+            processController: KeyBrakeRecoveryDemoProcessController(),
             espanso: EspansoAdapter(commandRunner: safeRunner, executableCandidates: []),
             networkController: FixtureNetworkController(),
             privacyController: PrivacyController(commandRunner: safeRunner),
             helper: UnavailableHelper(),
+            targetDefinitions: demoTargets,
+            sharingController: SharingServiceController(adapters: [
+                KeyBrakeRecoveryDemoSharingAdapter(identifier: "remote-login", displayName: "Remote Login", enabled: false),
+                KeyBrakeRecoveryDemoSharingAdapter(identifier: "remote-apple-events", displayName: "Remote Apple Events", enabled: false)
+            ]),
             initialState: .recoveryRequired
         )
-        return KeyBrakeViewModel(coordinator: coordinator, incidentStore: incidentStore)
+        return KeyBrakeViewModel(
+            coordinator: coordinator,
+            incidentStore: incidentStore,
+            initialIsolationPolicy: .standard,
+            isRecoveryDemo: true,
+            configuredTargetsOverride: demoTargets,
+            demoStoreRootDirectory: rootDirectory
+        )
     }
 
     private static func networkSandboxScenario(from launchArguments: [String]) -> NetworkSandboxScenario? {
@@ -174,6 +196,55 @@ private struct KeyBrakeNetworkSandboxProcessController: ProcessControlling {
     }
 }
 
+private struct KeyBrakeRecoveryDemoProcessController: ProcessControlling {
+    func matchingProcesses(for target: TargetDefinition) -> [ProcessIdentity] { [] }
+
+    func stop(_ identity: ProcessIdentity, allowForcedTermination: Bool) async -> ProcessTargetResult {
+        ProcessTargetResult(
+            targetID: identity.bundleIdentifier ?? "recovery-demo-process",
+            displayName: identity.bundleIdentifier ?? "Recovery demo process",
+            identity: identity,
+            outcome: .unsupported,
+            detail: "Recovery demonstration does not inspect or terminate host processes"
+        )
+    }
+}
+
+private actor KeyBrakeRecoveryDemoSharingAdapter: SharingServiceAdapter {
+    let identifier: String
+    let displayName: String
+    private var enabled: Bool
+
+    init(identifier: String, displayName: String, enabled: Bool) {
+        self.identifier = identifier
+        self.displayName = displayName
+        self.enabled = enabled
+    }
+
+    func detect() async -> SharingServiceCapability {
+        SharingServiceCapability(id: identifier, displayName: displayName, supported: true, enabled: enabled)
+    }
+
+    func disable(expectedState: SharingServiceState) async -> OperationStepResult {
+        guard expectedState.supported else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", operationDescription: "Recovery demonstration fixture is unsupported", outcome: .unsupported)
+        }
+        enabled = false
+        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", observedPreState: expectedState.enabled ? "enabled" : "disabled", observedPostState: "disabled", operationDescription: "Recovery demonstration changed only its in-memory sharing fixture", outcome: expectedState.enabled ? .succeeded : .alreadyInDesiredState)
+    }
+
+    func restore(originalState: SharingServiceState, appliedState: SharingServiceState) async -> OperationStepResult {
+        guard originalState.supported, appliedState.supported else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "restore", operationDescription: "Recovery demonstration fixture is unsupported", outcome: .unsupported)
+        }
+        guard enabled == appliedState.enabled else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "restore", observedPreState: enabled ? "enabled" : "disabled", observedPostState: enabled ? "enabled" : "disabled", operationDescription: "Recovery demonstration fixture changed after isolation", outcome: .conflict)
+        }
+        enabled = originalState.enabled
+        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: originalState.enabled ? "enabled" : "disabled", observedPreState: appliedState.enabled ? "enabled" : "disabled", observedPostState: enabled ? "enabled" : "disabled", operationDescription: "Recovery demonstration changed only its in-memory sharing fixture", outcome: .succeeded)
+    }
+}
+
 // Greppable:
 // canonical: keybrake-destination-demo-routes
 // aliases: incident-log staging; settings staging; destination launch argument
@@ -198,7 +269,7 @@ private struct WindowLaunchBridge: View {
     var body: some View {
         Label("KeyBrake", systemImage: hydrationAwareApplicationSymbol)
             .onAppear {
-                appDelegate.attach(model: model)
+                appDelegate.attach(model: model, openSettingsWindow: { openWindow(id: "settings") })
                 openCommandCenterIfRequested()
             }
             .onReceive(model.$isShowingRecoveryPanel.removeDuplicates()) { show in

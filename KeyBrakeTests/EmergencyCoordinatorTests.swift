@@ -6,6 +6,47 @@ private struct FixtureProcessController: ProcessControlling {
     func stop(_ identity: ProcessIdentity, allowForcedTermination: Bool) async -> ProcessTargetResult { ProcessTargetResult(targetID: "fixture", displayName: "Fixture", identity: identity, outcome: .succeeded, detail: "fixture") }
 }
 
+private actor FixtureSharingAdapter: SharingServiceAdapter {
+    nonisolated let identifier: String
+    nonisolated let displayName: String
+    private var enabled: Bool
+
+    init(identifier: String, displayName: String, enabled: Bool, supported: Bool = true) {
+        self.identifier = identifier
+        self.displayName = displayName
+        self.enabled = enabled
+        self.supported = supported
+    }
+
+    nonisolated let supported: Bool
+
+    func detect() async -> SharingServiceCapability {
+        SharingServiceCapability(id: identifier, displayName: displayName, supported: supported, enabled: enabled)
+    }
+
+    func disable(expectedState: SharingServiceState) async -> OperationStepResult {
+        guard supported, expectedState.supported else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", operationDescription: "Fixture sharing service unsupported", outcome: .unsupported)
+        }
+        guard enabled == expectedState.enabled else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", operationDescription: "Fixture sharing state changed before isolation", outcome: .conflict)
+        }
+        enabled = false
+        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "disabled", observedPreState: "enabled", observedPostState: "disabled", operationDescription: "Fixture sharing isolation", outcome: .succeeded)
+    }
+
+    func restore(originalState: SharingServiceState, appliedState: SharingServiceState) async -> OperationStepResult {
+        guard supported, originalState.supported, appliedState.supported else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "restore", operationDescription: "Fixture sharing service unsupported", outcome: .unsupported)
+        }
+        guard enabled == appliedState.enabled else {
+            return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "enabled", operationDescription: "Fixture sharing state changed after isolation", outcome: .conflict)
+        }
+        enabled = originalState.enabled
+        return OperationStepResult(subsystem: "sharing", targetID: identifier, targetDisplayName: displayName, requestedState: "enabled", observedPostState: "enabled", operationDescription: "Fixture sharing restoration", outcome: .succeeded)
+    }
+}
+
 final class EmergencyCoordinatorTests: XCTestCase {
     func testTerminationGateFailsClosedBeforeHydrationAndDuringTransactions() {
         XCTAssertTrue(KeyBrakeTerminationGate.blocksTermination(state: .normal, launchRecoveryCheckCompleted: false, recoveryRequired: false, immediateQuitApproved: false))
@@ -85,6 +126,161 @@ final class EmergencyCoordinatorTests: XCTestCase {
         XCTAssertEqual(snapshot?.networkChanges.first?.appliedEnabled, false)
         XCTAssertEqual(snapshot?.networkChanges.first?.currentEnabled, false)
         XCTAssertTrue(snapshot?.unresolvedSteps.contains { $0.targetID == "vpn" } == true)
+    }
+
+    func testExplicitVPNRetentionIsVerifiedAndDoesNotReconnectTheVPN() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let network = FixtureNetworkController(services: [NetworkService(id: "vpn", displayName: "Work VPN", kind: .vpn, enabled: true, active: true)])
+        let coordinator = EmergencyCoordinator(recoveryStore: RecoveryStore(rootDirectory: root), incidentStore: IncidentStore(rootDirectory: root), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []), networkController: network, privacyController: PrivacyController(commandRunner: RecordingCommandRunner()))
+
+        _ = await coordinator.stopRemoteAccess()
+        let incident = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true, retainVPNDisconnected: true))
+        let vpn = await network.inventory().first
+
+        XCTAssertEqual(incident.finalState, .normal)
+        XCTAssertEqual(vpn?.enabled, false)
+        XCTAssertEqual(vpn?.enabledObservationKnown, true)
+        XCTAssertTrue(incident.steps.contains { $0.targetID == "vpn" && $0.outcome == .skipped && $0.operationDescription.contains("no reconnection command") })
+        XCTAssertNil(try RecoveryStore(rootDirectory: root).load())
+    }
+
+    func testUnknownNetworkStateStaysUnknownAndIsNeverConvertedToDisabled() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let network = FixtureNetworkController(services: [NetworkService(id: "wifi", displayName: "Wi-Fi", kind: .wifi, enabled: false, enabledObservationKnown: false, active: false)])
+        let coordinator = EmergencyCoordinator(recoveryStore: RecoveryStore(rootDirectory: root), incidentStore: IncidentStore(rootDirectory: root), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []), networkController: network, privacyController: PrivacyController(commandRunner: RecordingCommandRunner()))
+
+        let isolation = await coordinator.stopRemoteAccess()
+        let afterIsolation = try XCTUnwrap(RecoveryStore(rootDirectory: root).load()?.resourceProgress.first)
+        let restoration = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true))
+        let afterRestore = try XCTUnwrap(RecoveryStore(rootDirectory: root).load()?.resourceProgress.first)
+        let live = await network.inventory().first
+
+        XCTAssertEqual(isolation.finalState, .partiallyIsolated)
+        XCTAssertFalse(afterIsolation.originalStateKnown)
+        XCTAssertNil(afterIsolation.observedEnabled)
+        XCTAssertEqual(afterIsolation.disposition, .unverified)
+        XCTAssertEqual(restoration.finalState, .recoveryRequired)
+        XCTAssertFalse(afterRestore.originalStateKnown)
+        XCTAssertNil(afterRestore.observedEnabled)
+        XCTAssertEqual(afterRestore.disposition, .unverified)
+        XCTAssertEqual(live?.enabled, false)
+        XCTAssertFalse(live?.enabledObservationKnown ?? true)
+    }
+
+    func testStagedNetworkAndSharingRestoreKeepsTheUnselectedResourcePending() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let network = FixtureNetworkController(services: [NetworkService(id: "wifi", displayName: "Wi-Fi", kind: .wifi, enabled: true, active: true)])
+        let sharingAdapter = FixtureSharingAdapter(identifier: "remote-login", displayName: "Remote Login", enabled: true)
+        let sharing = SharingServiceController(adapters: [sharingAdapter])
+        let coordinator = EmergencyCoordinator(recoveryStore: RecoveryStore(rootDirectory: root), incidentStore: IncidentStore(rootDirectory: root), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []), networkController: network, privacyController: PrivacyController(commandRunner: RecordingCommandRunner()), sharingController: sharing)
+
+        let isolated = await coordinator.stopRemoteAccess()
+        XCTAssertEqual(isolated.finalState, .isolated)
+
+        let networkRestore = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true))
+        let pendingSnapshot = try XCTUnwrap(RecoveryStore(rootDirectory: root).load())
+        let networkProgress = pendingSnapshot.resourceProgress.first { $0.resourceID == "wifi" }
+        let sharingProgress = pendingSnapshot.resourceProgress.first { $0.resourceID == "remote-login" }
+        XCTAssertEqual(networkRestore.finalState, .recoveryRequired)
+        XCTAssertEqual(networkProgress?.appliedEnabled, false)
+        XCTAssertEqual(networkProgress?.observedEnabled, true)
+        XCTAssertEqual(networkProgress?.disposition, .restored)
+        XCTAssertEqual(sharingProgress?.appliedEnabled, false)
+        XCTAssertEqual(sharingProgress?.observedEnabled, false)
+        XCTAssertEqual(sharingProgress?.disposition, .pending)
+
+        let sharingRestore = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: false, sharingServiceIDs: ["remote-login"]))
+        let liveSharing = await sharingAdapter.detect()
+        let liveNetwork = await network.inventory().first
+        XCTAssertEqual(sharingRestore.finalState, .normal)
+        XCTAssertTrue(liveSharing.enabled)
+        XCTAssertTrue(liveNetwork?.enabled == true)
+        XCTAssertNil(try RecoveryStore(rootDirectory: root).load())
+    }
+
+    func testEmptyProgressArrayCannotClearARecordedNetworkRecovery() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let store = RecoveryStore(rootDirectory: root)
+        let snapshot = RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .normal,
+            networkChanges: [NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: NetworkServiceKind.wifi.rawValue)],
+            resourceProgress: []
+        )
+        try store.save(snapshot)
+        let network = FixtureNetworkController(services: [NetworkService(id: "wifi", displayName: "Wi-Fi", kind: .wifi, enabled: false, active: false)])
+        let coordinator = EmergencyCoordinator(recoveryStore: store, incidentStore: IncidentStore(rootDirectory: root), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []), networkController: network, privacyController: PrivacyController(commandRunner: RecordingCommandRunner()), initialState: .recoveryRequired)
+
+        let incident = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true))
+        let live = await network.inventory().first
+
+        XCTAssertEqual(incident.finalState, .recoveryRequired)
+        XCTAssertEqual(live?.enabled, false)
+        XCTAssertNotNil(try store.load())
+    }
+
+    func testConflictingDuplicateVPNJournalCannotRestoreOrClearRecovery() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let store = RecoveryStore(rootDirectory: root)
+        try store.save(RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .normal,
+            networkChanges: [NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: NetworkServiceKind.wifi.rawValue)],
+            vpnConnections: [NetworkChange(id: "wifi", displayName: "Work VPN", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: NetworkServiceKind.vpn.rawValue, isVPN: true)]
+        ))
+        let network = FixtureNetworkController(services: [NetworkService(id: "wifi", displayName: "Wi-Fi", kind: .wifi, enabled: false, active: false)])
+        let coordinator = EmergencyCoordinator(recoveryStore: store, incidentStore: IncidentStore(rootDirectory: root), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []), networkController: network, privacyController: PrivacyController(commandRunner: RecordingCommandRunner()), initialState: .recoveryRequired)
+
+        let incident = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true))
+        let live = await network.inventory().first
+
+        XCTAssertEqual(incident.finalState, .recoveryRequired)
+        XCTAssertTrue(incident.steps.contains { $0.targetID == "resource-journal" && $0.outcome == .conflict })
+        XCTAssertEqual(live?.enabled, false)
+        XCTAssertNotNil(try store.load())
+    }
+
+    func testFinalAuditWriteFailureRetainsTheRecoverySnapshot() async throws {
+        let temporary = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let blockedIncidentRoot = temporary.appendingPathComponent("not-a-directory")
+        try FileManager.default.createDirectory(at: temporary, withIntermediateDirectories: true)
+        try Data("file blocks directory creation".utf8).write(to: blockedIncidentRoot)
+        let recoveryRoot = temporary.appendingPathComponent("Recovery", isDirectory: true)
+        let store = RecoveryStore(rootDirectory: recoveryRoot)
+        try store.save(RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .normal,
+            networkChanges: [NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: true, kind: NetworkServiceKind.wifi.rawValue)]
+        ))
+        let network = FixtureNetworkController(services: [NetworkService(id: "wifi", displayName: "Wi-Fi", kind: .wifi, enabled: true, active: true)])
+        let coordinator = EmergencyCoordinator(recoveryStore: store, incidentStore: IncidentStore(rootDirectory: blockedIncidentRoot), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []), networkController: network, privacyController: PrivacyController(commandRunner: RecordingCommandRunner()), initialState: .recoveryRequired)
+
+        let incident = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true))
+
+        XCTAssertEqual(incident.finalState, .recoveryRequired)
+        XCTAssertTrue(incident.steps.contains { $0.subsystem == "recovery" && $0.operationDescription.contains("Final audit could not be saved") })
+        XCTAssertNotNil(try store.load())
+        let live = await network.inventory().first
+        XCTAssertEqual(live?.enabled, true)
+    }
+
+    func testRestorationReturnsToRecordedPreIsolationOperationalState() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let store = RecoveryStore(rootDirectory: root)
+        try store.save(RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .localAutomationStopped,
+            networkChanges: [NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: NetworkServiceKind.wifi.rawValue)]
+        ))
+        let network = FixtureNetworkController(services: [NetworkService(id: "wifi", displayName: "Wi-Fi", kind: .wifi, enabled: false, active: false)])
+        let coordinator = EmergencyCoordinator(recoveryStore: store, incidentStore: IncidentStore(rootDirectory: root), processController: FixtureProcessController(), espanso: EspansoAdapter(commandRunner: RecordingCommandRunner(), executableCandidates: []), networkController: network, privacyController: PrivacyController(commandRunner: RecordingCommandRunner()), initialState: .recoveryRequired)
+
+        let incident = await coordinator.restoreHumanControl(selection: RecoverySelection(restoreNetwork: true))
+        let finalState = await coordinator.state()
+
+        XCTAssertEqual(incident.finalState, .localAutomationStopped)
+        XCTAssertEqual(finalState, .localAutomationStopped)
+        XCTAssertNil(try store.load())
     }
 
     func testTargetApprovalChangesTheCoordinatorConfiguration() async {

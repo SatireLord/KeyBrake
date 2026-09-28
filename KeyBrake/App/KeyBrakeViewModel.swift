@@ -15,10 +15,12 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published private(set) var launchAtLoginError: String?
     @Published private(set) var privilegedHelperStatus = "Not registered"
     @Published private(set) var privilegedHelperError: String?
+    @Published private(set) var operationInFlight = false
     @Published var isolationPolicy: EmergencyIsolationPolicy
     @Published var isShowingRecoveryPanel = false
     @Published var isShowingIncidentLog = false
     @Published var isShowingSettings = false
+    @Published private(set) var keyboardSettingsNavigationRequest: UUID?
     private var allowImmediateQuit = false
     private var launchRecoveryCheckCompleted = false
 
@@ -26,7 +28,9 @@ final class KeyBrakeViewModel: ObservableObject {
     let incidentStore: IncidentStore
     let featureContract: FeatureContract
     let isNetworkSandbox: Bool
+    let isRecoveryDemo: Bool
     let networkSandboxScenario: NetworkSandboxScenario?
+    private let demoStoreRootDirectory: URL?
 
     private static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
     private static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
@@ -36,17 +40,23 @@ final class KeyBrakeViewModel: ObservableObject {
         incidentStore: IncidentStore = IncidentStore(),
         initialIsolationPolicy: EmergencyIsolationPolicy? = nil,
         networkSandboxScenario: NetworkSandboxScenario? = nil,
-        isNetworkSandbox: Bool = false
+        isNetworkSandbox: Bool = false,
+        isRecoveryDemo: Bool = false,
+        configuredTargetsOverride: [TargetDefinition]? = nil,
+        demoStoreRootDirectory: URL? = nil
     ) {
         self.coordinator = coordinator
         self.incidentStore = incidentStore
         self.featureContract = FeatureContract.current()
         self.isNetworkSandbox = isNetworkSandbox
+        self.isRecoveryDemo = isRecoveryDemo
+        self.demoStoreRootDirectory = isRecoveryDemo ? demoStoreRootDirectory : nil
         self.networkSandboxScenario = isNetworkSandbox ? networkSandboxScenario : nil
-        self.configuredTargets = isNetworkSandbox ? TargetRegistry.builtInRemoteAccess : Self.loadConfiguredTargets()
-        self.isolationPolicy = initialIsolationPolicy ?? Self.loadIsolationPolicy()
-        self.launchAtLoginEnabled = isNetworkSandbox ? false : Self.readLaunchAtLoginStatus()
-        self.privilegedHelperStatus = isNetworkSandbox ? "Disabled in network sandbox" : Self.readPrivilegedHelperStatus()
+        let isReadOnlyDemo = isNetworkSandbox || isRecoveryDemo
+        self.configuredTargets = configuredTargetsOverride ?? (isReadOnlyDemo ? TargetRegistry.builtInRemoteAccess : Self.loadConfiguredTargets())
+        self.isolationPolicy = initialIsolationPolicy ?? (isReadOnlyDemo ? .standard : Self.loadIsolationPolicy())
+        self.launchAtLoginEnabled = isReadOnlyDemo ? false : Self.readLaunchAtLoginStatus()
+        self.privilegedHelperStatus = isReadOnlyDemo ? "Disabled in demo mode" : Self.readPrivilegedHelperStatus()
         Task {
             await coordinator.replaceTargetDefinitions(self.configuredTargets)
             await refresh()
@@ -54,7 +64,11 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     var isBusy: Bool {
-        operationalState.isStateChanging
+        operationalState.isStateChanging || operationInFlight
+    }
+
+    var isReadOnlyDemo: Bool {
+        isNetworkSandbox || isRecoveryDemo
     }
 
     var isRecoveryStatusKnown: Bool {
@@ -66,7 +80,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     var shouldInterceptTermination: Bool {
-        KeyBrakeTerminationGate.blocksTermination(
+        operationInFlight || KeyBrakeTerminationGate.blocksTermination(
             state: operationalState,
             launchRecoveryCheckCompleted: launchRecoveryCheckCompleted,
             recoveryRequired: hasRecovery,
@@ -91,8 +105,10 @@ final class KeyBrakeViewModel: ObservableObject {
 
     func stopSkynetLocally() {
         guard !isBusy else { return }
+        operationInFlight = true
         operationalState = .stoppingLocalAutomation
         Task {
+            defer { operationInFlight = false }
             let incident = await coordinator.stopSkynetLocally()
             await apply(incident: incident)
         }
@@ -100,8 +116,10 @@ final class KeyBrakeViewModel: ObservableObject {
 
     func stopRemoteAccess() {
         guard !isBusy else { return }
+        operationInFlight = true
         operationalState = .isolating
         Task {
+            defer { operationInFlight = false }
             let incident = await coordinator.stopRemoteAccess(policy: isolationPolicy)
             await apply(incident: incident)
             await MainActor.run { self.isShowingRecoveryPanel = true }
@@ -110,9 +128,18 @@ final class KeyBrakeViewModel: ObservableObject {
 
     func restoreHumanControl(restoreSharing: Bool = false) {
         guard !isBusy else { return }
+        let retainVPNDisconnected = !restoreSharing && confirmVPNRemainsDisconnectedIfNeeded()
+        guard restoreSharing || !hasPreviouslyConnectedVPN || retainVPNDisconnected else { return }
+        operationInFlight = true
         operationalState = .restoring
         Task {
-            let selection = RecoverySelection(restoreNetwork: !restoreSharing, sharingServiceIDs: restoreSharing ? ["remote-login", "remote-apple-events"] : [], restartEspanso: false)
+            defer { operationInFlight = false }
+            let selection = RecoverySelection(
+                restoreNetwork: !restoreSharing,
+                sharingServiceIDs: restoreSharing ? ["remote-login", "remote-apple-events"] : [],
+                restartEspanso: false,
+                retainVPNDisconnected: retainVPNDisconnected
+            )
             let incident = await coordinator.restoreHumanControl(selection: selection)
             await apply(incident: incident)
         }
@@ -128,6 +155,10 @@ final class KeyBrakeViewModel: ObservableObject {
 
     func openSettings() {
         isShowingSettings = true
+    }
+
+    func openKeyboardSettingsFromSystemSettings() {
+        keyboardSettingsNavigationRequest = UUID()
     }
 
     func requestQuit() {
@@ -174,11 +205,38 @@ final class KeyBrakeViewModel: ObservableObject {
         alert.runModal()
     }
 
+    private var hasPreviouslyConnectedVPN: Bool {
+        guard let unresolvedRecovery else { return false }
+        let network = unresolvedRecovery.networkChanges + unresolvedRecovery.vpnConnections.filter { vpn in
+            !unresolvedRecovery.networkChanges.contains(where: { $0.id == vpn.id })
+        }
+        return network.contains(where: { $0.isVPN && $0.originalEnabled })
+    }
+
+    private func confirmVPNRemainsDisconnectedIfNeeded() -> Bool {
+        guard hasPreviouslyConnectedVPN else { return false }
+        let alert = NSAlert()
+        alert.messageText = "Restore the network and leave VPNs as-is?"
+        alert.informativeText = "KeyBrake will not connect or disconnect a VPN during restoration. A VPN already reconnected by you stays connected; a VPN still disconnected by KeyBrake stays disconnected only when macOS confirms that state."
+        alert.addButton(withTitle: "Restore Network, Leave VPN As-Is")
+        alert.addButton(withTitle: "Cancel")
+        return alert.runModal() == .alertFirstButtonReturn
+    }
+
     func restoreNetworkOnly() {
         guard !isBusy else { return }
+        let retainVPNDisconnected = confirmVPNRemainsDisconnectedIfNeeded()
+        guard !hasPreviouslyConnectedVPN || retainVPNDisconnected else { return }
+        operationInFlight = true
         operationalState = .restoring
         Task {
-            let selection = RecoverySelection(restoreNetwork: true, sharingServiceIDs: [], restartEspanso: false)
+            defer { operationInFlight = false }
+            let selection = RecoverySelection(
+                restoreNetwork: true,
+                sharingServiceIDs: [],
+                restartEspanso: false,
+                retainVPNDisconnected: retainVPNDisconnected
+            )
             let incident = await coordinator.restoreHumanControl(selection: selection)
             await apply(incident: incident)
         }
@@ -186,8 +244,10 @@ final class KeyBrakeViewModel: ObservableObject {
 
     func restoreSharingOnly() {
         guard !isBusy else { return }
+        operationInFlight = true
         operationalState = .restoring
         Task {
+            defer { operationInFlight = false }
             let selection = RecoverySelection(restoreNetwork: false, sharingServiceIDs: ["remote-login", "remote-apple-events"], restartEspanso: false)
             let incident = await coordinator.restoreHumanControl(selection: selection)
             await apply(incident: incident)
@@ -196,7 +256,9 @@ final class KeyBrakeViewModel: ObservableObject {
 
     func restartEspanso() {
         guard !isBusy else { return }
+        operationInFlight = true
         Task {
+            defer { operationInFlight = false }
             let step = await coordinator.restartEspanso()
             let incident = IncidentRecord(initiatingAction: "Restart Espanso", originalState: operationalState, finalState: operationalState, steps: [step], resolution: step.outcome == .succeeded ? "Espanso restart verified" : "Espanso restart requires review")
             try? incidentStore.save(incident)
@@ -205,7 +267,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func setTargetApproval(targetID: String, approved: Bool) {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo else { return }
         guard let index = configuredTargets.firstIndex(where: { $0.id == targetID }) else { return }
         configuredTargets[index].approvedByUser = approved
         configuredTargets[index].updatedAt = Date()
@@ -214,14 +276,14 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func updateIsolationPolicy(_ policy: EmergencyIsolationPolicy) {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo else { return }
         isolationPolicy = policy
         guard let data = try? JSONEncoder().encode(policy) else { return }
         UserDefaults.standard.set(data, forKey: Self.isolationPolicyDefaultsKey)
     }
 
     func enrollTarget(_ target: TargetDefinition) {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo else { return }
         guard TargetRegistry.canEnroll(target, applicationBundleIdentifier: target.bundleIdentifier, executableURL: target.executableURL), !configuredTargets.contains(where: { $0.id == target.id }) else { return }
         configuredTargets.append(target)
         saveConfiguredTargets()
@@ -229,7 +291,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func removeTarget(targetID: String) {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo else { return }
         let builtInIDs = Set(TargetRegistry.builtInLocalAutomation.map(\.id) + TargetRegistry.builtInRemoteAccess.map(\.id))
         guard !builtInIDs.contains(targetID) else { return }
         configuredTargets.removeAll { $0.id == targetID }
@@ -238,16 +300,39 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func revokeAppAccess(targetID: String, services: Set<TCCService>) {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo, launchRecoveryCheckCompleted, !isBusy else { return }
         guard let target = configuredTargets.first(where: { $0.id == targetID }), let bundleIdentifier = target.bundleIdentifier else { return }
+        operationInFlight = true
         Task {
+            defer { operationInFlight = false }
+            await coordinator.replaceTargetDefinitions(configuredTargets)
             let incident = await coordinator.revokeAppAccess(targetID: targetID, services: services, bundleIdentifier: bundleIdentifier, displayName: target.displayName)
             await apply(incident: incident)
         }
     }
 
+    func resetKeyboardAccess(targetID: String) {
+        guard !isReadOnlyDemo, launchRecoveryCheckCompleted, !isBusy else { return }
+        guard let selectedTarget = configuredTargets.first(where: { $0.id == targetID }) else { return }
+        let currentTargets = Self.loadConfiguredTargets()
+        guard let target = currentTargets.first(where: { $0.id == targetID }),
+              target.bundleIdentifier == selectedTarget.bundleIdentifier,
+              target.applicationURL == selectedTarget.applicationURL,
+              target.executableURL == selectedTarget.executableURL,
+              let bundleIdentifier = target.bundleIdentifier,
+              TargetRegistry.canEnroll(target, applicationBundleIdentifier: bundleIdentifier, executableURL: target.executableURL) else { return }
+        configuredTargets = currentTargets
+        operationInFlight = true
+        Task {
+            defer { operationInFlight = false }
+            await coordinator.replaceTargetDefinitions(currentTargets)
+            let incident = await coordinator.resetKeyboardAccess(target: target)
+            await apply(incident: incident)
+        }
+    }
+
     func registerPrivilegedHelper() {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo else { return }
         guard #available(macOS 13.0, *) else {
             privilegedHelperError = "Privileged helper registration requires macOS 13 or later."
             return
@@ -267,7 +352,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func setLaunchAtLogin(_ enabled: Bool) {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo else { return }
         guard #available(macOS 13.0, *) else {
             launchAtLoginError = "Launch at Login requires macOS 13 or later."
             return
@@ -287,7 +372,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func openPrivacySettings() {
-        guard !isNetworkSandbox else { return }
+        guard !isReadOnlyDemo else { return }
         guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy") else { return }
         NSWorkspace.shared.open(url)
     }
@@ -295,6 +380,15 @@ final class KeyBrakeViewModel: ObservableObject {
     func clearResolvedHistory() {
         try? incidentStore.clearResolvedHistory()
         incidents = (try? incidentStore.list()) ?? []
+    }
+
+    func cleanupDemoStore() {
+        guard let root = demoStoreRootDirectory else { return }
+        let temporaryRoot = FileManager.default.temporaryDirectory.standardizedFileURL
+        let normalizedRoot = root.standardizedFileURL
+        guard normalizedRoot.deletingLastPathComponent() == temporaryRoot,
+              normalizedRoot.lastPathComponent.hasPrefix("KeyBrake-Recovery-Demo-") else { return }
+        try? FileManager.default.removeItem(at: normalizedRoot)
     }
 
     private func apply(incident: IncidentRecord) async {

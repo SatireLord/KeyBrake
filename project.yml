@@ -10,6 +10,7 @@ settings:
     SWIFT_VERSION: "6.0"
     MACOSX_DEPLOYMENT_TARGET: "14.0"
     SWIFT_STRICT_CONCURRENCY: minimal
+    KEYBRAKE_APP_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake
     CODE_SIGN_STYLE: Manual
     CODE_SIGNING_ALLOWED: NO
     DEVELOPMENT_TEAM: ""
@@ -44,7 +45,7 @@ targets:
       - target: KeyBrakePrivilegedHelper
         embed: true
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake
+      PRODUCT_BUNDLE_IDENTIFIER: "$(KEYBRAKE_APP_BUNDLE_IDENTIFIER)"
       INFOPLIST_FILE: SupportingFiles/Info.plist
       CODE_ENTITLEMENTS: SupportingFiles/KeyBrake.entitlements
       LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
@@ -53,6 +54,8 @@ targets:
     platform: macOS
     sources:
       - path: KeyBrakePreferencePane
+      - path: KeyBrakeCore/KeyBrakeSystemSettingsRoute.swift
+      - path: KeyBrakeCore/KeyBrakeSystemSettingsHandoff.swift
     dependencies:
       - sdk: PreferencePanes.framework
       - sdk: SwiftUI.framework
@@ -66,6 +69,7 @@ targets:
       INFOPLIST_KEY_CFBundleName: KeyBrake
       INFOPLIST_KEY_NSPrincipalClass: KeyBrakeSettingsPane
       INFOPLIST_KEY_LSMinimumSystemVersion: "14.0"
+      INFOPLIST_KEY_KeyBrakeHostBundleIdentifier: "$(KEYBRAKE_APP_BUNDLE_IDENTIFIER)"
   KeyBrakePrivilegedHelper:
     type: tool
     platform: macOS
