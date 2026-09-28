@@ -4,7 +4,7 @@ project_plan:
   receipt:
     schema: "agent-cache.lackeydo.receipt.v1"
     receipt_id: "keybrake-reset-keyboard-20260927"
-    status: "implementation-delivered; visual-proof-blocked"
+    status: "implementation-and-docs-pushed; visual-proof-blocked"
     submitted_by: "Codex"
     submitted_at: "2026-09-27T22:34:10-07:00"
     task_identity:
@@ -14,10 +14,10 @@ project_plan:
     repository_identity:
       repo_root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "e9eeefc38c8253b9507931fe2f2a4424b6556454"
-      tree: "not_recorded"
+      head: "3acbfe465fad3d583006a407ca782d0870bcb36e"
+      tree: "3bfe159c3cdaf2fad7e00f8cd0ffd4578322ac89"
       dirty_state: "dirty-preserved"
-      last_updated_at: "2026-09-28T02:41:45-07:00"
+      last_updated_at: "2026-09-28T02:46:00-07:00"
     claims:
       - claim_id: "R001"
         claim_class: "REQUIREMENT"
@@ -335,8 +335,8 @@ project_plan:
     - id: "R003"
       requirement: "Preserve both pre-existing dirty paths and all historical verification anchors."
       owner: "Current task write-set and final Git status"
-      status: "preserve; final path-level audit required before delivery"
-      proof: "Initial state and final exact-path status plus diff review; RecoveryView.swift and the iterative-improvement ledger are excluded from staging."
+      status: "preserved; final exact-path audit passed"
+      proof: "Only SettingsView.swift, the capability matrix, verification ledger, and this task ledger were staged. RecoveryView.swift and the iterative-improvement ledger remain unstaged and unchanged by this task."
       residual_risk: "The iterative-improvement ledger contains historical task state and remains unowned here."
     - id: "R004"
       requirement: "Record feature proof with exact UI allocation, commit the screenshot to GitHub, and organize the proof in the specified Google Drive folder with GitHub metadata."
@@ -364,7 +364,7 @@ project_plan:
       name: "Commit, push same branch, and attach organized Drive proof"
       files: ["exact S002/S003 owned paths", "Google Drive proof folder"]
       dependencies: ["S003", "final dirty-path audit", "live remote SHA check"]
-      status: "in_progress; commit and push implementation/docs on the existing branch; screenshot/Drive filing blocked"
+      status: "implementation/docs pushed to open PR #1; screenshot/Drive filing blocked"
   guards: []
   tests:
     - command: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM --filter PrivacyControllerTests/testPrivacyResetUsesServiceAndBundleIdentifier"
@@ -393,8 +393,17 @@ project_plan:
     - [x] Resolve the settings location from the user's KeyBrake clarification and select the existing keyboard-input TCC reset path. status: resolved; the UI names the exact effects and unchanged global settings.
     - [x] Implement Reset Keyboard in KeyBrake Settings > Keyboard, preserve global Keyboard Accessibility settings, and pass the focused TCC reset test plus macOS app build. status: complete
     - [ ] Stage on the isolated display, measure the feature LxW, and capture labeled PNG proof. status: blocked; AGENT_DISPLAY_STAGE_SAFE_V1 is unavailable, and no screenshot or Drive file exists
-    - [ ] Commit and push only task-owned implementation/docs on the existing branch, then file screenshot and GitHub metadata in the specified Drive folder. status: commit/push in progress; screenshot/Drive subtask blocked
+    - [x] Commit and push only task-owned implementation/docs to existing PR #1 on codex/keybrake-complete-implementation. status: commit 3acbfe465fad3d583006a407ca782d0870bcb36e is on origin and PR head matched at 2026-09-28T02:46:00-07:00
+    - [ ] File screenshot and GitHub metadata in the specified Drive folder. status: blocked; safe runtime capture is unavailable, and no screenshot or Drive file exists
+  delivery:
+    branch: "codex/keybrake-complete-implementation"
+    feature_commit_sha: "3acbfe465fad3d583006a407ca782d0870bcb36e"
+    feature_tree_sha: "3bfe159c3cdaf2fad7e00f8cd0ffd4578322ac89"
+    remote_branch_sha_at_verification: "3acbfe465fad3d583006a407ca782d0870bcb36e"
+    remote_verified_at: "2026-09-28T02:46:00-07:00"
+    pull_request: "https://github.com/SatireLord/KeyBrake/pull/1"
+    result: "Feature, capability row, verification notes, and task ledger were pushed; screenshot/Drive evidence remains blocked. A later closeout commit may update this ledger on the same branch."
   branch: "codex/keybrake-complete-implementation"
-  head: "e9eeefc38c8253b9507931fe2f2a4424b6556454"
-  last_verified_at: "2026-09-28T02:41:45-07:00"
-  completion: "implementation-delivered; visual-proof-and-Drive-blocked"
+  head: "3acbfe465fad3d583006a407ca782d0870bcb36e"
+  last_verified_at: "2026-09-28T02:46:00-07:00"
+  completion: "implementation-and-docs-pushed; visual-proof-and-Drive-blocked"
