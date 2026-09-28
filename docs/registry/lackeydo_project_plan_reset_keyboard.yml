@@ -4,7 +4,7 @@ project_plan:
   receipt:
     schema: "agent-cache.lackeydo.receipt.v1"
     receipt_id: "keybrake-reset-keyboard-20260927"
-    status: "prior in-app reset delivered; standalone pane built and installed; System Settings discovery unverified; app handoff gated"
+    status: "prior in-app reset delivered; pane scaffold committed and pushed to PR #1; System Settings discovery unverified; app handoff gated"
     submitted_by: "Codex"
     submitted_at: "2026-09-27T22:34:10-07:00"
     task_identity:
@@ -14,10 +14,10 @@ project_plan:
     repository_identity:
       repo_root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "5fb20d752511b674603778e1e07277b029e419a1"
-      tree: "d05e96931e49c625f183690e93d55faede5c4333"
+      head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
+      tree: "ca261f2bbc86880cb689d9695b4f0cf22eb87dc3"
       dirty_state: "dirty-preserved"
-      last_updated_at: "2026-09-28T05:23:00-07:00"
+      last_updated_at: "2026-09-28T05:28:00-07:00"
     claims:
       - claim_id: "R001"
         claim_class: "REQUIREMENT"
@@ -327,9 +327,9 @@ project_plan:
     repository_identity:
       root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "5fb20d752511b674603778e1e07277b029e419a1"
-      upstream_head: "5fb20d752511b674603778e1e07277b029e419a1"
-      checked_at: "2026-09-28T04:34:54-07:00"
+      head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
+      upstream_head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
+      checked_at: "2026-09-28T05:26:48-07:00"
       dirty_paths_excluded:
         - "KeyBrake/UI/RecoveryView.swift"
         - "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
@@ -571,6 +571,8 @@ project_plan:
       status: "passed; principal class is KeyBrakeSettingsPane and package type is BNDL"
     - command: "diff -qr build/Debug/KeyBrake.prefPane ~/Library/PreferencePanes/KeyBrake.prefPane"
       status: "passed; installed per-user pane is identical to the task-built bundle"
+    - command: "python3 /Users/michaeltran/AntiGravity/agent-cache/scripts/hooks/physical_code_compare_guard.py record --cwd /Users/michaeltran/AntiGravity/KeyBrake --staged --ack-diff-sha c01dde916b192ceab035cbea6411a2cf73337c9a9c9ec624e5b0582ace45fef0"
+      status: "passed after complete review of the exact 54 KB, 717-line staged diff; receipt /Users/michaeltran/.codex/physical-code-compare/830957ef69114dfa1aa948f3.json"
   deferred_items:
     - "Pane discovery/opening, app handoff, live accessibility, measured pane LxW, raw and annotated screenshot identity, and Google Drive filing remain unproven; the task pane bundle is built and installed, but the safe System Settings launch route is blocked."
   blockers:
@@ -598,11 +600,13 @@ project_plan:
     branch: "codex/keybrake-complete-implementation"
     feature_commit_sha: "3acbfe465fad3d583006a407ca782d0870bcb36e"
     feature_tree_sha: "3bfe159c3cdaf2fad7e00f8cd0ffd4578322ac89"
-    remote_branch_sha_at_verification: "3acbfe465fad3d583006a407ca782d0870bcb36e"
-    remote_verified_at: "2026-09-28T02:46:00-07:00"
+    pane_checkpoint_commit_sha: "e1d919515ef0650940a001267e7c10a11bd3cb89"
+    pane_checkpoint_tree_sha: "ca261f2bbc86880cb689d9695b4f0cf22eb87dc3"
+    remote_branch_sha_at_verification: "e1d919515ef0650940a001267e7c10a11bd3cb89"
+    remote_verified_at: "2026-09-28T05:26:48-07:00"
     pull_request: "https://github.com/SatireLord/KeyBrake/pull/1"
-    result: "The earlier in-app selected-app reset and its documentation were delivered; the corrected System Settings pane milestone is active on the same PR."
+    result: "The separate pane build scaffold and UI-113 proof record are pushed to PR #1; live System Settings discovery, pane-to-app handoff, screenshot proof, and Drive filing remain unverified."
   branch: "codex/keybrake-complete-implementation"
-  head: "5fb20d752511b674603778e1e07277b029e419a1"
-  last_verified_at: "2026-09-28T05:23:00-07:00"
+  head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
+  last_verified_at: "2026-09-28T05:28:00-07:00"
   completion: "pane-built-and-installed; System-Settings-runtime-proof-blocked; app-handoff-gated"
