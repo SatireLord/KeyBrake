@@ -14,10 +14,10 @@ project_plan:
     repository_identity:
       repo_root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
-      tree: "ca261f2bbc86880cb689d9695b4f0cf22eb87dc3"
+      head: "854b95355c4bc737f047d47bc8f6237bccb48ad1"
+      tree: "3039dfade98cbebda876387e4fbee8b11bd50e6d"
       dirty_state: "dirty-preserved"
-      last_updated_at: "2026-09-28T05:28:00-07:00"
+      last_updated_at: "2026-09-28T05:56:07-07:00"
     claims:
       - claim_id: "R001"
         claim_class: "REQUIREMENT"
@@ -327,9 +327,9 @@ project_plan:
     repository_identity:
       root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
-      upstream_head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
-      checked_at: "2026-09-28T05:26:48-07:00"
+      head: "854b95355c4bc737f047d47bc8f6237bccb48ad1"
+      upstream_head: "854b95355c4bc737f047d47bc8f6237bccb48ad1"
+      checked_at: "2026-09-28T05:56:07-07:00"
       dirty_paths_excluded:
         - "KeyBrake/UI/RecoveryView.swift"
         - "docs/registry/lackeydo_project_plan_keybrake_iterative_improvement.yml"
@@ -442,6 +442,11 @@ project_plan:
       creation_command: "CODEX_THREAD_ID=01a0e65b-adc4-7b23-ae91-dc737da705df displayctl ensure --logical-id keybrake-system-settings-pane-20260928 --name \"KeyBrake System Settings Pane\" --width 1920 --height 1080 --owner codex-01a0e65b-adc4-7b23-ae91-dc737da705df --refresh 60 --ttl 900"
       current_task_started_at_utc: "unknown; ensure response did not include a participant timestamp"
       last_verified_at_utc: "2026-09-28T12:08:10Z"
+      current_capability_refresh:
+        checked_at_utc: "2026-09-28T12:47:15Z"
+        command: "displayctl capabilities"
+        status: "succeeded"
+        result: "The host advertised virtual display support only; no AGENT_DISPLAY_STAGE_SAFE_V1 or app-supported System Settings reveal route was listed. The only display snapshot was shared virtual-16x9, system ID 26; no task-owned System Settings display existed."
       ttl_seconds: 900
       lease_expires_at_utc: "unknown; ensure response did not include expiry"
       start_command: "CODEX_THREAD_ID=01a0e65b-adc4-7b23-ae91-dc737da705df displayctl ensure --logical-id keybrake-system-settings-pane-20260928 --name \"KeyBrake System Settings Pane\" --width 1920 --height 1080 --owner codex-01a0e65b-adc4-7b23-ae91-dc737da705df --refresh 60 --ttl 900"
@@ -460,7 +465,7 @@ project_plan:
       computer_use_status: "no app-targeted CUA tool is exposed; preflight reports computer_use_standing=false"
       capture_status: "not captured; the task display was empty and no System Settings pane opened"
     next_safe_route:
-      status: "blocked after exact safe launch attempts"
+      status: "blocked; the 2026-09-28T12:47:15Z capability refresh still showed no admitted task-owned System Settings route"
       method: "Resume only when System Settings can be launched into the task display through an app-supported reveal route or AGENT_DISPLAY_STAGE_SAFE_V1 becomes available; then route the exact task-owned PID with displayctl route-window --no-activate."
       constraints: "Do not touch the existing System Settings process PID 39923, do not reuse virtual-16x9 with the BetterDisplay overlay, and do not capture unless inspection proves is-isolated=true."
       fallback: "If a separate task-owned process or isolated window cannot be proven, stop visual capture and record the runtime claim unverified; continue source and build proof."
@@ -542,7 +547,7 @@ project_plan:
       name: "Install, discover, open, and visually prove the pane in System Settings"
       files: ["~/Library/PreferencePanes/KeyBrake.prefPane", "docs/proofs/keybrake-system-settings-pane.raw.png", "docs/proofs/keybrake-system-settings-pane.png"]
       dependencies: ["S005", "task-owned Agent Display participant", "isolated task-launched System Settings process"]
-      status: "blocked; safe System Settings launch was refused before pane discovery could be checked; modern-host support is also not established by current Apple documentation"
+      status: "blocked; the latest capability refresh still provides no admitted route for pane discovery; modern-host support is also not established by current Apple documentation"
     - id: "S007"
       name: "Route the pane to existing Keyboard settings after S006 passes"
       files: ["KeyBrake/App/KeyBrakeApp.swift", "KeyBrakeCore/KeyBrakeSystemSettingsRoute.swift", "SupportingFiles/Info.plist", "KeyBrake/UI/SettingsView.swift"]
@@ -576,14 +581,103 @@ project_plan:
   deferred_items:
     - "Pane discovery/opening, app handoff, live accessibility, measured pane LxW, raw and annotated screenshot identity, and Google Drive filing remain unproven; the task pane bundle is built and installed, but the safe System Settings launch route is blocked."
   blockers:
-    - "System Settings runtime proof is blocked because /Users/michaeltran/bin/open refused the pane-document launch as an uncontained physical-Space window, then refused a background no-document launch without an app-supported AGENT_DISPLAY_REVEAL_NOTIFICATION. The host still lacks AGENT_DISPLAY_STAGE_SAFE_V1, and preflight reports computer_use_standing=false. Existing System Settings PID 39923 was left untouched."
+    - "System Settings runtime proof remains blocked: /Users/michaeltran/bin/open refused the pane-document launch as an uncontained physical-Space window, then refused a background no-document launch without an app-supported AGENT_DISPLAY_REVEAL_NOTIFICATION; the 2026-09-28T12:47:15Z displayctl capabilities snapshot still advertised no AGENT_DISPLAY_STAGE_SAFE_V1 and listed only shared virtual-16x9 system ID 26. Preflight reported computer_use_standing=false, and existing System Settings PID 39923 remains untouched. This is a runtime-evidence limit, not missing user authorization."
     - "The shared virtual-16x9 route remains excluded because its current display has a BetterDisplay overlay and old lease history; task display 27 is clean but empty because no supported System Settings launch path is available."
+  next_roi:
+    source_handoff:
+      thread_id: "01a0e26a-16f9-7ff3-8bc8-02cf501bb424"
+      deep_link: "codex://threads/01a0e26a-16f9-7ff3-8bc8-02cf501bb424"
+      received_at_utc: "2026-09-28T12:28:00Z"
+    exact_requested_outcome: "A separate KeyBrake entry appears and opens in macOS System Settings, then connects to KeyBrake's existing selected-app keyboard-access reset."
+    scope: "S006 runtime proof on the current KeyBrake branch and installed KeyBrake.prefPane."
+    completion_condition: "A task-owned System Settings process discovers and opens the installed pane on the task display, with containment verified before capture."
+    ranking_horizon: "Current S006 re-entry decision."
+    current_bottleneck: "No admitted safe route can launch System Settings into a task-owned display."
+    evidence:
+      - claim_class: "FACT"
+        claim: "The pane target builds and the per-user installed bundle matches the build."
+        basis: "UI-113 in docs/KEYBRAKE_VERIFICATION.md; commit e1d919515ef0650940a001267e7c10a11bd3cb89."
+      - claim_class: "OBSERVATION"
+        claim: "The latest display capability response lists only shared virtual-16x9 system ID 26 and does not advertise AGENT_DISPLAY_STAGE_SAFE_V1."
+        basis: "displayctl capabilities at 2026-09-28T12:47:15Z; response request ID 67A6BD7A-8D8E-4D67-84F0-6124057C5E90."
+      - claim_class: "UNKNOWN"
+        claim: "Whether macOS 27 System Settings discovers and loads this NSPreferencePane bundle remains unestablished."
+        basis: "No task-owned System Settings window opened; Apple's current framework documentation describes System Preferences."
+    score_method:
+      type: "ordinal estimate"
+      formula: "return_score = 2*outcome_leverage + trust_or_reliability_gain + recurring_friction_reduction + learning_or_reuse_gain; friction_score = effort + integration_risk + uncertainty + dependency_wait; relative_priority = return_score / friction_score"
+      scales: "Outcome, trust, and friction reduction use 0..3; learning uses 0..2; effort, integration risk, and uncertainty use 1..3; dependency wait uses 0..2. Scores are relative estimates, not money, probabilities, or measured effort."
+      sensitivity: "If the safe route reduces uncertainty from 3 to 2 and dependency wait from 2 to 1 while the other ROI-001 inputs stay fixed, the relative score changes from 13/7=1.86 to 13/5=2.60."
+    candidates:
+      - candidate_id: "ROI-001"
+        action: "Preserve the built-and-installed checkpoint; resume S006 only when an admitted task-owned System Settings route exists, then make one contained discovery/open attempt."
+        claim_class: "ESTIMATE"
+        requested_outcome_relation: "Directly preserves the explicit first milestone and avoids repeating a launch that the current safety boundary refuses."
+        user_payoff: "Fastest decision-changing proof of whether macOS 27 System Settings can host the pane."
+        inputs: "outcome=3; trust=3; friction_reduction=2; learning=2; effort=1; integration_risk=1; uncertainty=3; dependency_wait=2"
+        return_score: "13 = 2*3 + 3 + 2 + 2"
+        friction_score: "7 = 1 + 1 + 3 + 2"
+        relative_priority: "1.86 = 13/7"
+        status: "selected"
+        owner: "Agent Display launch admission and KeyBrakePreferencePane runtime proof"
+        proof_gate: "The task-owned System Settings process opens KeyBrake.prefPane on an isolated task display; inspect-ui and screenshot proof follow only after is-isolated=true."
+      - candidate_id: "ROI-002"
+        action: "Repeat the same pane-document or background System Settings launch now."
+        claim_class: "PROPOSAL"
+        requested_outcome_relation: "The earlier exact attempts were refused, and the current capability response shows no route change."
+        user_payoff: "None unless the host capability or supported reveal route changes."
+        inputs: "outcome=1; trust=1; friction_reduction=0; learning=0; effort=1; integration_risk=2; uncertainty=3; dependency_wait=2"
+        return_score: "3 = 2*1 + 1 + 0 + 0"
+        friction_score: "8 = 1 + 2 + 3 + 2"
+        relative_priority: "0.38 = 3/8"
+        status: "duplicate; do not repeat until route state changes"
+        owner: "System Settings launch route"
+        proof_gate: "A newly admitted route must exist before another launch attempt."
+      - candidate_id: "ROI-003"
+        action: "Wire the pane-to-app URL handoff before S006 passes."
+        claim_class: "REQUIREMENT"
+        requested_outcome_relation: "The handoff is required downstream, but the user-selected order gates it on proving pane discovery first."
+        user_payoff: "Would connect the pane to the existing reset after the host behavior is known."
+        inputs: "outcome=3; trust=1; friction_reduction=1; learning=0; effort=2; integration_risk=3; uncertainty=2; dependency_wait=2"
+        return_score: "8 = 2*3 + 1 + 1 + 0"
+        friction_score: "9 = 2 + 3 + 2 + 2"
+        relative_priority: "0.89 = 8/9"
+        status: "deferred until S006 proof"
+        owner: "KeyBrake app URL handler and shared settings route"
+        proof_gate: "S006 passes; then test keybrake://settings/keyboard and confirm only the selected app's ListenEvent/PostEvent reset remains reachable."
+    selection:
+      action: "Keep the verified build/install checkpoint and wait for an admitted task-owned System Settings route; do not repeat the refused launch while the capability response is unchanged."
+      cost_and_risk: "One read-only route check; no source or shared-display mutation. Current compatibility uncertainty remains high because System Settings never loaded the pane."
+      next_measurement: "A later displayctl capabilities/preflight result that admits a task-owned System Settings process and isolated pane window."
+      reentry_condition: "AGENT_DISPLAY_STAGE_SAFE_V1 is advertised or an app-supported reveal notification is available, and a fresh Agent-Display/cursor preflight admits the exact System Settings app on a task-owned display."
+      alternatives: "ROI-002 is duplicate until route state changes; ROI-003 remains the required second slice after S006."
+      does_not_prove: "This read-only decision does not prove System Settings compatibility, pane discovery, visible layout, accessibility, reset interaction, or distribution packaging."
+  release_gate_audit:
+    status: "evidence-audited"
+    exact_requested_outcome: "A separate KeyBrake System Settings entry opens, then provides access to the existing selected-app keyboard reset."
+    confirmed_blocker:
+      class: "A. CONFIRMED_BLOCKER"
+      item: "S006 acceptance cannot be proven on this host until a safe task-owned System Settings launch route is admitted."
+      authority: "The user adopted pane discovery/opening as the first milestone, and Agent Display/Cursor-Steal rules require containment before UI proof."
+      evidence: "The exact pane-document and background launch refusals are recorded above; displayctl capabilities at 2026-09-28T12:47:15Z returned only shared virtual-16x9 system ID 26 and no safe-stage capability."
+      omission_consequence: "System Settings support cannot be claimed, and the gated S007 pane-to-app handoff cannot start."
+      exact_action: "Wait for the safe route admission, then launch an isolated task-owned System Settings process and open KeyBrake.prefPane once."
+      proof: "The installed pane is discovered and open in an is-isolated task window, with the visible pane captured and its exact bounds recorded."
+    unknowns:
+      - "Whether macOS 27 System Settings discovers this NSPreferencePane bundle remains UNKNOWN until the admitted runtime test runs."
+    release_quality_improvements: []
+    future_work:
+      - "Installer/update packaging is not established by the current build target and can be designed after host compatibility is measured."
+    required_downstream_after_gate:
+      - "S007: connect the pane to the existing Keyboard settings only after S006 passes."
+      - "S008: complete the required visual receipt, Drive filing, and current-PR delivery record when an isolated pane window can be captured."
+    next_safe_entrypoint: "Refresh display capabilities only when the task host or reveal route changes; then repeat preflight and launch with the exact task-owned display."
   resolved_blockers:
     - "The originally requested KeyBrake_OpenSource working directory is absent; the user's clarification identifies KeyBrake as the product, and /Users/michaeltran/AntiGravity/KeyBrake is the verified Git root used for this implementation."
     - "The app has no separate keyboard shortcut preference model; the new control uses the existing supported per-app keyboard-input TCC reset path and states that global Keyboard Accessibility settings stay unchanged."
     - "Initialized the ignored KeyBrake .codegraph index with CodeGraph 1.1.6; explicit-path status reports 39 indexed files, 860 nodes, 1,891 edges, and 2,854,912 database bytes. The SettingsView query maps to KeyBrake/UI/SettingsView.swift:23-660; the Keyboard symbol query returns no nodes."
     - "The local MCP CodeGraph adapter still targets the missing active workspace; the explicit-path CodeGraph CLI succeeded on the validated KeyBrake root."
-    - "The explicit user clarification resolved app and placement: this is KeyBrake Settings > Keyboard. The exact TCC pair remains a source-derived choice and leaves the global Keyboard Accessibility options shown in the reference unchanged."
+    - "The earlier clarification placed Reset Keyboard inside KeyBrake Settings > Keyboard; the latest user correction supersedes that as the completion location and selects a separate System Settings pane. The existing in-app action remains limited to the selected app's ListenEvent and PostEvent TCC decisions."
   task_checklist_markdown: |
     - [x] Confirm the only valid KeyBrake Git root, branch, HEAD, upstream, remote head, and two excluded dirty paths. status: complete
     - [x] Read the scoped root AGENTS.md, shared agent contract, SeedRepo, LackeyDo, Checksummation contract, and Preflight Harmony rule. status: complete
@@ -595,18 +689,20 @@ project_plan:
     - [ ] Prove System Settings discovers and opens the pane. status: blocked; the safe launch guard refused both launch forms, the stage-safe capability is absent, and the existing Settings process was preserved.
     - [ ] Capture one isolated raw/annotated System Settings screenshot and record exact LxW plus proof hashes. status: blocked until a task-owned pane window passes is-isolated=true.
     - [ ] Connect the pane to the existing Keyboard settings and selected-app reset after the pane discovery proof. status: gated on S006.
-    - [ ] Update docs, exact-path commit/push, verify current remote SHA, and file screenshot plus metadata in the specified Drive folder. status: pending; check Drive connector availability before claiming filing.
+    - [x] Refresh Agent Display capabilities and the same-PR head at 2026-09-28T12:47:15Z; the safe route remains absent and only shared display 26 is listed. status: S006 still blocked; no UI launch was repeated.
+    - [x] Record the evidence-labeled NextROI decision, relative ordinal comparison, S006 blocker class, unknown host compatibility, and source-thread deep link in this ledger.
+    - [ ] Resume S006 only after safe route admission; then complete S007 and S008 in dependency order, including isolated screenshot, exact LxW, and Drive filing.
   delivery:
     branch: "codex/keybrake-complete-implementation"
     feature_commit_sha: "3acbfe465fad3d583006a407ca782d0870bcb36e"
     feature_tree_sha: "3bfe159c3cdaf2fad7e00f8cd0ffd4578322ac89"
     pane_checkpoint_commit_sha: "e1d919515ef0650940a001267e7c10a11bd3cb89"
     pane_checkpoint_tree_sha: "ca261f2bbc86880cb689d9695b4f0cf22eb87dc3"
-    remote_branch_sha_at_verification: "e1d919515ef0650940a001267e7c10a11bd3cb89"
-    remote_verified_at: "2026-09-28T05:26:48-07:00"
+    remote_branch_sha_at_verification: "854b95355c4bc737f047d47bc8f6237bccb48ad1"
+    remote_verified_at: "2026-09-28T05:56:07-07:00"
     pull_request: "https://github.com/SatireLord/KeyBrake/pull/1"
     result: "The separate pane build scaffold and UI-113 proof record are pushed to PR #1; live System Settings discovery, pane-to-app handoff, screenshot proof, and Drive filing remain unverified."
   branch: "codex/keybrake-complete-implementation"
-  head: "e1d919515ef0650940a001267e7c10a11bd3cb89"
-  last_verified_at: "2026-09-28T05:28:00-07:00"
+  head: "854b95355c4bc737f047d47bc8f6237bccb48ad1"
+  last_verified_at: "2026-09-28T05:56:07-07:00"
   completion: "pane-built-and-installed; System-Settings-runtime-proof-blocked; app-handoff-gated"
