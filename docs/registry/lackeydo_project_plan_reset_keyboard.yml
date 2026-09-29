@@ -3,10 +3,10 @@ project_plan:
     task_id: "01a0e65b-adc4-7b23-ae91-dc737da705df"
     source: "/Users/michaeltran/.codex/attachments/51d28704-900c-4fc0-abb6-bbeb9fb6affc/pasted-text-1.txt"
     status: "feature-source-and-pr-description-delivered; native-proof-unverified"
-    recorded_at_utc: "2026-09-29T00:06:26Z"
+    recorded_at_utc: "2026-09-29T00:27:11Z"
     latest_continuation:
-      repository_head: "bb485dd81a71a60a2fd418ecd94da6d03bc11a0d"
-      upstream_head_after_fetch: "bb485dd81a71a60a2fd418ecd94da6d03bc11a0d"
+      repository_head: "eeaa2d4c23cf73bcb7172541f8c3ef7f89db8edf"
+      upstream_head_after_fetch: "eeaa2d4c23cf73bcb7172541f8c3ef7f89db8edf"
       source_audit:
         recovery_progress: "Verified present at EmergencyCoordinator.recordProgress -> RecoveryStore.updateProgress; prior report of an unwired progress API was stale for this checkout. EmergencyCoordinatorTests covers per-resource persistence and independent restoration."
         privacy_reset_failure: "Fixed: ViewModel and coordinator now keep both privacy-reset actions unavailable until RecoveryStore.load succeeds; unreadable snapshots stay preserved and do not reach PrivacyController. Empty-store and known-pending hydration remain accepted, and the full suite covers the state boundaries."
@@ -16,6 +16,8 @@ project_plan:
         current_tests: "Focused demo-composition and unreadable-recovery tests passed 3 tests with zero failures. The complete SwiftPM suite passed all 73 discovered test methods with zero failures in one run after current source repairs."
         current_builds: "After xcodegen generate and the pane module-name collision fix, unsigned app Debug/Release and standalone pane Debug/Release builds pass. App builds embed their matching pane product under Contents/Library/PreferencePanes/KeyBrake.prefPane; same-build copies compare byte-for-byte. App and pane Info.plists lint and contain verified route/host metadata."
         native_preflight: "Fresh preflight receipt at 2026-09-28T23:50:34Z: status=degraded, computer_use_standing=false, route_exit=3, isolated_exit=3; Agent Display denied route/isolation because Settings contains User-Alpha. The sentinel was already running as PID 32475. No System Settings process launched; no live proof followed."
+        display_presence_preflight: "At 2026-09-29T00:14:55Z, agent_ui_preflight.py --app com.apple.systempreferences --display virtual-16x9 --require-existing-display --skip-route --start-sentinel --json returned status=pass for existing-display presence, with computer_use_standing=false and route=null. Display 9 was shared under lease owner agent-user; inspect-ui showed only menu-bar content, and operator windows remained on the physical display. Because --skip-route skipped route/isolation, this is not S006 admission or pane proof; no System Settings process was launched."
+        codegraph_refresh_attempt: "During 2026-09-29T00:17Z–00:26Z, the MCP CodeGraph status and explore calls both returned MCP -32603 internal errors. A shell invocation of /Users/michaeltran/AntiGravity/agent-cache/scripts/codegraph_repo_graph_bridge.py returned file-not-found, so no current graph refresh or new symbol query is claimed; the previously recorded explicit-root CodeGraph 1.1.6 result remains historical evidence."
         physical_project_comparison: "B4 snapshot captured immediately before the pane plist project update and xcodegen generate; physical_code_compare_guard.py record returned pass/no destructive changes. Historical pre-pane hashes remain recorded under physical_comparison.snapshots."
         recovery_progress: "Verified present at EmergencyCoordinator.recordProgress -> RecoveryStore.updateProgress; per-resource persistence and independent restoration tests exist."
       agent_cache_task_status: "One task-status call stalled and returned MCP internal error; no retry is planned, and this LackeyDo task ledger is the durable fallback."
@@ -36,12 +38,12 @@ project_plan:
           index_blob: "04d9a815eb680ad864b2fbb654b0c2c1d1371160"
           worktree_blob: "05eb4da7ce0c4924aa1f5e8a9f0ab6667dc81263"
           sha256: "492e8d586e194de58a35541a9486183e9af3bbf4e76551f6e0a09fd0119e931b"
-      acceptance_gate: "S006/S007/S008 remain separate native System Settings discovery, interaction, and visual-proof gates. Fresh 2026-09-28T23:50:34Z preflight denied route/isolation; only temporary-home installer fixtures ran. No real pane install, System Settings launch, screenshot, dimension measurement, or Drive claim is made."
+      acceptance_gate: "S006/S007/S008 remain separate native System Settings discovery, interaction, and visual-proof gates. The last actual route attempt at 2026-09-28T23:50:34Z denied route/isolation. The 2026-09-29T00:14:55Z --skip-route check passed only existing-display presence and left computer_use_standing=false and route=null; it did not admit System Settings. Only temporary-home installer fixtures ran. No real pane install, System Settings launch, screenshot, dimension measurement, or Drive claim is made."
     repository:
       root: "/Users/michaeltran/AntiGravity/KeyBrake"
       branch: "codex/keybrake-complete-implementation"
-      head: "bb485dd81a71a60a2fd418ecd94da6d03bc11a0d"
-      upstream_head: "bb485dd81a71a60a2fd418ecd94da6d03bc11a0d"
+      head: "eeaa2d4c23cf73bcb7172541f8c3ef7f89db8edf"
+      upstream_head: "eeaa2d4c23cf73bcb7172541f8c3ef7f89db8edf"
       pull_request: "https://github.com/SatireLord/KeyBrake/pull/1"
       pull_request_state: "open; unmerged; head matches current branch"
     attachment_inventory:
@@ -1023,13 +1025,14 @@ project_plan:
     - [x] Validate installer upgrade and failure edges in temporary HOME fixtures. status: matching pane upgrade retained a backup; unrelated panes, destination/parent symlinks, empty HOME, and URLName-only fake schemes were rejected without touching the real user Library.
     - [x] Commit and push the pane integration, tests, installer, and docs to PR #1. status: feature commit bb485dd81a71a60a2fd418ecd94da6d03bc11a0d; tree 036ff0d2d2148504ba8b34d51b268d83d80dae63; local/upstream/GitHub PR head matched after push.
     - [x] Update PR #1 description with implementation, proof, and limitation facts. status: stale UI-113 tail replaced; body readback matched after trailing-newline normalization.
-    - [ ] Install the route-enabled pane beside a matching installed KeyBrake app. status: no real install was performed because the fresh 2026-09-28T23:50:34Z preflight denied System Settings route and isolation.
-    - [ ] Prove System Settings discovers and opens the pane. status: unverified; fresh 2026-09-28T23:50:34Z preflight denied admission, and no process was launched.
+    - [ ] Install the route-enabled pane beside a matching installed KeyBrake app. status: no real install was performed because the latest actual route attempt denied admission; the 2026-09-29T00:14:55Z --skip-route check did not authorize installation or launch.
+    - [ ] Prove System Settings discovers and opens the pane. status: unverified; the last actual route attempt denied admission, and the later display-presence-only check skipped route/isolation.
     - [ ] Capture one isolated raw/annotated System Settings screenshot and record exact LxW plus proof hashes. status: blocked until a task-owned pane window passes is-isolated=true; source declares 560×360 points but no host measurement exists.
     - [x] Connect the pane source to the existing Keyboard settings while preserving selected-app reset semantics. status: source implementation and focused route tests pass; S006/S007 live runtime proof remains open.
     - [x] Refresh Agent Display capabilities and the same-PR head at 2026-09-28T12:47:15Z; the safe route remains absent and only shared display 26 is listed. status: S006 still blocked; no UI launch was repeated.
     - [x] Record the evidence-labeled NextROI decision, relative ordinal comparison, S006 blocker class, unknown host compatibility, and source-thread deep link in this ledger.
     - [x] Record the current System Settings target denial and verify the exact My Drive proof folder at 2026-09-28T16:30:54Z; no process launched and no screenshot uploaded.
+    - [x] Record the 2026-09-29T00:14:55Z skip-route display-presence result and its proof limit; no route, isolation, pane discovery, or live interaction was claimed.
     - [ ] Resume S006/S007 only on a task-owned macOS host where fresh preflight admits System Settings; install/discover/open once, exercise the route, record exact pane bounds, create raw and annotated proof, verify hashes and dimensions, file approved proof in the exact Drive folder, then update PR #1.
   delivery:
     branch: "codex/keybrake-complete-implementation"
@@ -1042,6 +1045,6 @@ project_plan:
     pull_request: "https://github.com/SatireLord/KeyBrake/pull/1"
     result: "Feature source commit bb485dd81a71a60a2fd418ecd94da6d03bc11a0d delivers the separate pane, app keyboard route, selected-app reset/recovery safeguards, fixture tests, app embedding, installer, and Debug/Release proof to PR #1; the PR description records these results. Fresh System Settings route/isolation preflight was denied at 2026-09-28T23:50:34Z, so real installation, discovery/opening, interaction, screenshot proof, and Drive upload remain unverified."
   branch: "codex/keybrake-complete-implementation"
-  head: "bb485dd81a71a60a2fd418ecd94da6d03bc11a0d"
-  last_verified_at: "2026-09-28T23:56:16Z"
+  head: "eeaa2d4c23cf73bcb7172541f8c3ef7f89db8edf"
+  last_verified_at: "2026-09-29T00:27:11Z"
   completion: "feature-source-and-PR-description-delivered; System-Settings-discovery-open-interaction-visual-and-Drive-proof-unverified"
