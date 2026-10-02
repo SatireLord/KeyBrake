@@ -1,15 +1,19 @@
 import AppKit
 import KeyBrakeCore
 import SwiftUI
+import UserNotifications
 
 final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
     private var recoveryPanelController: RecoveryPanelController?
     private weak var model: KeyBrakeViewModel?
     private var pendingKeyboardSettingsRoute = false
     private var openSettingsWindow: (() -> Void)?
+    private let recoveryNotificationBridge = KeyBrakeRecoveryNotificationBridge()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         recoveryPanelController = RecoveryPanelController()
+        recoveryNotificationBridge.owner = self
+        UNUserNotificationCenter.current().delegate = recoveryNotificationBridge
     }
 
     @MainActor
@@ -32,6 +36,13 @@ final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
                 self?.receiveKeyboardSettingsRoute()
             }
         }
+    }
+
+    @MainActor
+    func presentRecoveryFromNotification() {
+        guard let model else { return }
+        model.isShowingRecoveryPanel = true
+        presentRecoveryPanel(model: model)
     }
 
     @MainActor
@@ -84,6 +95,28 @@ final class KeyBrakeAppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ notification: Notification) {
         MainActor.assumeIsolated {
             model?.cleanupDemoStore()
+        }
+    }
+}
+
+/// Forwards the recovery notification onto the main actor without capturing
+/// KeyBrakeAppDelegate inside the UserNotifications callback.
+private final class KeyBrakeRecoveryNotificationBridge: NSObject, UNUserNotificationCenterDelegate, @unchecked Sendable {
+    weak var owner: KeyBrakeAppDelegate?
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        let opensRecovery = response.notification.request.identifier == "keybrake.recovery-pending"
+        let owner = owner
+        completionHandler()
+        guard opensRecovery else { return }
+        DispatchQueue.main.async {
+            MainActor.assumeIsolated {
+                owner?.presentRecoveryFromNotification()
+            }
         }
     }
 }
