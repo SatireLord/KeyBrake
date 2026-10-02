@@ -18,7 +18,7 @@ Version `0.1.0` (build `1`) is an experimental systems prototype. Local Xcode bu
 
 UI-015 adds explicit `CFBundleExecutable` metadata to the native app plist. The unsigned Xcode Release bundle now records `KeyBrake` as its executable while preserving the stable bundle identity, helper resources, LaunchDaemons plist, feature contract, and version metadata.
 
-Public claims must match [`docs/KEYBRAKE_CAPABILITY_MATRIX.md`](docs/KEYBRAKE_CAPABILITY_MATRIX.md). Evidence boundaries are in [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md). The operator checklist for flipping GitHub visibility is [`docs/KEYBRAKE_PUBLIC_RELEASE.md`](docs/KEYBRAKE_PUBLIC_RELEASE.md).
+Public claims must match [`docs/KEYBRAKE_CAPABILITY_MATRIX.md`](docs/KEYBRAKE_CAPABILITY_MATRIX.md). Evidence boundaries are in [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md). The operator checklist for flipping GitHub visibility is [`docs/KEYBRAKE_PUBLIC_RELEASE.md`](docs/KEYBRAKE_PUBLIC_RELEASE.md). Signed distribution steps are in [`docs/KEYBRAKE_OPERATOR_SIGNED_RELEASE.md`](docs/KEYBRAKE_OPERATOR_SIGNED_RELEASE.md).
 
 ## What it does
 
@@ -287,4 +287,4 @@ UI-111 makes the Recovery panel recorded inventory inspectable during safe revie
 
 UI-112 makes the Recovery panel busy-state guidance deterministically inspectable through `keybrake.recovery.busy-guidance` while preserving its visible copy, busy gates, and review-action availability.
 
-UI-113 exposes `keybrake.recovery.close-language` on the panel-close explanation. UI-114 exposes `keybrake.recovery.action-boundary` on the bounded-restore introduction. UI-115 makes the Recovery status GroupBox a containing surface for `keybrake.recovery.state-summary`. UI-116 adds `keybrake.recovery.panel` on the root surface and UI-117 adds `keybrake.recovery.header` for the title block. These are presentation-only inspection anchors; recovery handlers and host-operation boundaries are unchanged.
+UI-113 exposes `keybrake.recovery.close-language` on the panel-close explanation. UI-114 exposes `keybrake.recovery.action-boundary` on the bounded-restore introduction. UI-115 makes the Recovery status GroupBox a containing surface for `keybrake.recovery.state-summary`. UI-116 adds `keybrake.recovery.panel` on the root surface and UI-117 adds `keybrake.recovery.header` for the title block. UI-118 combines each recovery action title and explanation for inspection. These are presentation-only inspection anchors; recovery handlers and host-operation boundaries are unchanged.

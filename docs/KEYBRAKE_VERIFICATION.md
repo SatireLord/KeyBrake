@@ -567,6 +567,8 @@ The UI-113 through UI-115 proof adds `keybrake.recovery.close-language`, `keybra
 
 The UI-116 and UI-117 proof adds `keybrake.recovery.panel` on the containing recovery surface and `keybrake.recovery.header` on the combined title block without changing actions or layout. `swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI116-117` passed all 73 tests with 0 failures. Source SHA-256: `d6fb9338b27decc29a176d0c74127b677940352204fee060a5ab65ee0a1db4a8` (`KeyBrake/UI/RecoveryView.swift`).
 
+The UI-118 proof combines each Recovery panel action's visible title and explanation into one accessibility surface while preserving identifiers, hints, busy gates, and handlers. `project.yml` sets `ENABLE_TESTABILITY: YES` on `KeyBrakeCore` so Release Xcode `@testable import KeyBrakeCore` tests can run after `xcodegen generate`. `swift test --disable-sandbox --scratch-path /tmp/KeyBrakeROI-batch` passed all 73 tests with 0 failures. Agent Display containment and Developer ID signing were not re-run in this batch; see `docs/KEYBRAKE_OPERATOR_SIGNED_RELEASE.md` for the operator signed-release checklist.
+
 ## Regression checksum anchors
 
 These SHA-256 values anchor the safety contract and the highest-risk command seams for this deliverable. They are recorded after the final source/doc edits; a later change must recompute and review the affected value.

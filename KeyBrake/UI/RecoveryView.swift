@@ -20,6 +20,7 @@ import SwiftUI
 // QoL-115: the recovery state-summary GroupBox is a containing inspection surface while preserving the existing state-summary identifier and visible copy.
 // QoL-116: the recovery panel root exposes a stable inspection anchor without changing layout or recovery behavior.
 // QoL-117: the recovery panel header exposes a stable combined inspection surface without changing visible copy or recovery routing.
+// QoL-118: each recovery action combines its visible title and explanation into one inspectable accessibility surface without changing handlers or gates.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -246,6 +247,8 @@ struct RecoveryView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title). \(description)")
         .accessibilityIdentifier(identifier)
         .help(recoveryActionHint(description: description, disablesWhileBusy: disablesWhileBusy))
         .accessibilityHint(recoveryActionHint(description: description, disablesWhileBusy: disablesWhileBusy))

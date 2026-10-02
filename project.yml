@@ -29,6 +29,7 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrakeCore
       DEFINES_MODULE: YES
       GENERATE_INFOPLIST_FILE: YES
+      ENABLE_TESTABILITY: YES
   KeyBrake:
     type: application
     platform: macOS

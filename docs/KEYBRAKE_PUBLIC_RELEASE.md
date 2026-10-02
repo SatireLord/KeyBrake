@@ -27,7 +27,7 @@ This is the operator checklist for making KeyBrake source public. Agents must no
 3. Review and merge PR #1 onto `main` **before** making the repository public. Default `main` currently lacks `LICENSE` and the implementation.
 4. Confirm `main` contains the merged prototype.
 5. Change GitHub visibility to public only after that merge.
-6. After the flip, change the README public-source row from HOLD to experimental public source. Leave downloadable binary **BLOCKED** until Developer ID, helper approval, and live recovery receipts exist.
+6. After the flip, change the README public-source row from HOLD to experimental public source. Leave downloadable binary **BLOCKED** until Developer ID, helper approval, and live recovery receipts exist (see [`KEYBRAKE_OPERATOR_SIGNED_RELEASE.md`](KEYBRAKE_OPERATOR_SIGNED_RELEASE.md)).
 
 ## Still out of scope after a source flip
 

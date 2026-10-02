@@ -15,9 +15,14 @@ Please read [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) and [`SECURITY.md`](SECUR
 ```bash
 xcodegen generate
 swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM
-xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=macOS' \
-  test CODE_SIGNING_ALLOWED=NO
+swift build -c release --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPM-release
+xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -configuration Release \
+  -destination 'platform=macOS' -derivedDataPath /tmp/KeyBrakeDerivedData-release-test \
+  -parallel-testing-enabled NO -only-testing:KeyBrakeTests/EmergencyCoordinatorTests \
+  CODE_SIGNING_ALLOWED=NO test
 ```
+
+After `project.yml` changes, run `xcodegen generate` before Xcode commands. `KeyBrakeCore` sets `ENABLE_TESTABILITY` so Release `@testable` imports work in Xcode tests.
 
 SwiftPM covers `KeyBrakeCore` and tests. The unsigned `.app` with the embedded helper is an Xcode product.
 
