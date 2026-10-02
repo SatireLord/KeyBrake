@@ -204,6 +204,25 @@ struct RecoveryView: View {
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Recorded recovery inventory: \(snapshot.networkChanges.count) network changes, \(snapshot.sharingChanges.count) sharing changes, \(snapshot.unresolvedSteps.count) unresolved steps, \(snapshot.privacyResetRequests.count) privacy reviews")
             .accessibilityIdentifier("keybrake.recovery.inventory")
+            if !snapshot.conflictDetails.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Restore conflicts")
+                        .font(.headline)
+                    ForEach(snapshot.conflictDetails) { detail in
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(detail.name)
+                                .font(.subheadline.weight(.semibold))
+                            Text("Original \(detail.original) · Applied \(detail.applied) · Current \(detail.current)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("\(detail.name). Original \(detail.original). Applied \(detail.applied). Current \(detail.current)")
+                        .accessibilityIdentifier("keybrake.recovery.conflict.\(detail.id)")
+                    }
+                }
+                .accessibilityIdentifier("keybrake.recovery.conflicts")
+            }
         }
     }
 

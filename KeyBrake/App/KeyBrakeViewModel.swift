@@ -3,6 +3,8 @@ import AppKit
 import KeyBrakeCore
 import ServiceManagement
 import SwiftUI
+import UniformTypeIdentifiers
+@preconcurrency import UserNotifications
 
 @MainActor
 final class KeyBrakeViewModel: ObservableObject {
@@ -36,6 +38,8 @@ final class KeyBrakeViewModel: ObservableObject {
 
     static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
     static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
+    static let firstRunDefaultsKey = "KeyBrake.didCompleteFirstRunGuidance.v1"
+    private var didPostRecoveryNotification = false
 
     init(
         coordinator: EmergencyCoordinator = .live(),
@@ -116,6 +120,73 @@ final class KeyBrakeViewModel: ObservableObject {
         launchRecoveryCheckCompleted = true
         if hasRecovery {
             isShowingRecoveryPanel = true
+            postRecoveryNotificationIfNeeded()
+        } else {
+            presentFirstRunIfNeeded()
+        }
+    }
+
+    func requestStopRemoteAccess() {
+        guard !isBusy else { return }
+        let alert = NSAlert()
+        alert.messageText = isNetworkSandbox ? "Rehearse this isolation plan?" : "Apply this isolation plan?"
+        alert.informativeText = IsolationPlanPreview.confirmationText(for: isolationPolicy, sandbox: isNetworkSandbox)
+        alert.addButton(withTitle: isNetworkSandbox ? "Rehearse Isolation" : "Stop Remote Access")
+        alert.addButton(withTitle: "Cancel")
+        guard alert.runModal() == .alertFirstButtonReturn else { return }
+        stopRemoteAccess()
+    }
+
+    func exportIncidents() {
+        let panel = NSSavePanel()
+        panel.allowedContentTypes = [.json]
+        panel.nameFieldStringValue = "KeyBrake-incidents.json"
+        panel.message = "Exports operation metadata only. KeyBrake does not store credentials, TCC contents, or documents."
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        do {
+            let data = try KeyBrakeIncidentExport.jsonData(from: incidents)
+            try data.write(to: url, options: .atomic)
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "KeyBrake could not export incidents"
+            alert.informativeText = error.localizedDescription
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+        }
+    }
+
+    private func presentFirstRunIfNeeded() {
+        guard !isReadOnlyDemo else { return }
+        guard !settingsDefaults.bool(forKey: Self.firstRunDefaultsKey) else { return }
+        settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
+        let approvedRemoteTargets = configuredTargets.filter { $0.category == .remoteAccess && $0.approvedByUser }.count
+        let alert = NSAlert()
+        alert.messageText = "KeyBrake stays mouse-operated"
+        alert.informativeText = """
+        Recovery uses the pointer. If the keyboard is unavailable, open KeyBrake from the menu bar and choose a recovery action.
+        Privileged helper: \(privilegedHelperStatus).
+        Approved remote-access targets: \(approvedRemoteTargets).
+        """
+        alert.addButton(withTitle: approvedRemoteTargets == 0 ? "Open Settings" : "Continue")
+        if approvedRemoteTargets == 0 {
+            alert.addButton(withTitle: "Not Now")
+        }
+        if alert.runModal() == .alertFirstButtonReturn && approvedRemoteTargets == 0 {
+            openSettings()
+        }
+    }
+
+    private func postRecoveryNotificationIfNeeded() {
+        guard !isReadOnlyDemo, !didPostRecoveryNotification else { return }
+        didPostRecoveryNotification = true
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert]) { granted, _ in
+            guard granted else { return }
+            let content = UNMutableNotificationContent()
+            content.title = "KeyBrake recovery is still pending"
+            content.body = "Open KeyBrake and choose a mouse-operated recovery action. Closing the panel does not resolve the decision."
+            let request = UNNotificationRequest(identifier: "keybrake.recovery-pending", content: content, trigger: nil)
+            center.add(request)
         }
     }
 

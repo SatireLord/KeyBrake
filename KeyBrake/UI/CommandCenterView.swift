@@ -248,12 +248,22 @@ struct KeyBrakeCommandCenterView: View {
                 .accessibilityHint(commandCenterActionHint(description: "Stops approved local input automation without changing network or privacy settings", disablesWhileBusy: true))
                 .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
 
+                ForEach(IsolationPlanPreview.lines(for: model.isolationPolicy, sandbox: model.isNetworkSandbox)) { line in
+                    Text("\(line.title): \(line.detail)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("keybrake.command-center.isolation-preview.\(line.id)")
+                }
+
                 Button {
-                    model.stopRemoteAccess()
+                    model.requestStopRemoteAccess()
                 } label: {
                     actionLabel(
-                        title: "Stop Remote Access",
-                        description: "Save recovery state first, then apply the selected isolation profile.",
+                        title: model.isNetworkSandbox ? "Rehearse Isolation" : "Stop Remote Access",
+                        description: model.isNetworkSandbox
+                            ? "Run the fixture isolation plan. This does not change host network or sharing."
+                            : "Confirm the isolation plan, save recovery state, then apply the selected profile.",
                         systemImage: "lock.shield"
                     )
                 }

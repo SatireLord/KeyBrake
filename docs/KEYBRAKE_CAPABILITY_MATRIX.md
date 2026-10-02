@@ -14,8 +14,8 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Release surface | Status | Reason |
 | --- | --- | --- |
-| Source tree | Prepared | License, security contact, community files, and redacted verification are in the implementation branch |
-| GitHub visibility | **HOLD** | Repository remains private until the owner identity and release decision |
+| Source tree | Public on `main` | License, security contact, community files, and verification ledger are on the default branch |
+| GitHub visibility | **Public** | Source is public; downloadable binary remains blocked |
 | Downloadable binary | **BLOCKED** | Local unsigned bundle is proven; signing, helper approval, and live verification remain external gates |
 
 ## Capability inventory
@@ -96,6 +96,12 @@ This document classifies every user-visible or safety-critical capability by imp
 | Recovery panel root inspection | `implemented` | UI-116 exposes `keybrake.recovery.panel` on the containing recovery decision surface without changing layout, actions, or recovery semantics |
 | Recovery panel header inspection | `implemented` | UI-117 combines the visible recovery title and introduction into one inspectable surface at `keybrake.recovery.header` without changing visible copy or recovery routing |
 | Recovery panel action accessibility orientation | `implemented` | UI-118 combines each recovery action's visible title and explanation into one inspectable accessibility surface while preserving handlers, identifiers, hints, disabled gates, and recovery semantics |
+| Isolation plan preview | `implemented` | Stop Remote Access and the sandbox Rehearse Isolation action show the current profile's Wi-Fi, Ethernet, VPN, Remote Login, and Remote Apple Events effects and require confirmation before `stopRemoteAccess` |
+| Restore conflict detail | `implemented` | The recovery panel lists original, applied, and current state for snapshot resources whose disposition is conflict or identity mismatch |
+| Incident metadata export | `implemented` | Incident Log writes the existing incident records to a user-chosen JSON file; the export contains operation metadata only |
+| Recovery-pending notification | `implemented` | After launch hydration finds unresolved recovery outside demo mode, KeyBrake requests a local alert; delivery still depends on the user's notification permission |
+| Network sandbox rehearsal | `implemented` | In `--keybrake-network-sandbox`, the Command Center isolation action is labeled Rehearse Isolation and the confirmation states that the fixture path does not change the host |
+| First-run guidance | `implemented` | The first non-demo launch explains mouse-operated recovery, shows helper status and approved remote-target count, and offers Settings when no remote target is approved |
 | Incident Log outcome review | `implemented` | UI-043 makes recorded incident rows scannable with status, update date/time, resolution, and step count, and makes persisted incident and operation-step UUIDs available as stable inspection anchors without changing incident storage, recovery transitions, or host operations |
 | Network sandbox readable information boundary | `implemented` | UI-044 keeps sandbox status, scenario, fixture inventory, and current protection information readable while the existing host-bound production settings sections inherit the sandbox disabled gate; model guards, fixture behavior, and host-operation boundaries remain unchanged |
 | Settings target-list empty-state guidance | `implemented` | UI-045 gives empty Local Automation and Remote Access target lists explicit visible guidance and stable inspection identifiers while preserving configured rows, Add Application controls, target mutation handlers, sandbox behavior, and host-operation boundaries |

@@ -58,6 +58,12 @@ struct IncidentLogView: View {
             HStack(alignment: .top, spacing: 12) {
                 Text("Incident Log").font(.title2.weight(.semibold))
                 Spacer()
+                Button("Export Incidents…") {
+                    model.exportIncidents()
+                }
+                .accessibilityIdentifier("keybrake.incident-log.export")
+                .help("Writes operation metadata to a JSON file. Credentials and TCC contents are not included.")
+                .disabled(model.incidents.isEmpty)
                 Button("Clear Resolved History…") {
                     model.clearResolvedHistory()
                 }

@@ -747,4 +747,124 @@ public struct RecoverySnapshot: Codable, Sendable, Equatable {
         failedSteps = try container.decode([OperationStepResult].self, forKey: .failedSteps)
         unresolvedSteps = try container.decode([OperationStepResult].self, forKey: .unresolvedSteps)
     }
+
+    public var conflictDetails: [RecoveryConflictDetail] {
+        resourceProgress.compactMap { progress in
+            guard progress.disposition == .conflict || progress.disposition == .identityMismatch else {
+                return nil
+            }
+            let vpn = (networkChanges + vpnConnections).contains { $0.id == progress.resourceID && $0.isVPN }
+            return RecoveryConflictDetail(
+                id: progress.id,
+                name: progress.displayName,
+                original: Self.stateLabel(progress.originalEnabled, known: progress.originalStateKnown, vpn: vpn),
+                applied: Self.stateLabel(progress.appliedEnabled, known: progress.appliedEnabled != nil, vpn: vpn),
+                current: progress.disposition == .identityMismatch
+                    ? (progress.observedIdentity ?? "identity changed")
+                    : Self.stateLabel(progress.observedEnabled, known: progress.observedEnabled != nil, vpn: vpn)
+            )
+        }
+    }
+
+    private static func stateLabel(_ value: Bool?, known: Bool, vpn: Bool) -> String {
+        guard known, let value else { return "not recorded" }
+        if vpn {
+            return value ? "connected" : "disconnected"
+        }
+        return value ? "enabled" : "disabled"
+    }
+}
+
+public struct IsolationPreviewLine: Identifiable, Equatable, Sendable {
+    public let id: String
+    public let title: String
+    public let detail: String
+
+    public init(id: String, title: String, detail: String) {
+        self.id = id
+        self.title = title
+        self.detail = detail
+    }
+}
+
+public enum IsolationPlanPreview {
+    public static func lines(for policy: EmergencyIsolationPolicy, sandbox: Bool) -> [IsolationPreviewLine] {
+        var lines = [
+            IsolationPreviewLine(
+                id: "wifi",
+                title: "Wi-Fi",
+                detail: policy.disableWiFi
+                    ? "Disable Wi-Fi services that are enabled when isolation starts. Loopback stays active."
+                    : "Leave Wi-Fi unchanged."
+            ),
+            IsolationPreviewLine(
+                id: "ethernet",
+                title: "Ethernet",
+                detail: policy.disableEthernet
+                    ? "Disable physical Ethernet services that are enabled when isolation starts."
+                    : "Leave physical Ethernet unchanged."
+            ),
+            IsolationPreviewLine(
+                id: "vpn",
+                title: "VPN",
+                detail: policy.disconnectVPN
+                    ? "Disconnect selected VPNs. KeyBrake does not reconnect them during restore."
+                    : "Leave VPN connections unchanged."
+            ),
+            IsolationPreviewLine(
+                id: "remote-login",
+                title: "Remote Login",
+                detail: policy.disableRemoteLogin
+                    ? "Disable Remote Login when it is enabled."
+                    : "Leave Remote Login unchanged."
+            ),
+            IsolationPreviewLine(
+                id: "remote-apple-events",
+                title: "Remote Apple Events",
+                detail: policy.disableRemoteAppleEvents
+                    ? "Disable Remote Apple Events when they are enabled."
+                    : "Leave Remote Apple Events unchanged."
+            ),
+        ]
+        if sandbox {
+            lines.append(
+                IsolationPreviewLine(
+                    id: "sandbox",
+                    title: "Fixture rehearsal",
+                    detail: "This run uses the network sandbox. It does not change host Wi-Fi, VPN, sharing, or privacy settings."
+                )
+            )
+        }
+        return lines
+    }
+
+    public static func confirmationText(for policy: EmergencyIsolationPolicy, sandbox: Bool) -> String {
+        lines(for: policy, sandbox: sandbox)
+            .map { "\($0.title): \($0.detail)" }
+            .joined(separator: "\n")
+    }
+}
+
+public struct RecoveryConflictDetail: Identifiable, Equatable, Sendable {
+    public let id: String
+    public let name: String
+    public let original: String
+    public let applied: String
+    public let current: String
+
+    public init(id: String, name: String, original: String, applied: String, current: String) {
+        self.id = id
+        self.name = name
+        self.original = original
+        self.applied = applied
+        self.current = current
+    }
+}
+
+public enum KeyBrakeIncidentExport {
+    public static func jsonData(from incidents: [IncidentRecord]) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        return try encoder.encode(incidents)
+    }
 }

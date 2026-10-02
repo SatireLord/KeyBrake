@@ -45,7 +45,7 @@ struct KeyBrakeMenuView: View {
             .accessibilityIdentifier("keybrake.menu.stop-local-automation")
             .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
         Button {
-            model.stopRemoteAccess()
+            model.requestStopRemoteAccess()
         } label: {
             Label("Stop Remote Access", systemImage: "lock.shield")
         }

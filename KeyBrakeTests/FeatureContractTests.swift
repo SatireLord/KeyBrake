@@ -44,3 +44,61 @@ final class FeatureContractTests: XCTestCase {
             .appendingPathComponent("Resources/KeyBrakeFeatureContract.json")
     }
 }
+
+final class KeyBrakeProductSurfaceTests: XCTestCase {
+    func testIsolationPreviewFollowsPolicyAndLabelsSandbox() {
+        let disabledWiFi = EmergencyIsolationPolicy(
+            disableWiFi: false,
+            disableEthernet: true,
+            disconnectVPN: true,
+            disableRemoteLogin: false,
+            disableRemoteAppleEvents: true
+        )
+        let lines = IsolationPlanPreview.lines(for: disabledWiFi, sandbox: true)
+        XCTAssertEqual(lines.map(\.id), ["wifi", "ethernet", "vpn", "remote-login", "remote-apple-events", "sandbox"])
+        XCTAssertTrue(lines[0].detail.contains("Leave Wi-Fi unchanged"))
+        XCTAssertTrue(lines[3].detail.contains("Leave Remote Login unchanged"))
+        XCTAssertTrue(lines[5].detail.contains("does not change host"))
+    }
+
+    func testConflictDetailsExposeOriginalAppliedAndCurrent() {
+        let progress = RecoveryResourceProgress(
+            subsystem: .network,
+            resourceID: "wifi",
+            displayName: "Wi-Fi",
+            originalEnabled: true,
+            appliedEnabled: false,
+            observedEnabled: true,
+            disposition: .conflict
+        )
+        let snapshot = RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .recoveryRequired,
+            networkChanges: [
+                NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, kind: NetworkServiceKind.wifi.rawValue),
+            ],
+            resourceProgress: [progress]
+        )
+        let details = snapshot.conflictDetails
+        XCTAssertEqual(details.count, 1)
+        XCTAssertEqual(details[0].original, "enabled")
+        XCTAssertEqual(details[0].applied, "disabled")
+        XCTAssertEqual(details[0].current, "enabled")
+    }
+
+    func testIncidentExportRoundTripsMetadataOnly() throws {
+        let incident = IncidentRecord(
+            initiatingAction: "Stop Remote Access",
+            originalState: .normal,
+            finalState: .recoveryRequired,
+            steps: [],
+            resolution: "review required"
+        )
+        let data = try KeyBrakeIncidentExport.jsonData(from: [incident])
+        let decoded = try JSONDecoder().decode([IncidentRecord].self, from: data)
+        XCTAssertEqual(decoded, [incident])
+        let text = String(decoding: data, as: UTF8.self)
+        XCTAssertFalse(text.contains("password"))
+        XCTAssertFalse(text.contains("tcc.db"))
+    }
+}
