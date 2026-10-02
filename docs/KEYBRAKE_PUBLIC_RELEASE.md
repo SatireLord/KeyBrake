@@ -1,15 +1,15 @@
 # Public source flip checklist
 
-This is the operator checklist for making KeyBrake source public. Agents must not flip GitHub visibility or merge PR #1.
+This checklist recorded the public source flip for KeyBrake. Further visibility changes remain operator-owned.
 
 ## Current status
 
 | Surface | Status |
 | --- | --- |
-| Source tree on `codex/keybrake-complete-implementation` | Prepared for a human identity/visibility decision |
-| GitHub visibility | **HOLD** — repository remains private |
+| Source tree on `main` | Merged prototype (`3c16897`) |
+| GitHub visibility | **Public** |
 | Downloadable binary | **BLOCKED** — unsigned local bundle only |
-| PR [#1](https://github.com/SatireLord/KeyBrake/pull/1) | Open and unmerged until human review |
+| PR [#1](https://github.com/SatireLord/KeyBrake/pull/1) | **Merged** |
 
 ## Source work already in this tree
 
@@ -24,10 +24,10 @@ This is the operator checklist for making KeyBrake source public. Agents must no
 
 1. Choose the public identity story: GitHub `SatireLord`, copyright `Michael Tran`, bundle IDs `org.realitygood.*`.
 2. Enable GitHub private vulnerability reporting if it is not already enabled.
-3. Review and merge PR #1 onto `main` **before** making the repository public. Default `main` currently lacks `LICENSE` and the implementation.
-4. Confirm `main` contains the merged prototype.
-5. Change GitHub visibility to public only after that merge.
-6. After the flip, change the README public-source row from HOLD to experimental public source. Leave downloadable binary **BLOCKED** until Developer ID, helper approval, and live recovery receipts exist (see [`KEYBRAKE_OPERATOR_SIGNED_RELEASE.md`](KEYBRAKE_OPERATOR_SIGNED_RELEASE.md)).
+3. ~~Review and merge PR #1 onto `main` **before** making the repository public.~~ **Done** — merged 2026-10-02 as `3c16897`.
+4. ~~Confirm `main` contains the merged prototype.~~ **Done**.
+5. ~~Change GitHub visibility to public~~ **Done** after merge; README reflects experimental public source.
+6. Leave downloadable binary **BLOCKED** until Developer ID, helper approval, and live recovery receipts exist (see [`KEYBRAKE_OPERATOR_SIGNED_RELEASE.md`](KEYBRAKE_OPERATOR_SIGNED_RELEASE.md)).
 
 ## Still out of scope after a source flip
 

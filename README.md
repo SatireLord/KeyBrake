@@ -10,8 +10,8 @@ Copyright 2026 Michael Tran. GitHub repository: [SatireLord/KeyBrake](https://gi
 
 | Surface | Status |
 | --- | --- |
-| Source tree | Prepared for a human identity and visibility decision |
-| GitHub visibility | **HOLD** — this repository remains private |
+| Source tree | **Experimental public source** on `main` (merge commit `3c16897`) |
+| GitHub visibility | **Public** — source available; claims remain bounded by the capability matrix |
 | Downloadable binary | **BLOCKED** — unsigned local bundle only; signing, helper approval, and live verification remain external |
 
 Version `0.1.0` (build `1`) is an experimental systems prototype. Local Xcode builds verify the app, embedded helper executable, LaunchDaemons plist, and feature contract with signing disabled. This project does not claim Developer ID signing, notarization, privileged-helper approval, or live-host network isolation without receipts.
