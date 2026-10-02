@@ -55,7 +55,7 @@ struct RecoveryView: View {
 
                 recoveryAction(
                     title: "Restore Network",
-                    description: "Restore recorded network services that were enabled before KeyBrake isolated them.",
+                    description: model.networkRestoreLine,
                     systemImage: "network",
                     identifier: "keybrake.recovery.restore-network",
                     prominent: true
@@ -65,7 +65,7 @@ struct RecoveryView: View {
 
                 recoveryAction(
                     title: "Restore Previously Enabled Sharing Services",
-                    description: "Restore only the sharing services that were enabled before KeyBrake changed them.",
+                    description: model.sharingRestoreLine,
                     systemImage: "person.2.badge.gearshape",
                     identifier: "keybrake.recovery.restore-sharing",
                     prominent: false

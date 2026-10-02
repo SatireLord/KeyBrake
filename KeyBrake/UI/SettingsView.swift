@@ -388,6 +388,42 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("keybrake.settings.current-protection-state-section")
 
+            Section("Emergency Isolation") {
+                Toggle("Disable Wi-Fi", isOn: policyBinding(\.disableWiFi))
+                    .help(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-wifi")
+                Toggle("Disable physical Ethernet", isOn: policyBinding(\.disableEthernet))
+                    .help(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-ethernet")
+                Toggle("Disconnect VPNs", isOn: policyBinding(\.disconnectVPN))
+                    .help(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disconnect-vpn")
+                Toggle("Disable Remote Login", isOn: policyBinding(\.disableRemoteLogin))
+                    .help(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-remote-login")
+                Toggle("Disable Remote Apple Events", isOn: policyBinding(\.disableRemoteAppleEvents))
+                    .help(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
+                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-remote-apple-events")
+                ForEach(model.isolationPreviewLines) { line in
+                    Text("\(line.title): \(line.detail)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("keybrake.settings.isolation-preview.\(line.id)")
+                }
+                Text("Unsupported sharing capabilities are reported as unsupported and do not block independent network isolation.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.boundary")
+            }
+            .accessibilityIdentifier("keybrake.settings.emergency-isolation-section")
+            .disabled(model.isNetworkSandbox)
+
+            DisclosureGroup("Advanced") {
             // Greppable: canonical=keybrake-reset-keyboard; aliases=Reset Keyboard; reset keyboard access; forms=reset-keyboard;reset_keyboard; descriptors=macOS Input Monitoring and Send Keystrokes / Input TCC reset; states=no-target,selected,disabled,reset-requested; consumers=KeyBrakeViewModel.resetKeyboardAccess; owner=SettingsView.body
             Section("Keyboard") {
                 Picker("Application", selection: $selectedKeyboardTargetID) {
@@ -575,40 +611,6 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("keybrake.settings.application-access-section")
 
-            Section("Emergency Isolation") {
-                Toggle("Disable Wi-Fi", isOn: policyBinding(\.disableWiFi))
-                    .help(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
-                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
-                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-wifi")
-                Toggle("Disable physical Ethernet", isOn: policyBinding(\.disableEthernet))
-                    .help(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
-                    .accessibilityHint(isolationControlHint(effectDescription: "Disables physical Ethernet, USB Ethernet, and Thunderbolt interfaces", enabled: model.isolationPolicy.disableEthernet))
-                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-ethernet")
-                Toggle("Disconnect VPNs", isOn: policyBinding(\.disconnectVPN))
-                    .help(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
-                    .accessibilityHint(isolationControlHint(effectDescription: "Disconnects VPN services", enabled: model.isolationPolicy.disconnectVPN))
-                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disconnect-vpn")
-                Toggle("Disable Remote Login", isOn: policyBinding(\.disableRemoteLogin))
-                    .help(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
-                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Login sharing", enabled: model.isolationPolicy.disableRemoteLogin))
-                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-remote-login")
-                Toggle("Disable Remote Apple Events", isOn: policyBinding(\.disableRemoteAppleEvents))
-                    .help(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
-                    .accessibilityHint(isolationControlHint(effectDescription: "Disables Remote Apple Events sharing", enabled: model.isolationPolicy.disableRemoteAppleEvents))
-                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.disable-remote-apple-events")
-                ForEach(model.isolationPreviewLines) { line in
-                    Text("\(line.title): \(line.detail)")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .accessibilityIdentifier("keybrake.settings.isolation-preview.\(line.id)")
-                }
-                Text("Unsupported sharing capabilities are reported as unsupported and do not block independent network isolation.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .accessibilityIdentifier("keybrake.settings.emergency-isolation.boundary")
-            }
-            .accessibilityIdentifier("keybrake.settings.emergency-isolation-section")
-
             Section("Privacy Reset Profile") {
                 Text(privacyResetProfileSummary)
                     .font(.caption)
@@ -629,6 +631,9 @@ struct SettingsView: View {
                 }
             }
             .accessibilityIdentifier("keybrake.settings.privacy-reset-profile-section")
+            }
+            .disabled(model.isNetworkSandbox)
+            }
 
             Section("Recovery") {
                 Text("After Stop Remote Access, KeyBrake always presents the recovery panel and keeps incident history until you clear resolved records from the incident log.")
@@ -637,8 +642,6 @@ struct SettingsView: View {
                     .accessibilityIdentifier("keybrake.settings.recovery.contract-boundary")
             }
             .accessibilityIdentifier("keybrake.settings.recovery-section")
-            }
-            .disabled(model.isNetworkSandbox)
         }
         .formStyle(.grouped)
         .padding()

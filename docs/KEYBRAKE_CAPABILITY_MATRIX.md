@@ -22,6 +22,14 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Capability | Status | Notes |
 | --- | --- | --- |
+| Menu-bar status word | `implemented` | The menu extra reads Checking, Recovery, Stopped, or Ready before the menu opens |
+| Recovery-first menu action | `implemented` | Restore Human Control is the first action above the emergency buttons while recovery is pending |
+| First-run app approval | `implemented` | The first launch asks for one local app and one remote app, then returns to the menu bar |
+| Recovery restore wording | `implemented` | Restore Network and Restore Sharing say which recorded services they turn back on |
+| Quit pending-change list | `implemented` | The quit warning names the recorded changes still waiting |
+| Settings emergency profile | `implemented` | Emergency Isolation leads Settings. Helper registration, privacy reset, and keyboard reset sit in Advanced |
+| Incident change sentence | `implemented` | Each incident row states what changed ahead of the step list |
+| Command Center limit | `implemented` | Command Center states that KeyBrake does not undo privacy grants, restart stopped remote apps, or change anything it did not record |
 | Hydration-aware menu status | implemented | Menu-bar status help uses the shared checking explanation until recovery-status hydration completes, matching the visible status label |
 | Hydration-safe destination summaries | implemented | Command Center icons and recovery card, Settings recovery summary, and Incident Log recovery summary remain in checking state until recovery-status hydration completes |
 | Hydration-safe menu-bar shell icon | implemented | The menu-bar extra label uses the shared checking symbol until recovery-status hydration completes, then follows the confirmed operational state |

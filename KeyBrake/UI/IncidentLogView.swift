@@ -150,6 +150,9 @@ struct IncidentLogView: View {
                             .foregroundStyle(.secondary)
                     }
 
+                    Text(changeSentence(for: incident))
+                        .font(.callout)
+                        .fixedSize(horizontal: false, vertical: true)
                     Text(incident.resolution)
                         .font(.callout)
                         .fixedSize(horizontal: false, vertical: true)
@@ -160,6 +163,30 @@ struct IncidentLogView: View {
             .accessibilityIdentifier("keybrake.incident-log.entry.\(incident.id.uuidString)")
             .accessibilityHint("Expands to show the recorded operation steps")
         }
+    }
+
+    private func changeSentence(for incident: IncidentRecord) -> String {
+        let phrases = incident.steps.compactMap { step -> String? in
+            guard step.outcome == .succeeded || step.outcome == .alreadyInDesiredState else { return nil }
+            let post = (step.observedPostState ?? step.requestedState).lowercased()
+            if post.contains("disabled") || post.contains("off") || post == "false" {
+                return "\(step.targetDisplayName) was turned off"
+            }
+            if post.contains("disconnect") {
+                return "\(step.targetDisplayName) was disconnected"
+            }
+            if post.contains("enabled") || post.contains("on") || post == "true" {
+                return "\(step.targetDisplayName) was turned on"
+            }
+            if post.contains("stopped") || post.contains("terminated") {
+                return "\(step.targetDisplayName) was stopped"
+            }
+            return "\(step.targetDisplayName) changed"
+        }
+        if phrases.isEmpty {
+            return "No recorded state change was verified for this entry."
+        }
+        return phrases.prefix(4).joined(separator: ". ") + "."
     }
 
     private func incidentStep(_ step: OperationStepResult, incidentID: UUID) -> some View {

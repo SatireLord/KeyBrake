@@ -201,22 +201,19 @@ final class KeyBrakeViewModel: ObservableObject {
     private func presentFirstRunIfNeeded() {
         guard !isReadOnlyDemo else { return }
         guard !settingsDefaults.bool(forKey: Self.firstRunDefaultsKey) else { return }
-        let approvedRemoteTargets = configuredTargets.filter { $0.category == .remoteAccess && $0.approvedByUser }.count
         let alert = NSAlert()
-        alert.messageText = "KeyBrake stays mouse-operated"
+        alert.messageText = "Approve one local app and one remote app"
         alert.informativeText = """
-        Recovery uses the pointer. If the keyboard is unavailable, open KeyBrake from the menu bar and choose a recovery action.
-        Privileged helper: \(privilegedHelperStatus).
-        Approved remote-access targets: \(approvedRemoteTargets).
+        KeyBrake only stops applications you approve. Choose one local typing app, then one remote-access app. You return to the menu bar. Settings stays available for everything else.
+        Recovery uses the pointer.
         """
-        alert.addButton(withTitle: approvedRemoteTargets == 0 ? "Open Settings" : "Continue")
-        if approvedRemoteTargets == 0 {
-            alert.addButton(withTitle: "Not Now")
-        }
+        alert.addButton(withTitle: "Choose Apps")
+        alert.addButton(withTitle: "Not Now")
         let response = alert.runModal()
         settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
-        if response == .alertFirstButtonReturn && approvedRemoteTargets == 0 {
-            openSettings()
+        if response == .alertFirstButtonReturn {
+            enrollApplicationFromPanel(category: .localAutomation, approvedByUser: false)
+            enrollApplicationFromPanel(category: .remoteAccess, approvedByUser: true)
         }
     }
 
@@ -316,7 +313,7 @@ final class KeyBrakeViewModel: ObservableObject {
         }
         let alert = NSAlert()
         alert.messageText = "Recovery is still required"
-        alert.informativeText = "KeyBrake changed system state that has not been fully resolved. Choose a mouse-operated action."
+        alert.informativeText = "Still waiting: \(pendingChangeSummary) Choose a mouse-operated action."
         alert.addButton(withTitle: "Restore Network")
         alert.addButton(withTitle: "Keep Isolation and Quit")
         alert.addButton(withTitle: "Cancel")
@@ -414,6 +411,72 @@ final class KeyBrakeViewModel: ObservableObject {
         isolationPolicy = policy
         guard let data = try? JSONEncoder().encode(policy) else { return }
         settingsDefaults.set(data, forKey: Self.isolationPolicyDefaultsKey)
+    }
+
+    var networkRestoreLine: String {
+        let names = disabledRecordedNames(in: unresolvedRecovery?.networkChanges ?? [])
+        if names.isEmpty {
+            return "Restore recorded network services that were enabled before KeyBrake isolated them."
+        }
+        return "Turns \(names.joined(separator: ", ")) back on."
+    }
+
+    var sharingRestoreLine: String {
+        let names = disabledRecordedNames(in: unresolvedRecovery?.sharingChanges ?? [])
+        if names.isEmpty {
+            return "Restore only the sharing services that were enabled before KeyBrake changed them."
+        }
+        return "Turns \(names.joined(separator: ", ")) back on."
+    }
+
+    var pendingChangeSummary: String {
+        guard let snapshot = unresolvedRecovery else { return "recorded changes are still waiting." }
+        var names = disabledRecordedNames(in: snapshot.networkChanges)
+        names.append(contentsOf: disabledRecordedNames(in: snapshot.vpnConnections).map { "\($0) disconnected" })
+        names.append(contentsOf: disabledRecordedNames(in: snapshot.sharingChanges))
+        if names.isEmpty { return "recorded changes are still waiting." }
+        return names.joined(separator: ", ") + "."
+    }
+
+    private func disabledRecordedNames(in changes: [NetworkChange]) -> [String] {
+        changes.filter { $0.originalEnabled && $0.currentEnabled != true }.map(\.displayName)
+    }
+
+    private func disabledRecordedNames(in changes: [SharingChange]) -> [String] {
+        changes.filter { $0.originalEnabled && $0.currentEnabled != true }.map(\.displayName)
+    }
+
+    private func enrollApplicationFromPanel(category: TargetDefinition.Category, approvedByUser: Bool) {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.application]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.message = category == .localAutomation
+            ? "Choose one local typing application."
+            : "Choose one remote-access application. KeyBrake will approve it for Stop Remote Access."
+        guard panel.runModal() == .OK, let applicationURL = panel.url, let bundle = Bundle(url: applicationURL), let bundleIdentifier = bundle.bundleIdentifier else {
+            return
+        }
+        let targetID = "custom-\(bundleIdentifier.replacingOccurrences(of: ".", with: "-"))"
+        let displayName = (bundle.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String)
+            ?? (bundle.object(forInfoDictionaryKey: "CFBundleName") as? String)
+            ?? applicationURL.deletingPathExtension().lastPathComponent
+        let target = TargetDefinition(
+            id: targetID,
+            displayName: displayName,
+            category: category,
+            bundleIdentifier: bundleIdentifier,
+            applicationURL: applicationURL,
+            executableURL: bundle.executableURL,
+            approvedByUser: approvedByUser,
+            enabledForEmergencyStop: true,
+            allowForcedTermination: true
+        )
+        enrollTarget(target)
+        if approvedByUser {
+            setTargetApproval(targetID: target.id, approved: true)
+        }
     }
 
     func enrollTarget(_ target: TargetDefinition) {

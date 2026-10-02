@@ -34,6 +34,10 @@ struct KeyBrakeMenuView: View {
             .help("Open the at-a-glance KeyBrake status and action surface")
             .accessibilityHint("Opens the at-a-glance KeyBrake status and action surface")
             .accessibilityIdentifier("keybrake.menu.open-command-center")
+        if model.isRecoveryStatusKnown && model.hasRecovery {
+            Divider()
+            restoreHumanControlButton
+        }
         Divider()
         Button {
             model.stopSkynetLocally()
@@ -63,15 +67,9 @@ struct KeyBrakeMenuView: View {
             .accessibilityIdentifier("keybrake.menu.open-app-access-settings")
             .disabled(model.isBusy)
         Divider()
-        Button {
-            model.isShowingRecoveryPanel = true
-        } label: {
-            Label("Restore Human Control", systemImage: "arrow.uturn.backward.circle")
+        if !(model.isRecoveryStatusKnown && model.hasRecovery) {
+            restoreHumanControlButton
         }
-            .help(recoveryActionDetail)
-            .accessibilityHint(recoveryActionDetail)
-            .accessibilityIdentifier("keybrake.menu.restore-human-control")
-            .disabled(!model.hasRecovery || model.isBusy)
         Button {
             model.restartEspanso()
         } label: {
@@ -106,6 +104,18 @@ struct KeyBrakeMenuView: View {
         .help(quitActionHint)
         .accessibilityHint(quitActionHint)
         .accessibilityIdentifier("keybrake.menu.quit")
+    }
+
+    private var restoreHumanControlButton: some View {
+        Button {
+            model.isShowingRecoveryPanel = true
+        } label: {
+            Label("Restore Human Control", systemImage: "arrow.uturn.backward.circle")
+        }
+        .help(recoveryActionDetail)
+        .accessibilityHint(recoveryActionDetail)
+        .accessibilityIdentifier("keybrake.menu.restore-human-control")
+        .disabled(!model.hasRecovery || model.isBusy)
     }
 
     private var quitActionHint: String {

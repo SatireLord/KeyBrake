@@ -48,10 +48,15 @@ struct KeyBrakeCommandCenterView: View {
                     networkSandboxBanner
                 }
                 statusCard
-                emergencyActions
+                Text("KeyBrake will not undo privacy grants, will not restart remote apps it stopped, and will not change anything it did not record.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("keybrake.command-center.limit")
                 if model.isRecoveryStatusKnown && model.hasRecovery {
                     recoveryCard
                 }
+                emergencyActions
                 recentIncidentCard
                 secondaryActions
             }

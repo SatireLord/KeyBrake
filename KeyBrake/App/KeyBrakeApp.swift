@@ -62,6 +62,21 @@ private struct WindowLaunchBridge: View {
     @Environment(\.openWindow) private var openWindow
     @State private var didOpenLaunchRequestedCommandCenter = false
 
+    private var menuBarStatusWord: String {
+        guard model.isRecoveryStatusKnown else { return "Checking" }
+        if model.hasRecovery || model.operationalState.requiresRecoveryDecision {
+            return "Recovery"
+        }
+        switch model.operationalState {
+        case .localAutomationStopped, .stoppingLocalAutomation:
+            return "Stopped"
+        case .isolating, .isolated, .partiallyIsolated, .restoring, .recoveryRequired:
+            return "Recovery"
+        case .normal:
+            return "Ready"
+        }
+    }
+
     private var hydrationAwareApplicationSymbol: String {
         model.isRecoveryStatusKnown
             ? KeyBrakeStatusPresentation.symbol(for: model.operationalState)
@@ -69,7 +84,8 @@ private struct WindowLaunchBridge: View {
     }
 
     var body: some View {
-        Label("KeyBrake", systemImage: hydrationAwareApplicationSymbol)
+        Label(menuBarStatusWord, systemImage: hydrationAwareApplicationSymbol)
+            .accessibilityLabel("KeyBrake \(menuBarStatusWord)")
             .onAppear {
                 appDelegate.attach(model: model, openSettingsWindow: { openWindow(id: "settings") })
                 openCommandCenterIfRequested()
