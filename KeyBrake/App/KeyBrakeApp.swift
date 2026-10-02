@@ -68,11 +68,11 @@ private struct WindowLaunchBridge: View {
             return "Recovery"
         }
         switch model.operationalState {
-        case .localAutomationStopped, .stoppingLocalAutomation:
+        case .localAutomationStopped:
             return "Stopped"
-        case .isolating, .isolated, .partiallyIsolated, .restoring, .recoveryRequired:
+        case .isolated, .partiallyIsolated, .restoring, .recoveryRequired:
             return "Recovery"
-        case .normal:
+        case .normal, .stoppingLocalAutomation, .isolating:
             return "Ready"
         }
     }

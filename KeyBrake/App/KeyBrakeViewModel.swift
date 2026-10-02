@@ -210,10 +210,14 @@ final class KeyBrakeViewModel: ObservableObject {
         alert.addButton(withTitle: "Choose Apps")
         alert.addButton(withTitle: "Not Now")
         let response = alert.runModal()
-        settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
-        if response == .alertFirstButtonReturn {
-            enrollApplicationFromPanel(category: .localAutomation, approvedByUser: false)
-            enrollApplicationFromPanel(category: .remoteAccess, approvedByUser: true)
+        guard response == .alertFirstButtonReturn else {
+            settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
+            return
+        }
+        let localEnrolled = enrollApplicationFromPanel(category: .localAutomation, approvedByUser: false)
+        let remoteEnrolled = enrollApplicationFromPanel(category: .remoteAccess, approvedByUser: true)
+        if localEnrolled && remoteEnrolled {
+            settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
         }
     }
 
@@ -439,14 +443,15 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     private func disabledRecordedNames(in changes: [NetworkChange]) -> [String] {
-        changes.filter { $0.originalEnabled && $0.currentEnabled != true }.map(\.displayName)
+        changes.filter { $0.originalEnabled && $0.currentEnabled == false }.map(\.displayName)
     }
 
     private func disabledRecordedNames(in changes: [SharingChange]) -> [String] {
-        changes.filter { $0.originalEnabled && $0.currentEnabled != true }.map(\.displayName)
+        changes.filter { $0.originalEnabled && $0.currentEnabled == false }.map(\.displayName)
     }
 
-    private func enrollApplicationFromPanel(category: TargetDefinition.Category, approvedByUser: Bool) {
+    @discardableResult
+    private func enrollApplicationFromPanel(category: TargetDefinition.Category, approvedByUser: Bool) -> Bool {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.application]
         panel.allowsMultipleSelection = false
@@ -456,9 +461,9 @@ final class KeyBrakeViewModel: ObservableObject {
             ? "Choose one local typing application."
             : "Choose one remote-access application. KeyBrake will approve it for Stop Remote Access."
         guard panel.runModal() == .OK, let applicationURL = panel.url, let bundle = Bundle(url: applicationURL), let bundleIdentifier = bundle.bundleIdentifier else {
-            return
+            return false
         }
-        let targetID = "custom-\(bundleIdentifier.replacingOccurrences(of: ".", with: "-"))"
+        let targetID = "custom-\(category.rawValue)-\(bundleIdentifier.replacingOccurrences(of: ".", with: "-"))"
         let displayName = (bundle.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String)
             ?? (bundle.object(forInfoDictionaryKey: "CFBundleName") as? String)
             ?? applicationURL.deletingPathExtension().lastPathComponent
@@ -473,10 +478,25 @@ final class KeyBrakeViewModel: ObservableObject {
             enabledForEmergencyStop: true,
             allowForcedTermination: true
         )
+        guard TargetRegistry.canEnroll(target, applicationBundleIdentifier: bundleIdentifier, executableURL: bundle.executableURL) else {
+            showTerminationBlockedAlert(
+                messageText: "KeyBrake did not add \(displayName)",
+                informativeText: "This application is protected, or its identity could not be checked."
+            )
+            return false
+        }
+        guard !configuredTargets.contains(where: { $0.id == targetID }) else {
+            showTerminationBlockedAlert(
+                messageText: "\(displayName) is already configured",
+                informativeText: "Choose a different application for this step."
+            )
+            return false
+        }
         enrollTarget(target)
         if approvedByUser {
             setTargetApproval(targetID: target.id, approved: true)
         }
+        return configuredTargets.contains { $0.id == targetID }
     }
 
     func enrollTarget(_ target: TargetDefinition) {

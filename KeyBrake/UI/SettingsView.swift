@@ -454,6 +454,7 @@ struct SettingsView: View {
             .accessibilityIdentifier("keybrake.settings.keyboard-section")
             .id("keybrake.settings.keyboard-section")
             .disabled(model.isNetworkSandbox)
+            }
 
             if model.isRecoveryDemo {
                 Section("Recovery demonstration") {
@@ -491,6 +492,7 @@ struct SettingsView: View {
                 .accessibilityIdentifier("keybrake.settings.network-sandbox-section")
             }
 
+            DisclosureGroup("Advanced") {
             Group {
             Section("General") {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
@@ -522,6 +524,9 @@ struct SettingsView: View {
                 }
             }
             .accessibilityIdentifier("keybrake.settings.general-section")
+            }
+            .disabled(model.isNetworkSandbox)
+            }
 
             Section("Local Automation") {
                 if localAutomationTargets.isEmpty {
@@ -545,6 +550,7 @@ struct SettingsView: View {
                     .accessibilityIdentifier("keybrake.settings.local-automation.identity-boundary")
             }
             .accessibilityIdentifier("keybrake.settings.local-automation-section")
+            .disabled(model.isNetworkSandbox)
 
             Section("Remote Access") {
                 Text(remoteAccessApprovalSummary)
@@ -586,7 +592,9 @@ struct SettingsView: View {
                     .accessibilityIdentifier("keybrake.settings.remote-access.add-application")
             }
             .accessibilityIdentifier("keybrake.settings.remote-access-section")
+            .disabled(model.isNetworkSandbox)
 
+            DisclosureGroup("Advanced") {
             Section("Application Access") {
                 Picker("Application", selection: $selectedTargetID) {
                     Text("Choose an application").tag("")
@@ -633,7 +641,6 @@ struct SettingsView: View {
             .accessibilityIdentifier("keybrake.settings.privacy-reset-profile-section")
             }
             .disabled(model.isNetworkSandbox)
-            }
 
             Section("Recovery") {
                 Text("After Stop Remote Access, KeyBrake always presents the recovery panel and keeps incident history until you clear resolved records from the incident log.")

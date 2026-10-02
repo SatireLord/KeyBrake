@@ -167,21 +167,21 @@ struct IncidentLogView: View {
 
     private func changeSentence(for incident: IncidentRecord) -> String {
         let phrases = incident.steps.compactMap { step -> String? in
-            guard step.outcome == .succeeded || step.outcome == .alreadyInDesiredState else { return nil }
-            let post = (step.observedPostState ?? step.requestedState).lowercased()
-            if post.contains("disabled") || post.contains("off") || post == "false" {
+            guard step.outcome == .succeeded else { return nil }
+            switch (step.observedPostState ?? "").lowercased() {
+            case "disabled", "false", "off":
                 return "\(step.targetDisplayName) was turned off"
-            }
-            if post.contains("disconnect") {
+            case "disconnected":
                 return "\(step.targetDisplayName) was disconnected"
-            }
-            if post.contains("enabled") || post.contains("on") || post == "true" {
+            case "enabled", "true":
                 return "\(step.targetDisplayName) was turned on"
-            }
-            if post.contains("stopped") || post.contains("terminated") {
+            case "connected":
+                return "\(step.targetDisplayName) was connected"
+            case "stopped", "terminated":
                 return "\(step.targetDisplayName) was stopped"
+            default:
+                return nil
             }
-            return "\(step.targetDisplayName) changed"
         }
         if phrases.isEmpty {
             return "No recorded state change was verified for this entry."
