@@ -102,6 +102,10 @@ struct IncidentLogView: View {
 
     private func incidentRow(_ incident: IncidentRecord) -> some View {
         DisclosureGroup {
+            Button("Export This Incident…") {
+                model.exportIncident(incident)
+            }
+            .accessibilityIdentifier("keybrake.incident-log.entry.\(incident.id.uuidString).export")
             if incident.steps.isEmpty {
                 Text("No operation steps were recorded for this entry.")
                     .font(.callout)

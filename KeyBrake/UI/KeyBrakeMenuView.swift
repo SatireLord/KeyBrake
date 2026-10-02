@@ -47,7 +47,7 @@ struct KeyBrakeMenuView: View {
         Button {
             model.requestStopRemoteAccess()
         } label: {
-            Label("Stop Remote Access", systemImage: "lock.shield")
+            Label(model.isNetworkSandbox ? "Rehearse Isolation" : "Stop Remote Access", systemImage: "lock.shield")
         }
             .help(stopRemoteAccessActionHint)
             .accessibilityHint(stopRemoteAccessActionHint)

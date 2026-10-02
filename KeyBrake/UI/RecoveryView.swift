@@ -30,6 +30,12 @@ struct RecoveryView: View {
                 header
                 stateSummary
                 recoveryInventory
+                if !model.isReadOnlyDemo {
+                    Text(model.recoveryNotificationStatus)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("keybrake.recovery.notification-status")
+                }
 
                 Text("Choose a bounded action. KeyBrake restores only state that it recorded and can still verify.")
                     .font(.callout)
@@ -208,6 +214,9 @@ struct RecoveryView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Restore conflicts")
                         .font(.headline)
+                    Text("KeyBrake will not overwrite a value that no longer matches the state it applied.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                     ForEach(snapshot.conflictDetails) { detail in
                         VStack(alignment: .leading, spacing: 2) {
                             Text(detail.name)

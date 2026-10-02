@@ -248,7 +248,13 @@ struct KeyBrakeCommandCenterView: View {
                 .accessibilityHint(commandCenterActionHint(description: "Stops approved local input automation without changing network or privacy settings", disablesWhileBusy: true))
                 .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
 
-                ForEach(IsolationPlanPreview.lines(for: model.isolationPolicy, sandbox: model.isNetworkSandbox)) { line in
+                if !model.isNetworkSandbox && !IsolationPlanPreview.affectsIsolation(for: model.isolationPolicy, approvedRemoteTargetNames: model.approvedRemoteTargetNames) {
+                    Text("This plan changes nothing until you enable an isolation control or approve a remote application.")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                        .accessibilityIdentifier("keybrake.command-center.isolation-preview.empty")
+                }
+                ForEach(model.isolationPreviewLines) { line in
                     Text("\(line.title): \(line.detail)")
                         .font(.caption)
                         .foregroundStyle(.secondary)

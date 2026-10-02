@@ -18,6 +18,7 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published private(set) var privilegedHelperStatus = "Not registered"
     @Published private(set) var privilegedHelperError: String?
     @Published private(set) var operationInFlight = false
+    @Published private(set) var recoveryNotificationStatus = "Not requested"
     @Published private(set) var recoveryStoreHydrationSucceeded = false
     @Published var isolationPolicy: EmergencyIsolationPolicy
     @Published var isShowingRecoveryPanel = false
@@ -126,11 +127,45 @@ final class KeyBrakeViewModel: ObservableObject {
         }
     }
 
+    var approvedRemoteTargetNames: [String] {
+        configuredTargets
+            .filter { $0.category == .remoteAccess && $0.approvedByUser && $0.enabledForEmergencyStop }
+            .map(\.displayName)
+            .sorted()
+    }
+
+    var isolationPreviewLines: [IsolationPreviewLine] {
+        IsolationPlanPreview.lines(
+            for: isolationPolicy,
+            sandbox: isNetworkSandbox,
+            approvedRemoteTargetNames: approvedRemoteTargetNames
+        )
+    }
+
     func requestStopRemoteAccess() {
         guard !isBusy else { return }
         let alert = NSAlert()
+        let changesSomething = IsolationPlanPreview.affectsIsolation(
+            for: isolationPolicy,
+            approvedRemoteTargetNames: approvedRemoteTargetNames
+        )
+        if !isNetworkSandbox && !changesSomething {
+            alert.messageText = "This isolation plan changes nothing"
+            alert.informativeText = IsolationPlanPreview.confirmationText(
+                for: isolationPolicy,
+                sandbox: false,
+                approvedRemoteTargetNames: approvedRemoteTargetNames
+            )
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+            return
+        }
         alert.messageText = isNetworkSandbox ? "Rehearse this isolation plan?" : "Apply this isolation plan?"
-        alert.informativeText = IsolationPlanPreview.confirmationText(for: isolationPolicy, sandbox: isNetworkSandbox)
+        alert.informativeText = IsolationPlanPreview.confirmationText(
+            for: isolationPolicy,
+            sandbox: isNetworkSandbox,
+            approvedRemoteTargetNames: approvedRemoteTargetNames
+        )
         alert.addButton(withTitle: isNetworkSandbox ? "Rehearse Isolation" : "Stop Remote Access")
         alert.addButton(withTitle: "Cancel")
         guard alert.runModal() == .alertFirstButtonReturn else { return }
@@ -138,13 +173,21 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func exportIncidents() {
+        exportIncidentRecords(incidents, suggestedName: "KeyBrake-incidents.json")
+    }
+
+    func exportIncident(_ incident: IncidentRecord) {
+        exportIncidentRecords([incident], suggestedName: "KeyBrake-incident.json")
+    }
+
+    private func exportIncidentRecords(_ records: [IncidentRecord], suggestedName: String) {
         let panel = NSSavePanel()
         panel.allowedContentTypes = [.json]
-        panel.nameFieldStringValue = "KeyBrake-incidents.json"
+        panel.nameFieldStringValue = suggestedName
         panel.message = "Exports operation metadata only. KeyBrake does not store credentials, TCC contents, or documents."
         guard panel.runModal() == .OK, let url = panel.url else { return }
         do {
-            let data = try KeyBrakeIncidentExport.jsonData(from: incidents)
+            let data = try KeyBrakeIncidentExport.jsonData(from: records)
             try data.write(to: url, options: .atomic)
         } catch {
             let alert = NSAlert()
@@ -158,7 +201,6 @@ final class KeyBrakeViewModel: ObservableObject {
     private func presentFirstRunIfNeeded() {
         guard !isReadOnlyDemo else { return }
         guard !settingsDefaults.bool(forKey: Self.firstRunDefaultsKey) else { return }
-        settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
         let approvedRemoteTargets = configuredTargets.filter { $0.category == .remoteAccess && $0.approvedByUser }.count
         let alert = NSAlert()
         alert.messageText = "KeyBrake stays mouse-operated"
@@ -171,7 +213,9 @@ final class KeyBrakeViewModel: ObservableObject {
         if approvedRemoteTargets == 0 {
             alert.addButton(withTitle: "Not Now")
         }
-        if alert.runModal() == .alertFirstButtonReturn && approvedRemoteTargets == 0 {
+        let response = alert.runModal()
+        settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
+        if response == .alertFirstButtonReturn && approvedRemoteTargets == 0 {
             openSettings()
         }
     }
@@ -181,12 +225,15 @@ final class KeyBrakeViewModel: ObservableObject {
         didPostRecoveryNotification = true
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert]) { granted, _ in
-            guard granted else { return }
-            let content = UNMutableNotificationContent()
-            content.title = "KeyBrake recovery is still pending"
-            content.body = "Open KeyBrake and choose a mouse-operated recovery action. Closing the panel does not resolve the decision."
-            let request = UNNotificationRequest(identifier: "keybrake.recovery-pending", content: content, trigger: nil)
-            center.add(request)
+            Task { @MainActor in
+                self.recoveryNotificationStatus = granted ? "Local alert requested" : "Notification permission denied"
+                guard granted else { return }
+                let content = UNMutableNotificationContent()
+                content.title = "KeyBrake recovery is still pending"
+                content.body = "Open KeyBrake and choose a mouse-operated recovery action. Closing the panel does not resolve the decision."
+                let request = UNNotificationRequest(identifier: "keybrake.recovery-pending", content: content, trigger: nil)
+                center.add(request)
+            }
         }
     }
 
@@ -466,6 +513,12 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func clearResolvedHistory() {
+        let alert = NSAlert()
+        alert.messageText = "Clear resolved incident history?"
+        alert.informativeText = "KeyBrake removes only records whose final state is normal. Unresolved recovery snapshots stay in place."
+        alert.addButton(withTitle: "Clear Resolved History")
+        alert.addButton(withTitle: "Cancel")
+        guard alert.runModal() == .alertFirstButtonReturn else { return }
         try? incidentStore.clearResolvedHistory()
         incidents = (try? incidentStore.list()) ?? []
     }

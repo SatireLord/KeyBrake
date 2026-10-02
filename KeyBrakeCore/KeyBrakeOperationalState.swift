@@ -788,7 +788,17 @@ public struct IsolationPreviewLine: Identifiable, Equatable, Sendable {
 }
 
 public enum IsolationPlanPreview {
-    public static func lines(for policy: EmergencyIsolationPolicy, sandbox: Bool) -> [IsolationPreviewLine] {
+    public static func lines(
+        for policy: EmergencyIsolationPolicy,
+        sandbox: Bool,
+        approvedRemoteTargetNames: [String] = []
+    ) -> [IsolationPreviewLine] {
+        let remoteDetail: String
+        if approvedRemoteTargetNames.isEmpty {
+            remoteDetail = "No approved remote-access applications will be stopped."
+        } else {
+            remoteDetail = "Stop approved remote-access applications: \(approvedRemoteTargetNames.joined(separator: ", "))."
+        }
         var lines = [
             IsolationPreviewLine(
                 id: "wifi",
@@ -825,6 +835,7 @@ public enum IsolationPlanPreview {
                     ? "Disable Remote Apple Events when they are enabled."
                     : "Leave Remote Apple Events unchanged."
             ),
+            IsolationPreviewLine(id: "remote-targets", title: "Remote applications", detail: remoteDetail),
         ]
         if sandbox {
             lines.append(
@@ -838,10 +849,30 @@ public enum IsolationPlanPreview {
         return lines
     }
 
-    public static func confirmationText(for policy: EmergencyIsolationPolicy, sandbox: Bool) -> String {
-        lines(for: policy, sandbox: sandbox)
+    public static func affectsIsolation(
+        for policy: EmergencyIsolationPolicy,
+        approvedRemoteTargetNames: [String]
+    ) -> Bool {
+        policy.disableWiFi
+            || policy.disableEthernet
+            || policy.disconnectVPN
+            || policy.disableRemoteLogin
+            || policy.disableRemoteAppleEvents
+            || !approvedRemoteTargetNames.isEmpty
+    }
+
+    public static func confirmationText(
+        for policy: EmergencyIsolationPolicy,
+        sandbox: Bool,
+        approvedRemoteTargetNames: [String] = []
+    ) -> String {
+        var text = lines(for: policy, sandbox: sandbox, approvedRemoteTargetNames: approvedRemoteTargetNames)
             .map { "\($0.title): \($0.detail)" }
             .joined(separator: "\n")
+        if !sandbox && !affectsIsolation(for: policy, approvedRemoteTargetNames: approvedRemoteTargetNames) {
+            text += "\nThis plan does not change network, sharing, or approved remote applications."
+        }
+        return text
     }
 }
 

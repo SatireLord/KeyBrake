@@ -55,10 +55,16 @@ final class KeyBrakeProductSurfaceTests: XCTestCase {
             disableRemoteAppleEvents: true
         )
         let lines = IsolationPlanPreview.lines(for: disabledWiFi, sandbox: true)
-        XCTAssertEqual(lines.map(\.id), ["wifi", "ethernet", "vpn", "remote-login", "remote-apple-events", "sandbox"])
+        XCTAssertEqual(lines.map(\.id), ["wifi", "ethernet", "vpn", "remote-login", "remote-apple-events", "remote-targets", "sandbox"])
         XCTAssertTrue(lines[0].detail.contains("Leave Wi-Fi unchanged"))
         XCTAssertTrue(lines[3].detail.contains("Leave Remote Login unchanged"))
-        XCTAssertTrue(lines[5].detail.contains("does not change host"))
+        XCTAssertTrue(lines[6].detail.contains("does not change host"))
+        let named = IsolationPlanPreview.lines(for: .standard, sandbox: false, approvedRemoteTargetNames: ["Screen Sharing"])
+        XCTAssertTrue(named.contains { $0.id == "remote-targets" && $0.detail.contains("Screen Sharing") })
+        XCTAssertFalse(IsolationPlanPreview.affectsIsolation(
+            for: EmergencyIsolationPolicy(disableWiFi: false, disableEthernet: false, disconnectVPN: false, disableRemoteLogin: false, disableRemoteAppleEvents: false),
+            approvedRemoteTargetNames: []
+        ))
     }
 
     func testConflictDetailsExposeOriginalAppliedAndCurrent() {
