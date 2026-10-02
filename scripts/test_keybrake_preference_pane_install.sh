@@ -1,6 +1,46 @@
 #!/bin/sh
 set -eu
 
+# Review display. KeyBrake does not create a display. These two actions rebuild
+# and remove logical display keybrake-review only. They do not sweep other displays.
+if [ "${1:-}" = "rebuild" ] || [ "${1:-}" = "remove" ]; then
+    owner="${KEYBRAKE_DISPLAY_OWNER:-keybrake-review}"
+    logical_id="${KEYBRAKE_DISPLAY_LOGICAL_ID:-keybrake-review}"
+    displayctl="${KEYBRAKE_DISPLAYCTL:-/Users/michaeltran/bin/displayctl}"
+    if [ ! -x "$displayctl" ]; then
+        echo "displayctl is not installed. KeyBrake does not include a virtual display." >&2
+        exit 69
+    fi
+    case "$1" in
+        rebuild)
+            "$displayctl" ensure --logical-id "$logical_id" --name "KeyBrake Review" --width 1920 --height 1080 --owner "$owner"
+            "$displayctl" inspect --logical-id "$logical_id"
+            if [ "$#" -eq 2 ]; then
+                /usr/bin/open -n "$2" --args --keybrake-command-center
+                "$displayctl" stage --app KeyBrake --position above --preset 16:9 --no-activate
+            elif [ "$#" -ne 1 ]; then
+                echo "Usage: $0 rebuild [KeyBrake.app]" >&2
+                exit 64
+            fi
+            ;;
+        remove)
+            if [ "$#" -ne 1 ]; then
+                echo "Usage: $0 remove" >&2
+                exit 64
+            fi
+            release_status=0
+            down_status=0
+            "$displayctl" release --logical-id "$logical_id" --owner "$owner" || release_status=$?
+            "$displayctl" down --logical-id "$logical_id" --owner "$owner" || down_status=$?
+            if [ "$release_status" -ne 0 ] && [ "$down_status" -ne 0 ]; then
+                echo "Could not remove ${logical_id}." >&2
+                exit 1
+            fi
+            ;;
+    esac
+    exit 0
+fi
+
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 /path/to/KeyBrake.app" >&2
     exit 64

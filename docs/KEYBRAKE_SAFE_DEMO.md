@@ -43,3 +43,14 @@ After each simulated operation, the Command Center and Settings inventories foll
 ```
 
 That route labels itself Isolation failure fixture. Both routes are local simulations. They do not alter host Wi-Fi, VPN, sharing, processes, privacy, launchd, or user settings. Do not combine these flags with a live isolation test.
+
+## Review display
+
+KeyBrake does not create a display. On a machine that already has `displayctl`, the pane-test script also rebuilds a KeyBrake-owned review display and removes that same display:
+
+```bash
+scripts/test_keybrake_preference_pane_install.sh rebuild /path/to/KeyBrake.app
+scripts/test_keybrake_preference_pane_install.sh remove
+```
+
+`rebuild` runs `displayctl ensure` for logical display `keybrake-review`, owner `keybrake-review`, at 1920×1080. When an app path is given, it opens Command Center and moves that window above the other displays without sending a click. `remove` runs `displayctl release` and `displayctl down` for that same logical display and owner. It does not sweep other virtual displays. The failsafe still works from the menu bar when this display is absent.
