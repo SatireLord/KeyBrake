@@ -29,3 +29,7 @@ xcodebuild -project KeyBrake.xcodeproj -scheme KeyBrake -destination 'platform=m
 Do not claim Developer ID signing, notarization, privileged-helper approval, TCC execution, or live network isolation unless a corresponding receipt exists in [`docs/KEYBRAKE_VERIFICATION.md`](docs/KEYBRAKE_VERIFICATION.md).
 
 Update the capability matrix when user-visible behavior changes. Commit coherent deliverables, push the active branch, and verify branch divergence; leave PR merge and GitHub visibility changes to the human maintainer.
+
+## Last Rule — Shared Agent Dictionary (Dogfooding)
+
+During this dogfooding phase, all agents must read and follow `/Users/michaeltran/AntiGravity/Agent-Manager/Agent-Dictionary-Standardized/README.md` and the canonical terms in `terms.json` in that directory. Use its labels and meanings consistently in instructions, plans, task records, handoffs and reports. When a term is missing, ambiguous or conflicts with current source, record the discrepancy and a sourced proposed definition for the dictionary's assigned writer; preserve the distinction between user approval, recipient acceptance, work progress, verification and delivery. Dictionary updates follow its schema and update procedure.
