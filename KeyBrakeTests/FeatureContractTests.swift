@@ -92,6 +92,40 @@ final class KeyBrakeProductSurfaceTests: XCTestCase {
         XCTAssertEqual(details[0].current, "enabled")
     }
 
+    func testBlastRadiusPartialStopAndSessionWarningStaySpecific() {
+        XCTAssertEqual(KeyBrakeStopExplanation.localBlastRadius(names: ["Espanso", "Espanso"]), "Will stop: Espanso.")
+        XCTAssertEqual(KeyBrakeStopExplanation.localBlastRadius(names: []), "No local typing apps are set to stop.")
+        let changing = IsolationPlanPreview.changingTitles(for: .standard, sandbox: false, approvedRemoteTargetNames: ["AnyDesk"])
+        XCTAssertTrue(changing.contains("Wi-Fi"))
+        XCTAssertTrue(changing.contains("Remote applications"))
+        XCTAssertFalse(changing.contains("Fixture rehearsal"))
+        let idle = EmergencyIsolationPolicy(disableWiFi: false, disableEthernet: false, disconnectVPN: false, disableRemoteLogin: false, disableRemoteAppleEvents: false)
+        XCTAssertEqual(KeyBrakeStopExplanation.remoteBlastRadius(changingTitles: IsolationPlanPreview.changingTitles(for: idle, sandbox: false)), "This isolation plan changes nothing.")
+        let notice = KeyBrakeRemoteSessionNotice.notice(loginHosts: ["192.0.2.10"], screenSharingConnected: true)
+        XCTAssertEqual(notice?.warningSentence, "You are connected through Screen Sharing and Remote Login from 192.0.2.10. Stop Remote Access can disconnect this session.")
+        XCTAssertNil(KeyBrakeRemoteSessionNotice.notice(loginHosts: ["  "], screenSharingConnected: false))
+        let incident = IncidentRecord(
+            initiatingAction: "Stop Remote Access",
+            originalState: .normal,
+            finalState: .partiallyIsolated,
+            steps: [
+                OperationStepResult(subsystem: "network", targetID: "wifi", targetDisplayName: "Wi-Fi", requestedState: "disabled", observedPostState: "disabled", operationDescription: "disabled", outcome: .succeeded),
+                OperationStepResult(subsystem: "sharing", targetID: "remote-login", targetDisplayName: "Remote Login", requestedState: "disabled", operationDescription: "helper unavailable", outcome: .failed),
+            ]
+        )
+        XCTAssertEqual(
+            KeyBrakeStopExplanation.partialStopSummary(state: .partiallyIsolated, incident: incident),
+            "Changed: Wi-Fi. Stayed as it was: Remote Login."
+        )
+        let since = Date(timeIntervalSinceNow: -120)
+        let stillOff = KeyBrakeStopExplanation.stillOffSentence(names: ["Wi-Fi"], since: since, now: Date())
+        XCTAssertTrue(stillOff.contains("Still off: Wi-Fi."))
+        XCTAssertTrue(stillOff.contains("Off for 2 minutes."))
+        XCTAssertEqual(KeyBrakeHelperRegistrationCopy.buttonTitle(signing: .unsignedOrAdHoc), KeyBrakeHelperRegistrationCopy.unsignedSentence)
+        XCTAssertFalse(KeyBrakeHelperRegistrationCopy.canRegister(signing: .unsignedOrAdHoc))
+        XCTAssertTrue(KeyBrakeHelperRegistrationCopy.canRegister(signing: .developerID))
+    }
+
     func testIncidentExportRoundTripsMetadataOnly() throws {
         let incident = IncidentRecord(
             initiatingAction: "Stop Remote Access",

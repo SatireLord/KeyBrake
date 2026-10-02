@@ -51,6 +51,16 @@ struct KeyBrakeCommandCenterView: View {
                 Text(model.nextStepSentence)
                     .font(.title3.weight(.semibold))
                     .accessibilityIdentifier("keybrake.command-center.next-step")
+                if let recoveryStillOffText = model.recoveryStillOffText {
+                    Text(recoveryStillOffText)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("keybrake.command-center.still-off")
+                }
+                if let partialStopSummary = model.partialStopSummary {
+                    Text(partialStopSummary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("keybrake.command-center.partial-stop")
+                }
                 if let helperFailureNotice = model.helperFailureNotice {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(helperFailureNotice)
@@ -251,6 +261,10 @@ struct KeyBrakeCommandCenterView: View {
             }
 
             VStack(alignment: .leading, spacing: 10) {
+                Text(model.localStopBlastRadius)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("keybrake.command-center.local-blast-radius")
                 Button {
                     model.stopSkynetLocally()
                 } label: {

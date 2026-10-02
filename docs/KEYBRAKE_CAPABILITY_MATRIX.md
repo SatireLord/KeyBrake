@@ -30,6 +30,15 @@ This document classifies every user-visible or safety-critical capability by imp
 | Next-step sentence | `implemented` | The menu and Command Center say Wait, Open recovery, or Stop something |
 | Plain action names | `implemented` | Stop Local Typing Apps and Restore Recorded Changes are the visible labels. Hover shows Stop Skynet Locally and Restore Human Control |
 | Helper approval failure | `implemented` | A failed network, sharing, or helper step while the helper is not enabled says the helper is not approved and opens Register Privileged Helper |
+| Stop blast radius | `implemented` | The menu names the local apps that will stop and the isolation changes that will run before those actions |
+| Remote-session warning | `implemented` | Stop Remote Access names an active Screen Sharing or Remote Login session and still asks for the existing confirmation |
+| Practice isolation | `implemented` | Practice Isolation opens a second KeyBrake with the network-sandbox fixture and leaves the host network alone |
+| Startup at login | `implemented` | Launch KeyBrake at Login is in the Startup section, outside Advanced |
+| Espanso restart visibility | `implemented` | Restart Espanso appears only when Espanso is installed and enabled for the local stop |
+| One-step network restore | `implemented` | The recovery panel lists what turns back on, says a disconnected VPN stays disconnected, and restores without a second VPN question |
+| Partial stop explanation | `implemented` | Partial Isolation names what changed and what stayed as it was |
+| Unsigned helper registration | `implemented` | An unsigned or ad-hoc build disables helper registration and says network and sharing changes wait for a signed install |
+| Still-off recovery list | `implemented` | While recovery is pending, the menu names the services still off and how long they have been off |
 | Settings emergency profile | `implemented` | Emergency Isolation leads Settings. Helper registration, privacy reset, and keyboard reset sit in Advanced |
 | Incident change sentence | `implemented` | Each incident row states what changed ahead of the step list |
 | Command Center limit | `implemented` | Command Center states that KeyBrake does not undo privacy grants, restart stopped remote apps, or change anything it did not record |

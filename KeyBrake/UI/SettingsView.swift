@@ -116,6 +116,9 @@ struct SettingsView: View {
         if let privilegedHelperError = model.privilegedHelperError {
             return "The last privileged helper registration request failed: \(privilegedHelperError)"
         }
+        if !model.canRegisterPrivilegedHelper {
+            return KeyBrakeHelperRegistrationCopy.unsignedSentence
+        }
         switch model.privilegedHelperStatus {
         case "Enabled":
             return "The privileged helper is registered. Registering again asks macOS to refresh the registration."
@@ -397,6 +400,21 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("keybrake.settings.current-protection-state-section")
 
+            Section("Startup") {
+                Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
+                    .help(launchAtLoginActionHint)
+                    .accessibilityHint(launchAtLoginActionHint)
+                    .accessibilityIdentifier("keybrake.settings.general.launch-at-login")
+                if let launchAtLoginError = model.launchAtLoginError {
+                    Text(launchAtLoginError)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                        .accessibilityIdentifier("keybrake.settings.launch-at-login.error")
+                }
+            }
+            .disabled(model.isNetworkSandbox)
+            .accessibilityIdentifier("keybrake.settings.startup-section")
+
             Section("Emergency Isolation") {
                 Toggle("Disable Wi-Fi", isOn: policyBinding(\.disableWiFi))
                     .help(isolationControlHint(effectDescription: "Disables Wi-Fi interfaces", enabled: model.isolationPolicy.disableWiFi))
@@ -504,15 +522,12 @@ struct SettingsView: View {
             DisclosureGroup("Advanced", isExpanded: $isPrivilegedHelperSectionExpanded) {
             Group {
             Section("General") {
-                Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
-                    .help(launchAtLoginActionHint)
-                    .accessibilityHint(launchAtLoginActionHint)
-                    .accessibilityIdentifier("keybrake.settings.general.launch-at-login")
                 LabeledContent("Privileged Helper") {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(model.privilegedHelperStatus)
                             .accessibilityIdentifier("keybrake.settings.privileged-helper.status")
-                        Button("Register Privileged Helper") { model.registerPrivilegedHelper() }
+                        Button(model.helperRegistrationButtonTitle) { model.registerPrivilegedHelper() }
+                            .disabled(!model.canRegisterPrivilegedHelper)
                             .help(privilegedHelperActionHint)
                             .accessibilityHint(privilegedHelperActionHint)
                             .accessibilityIdentifier("keybrake.settings.general.register-privileged-helper")
@@ -525,12 +540,6 @@ struct SettingsView: View {
                         .font(.caption)
                         .foregroundStyle(.red)
                         .accessibilityIdentifier("keybrake.settings.privileged-helper.error")
-                }
-                if let launchAtLoginError = model.launchAtLoginError {
-                    Text(launchAtLoginError)
-                        .font(.caption)
-                        .foregroundStyle(.red)
-                        .accessibilityIdentifier("keybrake.settings.launch-at-login.error")
                 }
             }
             .accessibilityIdentifier("keybrake.settings.general-section")

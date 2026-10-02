@@ -55,12 +55,12 @@ struct RecoveryView: View {
 
                 recoveryAction(
                     title: "Restore Network",
-                    description: model.networkRestoreLine,
+                    description: model.quitRestoreConfirmationText,
                     systemImage: "network",
                     identifier: "keybrake.recovery.restore-network",
                     prominent: true
                 ) {
-                    model.restoreNetworkOnly()
+                    model.restoreNetworkOnly(confirmVPN: false)
                 }
 
                 recoveryAction(
@@ -73,14 +73,16 @@ struct RecoveryView: View {
                     model.restoreSharingOnly()
                 }
 
-                recoveryAction(
-                    title: "Restart Espanso",
-                    description: "Restart local input automation separately from network and sharing recovery.",
-                    systemImage: "arrow.clockwise.circle",
-                    identifier: "keybrake.recovery.restart-espanso",
-                    prominent: false
-                ) {
-                    model.restartEspanso()
+                if model.showsEspansoRestart {
+                    recoveryAction(
+                        title: "Restart Espanso",
+                        description: "Restart local input automation separately from network and sharing recovery.",
+                        systemImage: "arrow.clockwise.circle",
+                        identifier: "keybrake.recovery.restart-espanso",
+                        prominent: false
+                    ) {
+                        model.restartEspanso()
+                    }
                 }
 
                 recoveryAction(

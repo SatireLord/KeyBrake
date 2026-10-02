@@ -4,13 +4,22 @@ public struct EspansoAdapter: Sendable {
     private let commandRunner: CommandRunning
     private let executableCandidates: [URL]
 
-    public init(commandRunner: CommandRunning, executableCandidates: [URL] = [
-        URL(fileURLWithPath: "/opt/homebrew/bin/espanso"),
-        URL(fileURLWithPath: "/usr/local/bin/espanso"),
-        URL(fileURLWithPath: "/usr/bin/espanso")
-    ]) {
+    public init(commandRunner: CommandRunning, executableCandidates: [URL] = EspansoAdapter.defaultExecutableCandidates) {
         self.commandRunner = commandRunner
         self.executableCandidates = executableCandidates
+    }
+
+    public static let defaultExecutableCandidates: [URL] = [
+        URL(fileURLWithPath: "/opt/homebrew/bin/espanso"),
+        URL(fileURLWithPath: "/usr/local/bin/espanso"),
+        URL(fileURLWithPath: "/usr/bin/espanso"),
+    ]
+
+    public static func isInstalled(
+        candidates: [URL] = defaultExecutableCandidates,
+        isExecutable: (String) -> Bool = { FileManager.default.isExecutableFile(atPath: $0) }
+    ) -> Bool {
+        candidates.contains { isExecutable($0.path) }
     }
 
     public func resolveExecutable() -> URL? {

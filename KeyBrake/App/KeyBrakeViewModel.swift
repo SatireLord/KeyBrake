@@ -1,6 +1,7 @@
 import Foundation
 import AppKit
 import KeyBrakeCore
+import Security
 import ServiceManagement
 import SwiftUI
 import UniformTypeIdentifiers
@@ -42,6 +43,8 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published var firstRunRemoteSlot = FirstRunSlotState()
     @Published private(set) var keyboardSettingsNavigationRequest: UUID?
     @Published private(set) var privilegedHelperRevealRequest: UUID?
+    @Published private(set) var remoteSessionWarning: String?
+    let buildSigning: KeyBrakeBuildSigning
     private var allowImmediateQuit = false
     private var launchRecoveryCheckCompleted = false
 
@@ -88,6 +91,7 @@ final class KeyBrakeViewModel: ObservableObject {
         self.isolationPolicy = initialIsolationPolicy ?? (isReadOnlyDemo ? .standard : Self.loadIsolationPolicy(from: settingsDefaults))
         self.launchAtLoginEnabled = isReadOnlyDemo ? false : Self.readLaunchAtLoginStatus()
         self.privilegedHelperStatus = isReadOnlyDemo ? "Disabled in demo mode" : Self.readPrivilegedHelperStatus()
+        self.buildSigning = isReadOnlyDemo ? .otherSigned : KeyBrakeCodeSignature.current()
         Task {
             await coordinator.replaceTargetDefinitions(self.configuredTargets)
             await refresh()
@@ -183,11 +187,16 @@ final class KeyBrakeViewModel: ObservableObject {
             return
         }
         alert.messageText = isNetworkSandbox ? "Rehearse this isolation plan?" : "Apply this isolation plan?"
-        alert.informativeText = IsolationPlanPreview.confirmationText(
+        var confirmation = IsolationPlanPreview.confirmationText(
             for: isolationPolicy,
             sandbox: isNetworkSandbox,
             approvedRemoteTargetNames: approvedRemoteTargetNames
         )
+        if let warning = KeyBrakeRemoteSessionProbe.currentNotice()?.warningSentence {
+            remoteSessionWarning = warning
+            confirmation += "\n\n\(warning)"
+        }
+        alert.informativeText = confirmation
         alert.addButton(withTitle: isNetworkSandbox ? "Rehearse Isolation" : "Stop Remote Access")
         alert.addButton(withTitle: "Cancel")
         guard alert.runModal() == .alertFirstButtonReturn else { return }
@@ -467,6 +476,95 @@ final class KeyBrakeViewModel: ObservableObject {
         settingsDefaults.set(data, forKey: Self.isolationPolicyDefaultsKey)
     }
 
+    var localStopBlastRadius: String {
+        let names = configuredTargets
+            .filter { $0.category == .localAutomation && $0.enabledForEmergencyStop }
+            .map(\.displayName)
+        return KeyBrakeStopExplanation.localBlastRadius(names: names)
+    }
+
+    var remoteStopBlastRadius: String {
+        KeyBrakeStopExplanation.remoteBlastRadius(
+            changingTitles: IsolationPlanPreview.changingTitles(
+                for: isolationPolicy,
+                sandbox: isNetworkSandbox,
+                approvedRemoteTargetNames: approvedRemoteTargetNames
+            )
+        )
+    }
+
+    var partialStopSummary: String? {
+        KeyBrakeStopExplanation.partialStopSummary(state: operationalState, incident: latestIncident)
+    }
+
+    var recoveryStillOffText: String? {
+        guard isRecoveryStatusKnown, hasRecovery else { return nil }
+        let networkNames = disabledRecordedNames(in: (unresolvedRecovery?.networkChanges ?? []).filter { !$0.isVPN })
+        let sharingNames = disabledRecordedNames(in: unresolvedRecovery?.sharingChanges ?? [])
+        return KeyBrakeStopExplanation.stillOffSentence(
+            names: networkNames + sharingNames,
+            since: unresolvedRecovery?.createdAt
+        )
+    }
+
+    var showsEspansoRestart: Bool {
+        Self.showsEspansoRestart(targets: configuredTargets, espansoInstalled: EspansoAdapter.isInstalled())
+    }
+
+    var helperRegistrationButtonTitle: String {
+        KeyBrakeHelperRegistrationCopy.buttonTitle(signing: buildSigning)
+    }
+
+    var canRegisterPrivilegedHelper: Bool {
+        KeyBrakeHelperRegistrationCopy.canRegister(signing: buildSigning) && !isReadOnlyDemo
+    }
+
+    func refreshRemoteSessionWarning() {
+        remoteSessionWarning = KeyBrakeRemoteSessionProbe.currentNotice()?.warningSentence
+    }
+
+    func openPracticeIsolation() {
+        guard !isReadOnlyDemo else { return }
+        let bundleURL = Bundle.main.bundleURL
+        if bundleURL.pathExtension == "app" {
+            let configuration = NSWorkspace.OpenConfiguration()
+            configuration.arguments = [KeyBrakeLaunchArgument.networkSandbox]
+            configuration.createsNewApplicationInstance = true
+            NSWorkspace.shared.openApplication(at: bundleURL, configuration: configuration) { _, error in
+                guard let error else { return }
+                Task { @MainActor in
+                    self.showTerminationBlockedAlert(
+                        messageText: "KeyBrake could not open practice mode",
+                        informativeText: error.localizedDescription
+                    )
+                }
+            }
+            return
+        }
+        guard let executableURL = Bundle.main.executableURL else {
+            showTerminationBlockedAlert(
+                messageText: "KeyBrake could not open practice mode",
+                informativeText: "The current executable path is unavailable."
+            )
+            return
+        }
+        let process = Process()
+        process.executableURL = executableURL
+        process.arguments = [KeyBrakeLaunchArgument.networkSandbox]
+        do {
+            try process.run()
+        } catch {
+            showTerminationBlockedAlert(
+                messageText: "KeyBrake could not open practice mode",
+                informativeText: error.localizedDescription
+            )
+        }
+    }
+
+    static func showsEspansoRestart(targets: [TargetDefinition], espansoInstalled: Bool) -> Bool {
+        espansoInstalled && targets.contains { $0.id == "espanso" && $0.category == .localAutomation && $0.enabledForEmergencyStop }
+    }
+
     var networkRestoreLine: String {
         let names = disabledRecordedNames(in: unresolvedRecovery?.networkChanges ?? [])
         if names.isEmpty {
@@ -677,7 +775,7 @@ final class KeyBrakeViewModel: ObservableObject {
     }
 
     func registerPrivilegedHelper() {
-        guard !isReadOnlyDemo else { return }
+        guard canRegisterPrivilegedHelper else { return }
         guard #available(macOS 13.0, *) else {
             privilegedHelperError = "Privileged helper registration requires macOS 13 or later."
             return
@@ -808,5 +906,41 @@ final class KeyBrakeViewModel: ObservableObject {
             }
         }
         return "Requires macOS 13+"
+    }
+}
+
+enum KeyBrakeCodeSignature {
+    static func current() -> KeyBrakeBuildSigning {
+        guard let url = Bundle.main.executableURL else { return .unsignedOrAdHoc }
+        return classify(url: url)
+    }
+
+    static func classify(url: URL) -> KeyBrakeBuildSigning {
+        var staticCode: SecStaticCode?
+        guard SecStaticCodeCreateWithPath(url as CFURL, [], &staticCode) == errSecSuccess, let staticCode else {
+            return .unsignedOrAdHoc
+        }
+        var information: CFDictionary?
+        guard SecCodeCopySigningInformation(staticCode, SecCSFlags(rawValue: kSecCSSigningInformation), &information) == errSecSuccess,
+              let information = information as? [String: Any] else {
+            return .unsignedOrAdHoc
+        }
+        let flags = (information[kSecCodeInfoFlags as String] as? NSNumber)?.uint32Value ?? 0
+        let adhocSignatureFlag: UInt32 = 0x0002
+        if flags & adhocSignatureFlag != 0 {
+            return .unsignedOrAdHoc
+        }
+        if let certificates = information[kSecCodeInfoCertificates as String] as? [SecCertificate] {
+            for certificate in certificates {
+                let summary = SecCertificateCopySubjectSummary(certificate) as String? ?? ""
+                if summary.contains("Developer ID Application") {
+                    return .developerID
+                }
+            }
+            if !certificates.isEmpty {
+                return .otherSigned
+            }
+        }
+        return .unsignedOrAdHoc
     }
 }

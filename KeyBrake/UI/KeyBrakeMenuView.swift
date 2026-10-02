@@ -21,6 +21,7 @@ struct KeyBrakeMenuView: View {
 
     var body: some View {
         Label("KeyBrake", systemImage: statusSymbol)
+            .onAppear { model.refreshRemoteSessionWarning() }
             .font(.headline)
         Divider()
         Label(statusText, systemImage: statusSymbol)
@@ -30,6 +31,18 @@ struct KeyBrakeMenuView: View {
             .font(.callout)
             .foregroundStyle(.secondary)
             .accessibilityIdentifier("keybrake.menu.next-step")
+        if let recoveryStillOffText = model.recoveryStillOffText {
+            Text(recoveryStillOffText)
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("keybrake.menu.still-off")
+        }
+        if let partialStopSummary = model.partialStopSummary {
+            Text(partialStopSummary)
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("keybrake.menu.partial-stop")
+        }
         if let helperFailureNotice = model.helperFailureNotice {
             Text(helperFailureNotice)
                 .font(.callout)
@@ -53,6 +66,11 @@ struct KeyBrakeMenuView: View {
             restoreHumanControlButton
         }
         Divider()
+        Text(model.localStopBlastRadius)
+            .font(.callout)
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityIdentifier("keybrake.menu.local-blast-radius")
         Button {
             model.stopSkynetLocally()
         } label: {
@@ -62,6 +80,17 @@ struct KeyBrakeMenuView: View {
             .accessibilityHint(stopSkynetLocallyActionHint)
             .accessibilityIdentifier("keybrake.menu.stop-local-automation")
             .disabled(model.isBusy || model.operationalState == .localAutomationStopped)
+        Text(model.remoteStopBlastRadius)
+            .font(.callout)
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityIdentifier("keybrake.menu.remote-blast-radius")
+        if let remoteSessionWarning = model.remoteSessionWarning {
+            Text(remoteSessionWarning)
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("keybrake.menu.remote-session-warning")
+        }
         Button {
             model.requestStopRemoteAccess()
         } label: {
@@ -84,15 +113,27 @@ struct KeyBrakeMenuView: View {
         if !(model.isRecoveryStatusKnown && model.hasRecovery) {
             restoreHumanControlButton
         }
-        Button {
-            model.restartEspanso()
-        } label: {
-            Label("Restart Espanso", systemImage: "arrow.clockwise.circle")
-        }
+        if model.showsEspansoRestart {
+            Button {
+                model.restartEspanso()
+            } label: {
+                Label("Restart Espanso", systemImage: "arrow.clockwise.circle")
+            }
             .help(restartEspansoActionHint)
             .accessibilityHint(restartEspansoActionHint)
             .accessibilityIdentifier("keybrake.menu.restart-espanso")
             .disabled(model.isBusy)
+        }
+        if !model.isReadOnlyDemo {
+            Button {
+                model.openPracticeIsolation()
+            } label: {
+                Label("Practice Isolation", systemImage: "theatermasks")
+            }
+            .help("Opens a practice KeyBrake. It does not change this Mac's network, sharing, or apps.")
+            .accessibilityHint("Opens a practice KeyBrake that leaves this Mac's network, sharing, and apps unchanged")
+            .accessibilityIdentifier("keybrake.menu.practice-isolation")
+        }
         Button {
             openWindow(id: "incidents")
         } label: {

@@ -189,6 +189,14 @@ final class KeyBrakeDemoCompositionTests: XCTestCase {
         XCTAssertEqual(model.latestIncident?.initiatingAction, "Restore Human Control")
     }
 
+    func testEspansoRestartStaysHiddenUntilEspansoIsInstalledAndEnabled() {
+        let espanso = TargetDefinition(id: "espanso", displayName: "Espanso", category: .localAutomation, enabledForEmergencyStop: true)
+        let disabled = TargetDefinition(id: "espanso", displayName: "Espanso", category: .localAutomation, enabledForEmergencyStop: false)
+        XCTAssertTrue(KeyBrakeViewModel.showsEspansoRestart(targets: [espanso], espansoInstalled: true))
+        XCTAssertFalse(KeyBrakeViewModel.showsEspansoRestart(targets: [espanso], espansoInstalled: false))
+        XCTAssertFalse(KeyBrakeViewModel.showsEspansoRestart(targets: [disabled], espansoInstalled: true))
+    }
+
     func testMenuGuidanceAndHelperFailureCopy() {
         XCTAssertEqual(KeyBrakeViewModel.menuBarStatusWord(known: false, hasRecovery: false, state: .normal), "Checking")
         XCTAssertEqual(KeyBrakeViewModel.menuBarStatusWord(known: true, hasRecovery: false, state: .stoppingLocalAutomation), "Stopping")

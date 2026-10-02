@@ -874,6 +874,135 @@ public enum IsolationPlanPreview {
         }
         return text
     }
+
+    public static func changingTitles(
+        for policy: EmergencyIsolationPolicy,
+        sandbox: Bool,
+        approvedRemoteTargetNames: [String] = []
+    ) -> [String] {
+        lines(for: policy, sandbox: sandbox, approvedRemoteTargetNames: approvedRemoteTargetNames)
+            .filter { line in
+                line.id != "sandbox"
+                    && !line.detail.hasPrefix("Leave")
+                    && !line.detail.hasPrefix("No approved")
+            }
+            .map(\.title)
+    }
+}
+
+public struct KeyBrakeRemoteSessionNotice: Equatable, Sendable {
+    public let sessionNames: [String]
+
+    public init(sessionNames: [String]) {
+        self.sessionNames = sessionNames
+    }
+
+    public var warningSentence: String {
+        "You are connected through \(sessionNames.joined(separator: " and ")). Stop Remote Access can disconnect this session."
+    }
+
+    public static func notice(loginHosts: [String], screenSharingConnected: Bool) -> KeyBrakeRemoteSessionNotice? {
+        var names: [String] = []
+        if screenSharingConnected {
+            names.append("Screen Sharing")
+        }
+        let hosts = loginHosts.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+        if let host = hosts.first {
+            names.append("Remote Login from \(host)")
+        }
+        guard !names.isEmpty else { return nil }
+        return KeyBrakeRemoteSessionNotice(sessionNames: names)
+    }
+}
+
+public enum KeyBrakeBuildSigning: Equatable, Sendable {
+    case developerID
+    case otherSigned
+    case unsignedOrAdHoc
+}
+
+public enum KeyBrakeHelperRegistrationCopy {
+    public static let unsignedSentence = "Network and sharing changes wait for a signed install."
+
+    public static func buttonTitle(signing: KeyBrakeBuildSigning) -> String {
+        switch signing {
+        case .developerID, .otherSigned:
+            return "Register Privileged Helper"
+        case .unsignedOrAdHoc:
+            return unsignedSentence
+        }
+    }
+
+    public static func canRegister(signing: KeyBrakeBuildSigning) -> Bool {
+        signing != .unsignedOrAdHoc
+    }
+}
+
+public enum KeyBrakeStopExplanation {
+    public static func localBlastRadius(names: [String]) -> String {
+        let unique = Array(Set(names)).sorted()
+        if unique.isEmpty {
+            return "No local typing apps are set to stop."
+        }
+        return "Will stop: \(unique.joined(separator: ", "))."
+    }
+
+    public static func remoteBlastRadius(changingTitles: [String]) -> String {
+        if changingTitles.isEmpty {
+            return "This isolation plan changes nothing."
+        }
+        return "Will change: \(changingTitles.joined(separator: ", "))."
+    }
+
+    public static func partialStopSummary(state: KeyBrakeOperationalState, incident: IncidentRecord?) -> String? {
+        guard state == .partiallyIsolated, let incident else { return nil }
+        let changed = uniqueNames(incident.steps.filter { $0.outcome == .succeeded }.map(\.targetDisplayName))
+        let stayed = uniqueNames(incident.steps.filter {
+            $0.outcome == .failed || $0.outcome == .unsupported || $0.outcome == .conflict || $0.outcome == .skipped
+        }.map(\.targetDisplayName))
+        var parts: [String] = []
+        if !changed.isEmpty {
+            parts.append("Changed: \(changed.joined(separator: ", ")).")
+        }
+        if !stayed.isEmpty {
+            parts.append("Stayed as it was: \(stayed.joined(separator: ", ")).")
+        }
+        if parts.isEmpty {
+            return "Some changes did not finish. Open the incident log for the recorded steps."
+        }
+        return parts.joined(separator: " ")
+    }
+
+    public static func stillOffSentence(names: [String], since: Date?, now: Date = Date()) -> String {
+        let unique = Array(Set(names)).sorted()
+        let duration = since.map { agePhrase(from: $0, now: now) }
+        if unique.isEmpty {
+            return duration.map { "Recovery is still pending. \($0)" } ?? "Recovery is still pending."
+        }
+        let list = "Still off: \(unique.joined(separator: ", "))."
+        return duration.map { "\(list) \($0)" } ?? list
+    }
+
+    private static func uniqueNames(_ names: [String]) -> [String] {
+        Array(Set(names)).sorted()
+    }
+
+    private static func agePhrase(from start: Date, now: Date) -> String {
+        let seconds = max(0, Int(now.timeIntervalSince(start)))
+        if seconds < 60 {
+            return "Off for less than a minute."
+        }
+        let minutes = seconds / 60
+        if minutes < 60 {
+            return "Off for \(minutes) \(minutes == 1 ? "minute" : "minutes")."
+        }
+        let hours = minutes / 60
+        if hours < 48 {
+            return "Off for \(hours) \(hours == 1 ? "hour" : "hours")."
+        }
+        let days = hours / 24
+        return "Off for \(days) \(days == 1 ? "day" : "days")."
+    }
 }
 
 public struct RecoveryConflictDetail: Identifiable, Equatable, Sendable {
