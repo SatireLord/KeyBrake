@@ -286,3 +286,5 @@ UI-110 keeps the network sandbox inventory truthful after simulated actions. Com
 UI-111 makes the Recovery panel recorded inventory inspectable during safe review. The inventory exposes `keybrake.recovery.inventory`, and each network, sharing, unresolved, and privacy-review metric exposes a stable identifier with a combined accessibility label equal to its visible count and category; recovery actions, counts, layout, and persistence semantics remain unchanged.
 
 UI-112 makes the Recovery panel busy-state guidance deterministically inspectable through `keybrake.recovery.busy-guidance` while preserving its visible copy, busy gates, and review-action availability.
+
+UI-113 exposes `keybrake.recovery.close-language` on the panel-close explanation. UI-114 exposes `keybrake.recovery.action-boundary` on the bounded-restore introduction. UI-115 makes the Recovery status GroupBox a containing surface for `keybrake.recovery.state-summary`. These are presentation-only inspection anchors; recovery handlers and host-operation boundaries are unchanged.

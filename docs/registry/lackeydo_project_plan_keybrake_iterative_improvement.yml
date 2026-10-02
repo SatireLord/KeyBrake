@@ -11114,3 +11114,11 @@ project_plan:
       source_shas:
         - "KeyBrake/UI/RecoveryView.swift sha256=cc65bcab6fb897999263a69ec35b02e7f2884aa1d3cdf55cdb1829da8a2d1a6d"
     next_action: "Continue source-backed QoL on the private release branch; human maintainer owns visibility flip."
+  completed_iteration_ui113_ui115:
+    id: "UI-113–UI-115"
+    name: "Recovery panel guidance and state-summary inspection"
+    status: "complete_at_source_and_documentation_checkpoint"
+    proof:
+      focused_tests: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI113-115; 73 tests, 0 failures."
+      source_shas:
+        - "KeyBrake/UI/RecoveryView.swift sha256=fe3a2dcb02f348f88fb2c39d5e48914bd5d2992f10c4b5e4b05368f5b5fbc123"

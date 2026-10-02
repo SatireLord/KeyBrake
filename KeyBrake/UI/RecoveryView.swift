@@ -15,6 +15,9 @@ import SwiftUI
 // QoL-042: the Recovery quit affordance follows the existing busy termination guard while Keep Isolation remains available.
 // QoL-111: the recorded recovery inventory publishes stable parent and metric inspection anchors without changing its counts or recovery actions.
 // QoL-112: the recovery busy-state guidance exposes a stable inspection anchor without changing its visible copy or busy gates.
+// QoL-113: the recovery close-language guidance exposes a stable inspection anchor without changing panel-close or Keep Isolation semantics.
+// QoL-114: the recovery action-boundary guidance exposes a stable inspection anchor without changing restore handlers or recovery scope.
+// QoL-115: the recovery state-summary GroupBox is a containing inspection surface while preserving the existing state-summary identifier and visible copy.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -29,6 +32,7 @@ struct RecoveryView: View {
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("keybrake.recovery.action-boundary")
 
                 if model.isBusy {
                     Text("State-changing recovery actions are temporarily unavailable while KeyBrake completes the current operation. Review actions remain available.")
@@ -112,6 +116,7 @@ struct RecoveryView: View {
                 Text("Closing this panel does not resolve the recovery decision.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("keybrake.recovery.close-language")
             }
             .padding(24)
         }
@@ -169,10 +174,11 @@ struct RecoveryView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            .accessibilityIdentifier("keybrake.recovery.state-summary")
         } label: {
             Label("Recovery status", systemImage: "exclamationmark.triangle.fill")
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("keybrake.recovery.state-summary")
     }
 
     @ViewBuilder

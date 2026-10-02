@@ -563,6 +563,8 @@ The UI-111 proof establishes that the Recovery panel recorded inventory and each
 
 The UI-112 proof adds `keybrake.recovery.busy-guidance` to the existing Recovery panel busy-state explanation without changing visible copy, busy gates, or review-action availability. `KeyBrake/UI/RecoveryView.swift` passes bounded parse and the cursor-safe guard; `swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI112-retry` passed all 73 tests with 0 failures. No live runtime or Agent Display proof is claimed. Source SHA-256: `cc65bcab6fb897999263a69ec35b02e7f2884aa1d3cdf55cdb1829da8a2d1a6d` (`KeyBrake/UI/RecoveryView.swift`).
 
+The UI-113 through UI-115 proof adds `keybrake.recovery.close-language`, `keybrake.recovery.action-boundary`, and a containing Recovery status GroupBox for the existing `keybrake.recovery.state-summary` identifier without changing recovery handlers, close semantics, or hydration behavior. `swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI113-115` passed all 73 tests with 0 failures. No live runtime or Agent Display proof is claimed. Source SHA-256: `fe3a2dcb02f348f88fb2c39d5e48914bd5d2992f10c4b5e4b05368f5b5fbc123` (`KeyBrake/UI/RecoveryView.swift`).
+
 ## Regression checksum anchors
 
 These SHA-256 values anchor the safety contract and the highest-risk command seams for this deliverable. They are recorded after the final source/doc edits; a later change must recompute and review the affected value.
@@ -670,6 +672,7 @@ aff0ff4899ff4049a8587a0c5f313f740e2894374205e7f15119bea434e2a1a0  KeyBrake/UI/Se
 bfc03c32fedfeaa3af94f71a27d9bf4f4eae636d8d2123c0ba68a3d2a2352c83  KeyBrake/UI/SettingsView.swift (UI-110 current)
 c636d627dff71539da64f5dff518fd8861296fb3c7c28a476802f5f77f889481  KeyBrake/UI/RecoveryView.swift (UI-111 current)
 cc65bcab6fb897999263a69ec35b02e7f2884aa1d3cdf55cdb1829da8a2d1a6d  KeyBrake/UI/RecoveryView.swift (UI-112 current)
+fe3a2dcb02f348f88fb2c39d5e48914bd5d2992f10c4b5e4b05368f5b5fbc123  KeyBrake/UI/RecoveryView.swift (UI-113–115 current)
 
 ## Reset Keyboard — UI-112 (2026-09-28)
 

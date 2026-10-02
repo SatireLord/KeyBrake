@@ -165,6 +165,8 @@ UI-111 adds stable inspection anchors to the Recovery panel recorded inventory: 
 
 UI-112 exposes `keybrake.recovery.busy-guidance` on the Recovery panel busy-state explanation so safe review can locate that guidance without changing recovery handlers or host-operation boundaries.
 
+UI-113 adds `keybrake.recovery.close-language` and UI-114 adds `keybrake.recovery.action-boundary` for the existing close and scope copy. UI-115 keeps `keybrake.recovery.state-summary` on a containing Recovery status GroupBox for inspection hierarchy only.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
