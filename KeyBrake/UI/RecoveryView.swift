@@ -18,6 +18,8 @@ import SwiftUI
 // QoL-113: the recovery close-language guidance exposes a stable inspection anchor without changing panel-close or Keep Isolation semantics.
 // QoL-114: the recovery action-boundary guidance exposes a stable inspection anchor without changing restore handlers or recovery scope.
 // QoL-115: the recovery state-summary GroupBox is a containing inspection surface while preserving the existing state-summary identifier and visible copy.
+// QoL-116: the recovery panel root exposes a stable inspection anchor without changing layout or recovery behavior.
+// QoL-117: the recovery panel header exposes a stable combined inspection surface without changing visible copy or recovery routing.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -123,6 +125,7 @@ struct RecoveryView: View {
         .frame(minWidth: 600, minHeight: 560)
         .accessibilityElement(children: .contain)
         .accessibilityLabel("KeyBrake Recovery")
+        .accessibilityIdentifier("keybrake.recovery.panel")
     }
 
     private var header: some View {
@@ -140,6 +143,9 @@ struct RecoveryView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("KeyBrake Recovery. Review what changed, then choose exactly which state to restore.")
+        .accessibilityIdentifier("keybrake.recovery.header")
     }
 
     private var stateSummary: some View {

@@ -287,4 +287,4 @@ UI-111 makes the Recovery panel recorded inventory inspectable during safe revie
 
 UI-112 makes the Recovery panel busy-state guidance deterministically inspectable through `keybrake.recovery.busy-guidance` while preserving its visible copy, busy gates, and review-action availability.
 
-UI-113 exposes `keybrake.recovery.close-language` on the panel-close explanation. UI-114 exposes `keybrake.recovery.action-boundary` on the bounded-restore introduction. UI-115 makes the Recovery status GroupBox a containing surface for `keybrake.recovery.state-summary`. These are presentation-only inspection anchors; recovery handlers and host-operation boundaries are unchanged.
+UI-113 exposes `keybrake.recovery.close-language` on the panel-close explanation. UI-114 exposes `keybrake.recovery.action-boundary` on the bounded-restore introduction. UI-115 makes the Recovery status GroupBox a containing surface for `keybrake.recovery.state-summary`. UI-116 adds `keybrake.recovery.panel` on the root surface and UI-117 adds `keybrake.recovery.header` for the title block. These are presentation-only inspection anchors; recovery handlers and host-operation boundaries are unchanged.
