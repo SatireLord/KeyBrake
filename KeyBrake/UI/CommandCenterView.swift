@@ -8,7 +8,7 @@ import SwiftUI
 // forms: keybrake-command-center; commandCenter; command-center
 // descriptors: at-a-glance status; emergency actions; recovery routing; recent incident
 // states: checking; ready; busy; recovery-required; empty; incident-present; degraded
-// consumers: KeyBrakeApp; KeyBrakeMenuView; KeyBrakeViewModel; Agent Display
+// consumers: KeyBrakeApp; KeyBrakeMenuView; KeyBrakeViewModel
 // owner: KeyBrakeCommandCenterView
 // QoL-005: the Command Center header, state card, recovery card, and badge share the hydration-aware state boundary.
 // QoL-010: Command Center state-changing controls explain their busy disabled state while review navigation remains available.
