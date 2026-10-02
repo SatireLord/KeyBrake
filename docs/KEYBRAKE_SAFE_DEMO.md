@@ -163,6 +163,8 @@ UI-110 keeps the existing sandbox inventory aligned with recorded fixture outcom
 
 UI-111 adds stable inspection anchors to the Recovery panel recorded inventory: `keybrake.recovery.inventory` on the inventory container and `keybrake.recovery.inventory.network`, `.sharing`, `.unresolved`, and `.privacy-review` on each metric. Each metric combines its count and category label for accessibility review without changing recovery actions or host-operation boundaries.
 
+UI-112 exposes `keybrake.recovery.busy-guidance` on the Recovery panel busy-state explanation so safe review can locate that guidance without changing recovery handlers or host-operation boundaries.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.

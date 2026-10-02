@@ -284,3 +284,5 @@ UI-109 makes the Settings error-alert dismissal action scannable. The existing O
 UI-110 keeps the network sandbox inventory truthful after simulated actions. Command Center and Settings overlay recorded recovery state on the immutable fixture rows, show disabled or enabled Wi-Fi and Ethernet state, show connected or disconnected VPN state, and show unverified when a failed isolation step has no recorded post-state. The route remains fixture-only and does not claim OS-level network isolation or touch host operations.
 
 UI-111 makes the Recovery panel recorded inventory inspectable during safe review. The inventory exposes `keybrake.recovery.inventory`, and each network, sharing, unresolved, and privacy-review metric exposes a stable identifier with a combined accessibility label equal to its visible count and category; recovery actions, counts, layout, and persistence semantics remain unchanged.
+
+UI-112 makes the Recovery panel busy-state guidance deterministically inspectable through `keybrake.recovery.busy-guidance` while preserving its visible copy, busy gates, and review-action availability.

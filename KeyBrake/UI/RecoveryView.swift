@@ -14,6 +14,7 @@ import SwiftUI
 // QoL-009: state-changing recovery actions explain their busy disabled state while review actions remain available.
 // QoL-042: the Recovery quit affordance follows the existing busy termination guard while Keep Isolation remains available.
 // QoL-111: the recorded recovery inventory publishes stable parent and metric inspection anchors without changing its counts or recovery actions.
+// QoL-112: the recovery busy-state guidance exposes a stable inspection anchor without changing its visible copy or busy gates.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -34,6 +35,7 @@ struct RecoveryView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("keybrake.recovery.busy-guidance")
                 }
 
                 Divider()

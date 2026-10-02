@@ -11102,3 +11102,15 @@ project_plan:
       - "KeyBrake/UI/RecoveryView.swift=c636d627dff71539da64f5dff518fd8861296fb3c7c28a476802f5f77f889481"
     status: "pending_remote_push"
     next_safe_entry_point: "Human maintainer owns PR #1 merge and GitHub visibility per docs/KEYBRAKE_PUBLIC_RELEASE.md."
+  completed_iteration_ui112:
+    id: "UI-112"
+    name: "Recovery panel busy-guidance inspection anchor"
+    status: "complete_at_source_and_documentation_checkpoint"
+    write_set:
+      - path: "KeyBrake/UI/RecoveryView.swift"
+        status: committed
+    proof:
+      focused_tests: "swift test --disable-sandbox --scratch-path /tmp/KeyBrakeSwiftPMUI112-retry; 73 tests, 0 failures."
+      source_shas:
+        - "KeyBrake/UI/RecoveryView.swift sha256=cc65bcab6fb897999263a69ec35b02e7f2884aa1d3cdf55cdb1829da8a2d1a6d"
+    next_action: "Continue source-backed QoL on the private release branch; human maintainer owns visibility flip."
