@@ -13,6 +13,7 @@ import SwiftUI
 // QoL-003: the recovery state card stays honest while launch hydration is incomplete by showing the shared checking state.
 // QoL-009: state-changing recovery actions explain their busy disabled state while review actions remain available.
 // QoL-042: the Recovery quit affordance follows the existing busy termination guard while Keep Isolation remains available.
+// QoL-111: the recorded recovery inventory publishes stable parent and metric inspection anchors without changing its counts or recovery actions.
 struct RecoveryView: View {
     @ObservedObject var model: KeyBrakeViewModel
 
@@ -177,20 +178,21 @@ struct RecoveryView: View {
         if let snapshot = model.unresolvedRecovery {
             GroupBox {
                 HStack(spacing: 14) {
-                    recoveryMetric(value: snapshot.networkChanges.count, label: "network", systemImage: "network")
-                    recoveryMetric(value: snapshot.sharingChanges.count, label: "sharing", systemImage: "person.2.badge.gearshape")
-                    recoveryMetric(value: snapshot.unresolvedSteps.count, label: "unresolved", systemImage: "exclamationmark.circle")
-                    recoveryMetric(value: snapshot.privacyResetRequests.count, label: "privacy review", systemImage: "lock.shield")
+                    recoveryMetric(value: snapshot.networkChanges.count, label: "network", systemImage: "network", identifier: "keybrake.recovery.inventory.network")
+                    recoveryMetric(value: snapshot.sharingChanges.count, label: "sharing", systemImage: "person.2.badge.gearshape", identifier: "keybrake.recovery.inventory.sharing")
+                    recoveryMetric(value: snapshot.unresolvedSteps.count, label: "unresolved", systemImage: "exclamationmark.circle", identifier: "keybrake.recovery.inventory.unresolved")
+                    recoveryMetric(value: snapshot.privacyResetRequests.count, label: "privacy review", systemImage: "lock.shield", identifier: "keybrake.recovery.inventory.privacy-review")
                 }
             } label: {
                 Text("Recorded recovery inventory")
             }
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Recorded recovery inventory: \(snapshot.networkChanges.count) network changes, \(snapshot.sharingChanges.count) sharing changes, \(snapshot.unresolvedSteps.count) unresolved steps, \(snapshot.privacyResetRequests.count) privacy reviews")
+            .accessibilityIdentifier("keybrake.recovery.inventory")
         }
     }
 
-    private func recoveryMetric(value: Int, label: String, systemImage: String) -> some View {
+    private func recoveryMetric(value: Int, label: String, systemImage: String, identifier: String) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Label("\(value)", systemImage: systemImage)
                 .font(.title3.weight(.semibold))
@@ -200,6 +202,9 @@ struct RecoveryView: View {
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(value) \(label)")
+        .accessibilityIdentifier(identifier)
     }
 
     @ViewBuilder

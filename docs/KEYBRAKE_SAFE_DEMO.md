@@ -161,6 +161,8 @@ UI-109 makes the existing Settings error-alert dismissal action explicit during 
 
 UI-110 keeps the existing sandbox inventory aligned with recorded fixture outcomes during safe review. Before an action, rows retain the immutable connected-fixture values; after simulated isolation or restoration, rows use the recovery snapshot, Wi-Fi/Ethernet report enabled or disabled, VPN reports connected or disconnected, and a missing post-state reports unverified. The route remains non-mutating and fixture-only.
 
+UI-111 adds stable inspection anchors to the Recovery panel recorded inventory: `keybrake.recovery.inventory` on the inventory container and `keybrake.recovery.inventory.network`, `.sharing`, `.unresolved`, and `.privacy-review` on each metric. Each metric combines its count and category label for accessibility review without changing recovery actions or host-operation boundaries.
+
 UI-005 adds a visible history-cleanup availability state and stable symbols for the menu actions. The safe route remains non-mutating: an empty Incident Log keeps its clear-history action unavailable because no resolved record exists.
 
 The Command Center review path keeps emergency actions separate from navigation: use Incident Log to inspect recorded outcomes, and use Settings to review approved targets and isolation policy. The visible cards show counts without changing any operation, and each destination now begins with the state or record context needed to interpret its controls.
