@@ -153,6 +153,16 @@ struct IncidentLogView: View {
                     Text(changeSentence(for: incident))
                         .font(.callout)
                         .fixedSize(horizontal: false, vertical: true)
+                    if let helperFailureNotice = model.helperFailureNotice(for: incident) {
+                        Text(helperFailureNotice)
+                            .font(.callout)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("keybrake.incident-log.helper-not-approved.\(incident.id.uuidString)")
+                        Button("Open Register Privileged Helper") {
+                            model.openPrivilegedHelperSettings()
+                        }
+                        .accessibilityIdentifier("keybrake.incident-log.open-privileged-helper.\(incident.id.uuidString)")
+                    }
                     Text(incident.resolution)
                         .font(.callout)
                         .fixedSize(horizontal: false, vertical: true)

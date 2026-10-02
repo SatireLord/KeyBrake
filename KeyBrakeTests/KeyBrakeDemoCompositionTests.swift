@@ -109,6 +109,119 @@ final class KeyBrakeDemoCompositionTests: XCTestCase {
         XCTAssertFalse(FileManager.default.fileExists(atPath: demoRoot.path))
     }
 
+    func testFirstRunSittingSkipsWithoutAddingAnotherApp() async throws {
+        let (suiteName, defaults) = try isolatedDefaults()
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("KeyBrake-FirstRun-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let runner = RecordingCommandRunner()
+        let coordinator = EmergencyCoordinator(
+            recoveryStore: RecoveryStore(rootDirectory: root),
+            incidentStore: IncidentStore(rootDirectory: root),
+            processController: DemoFixtureProcessController(),
+            espanso: EspansoAdapter(commandRunner: runner, executableCandidates: []),
+            networkController: FixtureNetworkController(),
+            privacyController: PrivacyController(commandRunner: runner)
+        )
+        let model = KeyBrakeViewModel(
+            coordinator: coordinator,
+            incidentStore: IncidentStore(rootDirectory: root),
+            settingsDefaults: defaults
+        )
+        try await waitForRecoveryCheck(model)
+        let targetCount = model.configuredTargets.count
+        XCTAssertTrue(model.isShowingFirstRun)
+        XCTAssertEqual(model.firstRunLocalSlot.statusText, "Not chosen")
+        XCTAssertFalse(model.finishFirstRunSitting())
+        XCTAssertFalse(defaults.bool(forKey: KeyBrakeViewModel.firstRunDefaultsKey))
+        model.skipFirstRunSlot(.localAutomation)
+        XCTAssertEqual(model.firstRunLocalSlot.statusText, "Skipped")
+        XCTAssertFalse(model.finishFirstRunSitting())
+        model.skipFirstRunSlot(.remoteAccess)
+        XCTAssertEqual(model.firstRunRemoteSlot.statusText, "Skipped")
+        XCTAssertTrue(model.finishFirstRunSitting())
+        XCTAssertFalse(model.isShowingFirstRun)
+        XCTAssertEqual(model.configuredTargets.count, targetCount)
+        await model.refresh()
+        try await waitForRecoveryCheck(model)
+        XCTAssertFalse(model.isShowingFirstRun)
+    }
+
+    func testQuitConfirmationListsRestoreTargetsWithoutASecondVPNQuestion() async throws {
+        let (suiteName, defaults) = try isolatedDefaults()
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("KeyBrake-QuitRestore-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let wifi = NetworkChange(id: "wifi", displayName: "Wi-Fi", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: "wifi")
+        let vpn = NetworkChange(id: "vpn", displayName: "Work VPN", originalEnabled: true, appliedEnabled: false, currentEnabled: false, kind: "vpn", isVPN: true)
+        let snapshot = RecoverySnapshot(
+            incidentID: UUID(),
+            originalOperationalState: .recoveryRequired,
+            networkChanges: [wifi, vpn],
+            vpnConnections: []
+        )
+        try RecoveryStore(rootDirectory: root).save(snapshot)
+        let runner = RecordingCommandRunner()
+        let coordinator = EmergencyCoordinator(
+            recoveryStore: RecoveryStore(rootDirectory: root),
+            incidentStore: IncidentStore(rootDirectory: root),
+            processController: DemoFixtureProcessController(),
+            espanso: EspansoAdapter(commandRunner: runner, executableCandidates: []),
+            networkController: FixtureNetworkController(services: [
+                NetworkService(id: "wifi", displayName: "Wi-Fi", kind: .wifi, enabled: false, active: false),
+                NetworkService(id: "vpn", displayName: "Work VPN", kind: .vpn, enabled: false, active: false),
+            ]),
+            privacyController: PrivacyController(commandRunner: runner),
+            initialState: .recoveryRequired
+        )
+        let model = KeyBrakeViewModel(
+            coordinator: coordinator,
+            incidentStore: IncidentStore(rootDirectory: root),
+            isRecoveryDemo: true,
+            settingsDefaults: defaults
+        )
+        try await waitForRecoveryCheck(model)
+        XCTAssertTrue(model.quitRestoreConfirmationText.contains("Turns Wi-Fi back on."))
+        XCTAssertTrue(model.quitRestoreConfirmationText.contains("Work VPN stays disconnected."))
+        XCTAssertFalse(model.quitRestoreConfirmationText.contains("Turns Wi-Fi, Work VPN"))
+        model.restoreNetworkOnly(confirmVPN: false)
+        try await waitForIdle(model)
+        XCTAssertEqual(model.latestIncident?.initiatingAction, "Restore Human Control")
+    }
+
+    func testMenuGuidanceAndHelperFailureCopy() {
+        XCTAssertEqual(KeyBrakeViewModel.menuBarStatusWord(known: false, hasRecovery: false, state: .normal), "Checking")
+        XCTAssertEqual(KeyBrakeViewModel.menuBarStatusWord(known: true, hasRecovery: false, state: .stoppingLocalAutomation), "Stopping")
+        XCTAssertEqual(KeyBrakeViewModel.menuBarStatusWord(known: true, hasRecovery: false, state: .isolating), "Isolating")
+        XCTAssertEqual(KeyBrakeViewModel.menuBarStatusWord(known: true, hasRecovery: false, state: .normal), "Ready")
+        XCTAssertEqual(KeyBrakeViewModel.menuBarStatusWord(known: true, hasRecovery: true, state: .normal), "Recovery")
+        XCTAssertEqual(KeyBrakeViewModel.nextStepSentence(known: false, busy: false, hasRecovery: false), "Wait.")
+        XCTAssertEqual(KeyBrakeViewModel.nextStepSentence(known: true, busy: true, hasRecovery: false), "Wait.")
+        XCTAssertEqual(KeyBrakeViewModel.nextStepSentence(known: true, busy: false, hasRecovery: true), "Open recovery.")
+        XCTAssertEqual(KeyBrakeViewModel.nextStepSentence(known: true, busy: false, hasRecovery: false), "Stop something.")
+        let blocked = IncidentRecord(
+            initiatingAction: "Stop Remote Access",
+            originalState: .normal,
+            finalState: .recoveryRequired,
+            steps: [
+                OperationStepResult(
+                    subsystem: "network",
+                    targetID: "wifi",
+                    targetDisplayName: "Wi-Fi",
+                    requestedState: "disabled",
+                    operationDescription: "Helper is unavailable; operation skipped",
+                    outcome: .unsupported
+                ),
+            ]
+        )
+        XCTAssertEqual(
+            KeyBrakeViewModel.helperFailureNotice(helperStatus: "Approval required", incident: blocked, readOnlyDemo: false),
+            KeyBrakeViewModel.helperNotApprovedSentence
+        )
+        XCTAssertNil(KeyBrakeViewModel.helperFailureNotice(helperStatus: "Enabled", incident: blocked, readOnlyDemo: false))
+        XCTAssertNil(KeyBrakeViewModel.helperFailureNotice(helperStatus: "Approval required", incident: blocked, readOnlyDemo: true))
+    }
+
     private func waitForRecoveryCheck(_ model: KeyBrakeViewModel) async throws {
         for _ in 0..<100 {
             if model.isRecoveryStatusKnown { return }
@@ -141,6 +254,13 @@ final class KeyBrakeDemoCompositionTests: XCTestCase {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         defaults.setPersistentDomain([:], forName: suiteName)
         return (suiteName, defaults)
+    }
+}
+
+private struct DemoFixtureProcessController: ProcessControlling {
+    func matchingProcesses(for target: TargetDefinition) -> [ProcessIdentity] { [] }
+    func stop(_ identity: ProcessIdentity, allowForcedTermination: Bool) async -> ProcessTargetResult {
+        ProcessTargetResult(targetID: "fixture", displayName: "Fixture", identity: identity, outcome: .succeeded, detail: "fixture")
     }
 }
 

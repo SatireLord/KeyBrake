@@ -6,6 +6,19 @@ import SwiftUI
 import UniformTypeIdentifiers
 @preconcurrency import UserNotifications
 
+struct FirstRunSlotState: Equatable {
+    var displayName: String?
+    var skipped = false
+
+    var isSettled: Bool { displayName != nil || skipped }
+
+    var statusText: String {
+        if let displayName { return displayName }
+        if skipped { return "Skipped" }
+        return "Not chosen"
+    }
+}
+
 @MainActor
 final class KeyBrakeViewModel: ObservableObject {
     @Published private(set) var operationalState: KeyBrakeOperationalState = .normal
@@ -24,7 +37,11 @@ final class KeyBrakeViewModel: ObservableObject {
     @Published var isShowingRecoveryPanel = false
     @Published var isShowingIncidentLog = false
     @Published var isShowingSettings = false
+    @Published var isShowingFirstRun = false
+    @Published var firstRunLocalSlot = FirstRunSlotState()
+    @Published var firstRunRemoteSlot = FirstRunSlotState()
     @Published private(set) var keyboardSettingsNavigationRequest: UUID?
+    @Published private(set) var privilegedHelperRevealRequest: UUID?
     private var allowImmediateQuit = false
     private var launchRecoveryCheckCompleted = false
 
@@ -40,6 +57,11 @@ final class KeyBrakeViewModel: ObservableObject {
     static let configuredTargetsDefaultsKey = "KeyBrake.configuredTargets.v1"
     static let isolationPolicyDefaultsKey = "KeyBrake.isolationPolicy.v1"
     static let firstRunDefaultsKey = "KeyBrake.didCompleteFirstRunGuidance.v1"
+    static let helperNotApprovedSentence = "The helper is not approved. Open Settings and use Register Privileged Helper."
+    static let stopLocalTypingAppsTitle = "Stop Local Typing Apps"
+    static let restoreRecordedChangesTitle = "Restore Recorded Changes"
+    static let stopSkynetLocallyDescriptor = "Stop Skynet Locally"
+    static let restoreHumanControlDescriptor = "Restore Human Control"
     private var didPostRecoveryNotification = false
 
     init(
@@ -201,24 +223,52 @@ final class KeyBrakeViewModel: ObservableObject {
     private func presentFirstRunIfNeeded() {
         guard !isReadOnlyDemo else { return }
         guard !settingsDefaults.bool(forKey: Self.firstRunDefaultsKey) else { return }
-        let alert = NSAlert()
-        alert.messageText = "Approve one local app and one remote app"
-        alert.informativeText = """
-        KeyBrake only stops applications you approve. Choose one local typing app, then one remote-access app. You return to the menu bar. Settings stays available for everything else.
-        Recovery uses the pointer.
-        """
-        alert.addButton(withTitle: "Choose Apps")
-        alert.addButton(withTitle: "Not Now")
-        let response = alert.runModal()
-        guard response == .alertFirstButtonReturn else {
-            settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
-            return
+        if firstRunLocalSlot.displayName == nil {
+            firstRunLocalSlot.displayName = configuredTargets.last { $0.id.hasPrefix("custom-localAutomation-") }?.displayName
         }
-        let localEnrolled = enrollApplicationFromPanel(category: .localAutomation, approvedByUser: false)
-        let remoteEnrolled = enrollApplicationFromPanel(category: .remoteAccess, approvedByUser: true)
-        if localEnrolled && remoteEnrolled {
-            settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
+        if firstRunRemoteSlot.displayName == nil {
+            firstRunRemoteSlot.displayName = configuredTargets.last { $0.id.hasPrefix("custom-remoteAccess-") }?.displayName
         }
+        isShowingFirstRun = true
+    }
+
+    func skipFirstRunSlot(_ category: TargetDefinition.Category) {
+        switch category {
+        case .localAutomation:
+            guard firstRunLocalSlot.displayName == nil else { return }
+            firstRunLocalSlot.skipped = true
+        case .remoteAccess:
+            guard firstRunRemoteSlot.displayName == nil else { return }
+            firstRunRemoteSlot.skipped = true
+        }
+    }
+
+    func chooseFirstRunApplication(_ category: TargetDefinition.Category) {
+        let before = Set(configuredTargets.map(\.id))
+        let approvedByUser = category == .remoteAccess
+        guard enrollApplicationFromPanel(category: category, approvedByUser: approvedByUser) else { return }
+        let addedName = configuredTargets.last { !before.contains($0.id) && $0.category == category }?.displayName
+        switch category {
+        case .localAutomation:
+            firstRunLocalSlot.displayName = addedName
+            firstRunLocalSlot.skipped = false
+        case .remoteAccess:
+            firstRunRemoteSlot.displayName = addedName
+            firstRunRemoteSlot.skipped = false
+        }
+    }
+
+    @discardableResult
+    func finishFirstRunSitting() -> Bool {
+        guard firstRunLocalSlot.isSettled, firstRunRemoteSlot.isSettled else { return false }
+        settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
+        isShowingFirstRun = false
+        return true
+    }
+
+    func dismissFirstRunForNow() {
+        settingsDefaults.set(true, forKey: Self.firstRunDefaultsKey)
+        isShowingFirstRun = false
     }
 
     private func postRecoveryNotificationIfNeeded() {
@@ -316,14 +366,14 @@ final class KeyBrakeViewModel: ObservableObject {
             return
         }
         let alert = NSAlert()
-        alert.messageText = "Recovery is still required"
-        alert.informativeText = "Still waiting: \(pendingChangeSummary) Choose a mouse-operated action."
+        alert.messageText = "Restore what KeyBrake changed?"
+        alert.informativeText = quitRestoreConfirmationText
         alert.addButton(withTitle: "Restore Network")
         alert.addButton(withTitle: "Keep Isolation and Quit")
         alert.addButton(withTitle: "Cancel")
         switch alert.runModal() {
         case .alertFirstButtonReturn:
-            restoreHumanControl()
+            restoreNetworkOnly(confirmVPN: false)
         case .alertSecondButtonReturn:
             allowImmediateQuit = true
             NSApplication.shared.terminate(nil)
@@ -358,9 +408,9 @@ final class KeyBrakeViewModel: ObservableObject {
         return alert.runModal() == .alertFirstButtonReturn
     }
 
-    func restoreNetworkOnly() {
+    func restoreNetworkOnly(confirmVPN: Bool = true) {
         guard !isBusy else { return }
-        let retainVPNDisconnected = confirmVPNRemainsDisconnectedIfNeeded()
+        let retainVPNDisconnected = confirmVPN ? confirmVPNRemainsDisconnectedIfNeeded() : hasPreviouslyConnectedVPN
         guard !hasPreviouslyConnectedVPN || retainVPNDisconnected else { return }
         operationInFlight = true
         operationalState = .restoring
@@ -431,6 +481,84 @@ final class KeyBrakeViewModel: ObservableObject {
             return "Restore only the sharing services that were enabled before KeyBrake changed them."
         }
         return "Turns \(names.joined(separator: ", ")) back on."
+    }
+
+    var quitRestoreConfirmationText: String {
+        let networkNames = disabledRecordedNames(in: (unresolvedRecovery?.networkChanges ?? []).filter { !$0.isVPN })
+        let turnOn = networkNames.isEmpty
+            ? "No recorded network service turns back on."
+            : "Turns \(networkNames.joined(separator: ", ")) back on."
+        var lines = [turnOn]
+        let vpnNames = disabledRecordedNames(in: unresolvedRecovery?.vpnConnections ?? [])
+        let networkVPNNames = disabledRecordedNames(in: (unresolvedRecovery?.networkChanges ?? []).filter(\.isVPN))
+        let disconnectedVPNs = Array(Set(vpnNames + networkVPNNames)).sorted()
+        if disconnectedVPNs.isEmpty {
+            if hasPreviouslyConnectedVPN {
+                lines.append("A VPN KeyBrake disconnected stays disconnected. KeyBrake will not reconnect it.")
+            }
+        } else {
+            lines.append("\(disconnectedVPNs.joined(separator: ", ")) stays disconnected. KeyBrake will not reconnect a VPN.")
+        }
+        lines.append("Sharing stays as it is until you restore it from the recovery panel.")
+        return lines.joined(separator: " ")
+    }
+
+    var menuBarStatusWord: String {
+        Self.menuBarStatusWord(known: isRecoveryStatusKnown, hasRecovery: hasRecovery, state: operationalState)
+    }
+
+    var nextStepSentence: String {
+        Self.nextStepSentence(known: isRecoveryStatusKnown, busy: isBusy, hasRecovery: hasRecovery)
+    }
+
+    var helperFailureNotice: String? {
+        Self.helperFailureNotice(helperStatus: privilegedHelperStatus, incident: latestIncident, readOnlyDemo: isReadOnlyDemo)
+    }
+
+    func helperFailureNotice(for incident: IncidentRecord) -> String? {
+        Self.helperFailureNotice(helperStatus: privilegedHelperStatus, incident: incident, readOnlyDemo: isReadOnlyDemo)
+    }
+
+    func openPrivilegedHelperSettings() {
+        privilegedHelperRevealRequest = UUID()
+        isShowingSettings = true
+    }
+
+    static func menuBarStatusWord(known: Bool, hasRecovery: Bool, state: KeyBrakeOperationalState) -> String {
+        guard known else { return "Checking" }
+        switch state {
+        case .stoppingLocalAutomation:
+            return "Stopping"
+        case .isolating:
+            return "Isolating"
+        case .restoring:
+            return "Restoring"
+        case .localAutomationStopped, .normal, .isolated, .partiallyIsolated, .recoveryRequired:
+            break
+        }
+        if hasRecovery || state.requiresRecoveryDecision { return "Recovery" }
+        switch state {
+        case .localAutomationStopped:
+            return "Stopped"
+        case .isolated, .partiallyIsolated, .recoveryRequired:
+            return "Recovery"
+        case .normal, .stoppingLocalAutomation, .isolating, .restoring:
+            return "Ready"
+        }
+    }
+
+    static func nextStepSentence(known: Bool, busy: Bool, hasRecovery: Bool) -> String {
+        guard known, !busy else { return "Wait." }
+        return hasRecovery ? "Open recovery." : "Stop something."
+    }
+
+    static func helperFailureNotice(helperStatus: String, incident: IncidentRecord?, readOnlyDemo: Bool) -> String? {
+        guard !readOnlyDemo, helperStatus != "Enabled", let incident else { return nil }
+        let helperBlockedChange = incident.steps.contains { step in
+            (step.subsystem == "network" || step.subsystem == "sharing" || step.subsystem == "helper")
+                && (step.outcome == .failed || step.outcome == .unsupported)
+        }
+        return helperBlockedChange ? helperNotApprovedSentence : nil
     }
 
     var pendingChangeSummary: String {

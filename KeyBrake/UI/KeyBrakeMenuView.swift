@@ -26,6 +26,20 @@ struct KeyBrakeMenuView: View {
         Label(statusText, systemImage: statusSymbol)
             .accessibilityLabel("Current KeyBrake state: \(statusText)")
             .help(statusDetail)
+        Text(model.nextStepSentence)
+            .font(.callout)
+            .foregroundStyle(.secondary)
+            .accessibilityIdentifier("keybrake.menu.next-step")
+        if let helperFailureNotice = model.helperFailureNotice {
+            Text(helperFailureNotice)
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("keybrake.menu.helper-not-approved")
+            Button("Open Register Privileged Helper") {
+                model.openPrivilegedHelperSettings()
+            }
+            .accessibilityIdentifier("keybrake.menu.open-privileged-helper")
+        }
         Button {
             openWindow(id: "command-center")
         } label: {
@@ -42,7 +56,7 @@ struct KeyBrakeMenuView: View {
         Button {
             model.stopSkynetLocally()
         } label: {
-            Label("Stop Skynet Locally", systemImage: "keyboard.badge.ellipsis")
+            Label(KeyBrakeViewModel.stopLocalTypingAppsTitle, systemImage: "keyboard.badge.ellipsis")
         }
             .help(stopSkynetLocallyActionHint)
             .accessibilityHint(stopSkynetLocallyActionHint)
@@ -110,7 +124,7 @@ struct KeyBrakeMenuView: View {
         Button {
             model.isShowingRecoveryPanel = true
         } label: {
-            Label("Restore Human Control", systemImage: "arrow.uturn.backward.circle")
+            Label(KeyBrakeViewModel.restoreRecordedChangesTitle, systemImage: "arrow.uturn.backward.circle")
         }
         .help(recoveryActionDetail)
         .accessibilityHint(recoveryActionDetail)
@@ -146,12 +160,12 @@ struct KeyBrakeMenuView: View {
 
     private var stopSkynetLocallyActionHint: String {
         if model.isBusy {
-            return busyMenuActionHint
+            return "\(KeyBrakeViewModel.stopSkynetLocallyDescriptor). \(busyMenuActionHint)"
         }
         if model.operationalState == .localAutomationStopped {
-            return "Local input automation is already stopped."
+            return "\(KeyBrakeViewModel.stopSkynetLocallyDescriptor). Local input automation is already stopped."
         }
-        return "Stops approved local input automation without changing network or privacy settings."
+        return "\(KeyBrakeViewModel.stopSkynetLocallyDescriptor). Stops approved local input automation without changing network or privacy settings."
     }
 
     private var stopRemoteAccessActionHint: String {
@@ -178,13 +192,86 @@ struct KeyBrakeMenuView: View {
 
     private var recoveryActionDetail: String {
         guard model.isRecoveryStatusKnown else {
-            return "KeyBrake is checking whether an unresolved recovery snapshot exists."
+            return "\(KeyBrakeViewModel.restoreHumanControlDescriptor). KeyBrake is checking whether an unresolved recovery snapshot exists."
         }
         if model.isBusy {
-            return "KeyBrake is completing the current operation. Keep KeyBrake open until it completes."
+            return "\(KeyBrakeViewModel.restoreHumanControlDescriptor). KeyBrake is completing the current operation. Keep KeyBrake open until it completes."
         }
         return model.hasRecovery
-            ? "Open the recovery panel to choose how to restore the recorded changes."
-            : "No unresolved recovery snapshot is available."
+            ? "\(KeyBrakeViewModel.restoreHumanControlDescriptor). Open the recovery panel to choose how to restore the recorded changes."
+            : "\(KeyBrakeViewModel.restoreHumanControlDescriptor). No unresolved recovery snapshot is available."
+    }
+}
+
+struct FirstRunSetupView: View {
+    @ObservedObject var model: KeyBrakeViewModel
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            Text("Choose the apps KeyBrake can stop")
+                .font(.title2.weight(.semibold))
+            Text("Pick one local typing app and one remote-access app, or skip either slot. Skipping finishes this sitting. KeyBrake will not ask again or add another app for a skipped slot.")
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            firstRunSlot(
+                title: "Local typing app",
+                slot: model.firstRunLocalSlot,
+                identifier: "local",
+                category: .localAutomation
+            )
+            firstRunSlot(
+                title: "Remote-access app",
+                slot: model.firstRunRemoteSlot,
+                identifier: "remote",
+                category: .remoteAccess
+            )
+            HStack {
+                Button("Not Now") {
+                    model.dismissFirstRunForNow()
+                    dismiss()
+                }
+                .accessibilityIdentifier("keybrake.first-run.not-now")
+                Spacer()
+                Button("Finish") {
+                    if model.finishFirstRunSitting() {
+                        dismiss()
+                    }
+                }
+                .disabled(!model.firstRunLocalSlot.isSettled || !model.firstRunRemoteSlot.isSettled)
+                .accessibilityIdentifier("keybrake.first-run.finish")
+            }
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .accessibilityIdentifier("keybrake.first-run.setup")
+    }
+
+    private func firstRunSlot(
+        title: String,
+        slot: FirstRunSlotState,
+        identifier: String,
+        category: TargetDefinition.Category
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.headline)
+            Text(slot.statusText)
+                .foregroundStyle(slot.skipped ? Color.orange : Color.secondary)
+                .accessibilityIdentifier("keybrake.first-run.\(identifier).status")
+            HStack {
+                Button("Choose…") {
+                    model.chooseFirstRunApplication(category)
+                }
+                .accessibilityIdentifier("keybrake.first-run.\(identifier).choose")
+                Button("Skip") {
+                    model.skipFirstRunSlot(category)
+                }
+                .disabled(slot.displayName != nil)
+                .accessibilityIdentifier("keybrake.first-run.\(identifier).skip")
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("keybrake.first-run.\(identifier)")
     }
 }

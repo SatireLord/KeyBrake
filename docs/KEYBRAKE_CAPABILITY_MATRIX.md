@@ -22,11 +22,14 @@ This document classifies every user-visible or safety-critical capability by imp
 
 | Capability | Status | Notes |
 | --- | --- | --- |
-| Menu-bar status word | `implemented` | The menu extra reads Checking, Recovery, Stopped, or Ready before the menu opens |
-| Recovery-first menu action | `implemented` | Restore Human Control is the first action above the emergency buttons while recovery is pending |
-| First-run app approval | `implemented` | The first launch asks for one local app and one remote app, then returns to the menu bar |
+| Menu-bar status word | `implemented` | The menu extra reads Checking, Stopping, Isolating, Restoring, Recovery, Stopped, or Ready before the menu opens |
+| Recovery-first menu action | `implemented` | Restore Recorded Changes is the first action above the emergency buttons while recovery is pending. Hover shows Restore Human Control |
+| First-run app approval | `implemented` | One setup screen has a local slot and a remote slot. Each can be chosen or skipped. Finishing or choosing Not Now records the sitting so a canceled second choice does not add another local app |
 | Recovery restore wording | `implemented` | Restore Network and Restore Sharing say which recorded services they turn back on |
-| Quit pending-change list | `implemented` | The quit warning names the recorded changes still waiting |
+| Quit pending-change list | `implemented` | Quit asks once, names the network services that turn back on, and says a disconnected VPN stays disconnected |
+| Next-step sentence | `implemented` | The menu and Command Center say Wait, Open recovery, or Stop something |
+| Plain action names | `implemented` | Stop Local Typing Apps and Restore Recorded Changes are the visible labels. Hover shows Stop Skynet Locally and Restore Human Control |
+| Helper approval failure | `implemented` | A failed network, sharing, or helper step while the helper is not enabled says the helper is not approved and opens Register Privileged Helper |
 | Settings emergency profile | `implemented` | Emergency Isolation leads Settings. Helper registration, privacy reset, and keyboard reset sit in Advanced |
 | Incident change sentence | `implemented` | Each incident row states what changed ahead of the step list |
 | Command Center limit | `implemented` | Command Center states that KeyBrake does not undo privacy grants, restart stopped remote apps, or change anything it did not record |

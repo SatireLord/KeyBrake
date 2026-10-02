@@ -26,6 +26,8 @@ struct SettingsView: View {
     @State private var selectedTargetID = ""
     @State private var selectedKeyboardTargetID = ""
     @State private var lastKeyboardNavigationRequestID: UUID?
+    @State private var isPrivilegedHelperSectionExpanded = false
+    @State private var lastPrivilegedHelperRevealID: UUID?
     @State private var errorMessage = ""
 
     private var accessTargets: [TargetDefinition] {
@@ -128,6 +130,13 @@ struct SettingsView: View {
         default:
             return "Requests macOS to register KeyBrake's privileged helper; macOS controls approval and authorization."
         }
+    }
+
+    private func revealPrivilegedHelperIfNeeded(_ proxy: ScrollViewProxy) {
+        guard let request = model.privilegedHelperRevealRequest, request != lastPrivilegedHelperRevealID else { return }
+        lastPrivilegedHelperRevealID = request
+        isPrivilegedHelperSectionExpanded = true
+        withAnimation { proxy.scrollTo("keybrake.settings.general.privileged-helper", anchor: .top) }
     }
 
     private func isolationControlHint(effectDescription: String, enabled: Bool) -> String {
@@ -492,7 +501,7 @@ struct SettingsView: View {
                 .accessibilityIdentifier("keybrake.settings.network-sandbox-section")
             }
 
-            DisclosureGroup("Advanced") {
+            DisclosureGroup("Advanced", isExpanded: $isPrivilegedHelperSectionExpanded) {
             Group {
             Section("General") {
                 Toggle("Launch KeyBrake at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
@@ -510,6 +519,7 @@ struct SettingsView: View {
                     }
                 }
                 .accessibilityIdentifier("keybrake.settings.general.privileged-helper")
+                .id("keybrake.settings.general.privileged-helper")
                 if let privilegedHelperError = model.privilegedHelperError {
                     Text(privilegedHelperError)
                         .font(.caption)
@@ -532,7 +542,7 @@ struct SettingsView: View {
                 if localAutomationTargets.isEmpty {
                     targetListEmptyState(
                         title: "No local automation targets configured",
-                        detail: "Add an application to include it in Stop Skynet Locally.",
+                        detail: "Add an application to include it in Stop Local Typing Apps.",
                         identifier: "keybrake.settings.local-automation.empty"
                     )
                 } else {
@@ -658,6 +668,10 @@ struct SettingsView: View {
                 lastKeyboardNavigationRequestID = request
                 withAnimation { proxy.scrollTo("keybrake.settings.keyboard-section", anchor: .top) }
             }
+            revealPrivilegedHelperIfNeeded(proxy)
+        }
+        .onChange(of: model.privilegedHelperRevealRequest) { _, _ in
+            revealPrivilegedHelperIfNeeded(proxy)
         }
         .onChange(of: model.keyboardSettingsNavigationRequest) { _, request in
             guard let request, request != lastKeyboardNavigationRequestID else { return }

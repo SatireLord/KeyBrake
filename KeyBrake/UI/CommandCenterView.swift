@@ -48,6 +48,20 @@ struct KeyBrakeCommandCenterView: View {
                     networkSandboxBanner
                 }
                 statusCard
+                Text(model.nextStepSentence)
+                    .font(.title3.weight(.semibold))
+                    .accessibilityIdentifier("keybrake.command-center.next-step")
+                if let helperFailureNotice = model.helperFailureNotice {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(helperFailureNotice)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Button("Open Register Privileged Helper") {
+                            model.openPrivilegedHelperSettings()
+                        }
+                        .accessibilityIdentifier("keybrake.command-center.open-privileged-helper")
+                    }
+                    .accessibilityIdentifier("keybrake.command-center.helper-not-approved")
+                }
                 Text("KeyBrake will not undo privacy grants, will not restart remote apps it stopped, and will not change anything it did not record.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
@@ -241,13 +255,14 @@ struct KeyBrakeCommandCenterView: View {
                     model.stopSkynetLocally()
                 } label: {
                     actionLabel(
-                        title: "Stop Skynet Locally",
+                        title: KeyBrakeViewModel.stopLocalTypingAppsTitle,
                         description: "Stop approved local input automation without changing network or privacy settings.",
                         systemImage: "keyboard.badge.ellipsis"
                     )
                 }
                 .buttonStyle(.bordered)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .help(KeyBrakeViewModel.stopSkynetLocallyDescriptor)
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("keybrake.command-center.stop-local-automation")
                 .accessibilityHint(commandCenterActionHint(description: "Stops approved local input automation without changing network or privacy settings", disablesWhileBusy: true))
@@ -410,6 +425,14 @@ struct KeyBrakeCommandCenterView: View {
                             .foregroundStyle(KeyBrakeStatusPresentation.tint(for: incident.finalState))
                         Text(incident.resolution)
                             .fixedSize(horizontal: false, vertical: true)
+                        if let helperFailureNotice = model.helperFailureNotice(for: incident) {
+                            Text(helperFailureNotice)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Button("Open Register Privileged Helper") {
+                                model.openPrivilegedHelperSettings()
+                            }
+                            .accessibilityIdentifier("keybrake.command-center.recent-activity.open-privileged-helper")
+                        }
                         Label(
                             "\(incident.steps.count) recorded \(incident.steps.count == 1 ? "step" : "steps")",
                             systemImage: "checklist"

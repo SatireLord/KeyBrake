@@ -44,6 +44,12 @@ struct KeyBrakeApp: App {
                 .onAppear { appDelegate.attach(model: model) }
         }
         .defaultSize(width: 760, height: 620)
+
+        Window("KeyBrake Setup", id: "first-run") {
+            FirstRunSetupView(model: model)
+                .frame(width: 520, height: 380)
+        }
+        .defaultSize(width: 520, height: 380)
     }
 }
 
@@ -63,18 +69,7 @@ private struct WindowLaunchBridge: View {
     @State private var didOpenLaunchRequestedCommandCenter = false
 
     private var menuBarStatusWord: String {
-        guard model.isRecoveryStatusKnown else { return "Checking" }
-        if model.hasRecovery || model.operationalState.requiresRecoveryDecision {
-            return "Recovery"
-        }
-        switch model.operationalState {
-        case .localAutomationStopped:
-            return "Stopped"
-        case .isolated, .partiallyIsolated, .restoring, .recoveryRequired:
-            return "Recovery"
-        case .normal, .stoppingLocalAutomation, .isolating:
-            return "Ready"
-        }
+        model.menuBarStatusWord
     }
 
     private var hydrationAwareApplicationSymbol: String {
@@ -89,6 +84,14 @@ private struct WindowLaunchBridge: View {
             .onAppear {
                 appDelegate.attach(model: model, openSettingsWindow: { openWindow(id: "settings") })
                 openCommandCenterIfRequested()
+                if model.isShowingFirstRun {
+                    openWindow(id: "first-run")
+                }
+            }
+            .onChange(of: model.isShowingFirstRun) { _, show in
+                if show {
+                    openWindow(id: "first-run")
+                }
             }
             .onReceive(model.$isShowingRecoveryPanel.removeDuplicates()) { show in
                 Task { @MainActor in
