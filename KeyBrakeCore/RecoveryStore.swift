@@ -1,3 +1,4 @@
+import Darwin
 import Foundation
 
 public enum KeyBrakeStorageError: Error, LocalizedError, Sendable {
@@ -34,12 +35,63 @@ public final class RecoveryStore: @unchecked Sendable {
         try atomicWrite(snapshot, to: recoveryURL)
     }
 
+    @discardableResult
+    public func updateProgress(
+        in snapshot: inout RecoverySnapshot,
+        subsystem: RecoveryResourceSubsystem,
+        resourceID: String,
+        expectedDisplayName: String,
+        appliedEnabled: Bool? = nil,
+        observedEnabled: Bool?,
+        disposition: RecoveryResourceDisposition,
+        identityMatches: Bool? = nil,
+        observedIdentity: String? = nil
+    ) throws -> RecoveryResourceProgressUpdateResult {
+        var updatedSnapshot = snapshot
+        let result = updatedSnapshot.updateProgress(
+            subsystem: subsystem,
+            resourceID: resourceID,
+            expectedDisplayName: expectedDisplayName,
+            appliedEnabled: appliedEnabled,
+            observedEnabled: observedEnabled,
+            disposition: disposition,
+            identityMatches: identityMatches,
+            observedIdentity: observedIdentity
+        )
+
+        switch result {
+        case .notFound, .ambiguous:
+            return result
+        default:
+            updatedSnapshot.updatedAt = Date()
+            try save(updatedSnapshot)
+            snapshot = updatedSnapshot
+            return result
+        }
+    }
+
     public func load() throws -> RecoverySnapshot? {
-        guard fileManager.fileExists(atPath: recoveryURL.path) else { return nil }
+        do {
+            _ = try fileManager.attributesOfItem(atPath: recoveryURL.path)
+        } catch {
+            guard Self.isMissingRecoveryFile(error) else { throw error }
+            return nil
+        }
         let data = try Data(contentsOf: recoveryURL)
         let snapshot = try decoder.decode(RecoverySnapshot.self, from: data)
         guard snapshot.schemaVersion == 1 else { throw KeyBrakeStorageError.invalidSchema }
         return snapshot
+    }
+
+    private static func isMissingRecoveryFile(_ error: Error) -> Bool {
+        let nsError = error as NSError
+        if nsError.domain == NSCocoaErrorDomain {
+            return nsError.code == NSFileReadNoSuchFileError
+        }
+        if nsError.domain == NSPOSIXErrorDomain {
+            return nsError.code == ENOENT
+        }
+        return false
     }
 
     public func clear() throws {
@@ -54,9 +106,29 @@ public final class RecoveryStore: @unchecked Sendable {
             let temporary = rootDirectory.appendingPathComponent(".\(destination.lastPathComponent).\(UUID().uuidString).tmp")
             try data.write(to: temporary, options: .atomic)
             try fileManager.setAttributes([.posixPermissions: 0o600], ofItemAtPath: temporary.path)
-            if fileManager.fileExists(atPath: destination.path) { try fileManager.removeItem(at: destination) }
-            try fileManager.moveItem(at: temporary, to: destination)
-            try fileManager.setAttributes([.posixPermissions: 0o600], ofItemAtPath: destination.path)
+            let backup = rootDirectory.appendingPathComponent("\(destination.lastPathComponent).bak")
+            if fileManager.fileExists(atPath: destination.path) {
+                _ = try? fileManager.removeItem(at: backup)
+                try fileManager.moveItem(at: destination, to: backup)
+            }
+            do {
+                try fileManager.moveItem(at: temporary, to: destination)
+                try fileManager.setAttributes([.posixPermissions: 0o600], ofItemAtPath: destination.path)
+                guard try Data(contentsOf: destination) == data else {
+                    throw KeyBrakeStorageError.writeFailed("Recovery snapshot read-after-write verification failed")
+                }
+                try? fileManager.removeItem(at: backup)
+            } catch {
+                if fileManager.fileExists(atPath: backup.path) {
+                    if fileManager.fileExists(atPath: destination.path) {
+                        try? fileManager.removeItem(at: destination)
+                    }
+                    try? fileManager.moveItem(at: backup, to: destination)
+                }
+                throw KeyBrakeStorageError.writeFailed(error.localizedDescription)
+            }
+        } catch let error as KeyBrakeStorageError {
+            throw error
         } catch {
             throw KeyBrakeStorageError.writeFailed(error.localizedDescription)
         }

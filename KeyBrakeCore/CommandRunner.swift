@@ -1,3 +1,4 @@
+import Darwin
 import Foundation
 
 public struct CommandRequest: Sendable, Equatable {
@@ -84,21 +85,34 @@ public final class ProcessCommandRunner: CommandRunning, @unchecked Sendable {
                     return
                 }
 
+                let outputCollector = BoundedDataCollector(limit: request.outputLimitBytes)
+                let errorCollector = BoundedDataCollector(limit: request.outputLimitBytes)
+                let drainGroup = DispatchGroup()
+                Self.drain(outputPipe.fileHandleForReading, into: outputCollector, group: drainGroup)
+                Self.drain(errorPipe.fileHandleForReading, into: errorCollector, group: drainGroup)
+
                 let timeoutSeconds = Double(request.timeout.components.seconds) + Double(request.timeout.components.attoseconds) / 1_000_000_000_000_000_000
                 let deadline = Date().addingTimeInterval(max(0.1, timeoutSeconds))
                 while process.isRunning && Date() < deadline {
                     Thread.sleep(forTimeInterval: 0.01)
                 }
                 let timedOut = process.isRunning
-                if timedOut { process.terminate() }
+                if timedOut {
+                    process.terminate()
+                    let terminateDeadline = Date().addingTimeInterval(0.5)
+                    while process.isRunning && Date() < terminateDeadline {
+                        Thread.sleep(forTimeInterval: 0.01)
+                    }
+                    if process.isRunning {
+                        _ = kill(process.processIdentifier, SIGKILL)
+                    }
+                }
                 process.waitUntilExit()
-
-                let output = Self.bounded(outputPipe.fileHandleForReading.readDataToEndOfFile(), limit: request.outputLimitBytes)
-                let errorOutput = Self.bounded(errorPipe.fileHandleForReading.readDataToEndOfFile(), limit: request.outputLimitBytes)
+                drainGroup.wait()
                 let result = CommandResult(
                     terminationStatus: process.terminationStatus,
-                    standardOutput: output,
-                    standardError: errorOutput,
+                    standardOutput: outputCollector.data,
+                    standardError: errorCollector.data,
                     timedOut: timedOut,
                     startedAt: startedAt,
                     finishedAt: Date()
@@ -108,8 +122,39 @@ public final class ProcessCommandRunner: CommandRunning, @unchecked Sendable {
         }
     }
 
-    private static func bounded(_ data: Data, limit: Int) -> Data {
-        data.count <= limit ? data : data.prefix(limit)
+    private static func drain(_ handle: FileHandle, into collector: BoundedDataCollector, group: DispatchGroup) {
+        group.enter()
+        DispatchQueue.global(qos: .utility).async {
+            defer { group.leave() }
+            while true {
+                let chunk = handle.readData(ofLength: 16 * 1024)
+                if chunk.isEmpty { break }
+                collector.append(chunk)
+            }
+        }
+    }
+}
+
+private final class BoundedDataCollector: @unchecked Sendable {
+    private let lock = NSLock()
+    private let limit: Int
+    private var storage = Data()
+
+    init(limit: Int) {
+        self.limit = max(256, limit)
+    }
+
+    var data: Data {
+        lock.lock()
+        defer { lock.unlock() }
+        return storage
+    }
+
+    func append(_ chunk: Data) {
+        lock.lock()
+        defer { lock.unlock() }
+        guard storage.count < limit else { return }
+        storage.append(chunk.prefix(limit - storage.count))
     }
 }
 
@@ -140,7 +185,7 @@ public final class RecordingCommandRunner: CommandRunning, @unchecked Sendable {
     public func run(_ request: CommandRequest) async throws -> CommandResult {
         let next = recordAndDequeue(request)
         if let next { return try next.get() }
-        return CommandResult(terminationStatus: 0, standardOutput: Data(), standardError: Data(), timedOut: false, startedAt: Date(), finishedAt: Date())
+        throw CommandRunnerError.launchFailed("RecordingCommandRunner has no queued result for \(request.executableURL.path)")
     }
 
     private func recordAndDequeue(_ request: CommandRequest) -> Result<CommandResult, Error>? {

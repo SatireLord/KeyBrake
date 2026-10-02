@@ -14,4 +14,13 @@ public struct HelperAuthorization: Sendable {
         if let expectedTeamIdentifier, teamIdentifier != expectedTeamIdentifier { return false }
         return HelperCommandValidator(applicationBundleIdentifier: expectedBundleIdentifier).validate(command)
     }
+
+    public func accepts(auditToken: Data, command: HelperCommand) -> Bool {
+        guard let caller = HelperAudit.callerIdentity(auditToken: auditToken) else { return false }
+        return accepts(bundleIdentifier: caller.bundleIdentifier, teamIdentifier: caller.teamIdentifier, command: command)
+    }
+
+    public func accepts(caller: HelperCallerIdentity, command: HelperCommand) -> Bool {
+        accepts(bundleIdentifier: caller.bundleIdentifier, teamIdentifier: caller.teamIdentifier, command: command)
+    }
 }

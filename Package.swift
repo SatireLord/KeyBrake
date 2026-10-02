@@ -11,6 +11,10 @@ let package = Package(
     targets: [
         .target(name: "KeyBrakeCore", path: "KeyBrakeCore"),
         .executableTarget(name: "KeyBrake", dependencies: ["KeyBrakeCore"], path: "KeyBrake"),
-        .testTarget(name: "KeyBrakeTests", dependencies: ["KeyBrakeCore"], path: "KeyBrakeTests")
+        .testTarget(
+            name: "KeyBrakeTests",
+            dependencies: ["KeyBrakeCore", "KeyBrake"],
+            path: "KeyBrakeTests"
+        )
     ]
 )

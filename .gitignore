@@ -7,6 +7,15 @@ DerivedData/
 xcuserdata/
 
 .codegraph/
+.agent-cache/
+.swiftpm/
+
+receipts/
+secrets/
+.env
+*.pem
+*.p12
+*.mobileprovision
 
 *.swp
 *.tmp

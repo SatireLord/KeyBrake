@@ -10,6 +10,7 @@ settings:
     SWIFT_VERSION: "6.0"
     MACOSX_DEPLOYMENT_TARGET: "14.0"
     SWIFT_STRICT_CONCURRENCY: minimal
+    KEYBRAKE_APP_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake
     CODE_SIGN_STYLE: Manual
     CODE_SIGNING_ALLOWED: NO
     DEVELOPMENT_TEAM: ""
@@ -27,28 +28,62 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrakeCore
       DEFINES_MODULE: YES
+      GENERATE_INFOPLIST_FILE: YES
+      ENABLE_TESTABILITY: YES
   KeyBrake:
     type: application
     platform: macOS
     sources:
       - path: KeyBrake
-    resources:
-      - path: Resources/KeyBrakeFeatureContract.json
       - path: KeyBrakePrivilegedHelper/org.realitygood.KeyBrake.Helper.plist
+        buildPhase:
+          copyFiles:
+            destination: wrapper
+            subpath: Contents/Library/LaunchDaemons
+      - path: Resources
     dependencies:
       - target: KeyBrakeCore
+      - target: KeyBrakePreferencePane
+        link: false
+        embed: false
       - target: KeyBrakePrivilegedHelper
         embed: true
+    postBuildScripts:
+      - path: scripts/embed_keybrake_preference_pane.sh
+        name: Embed KeyBrake Preference Pane
+        inputFiles:
+          - $(BUILT_PRODUCTS_DIR)/KeyBrake.prefPane/Contents/Info.plist
+        outputFiles:
+          - $(TARGET_BUILD_DIR)/$(FULL_PRODUCT_NAME)/Contents/Library/PreferencePanes/KeyBrake.prefPane/Contents/Info.plist
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake
+      PRODUCT_BUNDLE_IDENTIFIER: "$(KEYBRAKE_APP_BUNDLE_IDENTIFIER)"
       INFOPLIST_FILE: SupportingFiles/Info.plist
       CODE_ENTITLEMENTS: SupportingFiles/KeyBrake.entitlements
       LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
+  KeyBrakePreferencePane:
+    type: bundle
+    platform: macOS
+    sources:
+      - path: KeyBrakePreferencePane
+      - path: KeyBrakeCore/KeyBrakeSystemSettingsRoute.swift
+      - path: KeyBrakeCore/KeyBrakeSystemSettingsHandoff.swift
+    dependencies:
+      - sdk: PreferencePanes.framework
+      - sdk: SwiftUI.framework
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.realitygood.KeyBrake.PreferencePane
+      PRODUCT_NAME: KeyBrake
+      PRODUCT_MODULE_NAME: KeyBrakePreferencePane
+      WRAPPER_EXTENSION: prefPane
+      PRODUCT_BUNDLE_PACKAGE_TYPE: BNDL
+      INFOPLIST_FILE: SupportingFiles/KeyBrakePreferencePane-Info.plist
   KeyBrakePrivilegedHelper:
     type: tool
     platform: macOS
     sources:
       - path: KeyBrakePrivilegedHelper
+        excludes:
+          - org.realitygood.KeyBrake.Helper.plist
     dependencies:
       - target: KeyBrakeCore
     settings:
@@ -60,6 +95,8 @@ targets:
     platform: macOS
     sources:
       - path: KeyBrakeTests
+      - path: KeyBrake/App/KeyBrakeViewModel.swift
+      - path: KeyBrake/App/KeyBrakeLaunchConfiguration.swift
     dependencies:
       - target: KeyBrakeCore
     settings:
