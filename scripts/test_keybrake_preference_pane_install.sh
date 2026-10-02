@@ -43,6 +43,8 @@ fi
 
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 /path/to/KeyBrake.app" >&2
+    echo "       $0 rebuild [KeyBrake.app]" >&2
+    echo "       $0 remove" >&2
     exit 64
 fi
 

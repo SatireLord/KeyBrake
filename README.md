@@ -95,3 +95,5 @@ For a walkthrough that does not change the Mac's network, privacy, or processes,
 ```
 
 `--keybrake-recovery-demo` opens a temporary recovery case. `--keybrake-network-sandbox-failure` rehearses a failed isolation. Neither flag touches the host.
+
+A review display is optional and is not part of the failsafe. [`docs/KEYBRAKE_SAFE_DEMO.md`](docs/KEYBRAKE_SAFE_DEMO.md) explains when to rebuild `keybrake-review` and when to remove it.

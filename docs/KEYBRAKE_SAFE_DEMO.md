@@ -46,11 +46,17 @@ That route labels itself Isolation failure fixture. Both routes are local simula
 
 ## Review display
 
-KeyBrake does not create a display. On a machine that already has `displayctl`, the pane-test script also rebuilds a KeyBrake-owned review display and removes that same display:
+KeyBrake does not create a display, and the failsafe does not need one. The menu bar on the physical display remains the recovery path. On a machine that already has `displayctl`, the pane-test script can rebuild one KeyBrake-owned review display and remove that same display:
 
 ```bash
 scripts/test_keybrake_preference_pane_install.sh rebuild /path/to/KeyBrake.app
 scripts/test_keybrake_preference_pane_install.sh remove
 ```
 
-`rebuild` runs `displayctl ensure` for logical display `keybrake-review`, owner `keybrake-review`, at 1920×1080. When an app path is given, it opens Command Center and moves that window above the other displays without sending a click. `remove` runs `displayctl release` and `displayctl down` for that same logical display and owner. It does not sweep other virtual displays. The failsafe still works from the menu bar when this display is absent.
+`rebuild` creates logical display `keybrake-review` for owner `keybrake-review` at 1920×1080, then prints its inspection. Pass a built `KeyBrake.app` when you also want Command Center opened and moved above the other displays. That move does not click. `rebuild` with no app path only brings the display back.
+
+`remove` releases and turns off `keybrake-review` for that same owner. It does not sweep other virtual displays.
+
+Rebuild when the review display is missing, after a failed window move, or when you want a clean 1920×1080 surface before looking at Command Center, Settings, Incident Log, or the recovery panel.
+
+Remove it when the review is finished, before you hand the Mac to someone else, and when the extra display is covering the physical menu bar you would use for mouse recovery. Leave it up while you are still reading that review. Leave every other virtual display alone. Removing this display does not restore network, sharing, or local automation, and it does not quit KeyBrake.
