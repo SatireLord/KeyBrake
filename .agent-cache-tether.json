@@ -1,0 +1,24 @@
+{
+  "hub": "agent-cache",
+  "schema": "agent-cache.tether.v1",
+  "seeds": {
+    "agent-cache-tether": {
+      "blocks": {
+        "AGENTS.md": {
+          "ask-first": "2ae97f74599ca0a21bb62a7c489f71a62272c7362864abbebc4eb9939521482c"
+        }
+      },
+      "files": {},
+      "version": 1
+    },
+    "agent-work-rules": {
+      "blocks": {
+        "AGENTS.md": {
+          "agent-work-rules": "b117d7a2449f6b5a257709d86b926414b141ae7a7377ae9d5375ed5c68864b61"
+        }
+      },
+      "files": {},
+      "version": 1
+    }
+  }
+}
